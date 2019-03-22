@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+
+<meta charset="utf-8" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="pandoc" />
+
+
+
+
+<title>   Behavioural Medicine Lab</title>
+
+<script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/bootstrap.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<link href="site_libs/highlightjs-9.12.0/default.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+<link href="site_libs/font-awesome-5.1.0/css/all.css" rel="stylesheet" />
+<link href="site_libs/font-awesome-5.1.0/css/v4-shims.css" rel="stylesheet" />
+
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css">
+  pre:not([class]) {
+    background-color: white;
+  }
+</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
+
+
+
+<style type="text/css">
+h1 {
+  font-size: 34px;
+}
+h1.title {
+  font-size: 38px;
+}
+h2 {
+  font-size: 30px;
+}
+h3 {
+  font-size: 24px;
+}
+h4 {
+  font-size: 18px;
+}
+h5 {
+  font-size: 16px;
+}
+h6 {
+  font-size: 12px;
+}
+.table th:not([align]) {
+  text-align: left;
+}
+</style>
+
+
+</head>
+
+<body>
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+code {
+  color: inherit;
+  background-color: rgba(0, 0, 0, 0.04);
+}
+img {
+  max-width:100%;
+  height: auto;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+</style>
+
+
+<style type="text/css">
+/* padding for bootstrap navbar */
+body {
+  padding-top: 51px;
+  padding-bottom: 40px;
+}
+/* offset scroll position for anchor links (for fixed navbar)  */
+.section h1 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h2 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h3 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h4 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h5 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h6 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.dropdown-submenu {
+  position: relative;
+}
+.dropdown-submenu>.dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -6px;
+  margin-left: -1px;
+  border-radius: 0 6px 6px 6px;
+}
+.dropdown-submenu:hover>.dropdown-menu {
+  display: block;
+}
+.dropdown-submenu>a:after {
+  display: block;
+  content: " ";
+  float: right;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 5px 0 5px 5px;
+  border-left-color: #cccccc;
+  margin-top: 5px;
+  margin-right: -10px;
+}
+.dropdown-submenu:hover>a:after {
+  border-left-color: #ffffff;
+}
+.dropdown-submenu.pull-left {
+  float: none;
+}
+.dropdown-submenu.pull-left>.dropdown-menu {
+  left: -100%;
+  margin-left: 10px;
+  border-radius: 6px 0 6px 6px;
+}
+</style>
+
+<script>
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark it active
+  menuAnchor.parent().addClass('active');
+
+  // if it's got a parent navbar menu mark it active as well
+  menuAnchor.closest('li.dropdown').addClass('active');
+});
+</script>
+
+<div class="container-fluid main-container">
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  background: white;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "&#xe258;";
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open')
+  });
+});
+</script>
+
+<!-- code folding -->
+
+
+
+
+
+<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html"><span class="fa fa-home"></span> Home</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li>
+  <a href="people.html">
+    <span class="fa fa-users"></span>
+     
+    People
+  </a>
+</li>
+<li>
+  <a href="alumni.html">
+    <span class="fa fa-graduation-cap"></span>
+     
+    Alumni
+  </a>
+</li>
+<li>
+  <a href="cv.html">
+    <span class="fa fa-file-alt"></span>
+     
+    Wiley CV
+  </a>
+</li>
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div class="fluid-row" id="header">
+
+
+
+<h1 class="title toc-ignore"><img src="wordcloud_banner.png"/> <br></br> Behavioural Medicine Lab</h1>
+
+</div>
+
+
+<p>Our research uses digitomics<a href="#fn1" class="footnote-ref" id="fnref1"><sup>1</sup></a> to understand the connections between sleep, psychosocial factors, and health. Reflecting our belief that both mental and physical health are important and interconnected, many of our research projects integrate mental and physical health.</p>
+<p><em>Topics</em> our team has expertise in include stress, resilience and emotion regulation, depression and anxiety, sleep and insomnia, and cancer.</p>
+<p><em>Methods</em> our team has expertise in include ecological momentary assessment, actigraphy, statistics and machine learning, and clinical trials.</p>
+<p>We leverage the latest science from our team and others to evaluate and optimise interventions to improve sleep, reduce insomnia symptoms, and promote mental health, particularly in people undergoing cancer treatment or other sources of high stress.</p>
+<p>Our team is lead by Dr. Joshua Wiley and is situated within the Monash Institute of Cognitive and Clinical Neurosciences <a href="http://www.monash.edu/neuro-institute">(MICCN)</a> within the Sleep and Circadian Rhythms Program. To see an example of the sort of work we do and how we work to feed findings back to our participants and the community, take a look at one of our participant reports summarising findings from two intensive daily studies we conducted.</p>
+<ul>
+<li><span class="fa fa-newspaper"></span> <a href="https://sway.office.com/YIoVCcBjbsP3MOqV?ref=Link">Participant Report</a></li>
+</ul>
+<div id="joshua-f.-wiley" class="section level2">
+<h2>Joshua F. Wiley</h2>
+<p>Dr. Joshua Wiley is a behavioural medicine researcher currently appointed as a lecturer (Asst. Professor) at Monash University in the School of Psychological Sciences and MICCN (2016-present). He studied health psychology and behavioural medicine, completing his PhD at the University of California at Los Angeles in 2015. Subsequently, he trained in pragmatic randomised controlled trials (RCTs) through post doctoral with a primary care and prevention group.</p>
+<p>Dr. Wiley’s research includes basic science and applied intervention work. In basic science, his work focuses on understanding the daily and longitudinal dynamics of sleep, psychosocial factors and health, emphasising potentially malleable mechanisms driving poor sleep and health. His intervention work targets the basic science mechanisms identified to attempt to improve population health. His intervention research focuses on accessible and feasible sleep/behavioural and emotion regulation interventions with potential for broad dissemination. Aligned with recent calls for personalised medicine, his group combines digitomics and cutting edge data analytics to drive personalised predictions and recommendations to help optimise the content, targetting, and delivery of their interventions. New tools and data analytic pipelines developed for his projects are routinely shared freely and have been picked up in many other studies and projects.</p>
+<p>Reflecting the global reach of his research, Dr. Wiley has helped obtain competitive federal grant funding from the Australian Research Council (ARC), United States National Institutes of Health (US NIH), and United States Department of Defense (US DoD), totalling &gt;$3 million in funding. He has &gt;50 peer-reviewed publications resulting in &gt;800 citations.</p>
+<div id="connect" class="section level3">
+<h3><svg style="height:0.8em;top:.04em;position:relative;fill:black;" viewBox="0 0 576 512"><path d="M528 32H48C21.5 32 0 53.5 0 80v352c0 26.5 21.5 48 48 48h480c26.5 0 48-21.5 48-48V80c0-26.5-21.5-48-48-48zm-352 96c35.3 0 64 28.7 64 64s-28.7 64-64 64-64-28.7-64-64 28.7-64 64-64zm112 236.8c0 10.6-10 19.2-22.4 19.2H86.4C74 384 64 375.4 64 364.8v-19.2c0-31.8 30.1-57.6 67.2-57.6h5c12.3 5.1 25.7 8 39.8 8s27.6-2.9 39.8-8h5c37.1 0 67.2 25.8 67.2 57.6v19.2zM512 312c0 4.4-3.6 8-8 8H360c-4.4 0-8-3.6-8-8v-16c0-4.4 3.6-8 8-8h144c4.4 0 8 3.6 8 8v16zm0-64c0 4.4-3.6 8-8 8H360c-4.4 0-8-3.6-8-8v-16c0-4.4 3.6-8 8-8h144c4.4 0 8 3.6 8 8v16zm0-64c0 4.4-3.6 8-8 8H360c-4.4 0-8-3.6-8-8v-16c0-4.4 3.6-8 8-8h144c4.4 0 8 3.6 8 8v16z"/></svg> Connect</h3>
+<ul>
+<li><span class="fa fa-github"></span> <a href="https://github.com/jwiley">github</a> - <span class="fa fa-google"></span> <a href="https://scholar.google.com/citations?user=bRG3LSQAAAAJ&amp;hl=en">Google Scholar</a></li>
+<li><span class="fa fa-linkedin"></span> <a href="https://www.linkedin.com/in/joshua-wiley-6a0b2278">linkedin</a> - <span class="fa fa-twitter"></span> <a href="http://twitter.com/WileyResearch">twitter</a></li>
+<li><span class="fa fa-envelope"></span> joshua.wiley <em>at</em> monash.edu</li>
+</ul>
+</div>
+</div>
+<div class="footnotes">
+<hr />
+<ol>
+<li id="fn1"><p>Digitally collected data either actively (e.g., completing mood surveys via an app; brief audio recordings of stress experienced in the past few hours) or passively (e.g., using sensor data from smartphones, wearables, mining social media). Often, large amounts of data are generated, either due to many features, many timepoints, or both.<a href="#fnref1" class="footnote-back">↩</a></p></li>
+</ol>
+</div>
+
+<br style = "line-height:100px;"></br>
+<p>Copyright &copy; 2019 by Behavioural Medicine Lab based in
+  Melbourne, Australia.  All rights reserved.</p>
+
+
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>
