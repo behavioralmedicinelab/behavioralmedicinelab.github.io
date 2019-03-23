@@ -1,0 +1,23 @@
+name: "Behavioural Medicine Lab Website"
+exclude: ["*.*~"]
+output_dir: "."
+navbar:
+  title: <span class="fa fa-home"></span> Home
+  right:
+    - icon: fa-cogs
+      text: "Projects"
+      href: projects.html    
+    - icon: fa-users
+      text: "People"
+      href: people.html  
+    - icon: fa-graduation-cap
+      text: "Alumni"
+      href: alumni.html
+    - icon: fa-file-alt
+      text: "Wiley CV"
+      href: cv.html
+
+output:
+  html_document:
+    include:
+      after_body: footer.html

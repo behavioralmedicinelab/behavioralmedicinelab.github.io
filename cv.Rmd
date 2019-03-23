@@ -1,0 +1,190 @@
+---
+title: Joshua F. Wiley's CV
+---
+
+
+```{r load_packages, message=FALSE, warning=FALSE, include=FALSE} 
+
+library(checkpoint); checkpoint("2019-01-25", scanForPackages = FALSE)
+library(fontawesome)
+library(readxl)
+library(data.table)
+library(rmarkdown)
+library(scholar)
+library(ggplot2)
+library(plotly)
+
+jwCites <- function() {
+  ct <- get_citation_history("bRG3LSQAAAAJ")
+  ct2 <- ct
+  ct2$cites <- cumsum(ct2$cites)
+  ct$Type <- "Yearly"
+  ct2$Type <- "Cumulative"
+  ct <- rbind(ct, ct2)
+
+  ggplot(ct, aes(year, cites)) +
+    geom_bar(stat = "identity") +
+    ylab("Number of Citations") + 
+    theme_classic() +
+    theme(axis.title.x = element_blank()) + 
+    facet_wrap(~ Type, scales = "free_y") + 
+    coord_cartesian(expand=FALSE) +
+    ggtitle("Google Scholar Citations")
+}
+citeplot <- tryCatch(jwCites(), error = function(e) ggplot() + ggtitle("Could not pull citations."))
+
+pubs <- read_excel("~/OneDrive/WileyDossier/CV_Full.xlsx", sheet = "Publications")
+pubs <- as.data.table(pubs)
+
+prpubs <- pubs[Type %in% c("Empirical", "Review")]
+prpubs[, Num := .N:1]
+
+bpubs <- pubs[Type %in% c("Book", "Book Chapter")]
+bpubs[, Num := .N:1]
+
+epubs <- pubs[Type %in% c("Editorial")]
+epubs[, Num := .N:1]
+
+abstracts <- read_excel("~/OneDrive/WileyDossier/CV_Full.xlsx", sheet = "Abstracts")
+abstracts <- as.data.table(abstracts)
+
+leadabstracts <- abstracts[FirstLast == 1]
+leadabstracts[, Num := .N:1]
+
+coabstracts <- abstracts[FirstLast == 0]
+coabstracts[, Num := .N:1]
+
+printPubs <- function(year, d) {
+  paste(c(
+    sprintf("`%s`", as.character(year)),
+    "<ol>",
+    paste(sprintf("<li value = %d>%s</li>", d[Year == year, Num], d[Year == year, Reference]),
+          collapse = "\n"),
+    "</ol>"), collapse = "\n")
+}
+
+
+students <- read_excel("~/OneDrive/WileyDossier/CV_Full.xlsx", sheet = "Students")
+students <- as.data.table(students)[Status != "Withdrew"]
+students[, CVSummary := sprintf("%s %s | %d - %s | %s | %s supervisor",
+                                GivenName, FamilyName, Started,
+                                ifelse(Status == "Current", "current", Ended),
+                                Type, ifelse(Primary == 1, "primary", "co"))]
+
+dstudents <- students[Type %in%
+                      c("DPsych (Clinical)", "PhD (Clinical)", "PhD")][
+  order(-Started, -Type)]
+dstudents[, Num := .N:1]
+dstudents[, CVSummary := sprintf("<li value = %d>%s</li>", Num, CVSummary)]
+dstudents <- paste(c("<ol>", dstudents$CVSummary, "</ol>"), collapse = "\n")
+
+
+hstudents <- students[Type %in% c("Honours")][order(-Started)]
+hstudents[, Num := .N:1]
+hstudents[, CVSummary := sprintf("<li value = %d>%s</li>", Num, CVSummary)]
+hstudents <- paste(c("<ol>", hstudents$CVSummary, "</ol>"), collapse = "\n")
+
+```
+
+<br></br>
+
+## <span class="fa fa-university"></span> EDUCATION
+
+`2010 - 24 March 2015`
+**Doctor of Philosophy** in Psychology (Health & Quantitative) from
+the *University of California, Los Angeles*. 
+Supervisor: Annette Stanton. Dissertation title: *Measurement of
+Psychosocial Resources, Allostatic Load, and Their Relations*.
+GPA: 3.96/4.00
+
+`2010 - 2011`
+**Master of Arts** in Psychology from the *University of California,
+Los Angeles*. Supervisor: Annette Stanton.
+
+`2006 - 2010`
+**Bacher of Arts** with honors in Psychology from the *University of
+California Riverside*. Supervisor: Howard Friedman. GPA: 3.95/4.00
+
+`2002 - 2005`
+**General Coursework** at *Riverside Community College*. Undeclared
+major. GPA: 4.00/4.00
+
+<br></br>
+
+## Academic Summary
+
+Lecturer at Monash University; **4** years post PhD; >$3 million AUD in grant funding; **5** primary, **1** co-supervised doctoral students; **2** Associate/Statistical editorial positions at journals; NHMRC panel member; **11** first/last & **28** co-author peer reviewed articles; **4** books; **9** other pubs; **24** first/last & **25** co-author peer reviewed abstracts; **9** invited presentations; **6** software packages developed.
+
+<br></br>
+
+## <span class="fa fa-building"></span> WORK EXPERIENCE
+
+`June 2016 - present`
+**Lecturer**, Monash Institute of Cognitive and Clinical
+Neurosciences, School of Psychological Sciences Lecturer (tenure-track
+Assistant Professor)
+
+`December 2016 - 2019`
+**Senior advisor**, Elkhart Group LLC.
+
+`January 2015 - June 2016`
+**Post Doctoral Fellow**, Australia Catholic University
+
+`July 2013 - March 2015`
+**Graduate Student Researcher**, My Year After Cancer Study (1R01 CA133081)
+
+`June 2013 - December 2016`
+**Partner and Data Scientist**, Elkhart Group Ltd.
+
+`August 2011 – June 2013`
+**Programmer analyst**, IDRE Statistical Consulting Group 
+
+`September 2008 - June 2010`
+**Research Assistant and Honors Student**, Professor Howard Friedman's
+Laboratory at the University of California, Riverside
+
+<br></br>
+
+-------------------------------------------
+
+## <span class="fa fa-book-open"></span> PUBLICATIONS
+
+`r ggplotly(citeplot)`
+
+### <span class="fa fa-file-alt"></span> Peer-Reviewed Articles
+
+`r paste(unlist(lapply(unique(prpubs$Year), printPubs, d = prpubs)), collapse = "\n")`
+
+### <span class="fa fa-book"></span> Books and Book Chapters
+
+`r paste(unlist(lapply(unique(bpubs$Year), printPubs, d = bpubs)), collapse = "\n")`
+
+### <span class="fa fa-file-contract"></span> Commentaries and Letters to the Editor
+
+`r paste(unlist(lapply(unique(epubs$Year), printPubs, d = epubs)), collapse = "\n")`
+
+<br></br>
+
+-------------------------------------------
+
+## <span class="fa fa-chalkboard-teacher"></span> ABSTRACTS, PRESENTATIONS, & SYMPOSIA
+
+### First or Last Author
+
+`r paste(unlist(lapply(unique(leadabstracts$Year), printPubs, d = leadabstracts)), collapse = "\n")`
+
+### Co-Author
+
+`r paste(unlist(lapply(unique(coabstracts$Year), printPubs, d = coabstracts)), collapse = "\n")`
+
+
+<!-- ## <span class="fa fa-dollar-sign"></span> Grants -->
+
+
+## <span class="fa fa-graduation-cap"></span> STUDENTS
+
+`Doctoral`
+`r dstudents`
+
+`Honours`
+`r hstudents`
