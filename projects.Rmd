@@ -23,5 +23,12 @@ projects[, ProjectSummary := sprintf(
 
 <br></br>
 
-`r paste(projects[, ProjectSummary], collapse = "\n\n -------------------- \n\n")`
+`r paste(projects[Primary == 1, ProjectSummary], collapse = "\n\n -------------------- \n\n")`
 
+----------------------
+
+## Projects We Collaborate On
+
+`r paste(projects[Primary == 0, ProjectSummary], collapse = "\n\n -------------------- \n\n")`
+
+----------------------

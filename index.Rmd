@@ -1,11 +1,59 @@
 ---
-title: <img src="wordcloud_banner.png"/> <br></br> Behavioural Medicine Lab
+title: Behavioural Medicine Lab
 ---
 
 ```{r load_packages, message=FALSE, warning=FALSE, include=FALSE} 
 
 library(checkpoint); checkpoint("2019-01-25", scanForPackages = FALSE)
 library(fontawesome)
+
+#### Stuff to make word cloud summaries #### 
+library(XML)
+library(tm)
+library(wordcloud)
+library(RColorBrewer)
+library(SnowballC)
+library(pdftools)
+
+txttrans <- function(text){
+  text = tm_map(text, content_transformer(tolower))
+  text = tm_map(text, removePunctuation)
+  text = tm_map(text, content_transformer(removeNumbers))
+  text = tm_map(text, removeWords,
+    c(stopwords("english"), "may", "also", "low", "high", "using", "stanton",
+      "seeman", "bower", "study", "model", "models", "rights", "license",
+      "wiley", "oxford", "see", "however", "page", "can", "print", "view",
+      "california", "subscriber", "title", "los", "angeles",
+      "wwwoxfordhandbookscom", "pdf"))
+  tm_map(text, content_transformer(stripWhitespace))
+}
+
+jw <- Corpus(DirSource("~/OneDrive/Manuscripts/Publications/", pattern="pdf"),
+             readerControl = list(reader=readPDF))
+jw2 <- txttrans(jw)
+## summary(jw2)
+
+png(filename = "~/OneDrive/Manuscripts/Publications/wordcloud.png", width = 10, height = 10, units = "in", res = 400)
+wordcloud(jw2, scale=c(5,0.5), max.words=100, random.order=FALSE,
+          rot.per=0.35, use.r.layout=FALSE, colors=brewer.pal(8, "Dark2"))
+dev.off()
+
+
+png(filename = "~/OneDrive/Manuscripts/Publications/wordcloud_banner.png", width = 12, height = 4, units = "in", res = 400)
+wordcloud(jw2, scale=c(6,0.2), max.words=150, random.order=FALSE,
+          rot.per=0, use.r.layout=FALSE, fixed.asp = FALSE, colors=brewer.pal(8, "Dark2"))
+dev.off()
+
+png(filename = "~/OneDrive/Manuscripts/Publications/wordcloud_small.png", width = 5, height = 5, units = "in", res = 400)
+wordcloud(jw2, scale=c(5,0.1), max.words=50, random.order=FALSE,
+          rot.per=0.35, use.r.layout=FALSE, colors=brewer.pal(8, "Dark2"))
+dev.off()
+
+png(filename = "wordcloud_banner.png", width = 12, height = 4, units = "in", res = 400)
+wordcloud(jw2, scale=c(6,0.2), max.words=150, random.order=FALSE,
+          rot.per=0, use.r.layout=FALSE, fixed.asp = FALSE, colors=brewer.pal(8, "Dark2"))
+dev.off()
+
 
 ```
 
@@ -35,6 +83,17 @@ the sort of work we do and how we work to feed findings back to our
 participants and the community, take a look at our
 [projects](projects.html) and look at some of the reports we have sent 
 our participants there.
+
+<br></br>
+
+The word cloud below provides an data-driven summary of the type
+of work our lab conducts. The word cloud is based off papers published
+from our lab. Word size shows how commonly specific words appear in
+our work.
+
+![](wordcloud_banner.png)
+
+<br></br>
 
 [^1]: Digitally collected data either actively (e.g., completing mood
     surveys via an app; brief audio recordings of stress experienced
