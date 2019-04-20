@@ -14,6 +14,10 @@ library(scholar)
 library(ggplot2)
 library(plotly)
 
+yearSincePhD <- round(as.numeric(
+  difftime(Sys.Date(), as.Date("2015-03-24"),
+           units = "days")/365.25), 1)
+
 jwCites <- function() {
   ct <- get_citation_history("bRG3LSQAAAAJ")
   ct2 <- ct
@@ -36,6 +40,13 @@ citeplot <- tryCatch(jwCites(), error = function(e) ggplot() + ggtitle("Could no
 pubs <- read_excel("~/OneDrive/WileyDossier/CV_Full.xlsx", sheet = "Publications")
 pubs <- as.data.table(pubs)
 
+tmp <- pubs[Type %in% c("Empirical", "Review"), FirstLast]
+NFirstLast <- sum(tmp == 1)
+NCoAuthor <- sum(tmp == 0)
+NBooks <- nrow(pubs[Type %in% c("Book")])
+NOther <- nrow(pubs[!Type %in% c("Empirical", "Review", "Book")])
+rm(tmp)
+
 prpubs <- pubs[Type %in% c("Empirical", "Review")]
 prpubs[, Num := .N:1]
 
@@ -45,14 +56,17 @@ bpubs[, Num := .N:1]
 epubs <- pubs[Type %in% c("Editorial")]
 epubs[, Num := .N:1]
 
-abstracts <- read_excel("~/OneDrive/WileyDossier/CV_Full.xlsx", sheet = "Abstracts")
-abstracts <- as.data.table(abstracts)
+presentations <- read_excel("~/OneDrive/WileyDossier/CV_Full.xlsx", sheet = "Presentations")
+presentations <- as.data.table(presentations)
 
-leadabstracts <- abstracts[FirstLast == 1]
+leadabstracts <- presentations[FirstLast == 1 & Type != "Invited"]
 leadabstracts[, Num := .N:1]
 
-coabstracts <- abstracts[FirstLast == 0]
+coabstracts <- presentations[FirstLast == 0 & Type != "Invited"]
 coabstracts[, Num := .N:1]
+
+invited <- presentations[FirstLast == 1 & Type == "Invited"]
+invited[, Num := .N:1]
 
 printPubs <- function(year, d) {
   paste(c(
@@ -63,9 +77,14 @@ printPubs <- function(year, d) {
     "</ol>"), collapse = "\n")
 }
 
-
 students <- read_excel("~/OneDrive/WileyDossier/CV_Full.xlsx", sheet = "Students")
 students <- as.data.table(students)[Status != "Withdrew"]
+
+tmp <- students[Type %in% c("DPsych (Clinical)", "PhD (Clinical)", "PhD"), Primary]
+NPrimary <- sum(tmp == 1)
+NSecondary <- sum(tmp == 0)
+rm(tmp)
+
 students[, CVSummary := sprintf("%s %s | %d - %s | %s | %s supervisor",
                                 GivenName, FamilyName, Started,
                                 ifelse(Status == "Current", "current", Ended),
@@ -78,11 +97,71 @@ dstudents[, Num := .N:1]
 dstudents[, CVSummary := sprintf("<li value = %d>%s</li>", Num, CVSummary)]
 dstudents <- paste(c("<ol>", dstudents$CVSummary, "</ol>"), collapse = "\n")
 
-
 hstudents <- students[Type %in% c("Honours")][order(-Started)]
 hstudents[, Num := .N:1]
 hstudents[, CVSummary := sprintf("<li value = %d>%s</li>", Num, CVSummary)]
 hstudents <- paste(c("<ol>", hstudents$CVSummary, "</ol>"), collapse = "\n")
+
+teaching <- read_excel("~/OneDrive/WileyDossier/CV_Full.xlsx", sheet = "Teaching")
+teaching <- as.data.table(teaching)[order(Level, -Ended, -Year, Role)]
+teaching[, Num := .N:1]
+teaching[, CVSummary := sprintf("%d - %s | %s | *%s* (%s) | %s",
+        Year, Ended,
+        Role,
+        Title, Code,
+        Organization)]
+
+dteaching <- teaching[Level == "Doctoral"]
+dteaching[, CVSummary := sprintf("<li value = %d>%s</li>", Num, CVSummary)]
+dteaching <- paste(c("<ol>", dteaching$CVSummary, "</ol>"), collapse = "\n")
+
+hteaching <- teaching[Level == "Honours"]
+hteaching[, CVSummary := sprintf("<li value = %d>%s</li>", Num, CVSummary)]
+hteaching <- paste(c("<ol>", hteaching$CVSummary, "</ol>"), collapse = "\n")
+
+uteaching <- teaching[Level == "Undergraduate"]
+uteaching[, CVSummary := sprintf("<li value = %d>%s</li>", Num, CVSummary)]
+uteaching <- paste(c("<ol>", uteaching$CVSummary, "</ol>"), collapse = "\n")
+
+
+grants <- read_excel("~/OneDrive/WileyDossier/CV_Full.xlsx", sheet = "Grants")
+grants <- as.data.table(grants)[, Started := as.Date(Started)]
+grants[, Ended := as.Date(Ended)]
+grants <- grants[order(Status, -Started)]
+
+
+
+grants[, CVSummary := sprintf("%d - %d | %s (%s)\nPI: %s\nTotal Value: %s (%s)\nRole: %s",
+        format(Started, format = "%Y"),
+        format(Ended, format = "%Y"),
+        Number, Funder,
+        formatC(Total, format="f", digits=0, big.mark=","), Currency,
+        Role)]
+grants[, Num := .N:1]
+
+cgrants <- grants[Status == "Current"]
+cgrants[, CVSummary := sprintf("<li value = %d>%s</li>", Num, CVSummary)]
+cgrants <- paste(c("<ol>", cgrants$CVSummary, "</ol>"), collapse = "\n")
+
+pgrants <- grants[Status == "Past"]
+pgrants[, CVSummary := sprintf("<li value = %d>%s</li>", Num, CVSummary)]
+pgrants <- paste(c("<ol>", pgrants$CVSummary, "</ol>"), collapse = "\n")
+
+
+awards <- read_excel("~/OneDrive/WileyDossier/CV_Full.xlsx", sheet = "Awards")
+
+
+summarystatement <- sprintf(
+  "Lecturer at Monash University; **%0.1f** years post PhD; >$3 million AUD in grant funding; **%d** primary, **%d** co-supervised doctoral students; **2** Associate/Statistical editorial positions at journals; NHMRC panel member; **%d** first/last & **%d** co-author peer reviewed articles; **%d** books; **%d** other pubs; **%d** first/last & **%d** co-author peer reviewed abstracts; **%d** invited presentations; **6** software packages developed.",
+  yearSincePhD,
+  NPrimary, NSecondary,
+  NFirstLast, NCoAuthor,
+  NBooks, NOther,
+  nrow(leadabstracts),
+  nrow(coabstracts),
+  nrow(invited))
+                            
+
 
 ```
 
@@ -113,7 +192,7 @@ major. GPA: 4.00/4.00
 
 ## Academic Summary
 
-Lecturer at Monash University; **4** years post PhD; >$3 million AUD in grant funding; **5** primary, **1** co-supervised doctoral students; **2** Associate/Statistical editorial positions at journals; NHMRC panel member; **11** first/last & **28** co-author peer reviewed articles; **4** books; **9** other pubs; **24** first/last & **25** co-author peer reviewed abstracts; **9** invited presentations; **6** software packages developed.
+`r summarystatement`
 
 <br></br>
 
@@ -136,7 +215,7 @@ Assistant Professor)
 `June 2013 - December 2016`
 **Partner and Data Scientist**, Elkhart Group Ltd.
 
-`August 2011 – June 2013`
+`August 2011 - June 2013`
 **Programmer analyst**, IDRE Statistical Consulting Group 
 
 `September 2008 - June 2010`
@@ -177,8 +256,29 @@ Laboratory at the University of California, Riverside
 
 `r paste(unlist(lapply(unique(coabstracts$Year), printPubs, d = coabstracts)), collapse = "\n")`
 
+### Invited
 
-<!-- ## <span class="fa fa-dollar-sign"></span> Grants -->
+`r paste(unlist(lapply(unique(invited$Year), printPubs, d = invited)), collapse = "\n")`
+
+
+## <span class="fa fa-dollar-sign"></span> GRANTS
+
+`Current`
+`r cgrants`
+
+`Past`
+`r pgrants`
+
+## <span class="fa fa-university"></span> TEACHING
+
+`Doctoral`
+`r dteaching`
+
+`Honours`
+`r hteaching`
+
+`Undergraduate`
+`r uteaching`
 
 
 ## <span class="fa fa-graduation-cap"></span> STUDENTS
