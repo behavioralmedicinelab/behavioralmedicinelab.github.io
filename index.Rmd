@@ -72,8 +72,8 @@ trials.
 
 We leverage the latest science from our team and others to evaluate
 and optimise interventions to improve sleep, reduce insomnia symptoms,
-and promote mental health, particularly in people undergoing cancer
-treatment or other sources of high stress.
+and promote mental health, particularly in people who are or have been
+treated for cancer or are experiencing other sources of high stress.
 
 Our team is lead by Dr. Joshua Wiley and is situated within the 
 Monash Institute of Cognitive and Clinical
@@ -86,7 +86,7 @@ our participants there.
 
 <br></br>
 
-The word cloud below provides an data-driven summary of the type
+The word cloud below provides a data-driven summary of the type
 of work our lab conducts. The word cloud is based off papers published
 from our lab. Word size shows how commonly specific words appear in
 our work.
