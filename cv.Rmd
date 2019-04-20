@@ -131,10 +131,11 @@ grants <- grants[order(Status, -Started)]
 
 
 
-grants[, CVSummary := sprintf("%d - %d | %s (%s)\nPI: %s\nTotal Value: %s (%s)\nRole: %s",
+grants[, CVSummary := sprintf("**%s - %s** | %s (%s)<br />**PI**: %s<br />**Total Value**: %s (%s)<br />**Role**: %s",
         format(Started, format = "%Y"),
         format(Ended, format = "%Y"),
         Number, Funder,
+        PI,
         formatC(Total, format="f", digits=0, big.mark=","), Currency,
         Role)]
 grants[, Num := .N:1]
@@ -149,7 +150,15 @@ pgrants <- paste(c("<ol>", pgrants$CVSummary, "</ol>"), collapse = "\n")
 
 
 awards <- read_excel("~/OneDrive/WileyDossier/CV_Full.xlsx", sheet = "Awards")
-
+awards <- as.data.table(awards)[order(-Year, Stop, na.last = FALSE)]
+awards[, CVSummary := sprintf("`%s` | %s (%s)",
+                              ifelse(is.na(Stop), as.character(Year),
+                                     sprintf("%d - %d", Year, Stop)),
+                              Name, Funder)]
+awards[, Num := .N:1]
+awards2 <- awards
+awards2[, CVSummary := sprintf("<li value = %d>%s</li>", Num, CVSummary)]
+awards2 <- paste(c("<ol>", awards2$CVSummary, "</ol>"), collapse = "\n")
 
 summarystatement <- sprintf(
   "Lecturer at Monash University; **%0.1f** years post PhD; >$3 million AUD in grant funding; **%d** primary, **%d** co-supervised doctoral students; **2** Associate/Statistical editorial positions at journals; NHMRC panel member; **%d** first/last & **%d** co-author peer reviewed articles; **%d** books; **%d** other pubs; **%d** first/last & **%d** co-author peer reviewed abstracts; **%d** invited presentations; **6** software packages developed.",
@@ -268,6 +277,12 @@ Laboratory at the University of California, Riverside
 
 `Past`
 `r pgrants`
+
+
+## <span class="fa fa-award"></span> AWARDS
+
+`r awards2`
+
 
 ## <span class="fa fa-university"></span> TEACHING
 
