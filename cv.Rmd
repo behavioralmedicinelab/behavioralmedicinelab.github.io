@@ -14,18 +14,25 @@ library(scholar)
 library(ggplot2)
 library(plotly)
 
+cyear <- as.integer(format(Sys.Date(), format = "%Y"))
+oldyear <- cyear - 4
 yearSincePhD <- round(as.numeric(
   difftime(Sys.Date(), as.Date("2015-03-24"),
            units = "days")/365.25), 1)
 
-jwCites <- function() {
-  ct <- get_citation_history("bRG3LSQAAAAJ")
+getCites <- function(id) {
+  ct <- get_citation_history(id)
   ct2 <- ct
   ct2$cites <- cumsum(ct2$cites)
   ct$Type <- "Yearly"
   ct2$Type <- "Cumulative"
   ct <- rbind(ct, ct2)
-
+  ct$ID <- id
+  return(ct)
+}
+                  
+jwCites <- function() {
+  ct <- getCites("bRG3LSQAAAAJ")
   ggplot(ct, aes(year, cites)) +
     geom_bar(stat = "identity") +
     ylab("Number of Citations") + 
@@ -35,7 +42,49 @@ jwCites <- function() {
     coord_cartesian(expand=FALSE) +
     ggtitle("Google Scholar Citations")
 }
+
 citeplot <- tryCatch(jwCites(), error = function(e) ggplot() + ggtitle("Could not pull citations."))
+
+
+## seniorlecturers <- list(
+##   `Trevor T-J Chong` = getCites("qLkvokIAAAAJ"),
+##   `Bradley A Edwards` = getCites("yypftd8AAAAJ"),
+##   `James Coxon` = getCites("hnAesu8AAAAJ"),
+##   `Ziarih Hawi` = getCites("PBuc7msAAAAJ"),
+##   `Laura Jobson` = getCites("dktQ3XQAAAAJ"),
+##   `Adam McKay` = getCites("KjOgwiQAAAAJ"),
+##   `Adeel Razi` = getCites("VG3onZwAAAAJ"),
+##   `Andrew J K Phillips` = getCites("w1fBCWIAAAAJ"),
+##   `Rebecca Anne Segrave` = getCites("-l_x5sAAAAAJ"),
+##   `Megan Spencer-Smith` = getCites("Z0WEv1oAAAAJ"),
+##   `Renerus Stolwyk` = getCites("k6MqWxgAAAAJ"),
+##   `Bei Bei` = getCites("wMBLE0IAAAAJ"),
+##   `Tracey Sletten` = getCites("OjrCgUoAAAAJ"),
+##   `Joshua F Wiley` = getCites("bRG3LSQAAAAJ"))
+## d <- as.data.table(do.call(rbind, lapply(names(seniorlecturers), function(v) {
+##   cbind(seniorlecturers[[v]], Name = v, Select = ifelse(v == "Joshua F Wiley",
+##                                                         "Applicant", "Level C\nComparators"))
+## })))
+## d2 <- d[Type == "Yearly" & year > 2012]
+## d2[, Rank := paste0(rank(-cites, ties.method = "max"), "/14"), by = year]
+## sqdiff <- function(x, j = .5) abs((x - (sqrt(x) + j)^2) )
+## compareplot <- ggplot(d2, aes(year, cites, group = Name, colour = Select, size = Select)) +
+##   ## geom_boxplot(aes(group = year, colour = NULL, size = NULL),
+##   ##              width = .3, colour = "grey80", show.legend = FALSE) + 
+##   geom_line() +
+##   ## stat_summary(aes(group = NULL, colour = NULL, size = NULL),
+##   ##              fun.y = median, geom = "point", shape = 18, size = 3, colour = "grey50") +
+##   geom_label(aes(year, cites + sqdiff(cites, 1), label = Rank),
+##              data = d2[Name=="Joshua F Wiley"], show.legend = FALSE) + 
+##   scale_colour_manual("Who", values = c("Applicant" = "black", "Level C\nComparators" = "grey60")) + 
+##   scale_size_manual("Who", values = c("Applicant" = 2, "Level C\nComparators" = .5)) + 
+##   scale_x_continuous("Year", breaks = 2013:2019) +
+##   scale_y_sqrt("Yearly Citations (Google Scholar)", breaks = c(10, 100, 200, 400, 600)) + 
+##   theme_classic() +
+##   coord_cartesian(xlim = c(2013 - .2, 2019 + .2), ylim = c(10, 640), expand = FALSE) +
+##   theme(legend.position = c(.8, .15)) +
+##   labs(caption = "Numbers show applicant rank")
+
 
 pubs <- read_excel("~/OneDrive/WileyDossier/CV_Full.xlsx", sheet = "Publications")
 pubs <- as.data.table(pubs)
@@ -169,8 +218,74 @@ summarystatement <- sprintf(
   nrow(leadabstracts),
   nrow(coabstracts),
   nrow(invited))
-                            
 
+dcif <- pubs[, .(CIF = sum(IF, na.rm=TRUE)), by = Year]
+mdcif5 <- dcif[Year %in% (oldyear:cyear), (M = mean(CIF))]
+
+pcif <- ggplot(dcif, aes(Year, CIF)) +
+  geom_hline(yintercept = 11, colour = "grey80") + 
+  geom_hline(yintercept = 14, colour = "grey80") + 
+  geom_hline(yintercept = 22, colour = "grey80") + 
+  geom_hline(yintercept = 27.5, colour = "grey80") +
+  geom_line(colour = "grey60") +
+  geom_point() +
+  geom_text(aes(y = CIF + 1.5, label = round(CIF, 1))) +
+  geom_segment(aes(x = oldyear, xend = cyear, y = mdcif5, yend = mdcif5),
+               colour = "black", size = 1, linetype = 2) +
+  geom_text(aes(x = (cyear + oldyear)/2, y = mdcif5 + 2,
+                label = sprintf("5 Year Average = %0.1f", mdcif5)),
+            size = 5) + 
+  scale_x_continuous(
+    "Data from Clarivate JCR. Benchmarks are aspirational levels for Teaching & Research at Monash University.",
+    breaks = 2013:cyear,
+                     labels = ifelse(
+                       2013:cyear == 2015,
+                       "2015\n(PhD Awarded)",
+                       2013:cyear)) + 
+  theme_classic() +
+  theme(axis.title.y = element_blank()) +
+  scale_y_continuous(
+    breaks = c(0, 11, 14, 22, 27.5),
+    labels = c("0", "Lecturer (11)", "Senior Lecturer (14)", "Assoc. Prof. (22)", "Professor (27.5)")) + 
+  ggtitle("Cumulative journal impact factors for all publications by year") +
+  ## labs(caption = "Data from Clarivate JCR.\nBenchmarks are aspirational levels for Teaching & Research faculty at Monash University.") +
+  coord_cartesian(xlim = c(2013 - .5, cyear + .5),
+                  ylim = c(0, max(dcif$CIF) + 5),
+                  expand = FALSE)
+
+dq1 <- pubs[, .(PQ1 = mean(Q1 == 1, na.rm=TRUE)), by = Year]
+mdq15 <- dq1[Year %in% (oldyear:cyear), (M = mean(PQ1*100))]
+
+pq1 <- ggplot(dq1, aes(Year, PQ1)) +
+  geom_hline(yintercept = .60, colour = "grey80") + 
+  geom_hline(yintercept = .70, colour = "grey80") + 
+  geom_hline(yintercept = .75, colour = "grey80") + 
+  geom_line(colour = "grey60") +
+  geom_point() +
+  geom_text(aes(y = PQ1 + .03, label = sprintf("%0.0f%%", round(PQ1 * 100)))) +
+  geom_segment(aes(x = oldyear, xend = cyear, y = mdq15/100, yend = mdq15/100),
+               colour = "black", size = 1, linetype = 2) +
+  geom_text(aes(x = (cyear + oldyear)/2, y = mdq15/100 + .03,
+                label = sprintf("5 Year Average = %0.1f%%", mdq15)),
+            size = 5) + 
+  scale_x_continuous(
+    "Data from Clarivate JCR. Benchmarks are aspirational levels for Teaching & Research at Monash University.",
+    breaks = 2013:cyear,
+                     labels = ifelse(
+                       2013:cyear == 2015,
+                       "2015\n(PhD Awarded)",
+                       2013:cyear)) + 
+  theme_classic() +
+  theme(axis.title.y = element_blank()) +
+  scale_y_continuous(
+    breaks = c(.5, .6, .7, .75, 1),
+    labels = c("50%",
+               "Lecturer (60%)", "Senior Lecturer (70%)", "Assoc. Prof. & Prof. (75%)", "100%")) +
+  ggtitle("Percent publications in top quartile (Q1) journals by year") + 
+  ## labs(caption = "Data from Clarivate JCR.\nBenchmarks are aspirational levels for Teaching & Research faculty at Monash University.") +
+  coord_cartesian(xlim = c(2013 - .5, cyear + .5),
+                  ylim = c(pmin(.5, min(dq1$PQ1)), 1.07),
+                  expand = FALSE)
 
 ```
 
@@ -237,8 +352,6 @@ Laboratory at the University of California, Riverside
 
 ## <span class="fa fa-book-open"></span> PUBLICATIONS
 
-`r ggplotly(citeplot)`
-
 ### <span class="fa fa-file-alt"></span> Peer-Reviewed Articles
 
 `r paste(unlist(lapply(unique(prpubs$Year), printPubs, d = prpubs)), collapse = "\n")`
@@ -250,6 +363,14 @@ Laboratory at the University of California, Riverside
 ### <span class="fa fa-file-contract"></span> Commentaries and Letters to the Editor
 
 `r paste(unlist(lapply(unique(epubs$Year), printPubs, d = epubs)), collapse = "\n")`
+
+### Quantitative Publication Information
+
+`r ggplotly(citeplot)`
+
+`r ggplotly(pcif)`
+
+`r ggplotly(pq1)`
 
 <br></br>
 
