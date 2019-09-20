@@ -4,7 +4,7 @@ title: Projects
 
 ```{r load_packages, message=FALSE, warning=FALSE, include=FALSE} 
 
-library(checkpoint); checkpoint("2019-01-25", scanForPackages = FALSE)
+library(checkpoint); checkpoint("2019-07-13", scanForPackages = FALSE)
 library(fontawesome)
 library(readxl)
 library(data.table)
@@ -17,7 +17,6 @@ projects[, ProjectSummary := sprintf(
   "### %s | %d - %s | \n\n %s \n",
   Name, Started, ifelse(Status == "Completed", as.character(Ended), "current"),
   Summary)]
-
 
 ```
 

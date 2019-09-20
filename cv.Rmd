@@ -5,7 +5,7 @@ title: Joshua F. Wiley's CV
 
 ```{r load_packages, message=FALSE, warning=FALSE, include=FALSE} 
 
-library(checkpoint); checkpoint("2019-01-25", scanForPackages = FALSE)
+library(checkpoint); checkpoint("2019-07-13", scanForPackages = FALSE)
 library(fontawesome)
 library(readxl)
 library(data.table)
@@ -210,7 +210,7 @@ awards2[, CVSummary := sprintf("<li value = %d>%s</li>", Num, CVSummary)]
 awards2 <- paste(c("<ol>", awards2$CVSummary, "</ol>"), collapse = "\n")
 
 summarystatement <- sprintf(
-  "Lecturer at Monash University; **%0.1f** years post PhD; >$3 million AUD in grant funding; **%d** primary, **%d** co-supervised doctoral students; **2** Associate/Statistical editorial positions at journals; NHMRC panel member; **%d** first/last & **%d** co-author peer reviewed articles; **%d** books; **%d** other pubs; **%d** first/last & **%d** co-author peer reviewed abstracts; **%d** invited presentations; **6** software packages developed.",
+  "Lecturer at Monash University; **%0.1f** years post PhD; nearly $4 million AUD in grant funding; **%d** primary, **%d** co-supervised doctoral students; **2** Associate/Statistical editorial positions at journals; NHMRC panel member; **%d** first/last & **%d** co-author peer reviewed articles; **%d** books; **%d** other pubs; **%d** first/last & **%d** co-author peer reviewed abstracts; **%d** invited presentations; **6** software packages developed.",
   yearSincePhD,
   NPrimary, NSecondary,
   NFirstLast, NCoAuthor,
@@ -323,8 +323,8 @@ major. GPA: 4.00/4.00
 ## <span class="fa fa-building"></span> WORK EXPERIENCE
 
 `June 2016 - present`
-**Lecturer**, Monash Institute of Cognitive and Clinical
-Neurosciences, School of Psychological Sciences Lecturer (tenure-track
+**Lecturer**, Turner Institute for Brain and Mental Health, 
+School of Psychological Sciences Lecturer (tenure-track
 Assistant Professor)
 
 `December 2016 - 2019`

@@ -2,8 +2,27 @@
 title: Lab Alumni
 ---
 
+```{r load_packages, message=FALSE, warning=FALSE, include=FALSE} 
+
+library(checkpoint); checkpoint("2019-07-13", scanForPackages = FALSE)
+library(fontawesome)
+library(readxl)
+library(data.table)
+library(rmarkdown)
+
+students <- read_excel("~/OneDrive/WileyDossier/CV_Full.xlsx", sheet = "Students")
+students <- as.data.table(students)[Status == "Completed" & Consent == 1][order(FamilyName)]
+
+students[, PeopleSummary := sprintf(
+  "### %s %s | %d - %d | %s \n %s \n",
+  GivenName, FamilyName, Started, Ended,
+  Type, Bio)]
+
+
+```
+
 <br></br>
 
-## Coming soon.
+`r paste(students[, PeopleSummary], collapse = "\n\n -------------------- \n\n")`
 
 

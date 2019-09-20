@@ -5,7 +5,7 @@ title: People
 
 ```{r load_packages, message=FALSE, warning=FALSE, include=FALSE} 
 
-library(checkpoint); checkpoint("2019-01-25", scanForPackages = FALSE)
+library(checkpoint); checkpoint("2019-07-13", scanForPackages = FALSE)
 library(fontawesome)
 library(readxl)
 library(data.table)
