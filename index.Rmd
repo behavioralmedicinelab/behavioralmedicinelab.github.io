@@ -4,16 +4,8 @@ title: Behavioural Medicine Lab
 
 ```{r load_packages, message=FALSE, warning=FALSE, include=FALSE} 
 
-library(checkpoint); checkpoint("2019-07-13", scanForPackages = FALSE)
-library(fontawesome)
-
-#### Stuff to make word cloud summaries #### 
-library(XML)
-library(tm)
-library(wordcloud)
-library(RColorBrewer)
-library(SnowballC)
-library(pdftools)
+## load packages and setup
+source("package_setup.R", echo=FALSE)
 
 txttrans <- function(text){
   text = tm_map(text, content_transformer(tolower))

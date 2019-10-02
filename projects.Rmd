@@ -4,11 +4,8 @@ title: Projects
 
 ```{r load_packages, message=FALSE, warning=FALSE, include=FALSE} 
 
-library(checkpoint); checkpoint("2019-07-13", scanForPackages = FALSE)
-library(fontawesome)
-library(readxl)
-library(data.table)
-library(rmarkdown)
+## load packages and setup
+source("package_setup.R", echo=FALSE)
 
 projects <- read_excel("~/OneDrive/WileyDossier/CV_Full.xlsx", sheet = "Projects")
 projects <- as.data.table(projects)[nzchar(Summary) & !is.na(Summary)][order(-Status, -Started)]

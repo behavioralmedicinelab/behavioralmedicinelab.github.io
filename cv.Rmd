@@ -5,14 +5,8 @@ title: Joshua F. Wiley's CV
 
 ```{r load_packages, message=FALSE, warning=FALSE, include=FALSE} 
 
-library(checkpoint); checkpoint("2019-07-13", scanForPackages = FALSE)
-library(fontawesome)
-library(readxl)
-library(data.table)
-library(rmarkdown)
-library(scholar)
-library(ggplot2)
-library(plotly)
+## load packages and setup
+source("package_setup.R", echo=FALSE)
 
 cyear <- as.integer(format(Sys.Date(), format = "%Y"))
 oldyear <- cyear - 4
