@@ -1,3 +1,4 @@
+
 name: "Behavioural Medicine Lab Website"
 exclude: ["*.*~"]
 output_dir: "."
@@ -6,18 +7,44 @@ navbar:
   right:
     - icon: fa-cogs
       text: "Projects"
-      href: projects.html    
-    - icon: fa-users
-      text: "People"
-      href: people.html  
+      href: projects.html
+      menu:
+        - text: "Clinical Trials"
+        - text: "CanCope"
+          href: projects.html#CanCope
+        - text: "SleepCare"
+          href: projects.html#SleepCare
+        - text: "SleepWell"
+          href: projects.html#SleepWell
+        - text: "---------"
+        - text: "Daily Life Studies"
+        - text: "SHS"
+          href: projects.html#SHS
+        - text: "DESTRESS"
+          href: projects.html#DESTRESS
+        - text: "ACES"
+          href: projects.html#ACES
+        - text: "---------"
+        - text: "Other Studies"
+        - text: "NHMRC Investigator Grant"
+          href: projects.html#NHMRC Investigator Grant
+        - text: "---------"
+        - text: "Collaborations"
+          href: projects.html#collaborations
+    - icon: fa-id-badge
+      text: "Team"
+      href: team.html
     - icon: fa-graduation-cap
       text: "Alumni"
       href: alumni.html
+    - icon: fa-users
+      text: "Consumers & Community"
+      href: consumer_community.html
     - icon: fa-file-alt
       text: "Wiley CV"
       href: cv.html
-
 output:
   html_document:
     include:
       after_body: footer.html
+
