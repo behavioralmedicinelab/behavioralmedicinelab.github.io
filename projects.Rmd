@@ -8,22 +8,39 @@ title: Projects
 source("package_setup.R", echo=FALSE)
 
 projects <- read_excel("~/OneDrive/WileyDossier/CV_Full.xlsx", sheet = "Projects")
-projects <- as.data.table(projects)[nzchar(Summary) & !is.na(Summary)][order(-Status, -Started)]
+projects <- as.data.table(projects)[nzchar(Summary) & !is.na(Summary)]
+projects[, Type := factor(Type, levels = c("Trial", "Daily", "Other"))]
+projects <- projects[order(Type, -Status, -Started)]
 
 projects[, ProjectSummary := sprintf(
-  "### %s | %d - %s | \n\n %s \n",
-  Name, Started, ifelse(Status == "Completed", as.character(Ended), "current"),
+  "<h3 id=%s>%s | %d - %s |</h3> \n\n %s \n",
+  Name, Name, Started, ifelse(Status == "Completed", as.character(Ended), "current"),
   Summary)]
 
 ```
 
 <br></br>
 
-`r paste(projects[Primary == 1, ProjectSummary], collapse = "\n\n -------------------- \n\n")`
+## Trials
+
+`r paste(projects[Primary == 1 & Type == "Trial", ProjectSummary], collapse = "\n\n -------------------- \n\n")`
 
 ----------------------
 
-## Projects We Collaborate On
+## Daily Life Studies
+
+`r paste(projects[Primary == 1 & Type == "Daily", ProjectSummary], collapse = "\n\n -------------------- \n\n")`
+
+----------------------
+
+## Other Studies
+
+`r paste(projects[Primary == 1 & Type == "Other", ProjectSummary], collapse = "\n\n -------------------- \n\n")`
+
+----------------------
+
+
+<h2 id="collaborations">Projects We Collaborate On</h2>
 
 `r paste(projects[Primary == 0, ProjectSummary], collapse = "\n\n -------------------- \n\n")`
 

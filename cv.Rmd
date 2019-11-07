@@ -40,44 +40,51 @@ jwCites <- function() {
 citeplot <- tryCatch(jwCites(), error = function(e) ggplot() + ggtitle("Could not pull citations."))
 
 
-## seniorlecturers <- list(
-##   `Trevor T-J Chong` = getCites("qLkvokIAAAAJ"),
-##   `Bradley A Edwards` = getCites("yypftd8AAAAJ"),
-##   `James Coxon` = getCites("hnAesu8AAAAJ"),
-##   `Ziarih Hawi` = getCites("PBuc7msAAAAJ"),
-##   `Laura Jobson` = getCites("dktQ3XQAAAAJ"),
-##   `Adam McKay` = getCites("KjOgwiQAAAAJ"),
-##   `Adeel Razi` = getCites("VG3onZwAAAAJ"),
-##   `Andrew J K Phillips` = getCites("w1fBCWIAAAAJ"),
-##   `Rebecca Anne Segrave` = getCites("-l_x5sAAAAAJ"),
-##   `Megan Spencer-Smith` = getCites("Z0WEv1oAAAAJ"),
-##   `Renerus Stolwyk` = getCites("k6MqWxgAAAAJ"),
-##   `Bei Bei` = getCites("wMBLE0IAAAAJ"),
-##   `Tracey Sletten` = getCites("OjrCgUoAAAAJ"),
-##   `Joshua F Wiley` = getCites("bRG3LSQAAAAJ"))
-## d <- as.data.table(do.call(rbind, lapply(names(seniorlecturers), function(v) {
-##   cbind(seniorlecturers[[v]], Name = v, Select = ifelse(v == "Joshua F Wiley",
-##                                                         "Applicant", "Level C\nComparators"))
-## })))
-## d2 <- d[Type == "Yearly" & year > 2012]
-## d2[, Rank := paste0(rank(-cites, ties.method = "max"), "/14"), by = year]
-## sqdiff <- function(x, j = .5) abs((x - (sqrt(x) + j)^2) )
-## compareplot <- ggplot(d2, aes(year, cites, group = Name, colour = Select, size = Select)) +
-##   ## geom_boxplot(aes(group = year, colour = NULL, size = NULL),
-##   ##              width = .3, colour = "grey80", show.legend = FALSE) + 
-##   geom_line() +
-##   ## stat_summary(aes(group = NULL, colour = NULL, size = NULL),
-##   ##              fun.y = median, geom = "point", shape = 18, size = 3, colour = "grey50") +
-##   geom_label(aes(year, cites + sqdiff(cites, 1), label = Rank),
-##              data = d2[Name=="Joshua F Wiley"], show.legend = FALSE) + 
-##   scale_colour_manual("Who", values = c("Applicant" = "black", "Level C\nComparators" = "grey60")) + 
-##   scale_size_manual("Who", values = c("Applicant" = 2, "Level C\nComparators" = .5)) + 
-##   scale_x_continuous("Year", breaks = 2013:2019) +
-##   scale_y_sqrt("Yearly Citations (Google Scholar)", breaks = c(10, 100, 200, 400, 600)) + 
-##   theme_classic() +
-##   coord_cartesian(xlim = c(2013 - .2, 2019 + .2), ylim = c(10, 640), expand = FALSE) +
-##   theme(legend.position = c(.8, .15)) +
-##   labs(caption = "Numbers show applicant rank")
+seniorlecturers <- list(
+  `Bei Bei` = getCites("wMBLE0IAAAAJ"),  
+  `Trevor T-J Chong` = getCites("qLkvokIAAAAJ"),
+  `James Coxon` = getCites("hnAesu8AAAAJ"),  
+  `Bradley A Edwards` = getCites("yypftd8AAAAJ"),
+  `Ziarih Hawi` = getCites("PBuc7msAAAAJ"),
+  `Melinda L Jackson` = getCites("3lg8mHgAAAAJ"),
+  `Sharna Jamadar` = getCites("plIkiT4AAAAJ"),
+  `Laura Jobson` = getCites("dktQ3XQAAAAJ"),  
+  `Adam McKay` = getCites("KjOgwiQAAAAJ"),
+  `Andrew J K Phillips` = getCites("w1fBCWIAAAAJ"),               
+  `Adeel Razi` = getCites("VG3onZwAAAAJ"),
+  `Rebecca Anne Segrave` = getCites("-l_x5sAAAAAJ"),
+  `Tracey Sletten` = getCites("OjrCgUoAAAAJ"),                         
+  `Megan Spencer-Smith` = getCites("Z0WEv1oAAAAJ"),
+  `Renerus Stolwyk` = getCites("k6MqWxgAAAAJ"),
+  `Nicole A Thomas` = getCites("9CuXF0AAAAAJ"),                    
+  `Joshua F Wiley` = getCites("bRG3LSQAAAAJ"))
+d <- as.data.table(do.call(rbind, lapply(names(seniorlecturers), function(v) {
+  cbind(seniorlecturers[[v]], Name = v, Select = ifelse(v == "Joshua F Wiley",
+                                                        "Applicant", "Level C\nComparators"))
+})))
+d2 <- d[Type == "Yearly" & year > 2012]
+d2[, Rank := paste0(rank(-cites, ties.method = "max"), "/", length(seniorlecturers)), by = year]
+sqdiff <- function(x, j = .5) abs((x - (sqrt(x) + j)^2) )
+compareplot <- ggplot(d2, aes(year, cites, group = Name, colour = Select, size = Select)) +
+  ## geom_boxplot(aes(group = year, colour = NULL, size = NULL),
+  ##              width = .3, colour = "grey80", show.legend = FALSE) + 
+  geom_line() +
+  ## stat_summary(aes(group = NULL, colour = NULL, size = NULL),
+  ##              fun.y = median, geom = "point", shape = 18, size = 3, colour = "grey50") +
+  geom_label(aes(year, cites + sqdiff(cites, 1), label = Rank),
+             data = d2[Name=="Joshua F Wiley"], show.legend = FALSE) + 
+  scale_colour_manual("Who", values = c("Applicant" = "black", "Level C\nComparators" = "grey60")) + 
+  scale_size_manual("Who", values = c("Applicant" = 2, "Level C\nComparators" = .5)) + 
+  scale_x_continuous("Year", breaks = 2013:2019,
+                     labels = ifelse(
+                       2013:2019 == 2015,
+                       "2015\n(PhD Awarded)",
+                       2013:2019)  ) + 
+  scale_y_sqrt("Yearly Citations (Google Scholar)", breaks = c(10, 100, 200, 400, 600)) + 
+  theme_classic() +
+  coord_cartesian(xlim = c(2013 - .2, 2019 + .2), ylim = c(10, 640), expand = FALSE) +
+  theme(legend.position = c(.8, .15)) +
+  labs(caption = "Numbers show applicant rank")
 
 
 pubs <- read_excel("~/OneDrive/WileyDossier/CV_Full.xlsx", sheet = "Publications")
@@ -299,7 +306,7 @@ GPA: 3.96/4.00
 Los Angeles*. Supervisor: Annette Stanton.
 
 `2006 - 2010`
-**Bacher of Arts** with honors in Psychology from the *University of
+**Bachelor of Arts** with honors in Psychology from the *University of
 California Riverside*. Supervisor: Howard Friedman. GPA: 3.95/4.00
 
 `2002 - 2005`

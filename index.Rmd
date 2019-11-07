@@ -16,7 +16,9 @@ txttrans <- function(text){
       "seeman", "bower", "study", "model", "models", "rights", "license",
       "wiley", "oxford", "see", "however", "page", "can", "print", "view",
       "california", "subscriber", "title", "los", "angeles",
-      "wwwoxfordhandbookscom", "pdf"))
+      "wwwoxfordhandbookscom", "pdf", "mean", "total", "although", "across",
+      "two", "less", "article", "among", "whether", "within", "included", "use",
+      "first", "doi"))
   tm_map(text, content_transformer(stripWhitespace))
 }
 
@@ -125,7 +127,7 @@ obtain competitive federal grant funding from the Australian Research
 Council (ARC), United States National Institutes of Health (US NIH),
 and United States Department of Defense (US DoD), totalling >$3
 million in funding. He has >50 peer-reviewed publications resulting in
->800 citations.
+>1,000 citations (GS).
 
 ### `r fa("address-card", fill = "black")` Connect
 

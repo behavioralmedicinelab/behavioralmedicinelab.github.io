@@ -555,15 +555,15 @@
     },
     "renv": {
       "Package": "renv",
-      "Version": "0.7.0-112",
+      "Version": "0.7.1-16",
       "Source": "GitHub",
       "RemoteType": "github",
       "RemoteHost": "api.github.com",
       "RemoteRepo": "renv",
       "RemoteUsername": "rstudio",
       "RemoteRef": "master",
-      "RemoteSha": "2e82b01b1b61eb50318ad85a1c5b8b94ce281ce6",
-      "Hash": "100f08b7af48087bfdc1557f222eaa0f"
+      "RemoteSha": "5d0c0def33d07b04b95f1134ecbbbf7cd551c7f8",
+      "Hash": "955c76d1f84265b54f3f1ec0ef098d0a"
     },
     "reshape2": {
       "Package": "reshape2",
@@ -581,10 +581,10 @@
     },
     "rmarkdown": {
       "Package": "rmarkdown",
-      "Version": "1.15",
+      "Version": "1.16",
       "Source": "Repository",
       "Repository": "CRAN",
-      "Hash": "7009ca49bab0c053098ae99b595bbacb"
+      "Hash": "74352997ea70389458e7a8b7059dfb95"
     },
     "rvest": {
       "Package": "rvest",
@@ -749,10 +749,10 @@
     },
     "xfun": {
       "Package": "xfun",
-      "Version": "0.9",
+      "Version": "0.10",
       "Source": "Repository",
       "Repository": "CRAN",
-      "Hash": "f577b2b637a64f3b5662430ccc6fa1b7"
+      "Hash": "b22f06440a75a69aa0c6c04cf5278d83"
     },
     "xml2": {
       "Package": "xml2",
