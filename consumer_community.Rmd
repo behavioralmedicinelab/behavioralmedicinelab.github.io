@@ -27,59 +27,58 @@ contact information to them.
 
 ----------------------------------------------------------------------
 
-# Get Involved
+<!-- # Get Involved -->
 
-If you are interested in joining our team as a consumer or community
-member, read about the two roles we have below and 
-fill out an <a href = "">expression of interest form</a>.
-Someone from our team will then reach out to you.
+<!-- If you are interested in joining our team as a consumer or community -->
+<!-- member, read about the two roles we have below and  -->
+<!-- fill out an <a href = "">expression of interest form</a>. -->
+<!-- Someone from our team will then reach out to you. -->
 
-#### Consumer and Community **Partners**
+<!-- #### Consumer and Community **Partners** -->
 
-Becoming a consumer or community partner with us requires some
-time. To partner with us, we ask that you be willing to commit to:
+<!-- Becoming a consumer or community partner with us requires some -->
+<!-- time. To partner with us, we ask that you be willing to commit to: -->
 
-* Complete training about being a consumer or community representative
-  in research. This takes about 2-3 hours and can be completed at home
-  and over the phone.
+<!-- * Complete training about being a consumer or community representative -->
+<!--   in research. This takes about 2-3 hours and can be completed at home -->
+<!--   and over the phone. -->
 
-* Meet for half a day in person at Monash University Clayton Campus
-  once per year -- about 4 hours per year. Catering will be provided
-  and parking provided or any parking expenses reimbursed.
+<!-- * Meet for half a day in person at Monash University Clayton Campus -->
+<!--   once per year -- about 4 hours per year. Catering will be provided -->
+<!--   and parking provided or any parking expenses reimbursed. -->
   
-* Join phone (or video) meetings 2-4 times per year. Each meeting may be
-  around 1 hour long, so about 2-4 hours per year.
+<!-- * Join phone (or video) meetings 2-4 times per year. Each meeting may be -->
+<!--   around 1 hour long, so about 2-4 hours per year. -->
   
-In total, we expect this to take about 8 - 12 hours per year. 
-In appreciation for that time, volunteers who persist with us through
-the year will receive an  honorarium valued at $400
+<!-- In total, we expect this to take about 8 - 12 hours per year.  -->
+<!-- In appreciation for that time, volunteers who persist with us through -->
+<!-- the year will receive an  honorarium valued at $400 -->
 
-#### Consumer and Community **Reviewers**
+<!-- #### Consumer and Community **Reviewers** -->
 
-Becoming a consumer or community reviewer involves some training and a
-very flexible schedule. As a reviewer, you would:
+<!-- Becoming a consumer or community reviewer involves some training and a -->
+<!-- very flexible schedule. As a reviewer, you would: -->
 
-* Complete training about being a consumer or community representative
-  in research. This takes about 2-3 hours and can be completed at home
-  and over the phone.
+<!-- * Complete training about being a consumer or community representative -->
+<!--   in research. This takes about 2-3 hours and can be completed at home -->
+<!--   and over the phone. -->
   
-* Review documents and materials. These would normally be emailed to
-  you. Some examples of documents that you might review and provide
-  input on are:
-    - a plain language summary of a project;
-	- questions we are thinking of asking people who take part in a
-      study;
-	- handouts or information we are thinking of giving to people in a
-      study;
-	- a presentation or newsletter we want to share with the public;
-	- an application for grant funding.
+<!-- * Review documents and materials. These would normally be emailed to -->
+<!--   you. Some examples of documents that you might review and provide -->
+<!--   input on are: -->
+<!--     - a plain language summary of a project; -->
+<!-- 	- questions we are thinking of asking people who take part in a -->
+<!--       study; -->
+<!-- 	- handouts or information we are thinking of giving to people in a -->
+<!--       study; -->
+<!-- 	- a presentation or newsletter we want to share with the public; -->
+<!-- 	- an application for grant funding. -->
   
-In total, we expect this to take about 4 - 8 hours per year. 
-In appreciation for that time, volunteers who persist with us through
-the year will receive an honorarium valued at $250.
+<!-- In total, we expect this to take about 4 - 8 hours per year.  -->
+<!-- In appreciation for that time, volunteers who persist with us through -->
+<!-- the year will receive an honorarium valued at $250. -->
 
-----------------------------------------------------------------------
-
+<!-- ---------------------------------------------------------------------- -->
 
 ## Resources
 

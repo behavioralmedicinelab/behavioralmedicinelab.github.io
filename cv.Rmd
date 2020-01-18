@@ -174,6 +174,24 @@ uteaching[, CVSummary := sprintf("<li value = %d>%s</li>", Num, CVSummary)]
 uteaching <- paste(c("<ol>", uteaching$CVSummary, "</ol>"), collapse = "\n")
 
 
+work <- read_excel("~/OneDrive/WileyDossier/CV_Full.xlsx", sheet = "Positions")
+work <- as.data.table(work)
+work[, CVSummary := sprintf("`%s - %s`\n**%s**, %s.",
+                            Started, Ended, Position, Info)]
+work <- paste(work$CVSummary, collapse = "\n\n")
+                   
+activities <- read_excel("~/OneDrive/WileyDossier/CV_Full.xlsx", sheet = "ProfessionalActivities")
+activities <- as.data.table(activities)
+leadership <- activities[Type == "Leadership"]
+affiliates <- activities[Type == "Affiliate"]
+                   
+leadership[, CVSummary := sprintf("`%s - %s`\n**%s**, %s.",
+                            Started, Ended, Position, Info)]
+leadership <- paste(leadership$CVSummary, collapse = "\n\n")
+
+affiliates <- paste(c("<ul>", sprintf("<li>%s</li>", affiliates$Info), "</ul>"), collapse = "\n")
+
+
 grants <- read_excel("~/OneDrive/WileyDossier/CV_Full.xlsx", sheet = "Grants")
 grants <- as.data.table(grants)[, Started := as.Date(Started)]
 grants[, Ended := as.Date(Ended)]
@@ -211,7 +229,7 @@ awards2[, CVSummary := sprintf("<li value = %d>%s</li>", Num, CVSummary)]
 awards2 <- paste(c("<ol>", awards2$CVSummary, "</ol>"), collapse = "\n")
 
 summarystatement <- sprintf(
-  "Lecturer at Monash University; **%0.1f** years post PhD; nearly $4 million AUD in grant funding; **%d** primary, **%d** co-supervised doctoral students; **2** Associate/Statistical editorial positions at journals; NHMRC panel member; **%d** first/last & **%d** co-author peer reviewed articles; **%d** books; **%d** other pubs; **%d** first/last & **%d** co-author peer reviewed abstracts; **%d** invited presentations; **6** software packages developed.",
+  "Lecturer at Monash University; **%0.1f** years post PhD; >$4 million AUD in grant funding; **%d** primary, **%d** co-supervised doctoral students; **2** Associate/Statistical editorial positions at journals; NHMRC panel member; **%d** first/last & **%d** co-author peer reviewed articles; **%d** books; **%d** other pubs; **%d** first/last & **%d** co-author peer reviewed abstracts; **%d** invited presentations; **6** software packages developed.",
   yearSincePhD,
   NPrimary, NSecondary,
   NFirstLast, NCoAuthor,
@@ -323,33 +341,20 @@ major. GPA: 4.00/4.00
 
 ## <span class="fa fa-building"></span> WORK EXPERIENCE
 
-`June 2016 - present`
-**Lecturer**, Turner Institute for Brain and Mental Health, 
-School of Psychological Sciences Lecturer (tenure-track
-Assistant Professor)
-
-`December 2016 - 2019`
-**Senior advisor**, Elkhart Group LLC.
-
-`January 2015 - June 2016`
-**Post Doctoral Fellow**, Australia Catholic University
-
-`July 2013 - March 2015`
-**Graduate Student Researcher**, My Year After Cancer Study (1R01 CA133081)
-
-`June 2013 - December 2016`
-**Partner and Data Scientist**, Elkhart Group Ltd.
-
-`August 2011 - June 2013`
-**Programmer analyst**, IDRE Statistical Consulting Group 
-
-`September 2008 - June 2010`
-**Research Assistant and Honors Student**, Professor Howard Friedman's
-Laboratory at the University of California, Riverside
+`r work`
 
 <br></br>
 
 -------------------------------------------
+
+## <span class="fa fa-globe"></span> PROFESSIONAL ACTIVITIES
+
+`r leadership`
+
+<br></br>
+
+-------------------------------------------
+
 
 ## <span class="fa fa-book-open"></span> PUBLICATIONS
 
@@ -365,17 +370,12 @@ Laboratory at the University of California, Riverside
 
 `r paste(unlist(lapply(unique(epubs$Year), printPubs, d = epubs)), collapse = "\n")`
 
-### Quantitative Publication Information
-
-`r ggplotly(citeplot)`
-
-`r ggplotly(pcif)`
-
-`r ggplotly(pq1)`
-
-<br></br>
-
--------------------------------------------
+<!-- ### Quantitative Publication Information -->
+<!-- r ggplotly(citeplot) -->
+<!-- r ggplotly(pcif) -->
+<!-- r ggplotly(pq1) -->
+<!-- <br></br> -->
+<!-- ------------------------------------------- -->
 
 ## <span class="fa fa-chalkboard-teacher"></span> ABSTRACTS, PRESENTATIONS, & SYMPOSIA
 
@@ -425,3 +425,9 @@ Laboratory at the University of California, Riverside
 
 `Honours`
 `r hstudents`
+
+## <span class="fa fa-user-circle"></span> PROFESSIONAL MEMBERSHIPS
+
+`r affiliates`
+
+<br></br>
