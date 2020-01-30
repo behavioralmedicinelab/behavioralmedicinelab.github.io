@@ -125,7 +125,7 @@ projects.
 Reflecting the global reach of his research, Dr. Wiley has helped
 obtain competitive federal grant funding from the Australian Research
 Council (ARC), United States National Institutes of Health (US NIH),
-and United States Department of Defense (US DoD), totalling >$3
+and United States Department of Defense (US DoD), totalling >$4
 million in funding. He has >50 peer-reviewed publications resulting in
 >1,000 citations (GS).
 
@@ -135,4 +135,5 @@ million in funding. He has >50 peer-reviewed publications resulting in
     [github](https://github.com/jwiley) -  <span class="fa fa-google"></span> [Google Scholar](https://scholar.google.com/citations?user=bRG3LSQAAAAJ&hl=en)
   - <span class="fa fa-linkedin"></span> 
     [linkedin](https://www.linkedin.com/in/joshua-wiley-6a0b2278) - <span class="fa fa-twitter"></span> [twitter](http://twitter.com/WileyResearch)
-  - <span class="fa fa-envelope"></span> joshua.wiley _at_ monash.edu
+  - <span class="fa fa-envelope"></span> joshua.wiley _at_ monash
+    _dot_ edu

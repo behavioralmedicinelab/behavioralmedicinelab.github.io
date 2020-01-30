@@ -65,6 +65,9 @@ navbar:
     - icon: fa-file-alt
       text: "Wiley CV"
       href: cv.html
+    - icon: fa-heart
+      text: "Ethics & Values"
+      href: ethics_values.html
 output:
   html_document:
     include:

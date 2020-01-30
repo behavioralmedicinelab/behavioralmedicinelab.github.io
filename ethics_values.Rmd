@@ -1,0 +1,99 @@
+---
+title: Our Ethics and Values
+---
+
+The well-being and health of each member of our team and of the people
+who participate with us in our work, whether colleagues, study
+participants or consumer and community partners and advisors, is our
+first priority.
+
+We are committed to creating an environment for work and study that is
+*ethical*, *inclusive*, and *supportive*. All of us are
+responsible for upholding these cores values, constantly mindful of
+them, being accountable for our actions and decisions, and speaking up
+about any actions or decisions contrary to these values.
+
+One concrete step we take to ensure we uphold these values is
+fostering transparency and open, safe, communication across all team
+members.
+
+### Ethics
+
+We strive to follow the highest ethical standards in our work,
+research, and interactions. This includes practicing honesty,
+fairness, and respect for each person regardless of their status or
+role. 
+
+We believe in integrity and professionalism in our research. Our
+research ethics apply not only to ensuring the safety and well-being
+of everyone who participates in our research, but also that we are
+careful, honest, and transparent in our interpretation of results and
+any outputs we submit.
+
+In addition to following standard research ethics rules and
+principles, as part of enacting these values, we strive towards a
+number of concrete research ideals:
+
+- Sharing data, code and materials publicly where possible. This helps
+  ensure that the community's contribution by volunteering to
+  participate in research provides the most benefit and value to the
+  world.
+- Providing people who participate in our research with their own data
+  in a useful format and a summary of our findings. This helps ensure
+  that people who volunteer in our research get the most direct
+  benefit. It also helps provide transparency about how their data are
+  used opening the possibility for open dialogue where concerns may
+  arise.
+- Ensuring high standards for data privacy and strict data security as
+  we often collect highly personal and large amounts of data from
+  daily life.
+- Seeking diversity and inclusivity in all areas of people who
+  participate in research and in our research team and collaborators.  
+- Carefully considering the nature of data used to build models and
+  algorithms, potential (mis)uses of the algorithms and tools we
+  build, as well as careful application of any existing algorithms or
+  tools in our research. We are particularly mindful about the
+  diversity and inclusivity of the data on which algorithms or models
+  were built. This is important as models/algorithms trained on biased
+  samples can "learn" this bias and then create or perpetuate
+  systematic bias or discrimination in the future.
+
+### Diversity and Inclusion
+
+We are strongly committed to supporting diversity in all areas
+including but not limited to socioeconomic background, race/ethnicity,
+culture, religion, language, ability status, and the intersection of
+multiple, underserved identities.
+
+We particularly encourage people who are historically underpresented
+in the health sciences to apply and join our group. If you are from an
+underpresented group and would like to join our team, please reach out
+to the lab head: <span class="fa fa-envelope"></span> joshua.wiley
+_at_ monash _dot_ edu. Dr. Wiley will be happy to discuss
+opportunities with you and to discuss any barriers or challenges you
+may be facing in getting research opportunities due to your background
+and collaboratively seek ways to resolve them.
+
+### Support
+
+We are committed to a work environment that is supportive and
+collegial, and we strongly discourage competition or comparisons
+between team members.
+*Each person in our team is valued and plays an important role.*
+Achieving milestones and accomplishing tasks on time is important,
+however, we recognise and value the mental and physical well-being of
+our team more than outcomes.
+
+**We encourage self-care** and regular,open discussions around
+self-care needs. This applies to all team members. This may
+mean getting someone to help cover a shift, adjusting deadlines or
+scaling back a project. We are committed to finding a path forward and
+finding additional resources where needed to make sure that everyone
+on our team is supported and able to maintain their well being as they
+work and study. These conversations can be difficult, but we believe
+it is more important to change goals on a project and have a happy,
+thriving team.
+
+As a lab that studies physical and mental health, we recognise that
+everyone is impacted by their health and foster stigma free
+communication about staff mental and physical health.
