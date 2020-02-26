@@ -19,9 +19,13 @@ students[, PeopleSummary := sprintf(
 
 ```
 
-![](BML_Group_2019.jpg)
+![](BML_Group_2020.jpg)
 
 <br></br>
 
 `r paste(students[, PeopleSummary], collapse = "\n\n -------------------- \n\n")`
 
+
+### Group Photo - 2019
+
+![](BML_Group_2019.jpg)
