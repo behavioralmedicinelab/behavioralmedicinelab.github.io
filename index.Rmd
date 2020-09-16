@@ -18,7 +18,7 @@ txttrans <- function(text){
       "california", "subscriber", "title", "los", "angeles",
       "wwwoxfordhandbookscom", "pdf", "mean", "total", "although", "across",
       "two", "less", "article", "among", "whether", "within", "included", "use",
-      "first", "doi"))
+      "first", "doi", "one", "test", "will", "three"))
   tm_map(text, content_transformer(stripWhitespace))
 }
 
@@ -99,7 +99,7 @@ our work.
 ## Joshua F. Wiley
 
 Dr. Joshua Wiley is a behavioural medicine researcher currently
-appointed as a lecturer (Asst. Professor) at Monash University in the
+appointed as a senior lecturer (Asst. Professor) at Monash University in the
 School of Psychological Sciences and Turner (2016-present). He studied
 health psychology and behavioural medicine, completing his PhD at the
 University of California at Los Angeles in 2015. Subsequently, he
@@ -123,11 +123,13 @@ shared freely and have been picked up in many other studies and
 projects.
 
 Reflecting the global reach of his research, Dr. Wiley has helped
-obtain competitive federal grant funding from the Australian Research
-Council (ARC), United States National Institutes of Health (US NIH),
-and United States Department of Defense (US DoD), totalling >$4
-million in funding. He has >50 peer-reviewed publications resulting in
->1,000 citations (GS).
+obtain competitive federal grant funding from the 
+Australian National Health and Medical Research Council (NHMRC),
+Australian Research Council (ARC), 
+United States National Institutes of Health (US NIH),
+and United States Department of Defense (US DoD), totaling >$5
+million in funding. He has >60 peer-reviewed publications resulting in
+>1,500 citations (GS).
 
 ### `r fa("address-card", fill = "black")` Connect
 
