@@ -120,11 +120,18 @@ coabstracts[, Num := .N:1]
 invited <- presentations[FirstLast == 1 & Type == "Invited"]
 invited[, Num := .N:1]
 
-printPubs <- function(year, d) {
+printPubs <- function(year, d) {  
   paste(c(
     sprintf("`%s`", as.character(year)),
     "<ol>",
-    paste(sprintf("<li value = %d>%s</li>", d[Year == year, Num], d[Year == year, Reference]),
+    paste(sprintf("<li value = %d>%s%s</li>",
+                  d[Year == year, Num], d[Year == year, Reference],
+                  fifelse(!is.na(d[Year == year, Project]), 
+        unlist(lapply(d[Year == year, Project], function(x) {
+          x2 <- unlist(strsplit(x, ";"))
+          sprintf(" Project(s): %s.", paste(sprintf("[%s](projects.html#%s)", x2, x2), collapse = " and "))
+        })),
+        "")),
           collapse = "\n"),
     "</ol>"), collapse = "\n")
 }
