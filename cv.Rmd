@@ -88,9 +88,19 @@ compareplot <- ggplot(d2, aes(year, cites, group = Name, colour = Select, size =
   theme(legend.position = c(.8, .15)) +
   labs(caption = "Numbers show applicant rank")
 
+fiveyear <- (year(Sys.Date()) - 5)
 
 pubs <- read_excel("~/OneDrive/WileyDossier/CV_Full.xlsx", sheet = "Publications")
 pubs <- as.data.table(pubs)
+
+tmp <- pubs[Type %in% c("Empirical", "Review"), FirstLast]
+NFirstLast <- sum(tmp == 1)
+NCoAuthor <- sum(tmp == 0)
+NBooks <- nrow(pubs[Type %in% c("Book")])
+NOther <- nrow(pubs[!Type %in% c("Empirical", "Review", "Book")])
+NTotal <- nrow(pubs)
+NTotalLast5 <- nrow(pubs[Year >= fiveyear])
+rm(tmp)
 
 tmp <- pubs[Type %in% c("Empirical", "Review"), FirstLast]
 NFirstLast <- sum(tmp == 1)
@@ -238,11 +248,18 @@ awards2[, CVSummary := sprintf("<li value = %d>%s</li>", Num, CVSummary)]
 awards2 <- paste(c("<ol>", awards2$CVSummary, "</ol>"), collapse = "\n")
 
 summarystatement <- sprintf(
-  "Senior Lecturer at Monash University; **%0.1f** years post PhD; >$4 million AUD in grant funding; **%d** primary, **%d** co-supervised doctoral students; **2** Associate/Statistical editorial positions at journals; NHMRC panel member; **%d** first/last & **%d** co-author peer reviewed articles; **%d** books; **%d** other pubs; **%d** first/last & **%d** co-author peer reviewed abstracts; **%d** invited presentations; **8** software packages developed.",
+"Senior Lecturer at Monash University; **%0.1f** years post PhD;
+>$5 million AUD in grant funding; **%d** primary, **%d** co-supervised doctoral students;
+**2** Associate/Statistical editorial positions at journals; NHMRC panel member;
+**%d** first/last & **%d** co-author peer reviewed articles; **%d** books; **%d** other pubs;
+total of **%d** publications (**%d** publications since the start of %d [last five years]);
+**%d** first/last & **%d** co-author peer reviewed abstracts; **%d** invited presentations;
+**8** software packages developed.",
   yearSincePhD,
   NPrimary, NSecondary,
   NFirstLast, NCoAuthor,
   NBooks, NOther,
+  NTotal, NTotalLast5, fiveyear,
   nrow(leadabstracts),
   nrow(coabstracts),
   nrow(invited))
