@@ -29,70 +29,91 @@ getCites <- function(id) {
                   
 jwCites <- function() {
   ct <- getCites("bRG3LSQAAAAJ")
+  ct$Type <- factor(ct$Type, levels = c("Yearly", "Cumulative"))
   ggplot(ct, aes(year, cites)) +
     geom_bar(stat = "identity") +
-    ylab("Number of Citations") + 
+    ylab("Number of Citations") +
+    scale_x_continuous("", breaks = seq(from = min(ct$year), to = max(ct$year), by = 2)) + 
     theme_classic() +
     theme(axis.title.x = element_blank()) + 
     facet_wrap(~ Type, scales = "free_y") + 
-    coord_cartesian(expand=FALSE) +
+    coord_cartesian(expand = FALSE) +
     ggtitle("Google Scholar Citations")
 }
 
 citeplot <- tryCatch(jwCites(), error = function(e) ggplot() + ggtitle("Could not pull citations."))
 
-
-seniorlecturers <- list(
-  `Bei Bei` = getCites("wMBLE0IAAAAJ"),  
-  `Trevor T-J Chong` = getCites("qLkvokIAAAAJ"),
-  `James Coxon` = getCites("hnAesu8AAAAJ"),  
-  `Bradley A Edwards` = getCites("yypftd8AAAAJ"),
-  `Ziarih Hawi` = getCites("PBuc7msAAAAJ"),
-  `Melinda L Jackson` = getCites("3lg8mHgAAAAJ"),
-  `Sharna Jamadar` = getCites("plIkiT4AAAAJ"),
-  `Laura Jobson` = getCites("dktQ3XQAAAAJ"),  
-  `Adam McKay` = getCites("KjOgwiQAAAAJ"),
-  `Andrew J K Phillips` = getCites("w1fBCWIAAAAJ"),               
-  `Adeel Razi` = getCites("VG3onZwAAAAJ"),
-  `Rebecca Anne Segrave` = getCites("-l_x5sAAAAAJ"),
-  `Tracey Sletten` = getCites("OjrCgUoAAAAJ"),                         
-  `Megan Spencer-Smith` = getCites("Z0WEv1oAAAAJ"),
-  `Renerus Stolwyk` = getCites("k6MqWxgAAAAJ"),
-  `Nicole A Thomas` = getCites("9CuXF0AAAAAJ"),                    
-  `Joshua F Wiley` = getCites("bRG3LSQAAAAJ"))
-d <- as.data.table(do.call(rbind, lapply(names(seniorlecturers), function(v) {
-  cbind(seniorlecturers[[v]], Name = v, Select = ifelse(v == "Joshua F Wiley",
-                                                        "Applicant", "Level C\nComparators"))
-})))
-d2 <- d[Type == "Yearly" & year > 2012]
-d2[, Rank := paste0(rank(-cites, ties.method = "max"), "/", length(seniorlecturers)), by = year]
-sqdiff <- function(x, j = .5) abs((x - (sqrt(x) + j)^2) )
-compareplot <- ggplot(d2, aes(year, cites, group = Name, colour = Select, size = Select)) +
-  ## geom_boxplot(aes(group = year, colour = NULL, size = NULL),
-  ##              width = .3, colour = "grey80", show.legend = FALSE) + 
-  geom_line() +
-  ## stat_summary(aes(group = NULL, colour = NULL, size = NULL),
-  ##              fun.y = median, geom = "point", shape = 18, size = 3, colour = "grey50") +
-  geom_label(aes(year, cites + sqdiff(cites, 1), label = Rank),
-             data = d2[Name=="Joshua F Wiley"], show.legend = FALSE) + 
-  scale_colour_manual("Who", values = c("Applicant" = "black", "Level C\nComparators" = "grey60")) + 
-  scale_size_manual("Who", values = c("Applicant" = 2, "Level C\nComparators" = .5)) + 
-  scale_x_continuous("Year", breaks = 2013:2019,
-                     labels = ifelse(
-                       2013:2019 == 2015,
-                       "2015\n(PhD Awarded)",
-                       2013:2019)  ) + 
-  scale_y_sqrt("Yearly Citations (Google Scholar)", breaks = c(10, 100, 200, 400, 600)) + 
-  theme_classic() +
-  coord_cartesian(xlim = c(2013 - .2, 2019 + .2), ylim = c(10, 640), expand = FALSE) +
-  theme(legend.position = c(.8, .15)) +
-  labs(caption = "Numbers show applicant rank")
+## seniorlecturers <- list(
+##   `Bei Bei` = getCites("wMBLE0IAAAAJ"),  
+##   `Trevor T-J Chong` = getCites("qLkvokIAAAAJ"),
+##   `James Coxon` = getCites("hnAesu8AAAAJ"),  
+##   `Bradley A Edwards` = getCites("yypftd8AAAAJ"),
+##   `Ziarih Hawi` = getCites("PBuc7msAAAAJ"),
+##   `Melinda L Jackson` = getCites("3lg8mHgAAAAJ"),
+##   `Sharna Jamadar` = getCites("plIkiT4AAAAJ"),
+##   `Laura Jobson` = getCites("dktQ3XQAAAAJ"),  
+##   `Adam McKay` = getCites("KjOgwiQAAAAJ"),
+##   `Andrew J K Phillips` = getCites("w1fBCWIAAAAJ"),               
+##   `Adeel Razi` = getCites("VG3onZwAAAAJ"),
+##   `Rebecca Anne Segrave` = getCites("-l_x5sAAAAAJ"),
+##   `Tracey Sletten` = getCites("OjrCgUoAAAAJ"),                         
+##   `Megan Spencer-Smith` = getCites("Z0WEv1oAAAAJ"),
+##   `Renerus Stolwyk` = getCites("k6MqWxgAAAAJ"),
+##   ## `Nicole A Thomas` = getCites("9CuXF0AAAAAJ"),                    
+##   `Joshua F Wiley` = getCites("bRG3LSQAAAAJ"))
+## d <- as.data.table(do.call(rbind, lapply(names(seniorlecturers), function(v) {
+##   cbind(seniorlecturers[[v]], Name = v, Select = ifelse(v == "Joshua F Wiley",
+##                                                         "Applicant", "Level C\nComparators"))
+## })))
+## d2 <- d[Type == "Yearly" & year > 2012]
+## d2[, Rank := paste0(rank(-cites, ties.method = "max"), "/", length(seniorlecturers)), by = year]
+## sqdiff <- function(x, j = .5) abs((x - (sqrt(x) + j)^2) )
+## compareplot <- ggplot(d2, aes(year, cites, group = Name, colour = Select, size = Select)) +
+##   ## geom_boxplot(aes(group = year, colour = NULL, size = NULL),
+##   ##              width = .3, colour = "grey80", show.legend = FALSE) + 
+##   geom_line() +
+##   ## stat_summary(aes(group = NULL, colour = NULL, size = NULL),
+##   ##              fun.y = median, geom = "point", shape = 18, size = 3, colour = "grey50") +
+##   geom_label(aes(year, cites + sqdiff(cites, 1), label = Rank),
+##              data = d2[Name=="Joshua F Wiley"], show.legend = FALSE) + 
+##   scale_colour_manual("Who", values = c("Applicant" = "black", "Level C\nComparators" = "grey60")) + 
+##   scale_size_manual("Who", values = c("Applicant" = 2, "Level C\nComparators" = .5)) + 
+##   scale_x_continuous("Year", breaks = 2013:2021,
+##                      labels = ifelse(
+##                        2013:2021 == 2015,
+##                        "2015\n(PhD Awarded)",
+##                        2013:2021)  ) + 
+##   scale_y_sqrt("Yearly Citations (Google Scholar)", breaks = c(10, 100, 200, 400, 600, 800)) + 
+##   theme_classic() +
+##   coord_cartesian(xlim = c(2013 - .2, 2021 + .2), ylim = c(10, 840), expand = FALSE) +
+##   theme(legend.position = c(.8, .15)) +
+##   labs(caption = "Numbers show applicant rank")
 
 fiveyear <- (year(Sys.Date()) - 5)
 
 pubs <- read_excel("~/OneDrive/WileyDossier/CV_Full.xlsx", sheet = "Publications")
 pubs <- as.data.table(pubs)
 
+pubcounts <- as.data.table(xtabs(~ Year + Type, data = pubs))
+pubcounts <- pubcounts[order(Type, Year),
+                       .(Year = Year, Yearly = N, Cumulative = cumsum(N)), by = Type]
+pubyears <- sort(unique(pubcounts$Year))
+pubcounts[, Year := factor(Year,
+                           levels = pubyears,
+                           labels = fifelse(pubyears == "2015", "2015\n(PhD)", pubyears))]
+pubcounts[, Type := factor(Type, levels = rev(c("Empirical", "Review", "Book", "Book Chapter", "Editorial")))]
+pubcounts <- melt(pubcounts, id.vars = c("Type", "Year"))
+
+pubcounts.graph <- ggplot(pubcounts, aes(Year, value, fill = Type)) + 
+  geom_bar(stat = "identity", position = "stack") +
+  scale_fill_viridis_d(begin = 1, end = 0) +
+  facet_wrap(~ variable, scales = "free_y") + 
+  theme_classic() +
+  theme(legend.title = element_blank(),
+        legend.position = "bottom",
+        axis.title.x = element_blank()) +
+  coord_cartesian(expand = FALSE)
+  
 tmp <- pubs[Type %in% c("Empirical", "Review"), FirstLast]
 NFirstLast <- sum(tmp == 1)
 NCoAuthor <- sum(tmp == 0)
@@ -396,8 +417,12 @@ major. GPA: 4.00/4.00
 
 `r paste(unlist(lapply(unique(epubs$Year), printPubs, d = epubs)), collapse = "\n")`
 
-<!-- ### Quantitative Publication Information -->
-<!-- r ggplotly(citeplot) -->
+### Quantitative Publication Information
+
+`r ggplotly(pubcounts.graph)`
+
+`r ggplotly(citeplot)`
+
 <!-- r ggplotly(pcif) -->
 <!-- r ggplotly(pq1) -->
 <!-- <br></br> -->
