@@ -170,9 +170,27 @@ printPubs <- function(year, d) {
 students <- read_excel("~/OneDrive/WileyDossier/CV_Full.xlsx", sheet = "Students")
 students <- as.data.table(students)[Status != "Withdrew"]
 
-tmp <- students[Type %in% c("DPsych (Clinical)", "PhD (Clinical)", "PhD"), Primary]
+tmp <- students[Status != "Completed" & Type %in% c("DPsych (Clinical)", "PhD (Clinical)", "PhD"),
+                Primary]
 NPrimary <- sum(tmp == 1)
 NSecondary <- sum(tmp == 0)
+rm(tmp)
+
+tmp <- students[Status == "Current" & Type %in% c("Honours"),
+                Primary]
+NHonours <- sum(tmp)
+rm(tmp)
+
+
+tmp <- students[Status == "Completed" & Type %in% c("DPsych (Clinical)", "PhD (Clinical)", "PhD"),
+                Primary]
+compNPrimary <- sum(tmp == 1)
+compNSecondary <- sum(tmp == 0)
+rm(tmp)
+
+tmp <- students[Status == "Completed" & Type %in% c("Honours"),
+                Primary]
+compNHonours <- sum(tmp)
 rm(tmp)
 
 students[, CVSummary := sprintf("%s %s | %d - %s | %s | %s supervisor",
@@ -270,14 +288,17 @@ awards2 <- paste(c("<ol>", awards2$CVSummary, "</ol>"), collapse = "\n")
 
 summarystatement <- sprintf(
 "Senior Lecturer at Monash University; **%0.1f** years post PhD;
->$5 million AUD in grant funding; **%d** primary, **%d** co-supervised doctoral students;
+>$5 million AUD in grant funding; 
+successfully graduated **%d** primary doctoral, **%d** co-supervised doctoral, and **%d** honours students;
+currently supervising **%d** primary doctoral, **%d** co-supervised doctoral, and **%d** honours students;
 **2** Associate/Statistical editorial positions at journals; NHMRC panel member;
 **%d** first/last & **%d** co-author peer reviewed articles; **%d** books; **%d** other pubs;
 total of **%d** publications (**%d** publications since the start of %d [last five years]);
 **%d** first/last & **%d** co-author peer reviewed abstracts; **%d** invited presentations;
 **8** software packages developed.",
-  yearSincePhD,
-  NPrimary, NSecondary,
+yearSincePhD,
+  compNPrimary, compNSecondary, compNHonours,
+  NPrimary, NSecondary, NHonours,
   NFirstLast, NCoAuthor,
   NBooks, NOther,
   NTotal, NTotalLast5, fiveyear,

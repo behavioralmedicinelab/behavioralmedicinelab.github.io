@@ -129,7 +129,7 @@ Australian Research Council (ARC),
 United States National Institutes of Health (US NIH),
 and United States Department of Defense (US DoD), totaling >$5
 million in funding. He has >60 peer-reviewed publications resulting in
->1,500 citations (GS).
+>2,000 citations (GS).
 
 ### `r fa("address-card", fill = "black")` Connect
 
