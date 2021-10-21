@@ -7,7 +7,7 @@ title: Projects
 ## load packages and setup
 source("package_setup.R", echo=FALSE)
 
-projects <- read_excel("~/OneDrive/WileyDossier/CV_Full.xlsx", sheet = "Projects")
+projects <- read_excel(file.path(basedir, "WileyDossier/CV_Full.xlsx"), sheet = "Projects")
 projects <- as.data.table(projects)[nzchar(Summary) & !is.na(Summary)]
 projects[, Type := factor(Type, levels = c("Trial", "Daily", "Other"))]
 projects <- projects[order(Type, -Status, -Started)]

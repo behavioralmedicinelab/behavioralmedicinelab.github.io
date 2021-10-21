@@ -30,3 +30,5 @@ library(data.table)
 library(scholar)
 library(ggplot2)
 library(plotly)
+
+basedir <- Sys.getenv("OneDrive")

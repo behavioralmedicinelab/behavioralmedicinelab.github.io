@@ -22,23 +22,26 @@ txttrans <- function(text){
   tm_map(text, content_transformer(stripWhitespace))
 }
 
-jw <- Corpus(DirSource("~/OneDrive/Manuscripts/Publications/", pattern="pdf"),
+jw <- Corpus(DirSource(file.path(basedir, "Manuscripts/Publications/"), pattern="pdf"),
              readerControl = list(reader=readPDF))
 jw2 <- txttrans(jw)
 ## summary(jw2)
 
-png(filename = "~/OneDrive/Manuscripts/Publications/wordcloud.png", width = 10, height = 10, units = "in", res = 400)
+png(filename = file.path(basedir, "Manuscripts/Publications/wordcloud.png"),
+    width = 10, height = 10, units = "in", res = 400)
 wordcloud(jw2, scale=c(5,0.5), max.words=100, random.order=FALSE,
           rot.per=0.35, use.r.layout=FALSE, colors=brewer.pal(8, "Dark2"))
 dev.off()
 
 
-png(filename = "~/OneDrive/Manuscripts/Publications/wordcloud_banner.png", width = 12, height = 4, units = "in", res = 400)
+png(filename = file.path(basedir, "Manuscripts/Publications/wordcloud_banner.png"),
+    width = 12, height = 4, units = "in", res = 400)
 wordcloud(jw2, scale=c(6,0.2), max.words=150, random.order=FALSE,
           rot.per=0, use.r.layout=FALSE, fixed.asp = FALSE, colors=brewer.pal(8, "Dark2"))
 dev.off()
 
-png(filename = "~/OneDrive/Manuscripts/Publications/wordcloud_small.png", width = 5, height = 5, units = "in", res = 400)
+png(filename = file.path(basedir, "Manuscripts/Publications/wordcloud_small.png"),
+    width = 5, height = 5, units = "in", res = 400)
 wordcloud(jw2, scale=c(5,0.1), max.words=50, random.order=FALSE,
           rot.per=0.35, use.r.layout=FALSE, colors=brewer.pal(8, "Dark2"))
 dev.off()
