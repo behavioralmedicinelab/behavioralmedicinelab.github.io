@@ -13,6 +13,7 @@
 library(fontawesome)
 library(knitr)
 library(rmarkdown)
+library(JWileymisc)
 
 #### Stuff to make word cloud summaries ####
 library(XML)
@@ -27,8 +28,11 @@ library(readxl)
 library(data.table)
 
 #### graphs
-library(scholar)
 library(ggplot2)
 library(plotly)
+
+#### benchmarking data
+library(scholar)
+library(packageRank)
 
 basedir <- Sys.getenv("OneDrive")

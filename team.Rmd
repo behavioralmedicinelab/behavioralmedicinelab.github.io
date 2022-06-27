@@ -9,7 +9,7 @@ title: Team
 source("package_setup.R", echo=FALSE)
 
 students <- read_excel(file.path(basedir, "WileyDossier/CV_Full.xlsx"),
-                       sheet = "Students")
+                       sheet = "People")
 students <- as.data.table(students)[Status == "Current" & Consent == 1][order(FamilyName)]
 
 students[, PeopleSummary := sprintf(
@@ -20,11 +20,16 @@ students[, PeopleSummary := sprintf(
 
 ```
 
-![](BML_Group_2020.jpg)
+![](BML_Group_2021.jpg)
 
 <br></br>
 
 `r paste(students[, PeopleSummary], collapse = "\n\n -------------------- \n\n")`
+
+
+### Group Photo - 2020
+
+![](BML_Group_2020.jpg)
 
 
 ### Group Photo - 2019
