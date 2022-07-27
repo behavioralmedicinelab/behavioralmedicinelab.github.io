@@ -5,7 +5,7 @@
 ## it also calls render_site() after the yaml file is written
 
 ## load packages and setup
-source("package_setup.R", echo=FALSE)
+source("package_setup.R", echo = FALSE)
 
 projects <- read_excel(file.path(basedir, "WileyDossier/CV_Full.xlsx"),
                        sheet = "Projects")
