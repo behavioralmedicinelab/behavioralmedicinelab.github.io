@@ -54,18 +54,18 @@ dev.off()
 
 ```
 
-Our research uses digitomics[^1] to understand the connections between
-sleep, psychosocial factors, and health. Reflecting our belief that
-both mental and physical health are important and interconnected, many
-of our research projects integrate mental and physical health.
+Through our research, we strive to understand the connections between
+sleep (behaviour), psychosocial factors, and health.
+Reflecting our belief that both mental and physical health are
+important and interconnected, many of our research projects
+integrate mental and physical health.
 
-*Topics* our team has expertise in include stress, resilience
-and emotion regulation, depression and anxiety, sleep and insomnia,
-and cancer.
+*Topics* our team has expertise in include sleep and insomnia,
+emotion regulation, depression and anxiety, and cancer.
 
-*Methods* our team has expertise in include ecological momentary
-assessment, actigraphy, statistics and machine learning, and clinical
-trials.
+*Methods* our team has expertise in include clinical trials, 
+ecological momentary assessment, actigraphy, 
+digitomics[^1], and statistics.
 
 We leverage the latest science from our team and others to evaluate
 and optimise interventions to improve sleep, reduce insomnia symptoms,
@@ -131,8 +131,7 @@ Australian National Health and Medical Research Council (NHMRC),
 Australian Research Council (ARC), 
 United States National Institutes of Health (US NIH),
 and United States Department of Defense (US DoD), totaling >$5
-million in funding. He has >60 peer-reviewed publications resulting in
->3,000 citations (GS).
+million in funding. He has >70 publications and >5,000 citations (GS).
 
 ### `r fa("address-card", fill = "black")` Connect
 

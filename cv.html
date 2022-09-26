@@ -13,7 +13,7 @@
 
 <title>Joshua F. Wiley’s CV</title>
 
-<script src="site_libs/header-attrs-2.14/header-attrs.js"></script>
+<script src="site_libs/header-attrs-2.16/header-attrs.js"></script>
 <script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <link href="site_libs/bootstrap-3.3.5/css/bootstrap.min.css" rel="stylesheet" />
@@ -150,11 +150,15 @@ $(document).ready(function () {
     href = "index.html";
   var menuAnchor = $('a[href="' + href + '"]');
 
-  // mark it active
-  menuAnchor.tab('show');
-
-  // if it's got a parent navbar menu mark it active as well
-  menuAnchor.closest('li.dropdown').addClass('active');
+  // mark the anchor link active (and if it's in a dropdown, also mark that active)
+  var dropdown = menuAnchor.closest('li.dropdown');
+  if (window.bootstrap) { // Bootstrap 4+
+    menuAnchor.addClass('active');
+    dropdown.find('> .dropdown-toggle').addClass('active');
+  } else { // Bootstrap 3
+    menuAnchor.parent().addClass('active');
+    dropdown.addClass('active');
+  }
 
   // Navbar adjustments
   var navHeight = $(".navbar").first().height() + 15;
@@ -369,7 +373,7 @@ Riverside</em>. Supervisor: Howard Friedman. GPA: 3.95/4.00</p>
 </div>
 <div id="academic-summary" class="section level2">
 <h2>Academic Summary</h2>
-<p>Senior Lecturer at Monash University; <strong>7.3</strong> years post
+<p>Senior Lecturer at Monash University; <strong>7.5</strong> years post
 PhD; &gt;$5 million AUD in grant funding; successfully graduated
 <strong>3</strong> primary doctoral, <strong>1</strong> co-supervised
 doctoral, and <strong>14</strong> honours students; currently
@@ -377,9 +381,9 @@ supervising <strong>8</strong> primary doctoral, <strong>4</strong>
 co-supervised doctoral, and <strong>4</strong> honours students;
 <strong>2</strong> Associate/Statistical editorial positions at
 journals; NHMRC panel member; <strong>22</strong> first/last &amp;
-<strong>53</strong> co-author peer reviewed articles; <strong>7</strong>
-books; <strong>18</strong> other pubs; total of <strong>100</strong>
-publications (<strong>74</strong> publications since the start of 2017
+<strong>54</strong> co-author peer reviewed articles; <strong>7</strong>
+books; <strong>19</strong> other pubs; total of <strong>102</strong>
+publications (<strong>76</strong> publications since the start of 2017
 [last five years]); <strong>26</strong> first/last &amp;
 <strong>30</strong> co-author peer reviewed abstracts;
 <strong>9</strong> invited presentations; <strong>8</strong> software
@@ -423,7 +427,7 @@ Federal Funding Agency).</p>
 <p><code>June 2018 - Current</code> <strong>Member</strong>, Human
 Research Ethics Committee at Monash University (US IRB equivalent); (38
 apps in 2020; 21 apps in 2019).</p>
-<p><code>June 2020 - Current</code> <strong>Low Risk Reviewer</strong>,
+<p><code>June 2022 - Current</code> <strong>Low Risk Reviewer</strong>,
 Human Research Ethics Committee at Monash University (US IRB
 equivalent);.</p>
 <p><code>September 2017 - Current</code> <strong>Statistical
@@ -475,12 +479,19 @@ committee: useR! 2014 international conference.</p>
 Articles</h3>
 <code>2022</code>
 <ol>
+<li value="76">
+*Tuck, D., <strong>Wiley, J. F.</strong>, Patlamazoglou, L., &amp;
+Berger, E. (in press). Distress of Tertiary Education Students in
+Australia During the COVID-19 Pandemic. <em>Journal of Clinical
+Psychology</em>
+</li>
 <li value="75">
 Verma, S., Quin, N., Astbury, L., Wellecke, C., <strong>Wiley, J.
 F.</strong>, Davey, M., Rajaratnam, S. M. W., &amp; Bei, B. (in press).
 Treating Postpartum Insomnia: A Three Arm Randomised Controlled Trial of
 Cognitive Behavioural Therapy and Light Dark Therapy. <em>Psychological
-Medicine</em>.
+Medicine</em>, 1-11. <a href="https://doi.org/10.1017/S0033291722002616"
+class="uri">https://doi.org/10.1017/S0033291722002616</a>
 </li>
 <li value="74">
 Campbell, R., Bultijnck, R., Ingham, G., Sundaram, C. S., <strong>Wiley,
@@ -496,16 +507,12 @@ cancer and its treatment on masculinity: A systematic review.
 <em>Psycho-Oncology</em>.
 </li>
 <li value="72">
-*Messman, B. A., <strong>Wiley, J. F.</strong>, *Yap, Y., *Tung, N. Y.
-C., Almeida, I. M., Dietch, J. R., Taylor, D. J., Slavish, D. C. (2022).
-How much does sleep vary from night-to-night? A quantitative summary of
-intraindividual variability in sleep by age, gender, and racial/ethnic
-identity across eight-pooled datasets. <em>Journal of Sleep
-Research</em>. e13680. 1-14. <a href="https://doi.org/10.1111/jsr.13680"
-class="uri">https://doi.org/10.1111/jsr.13680</a> Project(s): <a
-href="projects.html#ACES">ACES</a> and <a
-href="projects.html#DESTRESS">DESTRESS</a> and <a
-href="projects.html#SHS">SHS</a>.
+*Tuck, D., Berger, E., <strong>Wiley, J. F.</strong>, Patlamazoglou, L.
+(in press). Single Factor Interventions to Promote Resilience in
+Tertiary Education Students: A Systematic Review. <em>International
+Journal of Stress Management</em>. <a
+href="https://doi.org/10.1037/str0000236"
+class="uri">https://doi.org/10.1037/str0000236</a>
 </li>
 <li value="71">
 *Maccora, J., *Bean, H. R., Diggens, J., Ftanou, M., Alexander, M., Lu,
@@ -527,6 +534,26 @@ class="uri">https://doi.org/10.1093/abm/kaac017</a> Project(s): <a
 href="projects.html#SHS">SHS</a>.
 </li>
 <li value="69">
+Brown, L. A., Hamlett, G. E., Zhu, Y., <strong>Wiley, J. F.</strong>,
+Moore, T. M., DiDomenico, G. E., Visoki, E., Greenberg, D. M., Gur, R.
+C., Gur, R. E., &amp; Barzilay, R. (in press). Worry about COVID-19 as a
+predictor of future insomnia. <em>Journal of Sleep Research, 31</em>(5).
+e13564. <a href="https://doi.org/10.1111/jsr.13564"
+class="uri">https://doi.org/10.1111/jsr.13564</a>
+</li>
+<li value="68">
+*Messman, B. A., <strong>Wiley, J. F.</strong>, *Yap, Y., *Tung, N. Y.
+C., Almeida, I. M., Dietch, J. R., Taylor, D. J., Slavish, D. C. (2022).
+How much does sleep vary from night-to-night? A quantitative summary of
+intraindividual variability in sleep by age, gender, and racial/ethnic
+identity across eight-pooled datasets. <em>Journal of Sleep
+Research</em>. e13680. 1-14. <a href="https://doi.org/10.1111/jsr.13680"
+class="uri">https://doi.org/10.1111/jsr.13680</a> Project(s): <a
+href="projects.html#ACES">ACES</a> and <a
+href="projects.html#DESTRESS">DESTRESS</a> and <a
+href="projects.html#SHS">SHS</a>.
+</li>
+<li value="67">
 *Tung, N. Y. C., *Yap, Y., Bei, B., Luecken, L. J., &amp; <strong>Wiley,
 J. F.</strong> (2022). Resilience to early family risk moderates
 stress-affection associations: A 14-day ecological momentary assessment
@@ -535,15 +562,7 @@ href="https://doi.org/10.1016/j.jad.2022.05.075"
 class="uri">https://doi.org/10.1016/j.jad.2022.05.075</a> Project(s): <a
 href="projects.html#SHS">SHS</a>.
 </li>
-<li value="68">
-Brown, L. A., Hamlett, G. E., Zhu, Y., <strong>Wiley, J. F.</strong>,
-Moore, T. M., DiDomenico, G. E., Visoki, E., Greenberg, D. M., Gur, R.
-C., Gur, R. E., &amp; Barzilay, R. (in press). Worry about COVID-19 as a
-predictor of future insomnia. <em>Journal of Sleep Research</em>. <a
-href="https://doi.org/10.1111/jsr.13564"
-class="uri">https://doi.org/10.1111/jsr.13564</a>
-</li>
-<li value="67">
+<li value="66">
 Slavish, D. C., Dietch, J. R., Kane, H. S., Messman, B. A., Garcia, O.,
 <strong>Wiley, J. F.</strong>, *Yap, Y., Kelly, K., Ruggero, C. J.,
 &amp; Taylor, D. J. (2022). Daily stress and sleep associations vary by
@@ -552,9 +571,9 @@ work schedule: A between- and within-person analysis in nurses.
 href="https://doi.org/10.1111/jsr.13506"
 class="uri">https://doi.org/10.1111/jsr.13506</a>
 </li>
-<li value="66">
+<li value="65">
 *Le, F., *Yap, Y., *Tung, N. Y. C., Bei, B., &amp; <strong>Wiley, J.
-F.</strong> (in press). The associations between daily activities and
+F.</strong> (2022). The associations between daily activities and
 affect: A compositional isotemporal substitution analysis.
 <em>International Journal of Behavioral Medicine</em>. <a
 href="https://doi.org/10.1007/s12529-021-10031-z"
@@ -562,14 +581,6 @@ class="uri">https://doi.org/10.1007/s12529-021-10031-z</a> Project(s):
 <a href="projects.html#ACES">ACES</a> and <a
 href="projects.html#DESTRESS">DESTRESS</a> and <a
 href="projects.html#SHS">SHS</a>.
-</li>
-<li value="65">
-*Tuck, D., Berger, E., <strong>Wiley, J. F.</strong>, Patlamazoglou, L.
-(in press). Single Factor Interventions to Promote Resilience in
-Tertiary Education Students: A Systematic Review. <em>International
-Journal of Stress Management</em>. <a
-href="https://doi.org/10.1037/str0000236"
-class="uri">https://doi.org/10.1037/str0000236</a>
 </li>
 <li value="64">
 *Tung, N. Y. C., *Yap, Y., Bei, B., Luecken, L. J., &amp; <strong>Wiley,
@@ -624,7 +635,7 @@ href="projects.html#DESTRESS">DESTRESS</a>.
 *Shen, L., <strong>Wiley, J. F.</strong>, &amp; Bei, B. (2021).
 Perceived daily sleep need and sleep debt in adolescents: Associations
 with daily affect over school and vacation periods. <em>Sleep,
-44</em>(12), . <a href="https://doi.org/10.1093/sleep/zsab190"
+44</em>(12), 1-9. <a href="https://doi.org/10.1093/sleep/zsab190"
 class="uri">https://doi.org/10.1093/sleep/zsab190</a> Project(s): <a
 href="projects.html#STEPS">STEPS</a>.
 </li>
@@ -645,7 +656,7 @@ R., Robbins, R., <strong>Wiley, J. F.</strong>, Facer-Childs, E. R.,
 Czeisler, C. A., Howard, M. E., &amp; Rajaratnam, S. M. W. (2021).
 Mental Health among Parents of Children Aged &lt;18 Years and Unpaid
 Caregivers of Adults During the COVID-19 Pandemic - United States,
-December 2020 and February to March 2021. <em>MMWR-Moribidty and
+December 2020 and February to March 2021. <em>MMWR-Morbidity and
 Mortality Weekly Report</em>. <a
 href="http://dx.doi.org/10.15585/mmwr.mm7024a3"
 class="uri">http://dx.doi.org/10.15585/mmwr.mm7024a3</a> Project(s): <a
@@ -1161,7 +1172,7 @@ class="section level3">
 (Protocols, Commentaries, Letters)</h3>
 <code>2022</code>
 <ol>
-<li value="15">
+<li value="16">
 Vaughan, E., Ftanou, M., Lewin, J., Murnane, A., Berger, I.,
 <strong>Wiley, J. F.</strong>, Hickey, M., Bullen, D., Jeffor, M.,
 Goldin, J., Stonehouse, J., Phipps-Nelson, J., &amp; Thompson, K. (in
@@ -1170,16 +1181,39 @@ behavioural therapy based approach to the management of sleep
 difficulties in adolescents and young adults with cancer. <em>Pilot and
 Feasibility Studies</em>.
 </li>
+<li value="15">
+Brown, L. A., Taylor, D. J., Bryan, C., <strong>Wiley, J. F.</strong>,
+Pruiksma, K., Khazem, L., Baker, J. C., Young, J., O’Leary, K. (in
+press). Digital phenotyping to improve prediction of suicidal urges in
+treatment: Study protocol. <em>Aggression and Violent Behavior</em>. <a
+href="https://doi.org/10.1016/j.avb.2022.101733"
+class="uri">https://doi.org/10.1016/j.avb.2022.101733</a>
+</li>
 <li value="14">
+*Maccora, J., Garland, S., Ftanou, M., Day, D., White, M., Lopez, V. A.,
+Mortimer, D., Diggens, J., Phillips, A. J. K., Wallace, R., Alexander,
+M., Boyle, F., Stafford, L., Francis, P. A., Bei, B., <strong>Wiley, J.
+F.</strong> (2022). The Sleep, Cancer and Rest (SleepCaRe) Trial:
+Rationale and Design of a Randomized, Controlled Trial of Cognitive
+Behavioral and Bright Light Therapy for Insomnia and Fatigue in Women
+with Brast Cancer receiving Chemotherapy. <em>Contemporary Clinical
+Trials, 120</em>, 1-8. <a
+href="https://doi.org/10.1016/j.cct.2022.106877"
+class="uri">https://doi.org/10.1016/j.cct.2022.106877</a> Project(s): <a
+href="projects.html#SleepCaRe">SleepCaRe</a>.
+</li>
+<li value="13">
 *Smith, I., *Wallace, R., *Wellecke, C., Bind, M.-A., Weihs, K. L., Bei,
-B., &amp; <strong>Wiley, J. F.</strong> (in press). The CanCope study:
+B., &amp; <strong>Wiley, J. F.</strong> (2022). The CanCope study:
 Protocol for a randomized controlled trial assessing an
 internet-delivered emotion-focused intervention compared to a healthy
 lifestyle active control intervention in improving mental health in
-cancer survivors. <em>JMIR Research Protocols</em>. Project(s): <a
+cancer survivors. <em>JMIR Research Protocols, 11</em>(7):e36658, 1-17.
+<a href="https://doi.org/10.2196/36658"
+class="uri">https://doi.org/10.2196/36658</a> Project(s): <a
 href="projects.html#CanCope">CanCope</a>.
 </li>
-<li value="13">
+<li value="12">
 Stone, J. E., <strong>Wiley, J. F.</strong>, Chacos, E., Hand, A. J.,
 Lu, S., Raniti, M., Klerman, E. B., Lockley, S. W., Carskadon, M. A.,
 Phillips, A. J. K., Bei, B., &amp; Rajaratnam, S. M. W. (2022). The
@@ -1189,14 +1223,6 @@ timing, and academic performance in adolescence. <em>BMJ Open</em>
 12:e055716. 1-10. <a href="https://doi.org/10.1136/bmjopen-2021-055716"
 class="uri">https://doi.org/10.1136/bmjopen-2021-055716</a> Project(s):
 <a href="projects.html#CLASS">CLASS</a>.
-</li>
-<li value="12">
-Brown, L. A., Taylor, D. J., Bryan, C., <strong>Wiley, J. F.</strong>,
-Pruiksma, K., Khazem, L., Baker, J. C., Young, J., O’Leary, K. (in
-press). Digital phenotyping to improve prediction of suicidal urges in
-treatment: Study protocol. <em>Aggression and Violent Behavior</em>. <a
-href="https://doi.org/10.1016/j.avb.2022.101733"
-class="uri">https://doi.org/10.1016/j.avb.2022.101733</a>
 </li>
 </ol>
 <code>2021</code>
@@ -1390,8 +1416,8 @@ class="uri">https://doi.org/10.1007/978-1-4842-0373-6</a>
 </div>
 <div id="quantitative-publication-information" class="section level3">
 <h3>Quantitative Publication Information</h3>
-<p><div id="htmlwidget-48740d308888567eb2c4" style="width:100%;height:400px;" class="plotly html-widget"></div> <script type="application/json" data-for="htmlwidget-48740d308888567eb2c4">{"x":{"data":[{"orientation":"v","width":[0.9,0.9,0.9,0.9,0.9,0.9,0.9,0.899999999999999,0.899999999999999,0.899999999999999],"base":[2,5,7,10,7,10,9,8,15,19],"x":[1,2,3,4,5,6,7,8,9,10],"y":[0,1,0,1,3,0,1,0,2,0],"text":["Year: 2013<br />value:  0<br />Type: Editorial","Year: 2014<br />value:  1<br />Type: Editorial","Year: 2015<br />(PhD)<br />value:  0<br />Type: Editorial","Year: 2016<br />value:  1<br />Type: Editorial","Year: 2017<br />value:  3<br />Type: Editorial","Year: 2018<br />value:  0<br />Type: Editorial","Year: 2019<br />value:  1<br />Type: Editorial","Year: 2020<br />value:  0<br />Type: Editorial","Year: 2021<br />value:  2<br />Type: Editorial","Year: 2022<br />value:  0<br />Type: Editorial"],"type":"bar","textposition":"none","marker":{"autocolorscale":false,"color":"rgba(253,231,37,1)","line":{"width":1.88976377952756,"color":"transparent"}},"name":"Editorial","legendgroup":"Editorial","showlegend":true,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"orientation":"v","width":[0.9,0.9,0.9,0.9,0.9,0.9,0.9,0.899999999999999,0.899999999999999,0.899999999999999],"base":[2,7,14,24,31,41,50,58,73,92],"x":[1,2,3,4,5,6,7,8,9,10],"y":[0,1,1,2,5,5,6,6,8,8],"text":["Year: 2013<br />value:  0<br />Type: Editorial","Year: 2014<br />value:  1<br />Type: Editorial","Year: 2015<br />(PhD)<br />value:  1<br />Type: Editorial","Year: 2016<br />value:  2<br />Type: Editorial","Year: 2017<br />value:  5<br />Type: Editorial","Year: 2018<br />value:  5<br />Type: Editorial","Year: 2019<br />value:  6<br />Type: Editorial","Year: 2020<br />value:  6<br />Type: Editorial","Year: 2021<br />value:  8<br />Type: Editorial","Year: 2022<br />value:  8<br />Type: Editorial"],"type":"bar","textposition":"none","marker":{"autocolorscale":false,"color":"rgba(253,231,37,1)","line":{"width":1.88976377952756,"color":"transparent"}},"name":"Editorial","legendgroup":"Editorial","showlegend":false,"xaxis":"x2","yaxis":"y2","hoverinfo":"text","frame":null},{"orientation":"v","width":[0.9,0.9,0.9,0.9,0.9,0.9,0.9,0.899999999999999,0.899999999999999,0.899999999999999],"base":[2,5,7,9,7,10,8,8,14,19],"x":[1,2,3,4,5,6,7,8,9,10],"y":[0,0,0,1,0,0,1,0,1,0],"text":["Year: 2013<br />value:  0<br />Type: Book Chapter","Year: 2014<br />value:  0<br />Type: Book Chapter","Year: 2015<br />(PhD)<br />value:  0<br />Type: Book Chapter","Year: 2016<br />value:  1<br />Type: Book Chapter","Year: 2017<br />value:  0<br />Type: Book Chapter","Year: 2018<br />value:  0<br />Type: Book Chapter","Year: 2019<br />value:  1<br />Type: Book Chapter","Year: 2020<br />value:  0<br />Type: Book Chapter","Year: 2021<br />value:  1<br />Type: Book Chapter","Year: 2022<br />value:  0<br />Type: Book Chapter"],"type":"bar","textposition":"none","marker":{"autocolorscale":false,"color":"rgba(122,209,81,1)","line":{"width":1.88976377952756,"color":"transparent"}},"name":"Book Chapter","legendgroup":"Book Chapter","showlegend":true,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"orientation":"v","width":[0.9,0.9,0.9,0.9,0.9,0.9,0.9,0.899999999999999,0.899999999999999,0.899999999999999],"base":[2,7,14,23,30,40,48,56,70,89],"x":[1,2,3,4,5,6,7,8,9,10],"y":[0,0,0,1,1,1,2,2,3,3],"text":["Year: 2013<br />value:  0<br />Type: Book Chapter","Year: 2014<br />value:  0<br />Type: Book Chapter","Year: 2015<br />(PhD)<br />value:  0<br />Type: Book Chapter","Year: 2016<br />value:  1<br />Type: Book Chapter","Year: 2017<br />value:  1<br />Type: Book Chapter","Year: 2018<br />value:  1<br />Type: Book Chapter","Year: 2019<br />value:  2<br />Type: Book Chapter","Year: 2020<br />value:  2<br />Type: Book Chapter","Year: 2021<br />value:  3<br />Type: Book Chapter","Year: 2022<br />value:  3<br />Type: Book Chapter"],"type":"bar","textposition":"none","marker":{"autocolorscale":false,"color":"rgba(122,209,81,1)","line":{"width":1.88976377952756,"color":"transparent"}},"name":"Book Chapter","legendgroup":"Book Chapter","showlegend":false,"xaxis":"x2","yaxis":"y2","hoverinfo":"text","frame":null},{"orientation":"v","width":[0.9,0.9,0.9,0.9,0.9,0.9,0.9,0.899999999999999,0.899999999999999,0.899999999999999],"base":[2,5,6,7,7,9,7,6,14,19],"x":[1,2,3,4,5,6,7,8,9,10],"y":[0,0,1,2,0,1,1,2,0,0],"text":["Year: 2013<br />value:  0<br />Type: Book","Year: 2014<br />value:  0<br />Type: Book","Year: 2015<br />(PhD)<br />value:  1<br />Type: Book","Year: 2016<br />value:  2<br />Type: Book","Year: 2017<br />value:  0<br />Type: Book","Year: 2018<br />value:  1<br />Type: Book","Year: 2019<br />value:  1<br />Type: Book","Year: 2020<br />value:  2<br />Type: Book","Year: 2021<br />value:  0<br />Type: Book","Year: 2022<br />value:  0<br />Type: Book"],"type":"bar","textposition":"none","marker":{"autocolorscale":false,"color":"rgba(34,168,132,1)","line":{"width":1.88976377952756,"color":"transparent"}},"name":"Book","legendgroup":"Book","showlegend":true,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"orientation":"v","width":[0.9,0.9,0.9,0.9,0.9,0.9,0.9,0.899999999999999,0.899999999999999,0.899999999999999],"base":[2,7,13,20,27,36,43,49,63,82],"x":[1,2,3,4,5,6,7,8,9,10],"y":[0,0,1,3,3,4,5,7,7,7],"text":["Year: 2013<br />value:  0<br />Type: Book","Year: 2014<br />value:  0<br />Type: Book","Year: 2015<br />(PhD)<br />value:  1<br />Type: Book","Year: 2016<br />value:  3<br />Type: Book","Year: 2017<br />value:  3<br />Type: Book","Year: 2018<br />value:  4<br />Type: Book","Year: 2019<br />value:  5<br />Type: Book","Year: 2020<br />value:  7<br />Type: Book","Year: 2021<br />value:  7<br />Type: Book","Year: 2022<br />value:  7<br />Type: Book"],"type":"bar","textposition":"none","marker":{"autocolorscale":false,"color":"rgba(34,168,132,1)","line":{"width":1.88976377952756,"color":"transparent"}},"name":"Book","legendgroup":"Book","showlegend":false,"xaxis":"x2","yaxis":"y2","hoverinfo":"text","frame":null},{"orientation":"v","width":[0.9,0.9,0.9,0.9,0.9,0.9,0.9,0.899999999999999,0.899999999999999,0.899999999999999],"base":[2,5,6,7,7,9,7,4,13,15],"x":[1,2,3,4,5,6,7,8,9,10],"y":[0,0,0,0,0,0,0,2,1,4],"text":["Year: 2013<br />value:  0<br />Type: Protocol","Year: 2014<br />value:  0<br />Type: Protocol","Year: 2015<br />(PhD)<br />value:  0<br />Type: Protocol","Year: 2016<br />value:  0<br />Type: Protocol","Year: 2017<br />value:  0<br />Type: Protocol","Year: 2018<br />value:  0<br />Type: Protocol","Year: 2019<br />value:  0<br />Type: Protocol","Year: 2020<br />value:  2<br />Type: Protocol","Year: 2021<br />value:  1<br />Type: Protocol","Year: 2022<br />value:  4<br />Type: Protocol"],"type":"bar","textposition":"none","marker":{"autocolorscale":false,"color":"rgba(42,120,142,1)","line":{"width":1.88976377952756,"color":"transparent"}},"name":"Protocol","legendgroup":"Protocol","showlegend":true,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"orientation":"v","width":[0.9,0.9,0.9,0.9,0.9,0.9,0.9,0.899999999999999,0.899999999999999,0.899999999999999],"base":[2,7,13,20,27,36,43,47,60,75],"x":[1,2,3,4,5,6,7,8,9,10],"y":[0,0,0,0,0,0,0,2,3,7],"text":["Year: 2013<br />value:  0<br />Type: Protocol","Year: 2014<br />value:  0<br />Type: Protocol","Year: 2015<br />(PhD)<br />value:  0<br />Type: Protocol","Year: 2016<br />value:  0<br />Type: Protocol","Year: 2017<br />value:  0<br />Type: Protocol","Year: 2018<br />value:  0<br />Type: Protocol","Year: 2019<br />value:  0<br />Type: Protocol","Year: 2020<br />value:  2<br />Type: Protocol","Year: 2021<br />value:  3<br />Type: Protocol","Year: 2022<br />value:  7<br />Type: Protocol"],"type":"bar","textposition":"none","marker":{"autocolorscale":false,"color":"rgba(42,120,142,1)","line":{"width":1.88976377952756,"color":"transparent"}},"name":"Protocol","legendgroup":"Protocol","showlegend":false,"xaxis":"x2","yaxis":"y2","hoverinfo":"text","frame":null},{"orientation":"v","width":[0.9,0.9,0.9,0.9,0.9,0.9,0.9,0.899999999999999,0.899999999999999,0.899999999999999],"base":[2,4,6,6,6,9,7,4,13,13],"x":[1,2,3,4,5,6,7,8,9,10],"y":[0,1,0,1,1,0,0,0,0,2],"text":["Year: 2013<br />value:  0<br />Type: Review","Year: 2014<br />value:  1<br />Type: Review","Year: 2015<br />(PhD)<br />value:  0<br />Type: Review","Year: 2016<br />value:  1<br />Type: Review","Year: 2017<br />value:  1<br />Type: Review","Year: 2018<br />value:  0<br />Type: Review","Year: 2019<br />value:  0<br />Type: Review","Year: 2020<br />value:  0<br />Type: Review","Year: 2021<br />value:  0<br />Type: Review","Year: 2022<br />value:  2<br />Type: Review"],"type":"bar","textposition":"none","marker":{"autocolorscale":false,"color":"rgba(65,68,135,1)","line":{"width":1.88976377952756,"color":"transparent"}},"name":"Review","legendgroup":"Review","showlegend":true,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"orientation":"v","width":[0.9,0.9,0.9,0.9,0.9,0.9,0.9,0.899999999999999,0.899999999999999,0.899999999999999],"base":[2,6,12,18,24,33,40,44,57,70],"x":[1,2,3,4,5,6,7,8,9,10],"y":[0,1,1,2,3,3,3,3,3,5],"text":["Year: 2013<br />value:  0<br />Type: Review","Year: 2014<br />value:  1<br />Type: Review","Year: 2015<br />(PhD)<br />value:  1<br />Type: Review","Year: 2016<br />value:  2<br />Type: Review","Year: 2017<br />value:  3<br />Type: Review","Year: 2018<br />value:  3<br />Type: Review","Year: 2019<br />value:  3<br />Type: Review","Year: 2020<br />value:  3<br />Type: Review","Year: 2021<br />value:  3<br />Type: Review","Year: 2022<br />value:  5<br />Type: Review"],"type":"bar","textposition":"none","marker":{"autocolorscale":false,"color":"rgba(65,68,135,1)","line":{"width":1.88976377952756,"color":"transparent"}},"name":"Review","legendgroup":"Review","showlegend":false,"xaxis":"x2","yaxis":"y2","hoverinfo":"text","frame":null},{"orientation":"v","width":[0.9,0.9,0.9,0.9,0.9,0.9,0.9,0.899999999999999,0.899999999999999,0.899999999999999],"base":[0,0,0,0,0,0,0,0,0,0],"x":[1,2,3,4,5,6,7,8,9,10],"y":[2,4,6,6,6,9,7,4,13,13],"text":["Year: 2013<br />value:  2<br />Type: Empirical","Year: 2014<br />value:  4<br />Type: Empirical","Year: 2015<br />(PhD)<br />value:  6<br />Type: Empirical","Year: 2016<br />value:  6<br />Type: Empirical","Year: 2017<br />value:  6<br />Type: Empirical","Year: 2018<br />value:  9<br />Type: Empirical","Year: 2019<br />value:  7<br />Type: Empirical","Year: 2020<br />value:  4<br />Type: Empirical","Year: 2021<br />value: 13<br />Type: Empirical","Year: 2022<br />value: 13<br />Type: Empirical"],"type":"bar","textposition":"none","marker":{"autocolorscale":false,"color":"rgba(68,1,84,1)","line":{"width":1.88976377952756,"color":"transparent"}},"name":"Empirical","legendgroup":"Empirical","showlegend":true,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"orientation":"v","width":[0.9,0.9,0.9,0.9,0.9,0.9,0.9,0.899999999999999,0.899999999999999,0.899999999999999],"base":[0,0,0,0,0,0,0,0,0,0],"x":[1,2,3,4,5,6,7,8,9,10],"y":[2,6,12,18,24,33,40,44,57,70],"text":["Year: 2013<br />value:  2<br />Type: Empirical","Year: 2014<br />value:  6<br />Type: Empirical","Year: 2015<br />(PhD)<br />value: 12<br />Type: Empirical","Year: 2016<br />value: 18<br />Type: Empirical","Year: 2017<br />value: 24<br />Type: Empirical","Year: 2018<br />value: 33<br />Type: Empirical","Year: 2019<br />value: 40<br />Type: Empirical","Year: 2020<br />value: 44<br />Type: Empirical","Year: 2021<br />value: 57<br />Type: Empirical","Year: 2022<br />value: 70<br />Type: Empirical"],"type":"bar","textposition":"none","marker":{"autocolorscale":false,"color":"rgba(68,1,84,1)","line":{"width":1.88976377952756,"color":"transparent"}},"name":"Empirical","legendgroup":"Empirical","showlegend":false,"xaxis":"x2","yaxis":"y2","hoverinfo":"text","frame":null}],"layout":{"margin":{"t":37.4307458143075,"r":7.30593607305936,"b":25.0837138508371,"l":37.2602739726027},"plot_bgcolor":"rgba(255,255,255,1)","paper_bgcolor":"rgba(255,255,255,1)","font":{"color":"rgba(0,0,0,1)","family":"","size":14.6118721461187},"xaxis":{"domain":[0,0.470112079701121],"automargin":true,"type":"linear","autorange":false,"range":[0.55,10.45],"tickmode":"array","ticktext":["2013","2014","2015<br />(PhD)","2016","2017","2018","2019","2020","2021","2022"],"tickvals":[1,2,3,4,5,6,7,8,9,10],"categoryorder":"array","categoryarray":["2013","2014","2015<br />(PhD)","2016","2017","2018","2019","2020","2021","2022"],"nticks":null,"ticks":"outside","tickcolor":"rgba(51,51,51,1)","ticklen":3.65296803652968,"tickwidth":0.66417600664176,"showticklabels":true,"tickfont":{"color":"rgba(77,77,77,1)","family":"","size":11.689497716895},"tickangle":-0,"showline":true,"linecolor":"rgba(0,0,0,1)","linewidth":0.66417600664176,"showgrid":false,"gridcolor":null,"gridwidth":0,"zeroline":false,"anchor":"y","title":"","hoverformat":".2f"},"yaxis":{"domain":[0,1],"automargin":true,"type":"linear","autorange":false,"range":[0,19],"tickmode":"array","ticktext":["0","5","10","15"],"tickvals":[0,5,10,15],"categoryorder":"array","categoryarray":["0","5","10","15"],"nticks":null,"ticks":"outside","tickcolor":"rgba(51,51,51,1)","ticklen":3.65296803652968,"tickwidth":0.66417600664176,"showticklabels":true,"tickfont":{"color":"rgba(77,77,77,1)","family":"","size":11.689497716895},"tickangle":-0,"showline":true,"linecolor":"rgba(0,0,0,1)","linewidth":0.66417600664176,"showgrid":false,"gridcolor":null,"gridwidth":0,"zeroline":false,"anchor":"x","title":"","hoverformat":".2f"},"annotations":[{"text":"value","x":0,"y":0.5,"showarrow":false,"ax":0,"ay":0,"font":{"color":"rgba(0,0,0,1)","family":"","size":14.6118721461187},"xref":"paper","yref":"paper","textangle":-90,"xanchor":"right","yanchor":"center","annotationType":"axis","xshift":-21.9178082191781},{"text":"Yearly","x":0.23505603985056,"y":1,"showarrow":false,"ax":0,"ay":0,"font":{"color":"rgba(26,26,26,1)","family":"","size":11.689497716895},"xref":"paper","yref":"paper","textangle":-0,"xanchor":"center","yanchor":"bottom"},{"text":"Cumulative","x":0.76494396014944,"y":1,"showarrow":false,"ax":0,"ay":0,"font":{"color":"rgba(26,26,26,1)","family":"","size":11.689497716895},"xref":"paper","yref":"paper","textangle":-0,"xanchor":"center","yanchor":"bottom"}],"shapes":[{"type":"rect","fillcolor":null,"line":{"color":null,"width":0,"linetype":[]},"yref":"paper","xref":"paper","x0":0,"x1":0.470112079701121,"y0":0,"y1":1},{"type":"rect","fillcolor":"rgba(255,255,255,1)","line":{"color":"rgba(0,0,0,1)","width":1.32835201328352,"linetype":"solid"},"yref":"paper","xref":"paper","x0":0,"x1":0.470112079701121,"y0":0,"y1":23.37899543379,"yanchor":1,"ysizemode":"pixel"},{"type":"rect","fillcolor":null,"line":{"color":null,"width":0,"linetype":[]},"yref":"paper","xref":"paper","x0":0.529887920298879,"x1":1,"y0":0,"y1":1},{"type":"rect","fillcolor":"rgba(255,255,255,1)","line":{"color":"rgba(0,0,0,1)","width":1.32835201328352,"linetype":"solid"},"yref":"paper","xref":"paper","x0":0.529887920298879,"x1":1,"y0":0,"y1":23.37899543379,"yanchor":1,"ysizemode":"pixel"}],"xaxis2":{"type":"linear","autorange":false,"range":[0.55,10.45],"tickmode":"array","ticktext":["2013","2014","2015<br />(PhD)","2016","2017","2018","2019","2020","2021","2022"],"tickvals":[1,2,3,4,5,6,7,8,9,10],"categoryorder":"array","categoryarray":["2013","2014","2015<br />(PhD)","2016","2017","2018","2019","2020","2021","2022"],"nticks":null,"ticks":"outside","tickcolor":"rgba(51,51,51,1)","ticklen":3.65296803652968,"tickwidth":0.66417600664176,"showticklabels":true,"tickfont":{"color":"rgba(77,77,77,1)","family":"","size":11.689497716895},"tickangle":-0,"showline":true,"linecolor":"rgba(0,0,0,1)","linewidth":0.66417600664176,"showgrid":false,"domain":[0.529887920298879,1],"gridcolor":null,"gridwidth":0,"zeroline":false,"anchor":"y2","title":"","hoverformat":".2f"},"yaxis2":{"type":"linear","autorange":false,"range":[0,100],"tickmode":"array","ticktext":["0","25","50","75","100"],"tickvals":[0,25,50,75,100],"categoryorder":"array","categoryarray":["0","25","50","75","100"],"nticks":null,"ticks":"outside","tickcolor":"rgba(51,51,51,1)","ticklen":3.65296803652968,"tickwidth":0.66417600664176,"showticklabels":true,"tickfont":{"color":"rgba(77,77,77,1)","family":"","size":11.689497716895},"tickangle":-0,"showline":true,"linecolor":"rgba(0,0,0,1)","linewidth":0.66417600664176,"showgrid":false,"domain":[0,1],"gridcolor":null,"gridwidth":0,"zeroline":false,"anchor":"x2","title":"","hoverformat":".2f"},"showlegend":true,"legend":{"bgcolor":"rgba(255,255,255,1)","bordercolor":"transparent","borderwidth":1.88976377952756,"font":{"color":"rgba(0,0,0,1)","family":"","size":11.689497716895},"title":{"text":"Type","font":{"color":null,"family":null,"size":0}}},"hovermode":"closest","barmode":"relative"},"config":{"doubleClick":"reset","modeBarButtonsToAdd":["hoverclosest","hovercompare"],"showSendToCloud":false},"source":"A","attrs":{"99603563427f":{"x":{},"y":{},"fill":{},"type":"bar"}},"cur_data":"99603563427f","visdat":{"99603563427f":["function (y) ","x"]},"highlight":{"on":"plotly_click","persistent":false,"dynamic":false,"selectize":false,"opacityDim":0.2,"selected":{"opacity":1},"debounce":0},"shinyEvents":["plotly_hover","plotly_click","plotly_selected","plotly_relayout","plotly_brushed","plotly_brushing","plotly_clickannotation","plotly_doubleclick","plotly_deselect","plotly_afterplot","plotly_sunburstclick"],"base_url":"https://plot.ly"},"evals":[],"jsHooks":[]}</script></p>
-<p><div id="htmlwidget-ef178cb2fa1387161340" style="width:100%;height:400px;" class="plotly html-widget"></div> <script type="application/json" data-for="htmlwidget-ef178cb2fa1387161340">{"x":{"data":[{"orientation":"v","width":[0.900000000000091,0.900000000000091,0.900000000000091,0.900000000000091,0.900000000000091,0.900000000000091,0.900000000000091,0.900000000000091,0.900000000000091,0.900000000000091],"base":[0,0,0,0,0,0,0,0,0,0],"x":[2013,2014,2015,2016,2017,2018,2019,2020,2021,2022],"y":[15,44,89,132,219,317,385,633,2026,1423],"text":["year: 2013<br />cites:   15","year: 2014<br />cites:   44","year: 2015<br />cites:   89","year: 2016<br />cites:  132","year: 2017<br />cites:  219","year: 2018<br />cites:  317","year: 2019<br />cites:  385","year: 2020<br />cites:  633","year: 2021<br />cites: 2026","year: 2022<br />cites: 1423"],"type":"bar","textposition":"none","marker":{"autocolorscale":false,"color":"rgba(89,89,89,1)","line":{"width":1.88976377952756,"color":"transparent"}},"showlegend":false,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"orientation":"v","width":[0.900000000000091,0.900000000000091,0.900000000000091,0.900000000000091,0.900000000000091,0.900000000000091,0.900000000000091,0.900000000000091,0.900000000000091,0.900000000000091],"base":[0,0,0,0,0,0,0,0,0,0],"x":[2013,2014,2015,2016,2017,2018,2019,2020,2021,2022],"y":[15,59,148,280,499,816,1201,1834,3860,5283],"text":["year: 2013<br />cites:   15","year: 2014<br />cites:   59","year: 2015<br />cites:  148","year: 2016<br />cites:  280","year: 2017<br />cites:  499","year: 2018<br />cites:  816","year: 2019<br />cites: 1201","year: 2020<br />cites: 1834","year: 2021<br />cites: 3860","year: 2022<br />cites: 5283"],"type":"bar","textposition":"none","marker":{"autocolorscale":false,"color":"rgba(89,89,89,1)","line":{"width":1.88976377952756,"color":"transparent"}},"showlegend":false,"xaxis":"x2","yaxis":"y2","hoverinfo":"text","frame":null}],"layout":{"margin":{"t":54.9649923896499,"r":7.30593607305936,"b":25.0837138508371,"l":48.9497716894977},"plot_bgcolor":"rgba(255,255,255,1)","paper_bgcolor":"rgba(255,255,255,1)","font":{"color":"rgba(0,0,0,1)","family":"","size":14.6118721461187},"title":{"text":"Google Scholar Citations","font":{"color":"rgba(0,0,0,1)","family":"","size":17.5342465753425},"x":0,"xref":"paper"},"xaxis":{"domain":[0,0.463262764632628],"automargin":true,"type":"linear","autorange":false,"range":[2012.55,2022.45],"tickmode":"array","ticktext":["2013","2015","2017","2019","2021"],"tickvals":[2013,2015,2017,2019,2021],"categoryorder":"array","categoryarray":["2013","2015","2017","2019","2021"],"nticks":null,"ticks":"outside","tickcolor":"rgba(51,51,51,1)","ticklen":3.65296803652968,"tickwidth":0.66417600664176,"showticklabels":true,"tickfont":{"color":"rgba(77,77,77,1)","family":"","size":11.689497716895},"tickangle":-0,"showline":true,"linecolor":"rgba(0,0,0,1)","linewidth":0.66417600664176,"showgrid":false,"gridcolor":null,"gridwidth":0,"zeroline":false,"anchor":"y","title":"","hoverformat":".2f"},"yaxis":{"domain":[0,1],"automargin":true,"type":"linear","autorange":false,"range":[0,2026],"tickmode":"array","ticktext":["0","500","1000","1500","2000"],"tickvals":[0,500,1000,1500,2000],"categoryorder":"array","categoryarray":["0","500","1000","1500","2000"],"nticks":null,"ticks":"outside","tickcolor":"rgba(51,51,51,1)","ticklen":3.65296803652968,"tickwidth":0.66417600664176,"showticklabels":true,"tickfont":{"color":"rgba(77,77,77,1)","family":"","size":11.689497716895},"tickangle":-0,"showline":true,"linecolor":"rgba(0,0,0,1)","linewidth":0.66417600664176,"showgrid":false,"gridcolor":null,"gridwidth":0,"zeroline":false,"anchor":"x","title":"","hoverformat":".2f"},"annotations":[{"text":"Number of Citations","x":0,"y":0.5,"showarrow":false,"ax":0,"ay":0,"font":{"color":"rgba(0,0,0,1)","family":"","size":14.6118721461187},"xref":"paper","yref":"paper","textangle":-90,"xanchor":"right","yanchor":"center","annotationType":"axis","xshift":-33.6073059360731},{"text":"Yearly","x":0.231631382316314,"y":1,"showarrow":false,"ax":0,"ay":0,"font":{"color":"rgba(26,26,26,1)","family":"","size":11.689497716895},"xref":"paper","yref":"paper","textangle":-0,"xanchor":"center","yanchor":"bottom"},{"text":"Cumulative","x":0.768368617683686,"y":1,"showarrow":false,"ax":0,"ay":0,"font":{"color":"rgba(26,26,26,1)","family":"","size":11.689497716895},"xref":"paper","yref":"paper","textangle":-0,"xanchor":"center","yanchor":"bottom"}],"shapes":[{"type":"rect","fillcolor":null,"line":{"color":null,"width":0,"linetype":[]},"yref":"paper","xref":"paper","x0":0,"x1":0.463262764632628,"y0":0,"y1":1},{"type":"rect","fillcolor":"rgba(255,255,255,1)","line":{"color":"rgba(0,0,0,1)","width":1.32835201328352,"linetype":"solid"},"yref":"paper","xref":"paper","x0":0,"x1":0.463262764632628,"y0":0,"y1":23.37899543379,"yanchor":1,"ysizemode":"pixel"},{"type":"rect","fillcolor":null,"line":{"color":null,"width":0,"linetype":[]},"yref":"paper","xref":"paper","x0":0.536737235367372,"x1":1,"y0":0,"y1":1},{"type":"rect","fillcolor":"rgba(255,255,255,1)","line":{"color":"rgba(0,0,0,1)","width":1.32835201328352,"linetype":"solid"},"yref":"paper","xref":"paper","x0":0.536737235367372,"x1":1,"y0":0,"y1":23.37899543379,"yanchor":1,"ysizemode":"pixel"}],"xaxis2":{"type":"linear","autorange":false,"range":[2012.55,2022.45],"tickmode":"array","ticktext":["2013","2015","2017","2019","2021"],"tickvals":[2013,2015,2017,2019,2021],"categoryorder":"array","categoryarray":["2013","2015","2017","2019","2021"],"nticks":null,"ticks":"outside","tickcolor":"rgba(51,51,51,1)","ticklen":3.65296803652968,"tickwidth":0.66417600664176,"showticklabels":true,"tickfont":{"color":"rgba(77,77,77,1)","family":"","size":11.689497716895},"tickangle":-0,"showline":true,"linecolor":"rgba(0,0,0,1)","linewidth":0.66417600664176,"showgrid":false,"domain":[0.536737235367372,1],"gridcolor":null,"gridwidth":0,"zeroline":false,"anchor":"y2","title":"","hoverformat":".2f"},"yaxis2":{"type":"linear","autorange":false,"range":[0,5283],"tickmode":"array","ticktext":["0","1000","2000","3000","4000","5000"],"tickvals":[0,1000,2000,3000,4000,5000],"categoryorder":"array","categoryarray":["0","1000","2000","3000","4000","5000"],"nticks":null,"ticks":"outside","tickcolor":"rgba(51,51,51,1)","ticklen":3.65296803652968,"tickwidth":0.66417600664176,"showticklabels":true,"tickfont":{"color":"rgba(77,77,77,1)","family":"","size":11.689497716895},"tickangle":-0,"showline":true,"linecolor":"rgba(0,0,0,1)","linewidth":0.66417600664176,"showgrid":false,"domain":[0,1],"gridcolor":null,"gridwidth":0,"zeroline":false,"anchor":"x2","title":"","hoverformat":".2f"},"showlegend":false,"legend":{"bgcolor":"rgba(255,255,255,1)","bordercolor":"transparent","borderwidth":1.88976377952756,"font":{"color":"rgba(0,0,0,1)","family":"","size":11.689497716895}},"hovermode":"closest","barmode":"relative"},"config":{"doubleClick":"reset","modeBarButtonsToAdd":["hoverclosest","hovercompare"],"showSendToCloud":false},"source":"A","attrs":{"9960533c72":{"x":{},"y":{},"type":"bar"}},"cur_data":"9960533c72","visdat":{"9960533c72":["function (y) ","x"]},"highlight":{"on":"plotly_click","persistent":false,"dynamic":false,"selectize":false,"opacityDim":0.2,"selected":{"opacity":1},"debounce":0},"shinyEvents":["plotly_hover","plotly_click","plotly_selected","plotly_relayout","plotly_brushed","plotly_brushing","plotly_clickannotation","plotly_doubleclick","plotly_deselect","plotly_afterplot","plotly_sunburstclick"],"base_url":"https://plot.ly"},"evals":[],"jsHooks":[]}</script></p>
+<p><div id="htmlwidget-d31531d0210b7080424c" style="width:100%;height:400px;" class="plotly html-widget"></div> <script type="application/json" data-for="htmlwidget-d31531d0210b7080424c">{"x":{"data":[{"orientation":"v","width":[0.9,0.9,0.9,0.9,0.9,0.9,0.9,0.899999999999999,0.899999999999999,0.899999999999999],"base":[2,5,7,10,7,10,9,8,15,21],"x":[1,2,3,4,5,6,7,8,9,10],"y":[0,1,0,1,3,0,1,0,2,0],"text":["Year: 2013<br />value:  0<br />Type: Editorial","Year: 2014<br />value:  1<br />Type: Editorial","Year: 2015<br />(PhD)<br />value:  0<br />Type: Editorial","Year: 2016<br />value:  1<br />Type: Editorial","Year: 2017<br />value:  3<br />Type: Editorial","Year: 2018<br />value:  0<br />Type: Editorial","Year: 2019<br />value:  1<br />Type: Editorial","Year: 2020<br />value:  0<br />Type: Editorial","Year: 2021<br />value:  2<br />Type: Editorial","Year: 2022<br />value:  0<br />Type: Editorial"],"type":"bar","textposition":"none","marker":{"autocolorscale":false,"color":"rgba(253,231,37,1)","line":{"width":1.88976377952756,"color":"transparent"}},"name":"Editorial","legendgroup":"Editorial","showlegend":true,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"orientation":"v","width":[0.9,0.9,0.9,0.9,0.9,0.9,0.9,0.899999999999999,0.899999999999999,0.899999999999999],"base":[2,7,14,24,31,41,50,58,73,94],"x":[1,2,3,4,5,6,7,8,9,10],"y":[0,1,1,2,5,5,6,6,8,8],"text":["Year: 2013<br />value:  0<br />Type: Editorial","Year: 2014<br />value:  1<br />Type: Editorial","Year: 2015<br />(PhD)<br />value:  1<br />Type: Editorial","Year: 2016<br />value:  2<br />Type: Editorial","Year: 2017<br />value:  5<br />Type: Editorial","Year: 2018<br />value:  5<br />Type: Editorial","Year: 2019<br />value:  6<br />Type: Editorial","Year: 2020<br />value:  6<br />Type: Editorial","Year: 2021<br />value:  8<br />Type: Editorial","Year: 2022<br />value:  8<br />Type: Editorial"],"type":"bar","textposition":"none","marker":{"autocolorscale":false,"color":"rgba(253,231,37,1)","line":{"width":1.88976377952756,"color":"transparent"}},"name":"Editorial","legendgroup":"Editorial","showlegend":false,"xaxis":"x2","yaxis":"y2","hoverinfo":"text","frame":null},{"orientation":"v","width":[0.9,0.9,0.9,0.9,0.9,0.9,0.9,0.899999999999999,0.899999999999999,0.899999999999999],"base":[2,5,7,9,7,10,8,8,14,21],"x":[1,2,3,4,5,6,7,8,9,10],"y":[0,0,0,1,0,0,1,0,1,0],"text":["Year: 2013<br />value:  0<br />Type: Book Chapter","Year: 2014<br />value:  0<br />Type: Book Chapter","Year: 2015<br />(PhD)<br />value:  0<br />Type: Book Chapter","Year: 2016<br />value:  1<br />Type: Book Chapter","Year: 2017<br />value:  0<br />Type: Book Chapter","Year: 2018<br />value:  0<br />Type: Book Chapter","Year: 2019<br />value:  1<br />Type: Book Chapter","Year: 2020<br />value:  0<br />Type: Book Chapter","Year: 2021<br />value:  1<br />Type: Book Chapter","Year: 2022<br />value:  0<br />Type: Book Chapter"],"type":"bar","textposition":"none","marker":{"autocolorscale":false,"color":"rgba(122,209,81,1)","line":{"width":1.88976377952756,"color":"transparent"}},"name":"Book Chapter","legendgroup":"Book Chapter","showlegend":true,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"orientation":"v","width":[0.9,0.9,0.9,0.9,0.9,0.9,0.9,0.899999999999999,0.899999999999999,0.899999999999999],"base":[2,7,14,23,30,40,48,56,70,91],"x":[1,2,3,4,5,6,7,8,9,10],"y":[0,0,0,1,1,1,2,2,3,3],"text":["Year: 2013<br />value:  0<br />Type: Book Chapter","Year: 2014<br />value:  0<br />Type: Book Chapter","Year: 2015<br />(PhD)<br />value:  0<br />Type: Book Chapter","Year: 2016<br />value:  1<br />Type: Book Chapter","Year: 2017<br />value:  1<br />Type: Book Chapter","Year: 2018<br />value:  1<br />Type: Book Chapter","Year: 2019<br />value:  2<br />Type: Book Chapter","Year: 2020<br />value:  2<br />Type: Book Chapter","Year: 2021<br />value:  3<br />Type: Book Chapter","Year: 2022<br />value:  3<br />Type: Book Chapter"],"type":"bar","textposition":"none","marker":{"autocolorscale":false,"color":"rgba(122,209,81,1)","line":{"width":1.88976377952756,"color":"transparent"}},"name":"Book Chapter","legendgroup":"Book Chapter","showlegend":false,"xaxis":"x2","yaxis":"y2","hoverinfo":"text","frame":null},{"orientation":"v","width":[0.9,0.9,0.9,0.9,0.9,0.9,0.9,0.899999999999999,0.899999999999999,0.899999999999999],"base":[2,5,6,7,7,9,7,6,14,21],"x":[1,2,3,4,5,6,7,8,9,10],"y":[0,0,1,2,0,1,1,2,0,0],"text":["Year: 2013<br />value:  0<br />Type: Book","Year: 2014<br />value:  0<br />Type: Book","Year: 2015<br />(PhD)<br />value:  1<br />Type: Book","Year: 2016<br />value:  2<br />Type: Book","Year: 2017<br />value:  0<br />Type: Book","Year: 2018<br />value:  1<br />Type: Book","Year: 2019<br />value:  1<br />Type: Book","Year: 2020<br />value:  2<br />Type: Book","Year: 2021<br />value:  0<br />Type: Book","Year: 2022<br />value:  0<br />Type: Book"],"type":"bar","textposition":"none","marker":{"autocolorscale":false,"color":"rgba(34,168,132,1)","line":{"width":1.88976377952756,"color":"transparent"}},"name":"Book","legendgroup":"Book","showlegend":true,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"orientation":"v","width":[0.9,0.9,0.9,0.9,0.9,0.9,0.9,0.899999999999999,0.899999999999999,0.899999999999999],"base":[2,7,13,20,27,36,43,49,63,84],"x":[1,2,3,4,5,6,7,8,9,10],"y":[0,0,1,3,3,4,5,7,7,7],"text":["Year: 2013<br />value:  0<br />Type: Book","Year: 2014<br />value:  0<br />Type: Book","Year: 2015<br />(PhD)<br />value:  1<br />Type: Book","Year: 2016<br />value:  3<br />Type: Book","Year: 2017<br />value:  3<br />Type: Book","Year: 2018<br />value:  4<br />Type: Book","Year: 2019<br />value:  5<br />Type: Book","Year: 2020<br />value:  7<br />Type: Book","Year: 2021<br />value:  7<br />Type: Book","Year: 2022<br />value:  7<br />Type: Book"],"type":"bar","textposition":"none","marker":{"autocolorscale":false,"color":"rgba(34,168,132,1)","line":{"width":1.88976377952756,"color":"transparent"}},"name":"Book","legendgroup":"Book","showlegend":false,"xaxis":"x2","yaxis":"y2","hoverinfo":"text","frame":null},{"orientation":"v","width":[0.9,0.9,0.9,0.9,0.9,0.9,0.9,0.899999999999999,0.899999999999999,0.899999999999999],"base":[2,5,6,7,7,9,7,4,13,16],"x":[1,2,3,4,5,6,7,8,9,10],"y":[0,0,0,0,0,0,0,2,1,5],"text":["Year: 2013<br />value:  0<br />Type: Protocol","Year: 2014<br />value:  0<br />Type: Protocol","Year: 2015<br />(PhD)<br />value:  0<br />Type: Protocol","Year: 2016<br />value:  0<br />Type: Protocol","Year: 2017<br />value:  0<br />Type: Protocol","Year: 2018<br />value:  0<br />Type: Protocol","Year: 2019<br />value:  0<br />Type: Protocol","Year: 2020<br />value:  2<br />Type: Protocol","Year: 2021<br />value:  1<br />Type: Protocol","Year: 2022<br />value:  5<br />Type: Protocol"],"type":"bar","textposition":"none","marker":{"autocolorscale":false,"color":"rgba(42,120,142,1)","line":{"width":1.88976377952756,"color":"transparent"}},"name":"Protocol","legendgroup":"Protocol","showlegend":true,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"orientation":"v","width":[0.9,0.9,0.9,0.9,0.9,0.9,0.9,0.899999999999999,0.899999999999999,0.899999999999999],"base":[2,7,13,20,27,36,43,47,60,76],"x":[1,2,3,4,5,6,7,8,9,10],"y":[0,0,0,0,0,0,0,2,3,8],"text":["Year: 2013<br />value:  0<br />Type: Protocol","Year: 2014<br />value:  0<br />Type: Protocol","Year: 2015<br />(PhD)<br />value:  0<br />Type: Protocol","Year: 2016<br />value:  0<br />Type: Protocol","Year: 2017<br />value:  0<br />Type: Protocol","Year: 2018<br />value:  0<br />Type: Protocol","Year: 2019<br />value:  0<br />Type: Protocol","Year: 2020<br />value:  2<br />Type: Protocol","Year: 2021<br />value:  3<br />Type: Protocol","Year: 2022<br />value:  8<br />Type: Protocol"],"type":"bar","textposition":"none","marker":{"autocolorscale":false,"color":"rgba(42,120,142,1)","line":{"width":1.88976377952756,"color":"transparent"}},"name":"Protocol","legendgroup":"Protocol","showlegend":false,"xaxis":"x2","yaxis":"y2","hoverinfo":"text","frame":null},{"orientation":"v","width":[0.9,0.9,0.9,0.9,0.9,0.9,0.9,0.899999999999999,0.899999999999999,0.899999999999999],"base":[2,4,6,6,6,9,7,4,13,14],"x":[1,2,3,4,5,6,7,8,9,10],"y":[0,1,0,1,1,0,0,0,0,2],"text":["Year: 2013<br />value:  0<br />Type: Review","Year: 2014<br />value:  1<br />Type: Review","Year: 2015<br />(PhD)<br />value:  0<br />Type: Review","Year: 2016<br />value:  1<br />Type: Review","Year: 2017<br />value:  1<br />Type: Review","Year: 2018<br />value:  0<br />Type: Review","Year: 2019<br />value:  0<br />Type: Review","Year: 2020<br />value:  0<br />Type: Review","Year: 2021<br />value:  0<br />Type: Review","Year: 2022<br />value:  2<br />Type: Review"],"type":"bar","textposition":"none","marker":{"autocolorscale":false,"color":"rgba(65,68,135,1)","line":{"width":1.88976377952756,"color":"transparent"}},"name":"Review","legendgroup":"Review","showlegend":true,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"orientation":"v","width":[0.9,0.9,0.9,0.9,0.9,0.9,0.9,0.899999999999999,0.899999999999999,0.899999999999999],"base":[2,6,12,18,24,33,40,44,57,71],"x":[1,2,3,4,5,6,7,8,9,10],"y":[0,1,1,2,3,3,3,3,3,5],"text":["Year: 2013<br />value:  0<br />Type: Review","Year: 2014<br />value:  1<br />Type: Review","Year: 2015<br />(PhD)<br />value:  1<br />Type: Review","Year: 2016<br />value:  2<br />Type: Review","Year: 2017<br />value:  3<br />Type: Review","Year: 2018<br />value:  3<br />Type: Review","Year: 2019<br />value:  3<br />Type: Review","Year: 2020<br />value:  3<br />Type: Review","Year: 2021<br />value:  3<br />Type: Review","Year: 2022<br />value:  5<br />Type: Review"],"type":"bar","textposition":"none","marker":{"autocolorscale":false,"color":"rgba(65,68,135,1)","line":{"width":1.88976377952756,"color":"transparent"}},"name":"Review","legendgroup":"Review","showlegend":false,"xaxis":"x2","yaxis":"y2","hoverinfo":"text","frame":null},{"orientation":"v","width":[0.9,0.9,0.9,0.9,0.9,0.9,0.9,0.899999999999999,0.899999999999999,0.899999999999999],"base":[0,0,0,0,0,0,0,0,0,0],"x":[1,2,3,4,5,6,7,8,9,10],"y":[2,4,6,6,6,9,7,4,13,14],"text":["Year: 2013<br />value:  2<br />Type: Empirical","Year: 2014<br />value:  4<br />Type: Empirical","Year: 2015<br />(PhD)<br />value:  6<br />Type: Empirical","Year: 2016<br />value:  6<br />Type: Empirical","Year: 2017<br />value:  6<br />Type: Empirical","Year: 2018<br />value:  9<br />Type: Empirical","Year: 2019<br />value:  7<br />Type: Empirical","Year: 2020<br />value:  4<br />Type: Empirical","Year: 2021<br />value: 13<br />Type: Empirical","Year: 2022<br />value: 14<br />Type: Empirical"],"type":"bar","textposition":"none","marker":{"autocolorscale":false,"color":"rgba(68,1,84,1)","line":{"width":1.88976377952756,"color":"transparent"}},"name":"Empirical","legendgroup":"Empirical","showlegend":true,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"orientation":"v","width":[0.9,0.9,0.9,0.9,0.9,0.9,0.9,0.899999999999999,0.899999999999999,0.899999999999999],"base":[0,0,0,0,0,0,0,0,0,0],"x":[1,2,3,4,5,6,7,8,9,10],"y":[2,6,12,18,24,33,40,44,57,71],"text":["Year: 2013<br />value:  2<br />Type: Empirical","Year: 2014<br />value:  6<br />Type: Empirical","Year: 2015<br />(PhD)<br />value: 12<br />Type: Empirical","Year: 2016<br />value: 18<br />Type: Empirical","Year: 2017<br />value: 24<br />Type: Empirical","Year: 2018<br />value: 33<br />Type: Empirical","Year: 2019<br />value: 40<br />Type: Empirical","Year: 2020<br />value: 44<br />Type: Empirical","Year: 2021<br />value: 57<br />Type: Empirical","Year: 2022<br />value: 71<br />Type: Empirical"],"type":"bar","textposition":"none","marker":{"autocolorscale":false,"color":"rgba(68,1,84,1)","line":{"width":1.88976377952756,"color":"transparent"}},"name":"Empirical","legendgroup":"Empirical","showlegend":false,"xaxis":"x2","yaxis":"y2","hoverinfo":"text","frame":null}],"layout":{"margin":{"t":37.4307458143075,"r":7.30593607305936,"b":25.0837138508371,"l":37.2602739726027},"plot_bgcolor":"rgba(255,255,255,1)","paper_bgcolor":"rgba(255,255,255,1)","font":{"color":"rgba(0,0,0,1)","family":"","size":14.6118721461187},"xaxis":{"domain":[0,0.470112079701121],"automargin":true,"type":"linear","autorange":false,"range":[0.55,10.45],"tickmode":"array","ticktext":["2013","2014","2015<br />(PhD)","2016","2017","2018","2019","2020","2021","2022"],"tickvals":[1,2,3,4,5,6,7,8,9,10],"categoryorder":"array","categoryarray":["2013","2014","2015<br />(PhD)","2016","2017","2018","2019","2020","2021","2022"],"nticks":null,"ticks":"outside","tickcolor":"rgba(51,51,51,1)","ticklen":3.65296803652968,"tickwidth":0.66417600664176,"showticklabels":true,"tickfont":{"color":"rgba(77,77,77,1)","family":"","size":11.689497716895},"tickangle":-0,"showline":true,"linecolor":"rgba(0,0,0,1)","linewidth":0.66417600664176,"showgrid":false,"gridcolor":null,"gridwidth":0,"zeroline":false,"anchor":"y","title":"","hoverformat":".2f"},"yaxis":{"domain":[0,1],"automargin":true,"type":"linear","autorange":false,"range":[0,21],"tickmode":"array","ticktext":["0","5","10","15","20"],"tickvals":[0,5,10,15,20],"categoryorder":"array","categoryarray":["0","5","10","15","20"],"nticks":null,"ticks":"outside","tickcolor":"rgba(51,51,51,1)","ticklen":3.65296803652968,"tickwidth":0.66417600664176,"showticklabels":true,"tickfont":{"color":"rgba(77,77,77,1)","family":"","size":11.689497716895},"tickangle":-0,"showline":true,"linecolor":"rgba(0,0,0,1)","linewidth":0.66417600664176,"showgrid":false,"gridcolor":null,"gridwidth":0,"zeroline":false,"anchor":"x","title":"","hoverformat":".2f"},"annotations":[{"text":"value","x":0,"y":0.5,"showarrow":false,"ax":0,"ay":0,"font":{"color":"rgba(0,0,0,1)","family":"","size":14.6118721461187},"xref":"paper","yref":"paper","textangle":-90,"xanchor":"right","yanchor":"center","annotationType":"axis","xshift":-21.9178082191781},{"text":"Yearly","x":0.23505603985056,"y":1,"showarrow":false,"ax":0,"ay":0,"font":{"color":"rgba(26,26,26,1)","family":"","size":11.689497716895},"xref":"paper","yref":"paper","textangle":-0,"xanchor":"center","yanchor":"bottom"},{"text":"Cumulative","x":0.76494396014944,"y":1,"showarrow":false,"ax":0,"ay":0,"font":{"color":"rgba(26,26,26,1)","family":"","size":11.689497716895},"xref":"paper","yref":"paper","textangle":-0,"xanchor":"center","yanchor":"bottom"}],"shapes":[{"type":"rect","fillcolor":null,"line":{"color":null,"width":0,"linetype":[]},"yref":"paper","xref":"paper","x0":0,"x1":0.470112079701121,"y0":0,"y1":1},{"type":"rect","fillcolor":"rgba(255,255,255,1)","line":{"color":"rgba(0,0,0,1)","width":1.32835201328352,"linetype":"solid"},"yref":"paper","xref":"paper","x0":0,"x1":0.470112079701121,"y0":0,"y1":23.37899543379,"yanchor":1,"ysizemode":"pixel"},{"type":"rect","fillcolor":null,"line":{"color":null,"width":0,"linetype":[]},"yref":"paper","xref":"paper","x0":0.529887920298879,"x1":1,"y0":0,"y1":1},{"type":"rect","fillcolor":"rgba(255,255,255,1)","line":{"color":"rgba(0,0,0,1)","width":1.32835201328352,"linetype":"solid"},"yref":"paper","xref":"paper","x0":0.529887920298879,"x1":1,"y0":0,"y1":23.37899543379,"yanchor":1,"ysizemode":"pixel"}],"xaxis2":{"type":"linear","autorange":false,"range":[0.55,10.45],"tickmode":"array","ticktext":["2013","2014","2015<br />(PhD)","2016","2017","2018","2019","2020","2021","2022"],"tickvals":[1,2,3,4,5,6,7,8,9,10],"categoryorder":"array","categoryarray":["2013","2014","2015<br />(PhD)","2016","2017","2018","2019","2020","2021","2022"],"nticks":null,"ticks":"outside","tickcolor":"rgba(51,51,51,1)","ticklen":3.65296803652968,"tickwidth":0.66417600664176,"showticklabels":true,"tickfont":{"color":"rgba(77,77,77,1)","family":"","size":11.689497716895},"tickangle":-0,"showline":true,"linecolor":"rgba(0,0,0,1)","linewidth":0.66417600664176,"showgrid":false,"domain":[0.529887920298879,1],"gridcolor":null,"gridwidth":0,"zeroline":false,"anchor":"y2","title":"","hoverformat":".2f"},"yaxis2":{"type":"linear","autorange":false,"range":[0,102],"tickmode":"array","ticktext":["0","25","50","75","100"],"tickvals":[0,25,50,75,100],"categoryorder":"array","categoryarray":["0","25","50","75","100"],"nticks":null,"ticks":"outside","tickcolor":"rgba(51,51,51,1)","ticklen":3.65296803652968,"tickwidth":0.66417600664176,"showticklabels":true,"tickfont":{"color":"rgba(77,77,77,1)","family":"","size":11.689497716895},"tickangle":-0,"showline":true,"linecolor":"rgba(0,0,0,1)","linewidth":0.66417600664176,"showgrid":false,"domain":[0,1],"gridcolor":null,"gridwidth":0,"zeroline":false,"anchor":"x2","title":"","hoverformat":".2f"},"showlegend":true,"legend":{"bgcolor":"rgba(255,255,255,1)","bordercolor":"transparent","borderwidth":1.88976377952756,"font":{"color":"rgba(0,0,0,1)","family":"","size":11.689497716895},"title":{"text":"Type","font":{"color":null,"family":null,"size":0}}},"hovermode":"closest","barmode":"relative"},"config":{"doubleClick":"reset","modeBarButtonsToAdd":["hoverclosest","hovercompare"],"showSendToCloud":false},"source":"A","attrs":{"52d82f1331eb":{"x":{},"y":{},"fill":{},"type":"bar"}},"cur_data":"52d82f1331eb","visdat":{"52d82f1331eb":["function (y) ","x"]},"highlight":{"on":"plotly_click","persistent":false,"dynamic":false,"selectize":false,"opacityDim":0.2,"selected":{"opacity":1},"debounce":0},"shinyEvents":["plotly_hover","plotly_click","plotly_selected","plotly_relayout","plotly_brushed","plotly_brushing","plotly_clickannotation","plotly_doubleclick","plotly_deselect","plotly_afterplot","plotly_sunburstclick"],"base_url":"https://plot.ly"},"evals":[],"jsHooks":[]}</script></p>
+<p><div id="htmlwidget-93dc806161ab16ef7d32" style="width:100%;height:400px;" class="plotly html-widget"></div> <script type="application/json" data-for="htmlwidget-93dc806161ab16ef7d32">{"x":{"data":[{"orientation":"v","width":[0.900000000000091,0.900000000000091,0.900000000000091,0.900000000000091,0.900000000000091,0.900000000000091,0.900000000000091,0.900000000000091,0.900000000000091,0.900000000000091],"base":[0,0,0,0,0,0,0,0,0,0],"x":[2013,2014,2015,2016,2017,2018,2019,2020,2021,2022],"y":[15,44,89,132,219,318,389,640,2018,1864],"text":["year: 2013<br />cites:   15","year: 2014<br />cites:   44","year: 2015<br />cites:   89","year: 2016<br />cites:  132","year: 2017<br />cites:  219","year: 2018<br />cites:  318","year: 2019<br />cites:  389","year: 2020<br />cites:  640","year: 2021<br />cites: 2018","year: 2022<br />cites: 1864"],"type":"bar","textposition":"none","marker":{"autocolorscale":false,"color":"rgba(89,89,89,1)","line":{"width":1.88976377952756,"color":"transparent"}},"showlegend":false,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"orientation":"v","width":[0.900000000000091,0.900000000000091,0.900000000000091,0.900000000000091,0.900000000000091,0.900000000000091,0.900000000000091,0.900000000000091,0.900000000000091,0.900000000000091],"base":[0,0,0,0,0,0,0,0,0,0],"x":[2013,2014,2015,2016,2017,2018,2019,2020,2021,2022],"y":[15,59,148,280,499,817,1206,1846,3864,5728],"text":["year: 2013<br />cites:   15","year: 2014<br />cites:   59","year: 2015<br />cites:  148","year: 2016<br />cites:  280","year: 2017<br />cites:  499","year: 2018<br />cites:  817","year: 2019<br />cites: 1206","year: 2020<br />cites: 1846","year: 2021<br />cites: 3864","year: 2022<br />cites: 5728"],"type":"bar","textposition":"none","marker":{"autocolorscale":false,"color":"rgba(89,89,89,1)","line":{"width":1.88976377952756,"color":"transparent"}},"showlegend":false,"xaxis":"x2","yaxis":"y2","hoverinfo":"text","frame":null}],"layout":{"margin":{"t":54.9649923896499,"r":7.30593607305936,"b":25.0837138508371,"l":48.9497716894977},"plot_bgcolor":"rgba(255,255,255,1)","paper_bgcolor":"rgba(255,255,255,1)","font":{"color":"rgba(0,0,0,1)","family":"","size":14.6118721461187},"title":{"text":"Google Scholar Citations","font":{"color":"rgba(0,0,0,1)","family":"","size":17.5342465753425},"x":0,"xref":"paper"},"xaxis":{"domain":[0,0.463262764632628],"automargin":true,"type":"linear","autorange":false,"range":[2012.55,2022.45],"tickmode":"array","ticktext":["2013","2015","2017","2019","2021"],"tickvals":[2013,2015,2017,2019,2021],"categoryorder":"array","categoryarray":["2013","2015","2017","2019","2021"],"nticks":null,"ticks":"outside","tickcolor":"rgba(51,51,51,1)","ticklen":3.65296803652968,"tickwidth":0.66417600664176,"showticklabels":true,"tickfont":{"color":"rgba(77,77,77,1)","family":"","size":11.689497716895},"tickangle":-0,"showline":true,"linecolor":"rgba(0,0,0,1)","linewidth":0.66417600664176,"showgrid":false,"gridcolor":null,"gridwidth":0,"zeroline":false,"anchor":"y","title":"","hoverformat":".2f"},"yaxis":{"domain":[0,1],"automargin":true,"type":"linear","autorange":false,"range":[0,2018],"tickmode":"array","ticktext":["0","500","1000","1500","2000"],"tickvals":[0,500,1000,1500,2000],"categoryorder":"array","categoryarray":["0","500","1000","1500","2000"],"nticks":null,"ticks":"outside","tickcolor":"rgba(51,51,51,1)","ticklen":3.65296803652968,"tickwidth":0.66417600664176,"showticklabels":true,"tickfont":{"color":"rgba(77,77,77,1)","family":"","size":11.689497716895},"tickangle":-0,"showline":true,"linecolor":"rgba(0,0,0,1)","linewidth":0.66417600664176,"showgrid":false,"gridcolor":null,"gridwidth":0,"zeroline":false,"anchor":"x","title":"","hoverformat":".2f"},"annotations":[{"text":"Number of Citations","x":0,"y":0.5,"showarrow":false,"ax":0,"ay":0,"font":{"color":"rgba(0,0,0,1)","family":"","size":14.6118721461187},"xref":"paper","yref":"paper","textangle":-90,"xanchor":"right","yanchor":"center","annotationType":"axis","xshift":-33.6073059360731},{"text":"Yearly","x":0.231631382316314,"y":1,"showarrow":false,"ax":0,"ay":0,"font":{"color":"rgba(26,26,26,1)","family":"","size":11.689497716895},"xref":"paper","yref":"paper","textangle":-0,"xanchor":"center","yanchor":"bottom"},{"text":"Cumulative","x":0.768368617683686,"y":1,"showarrow":false,"ax":0,"ay":0,"font":{"color":"rgba(26,26,26,1)","family":"","size":11.689497716895},"xref":"paper","yref":"paper","textangle":-0,"xanchor":"center","yanchor":"bottom"}],"shapes":[{"type":"rect","fillcolor":null,"line":{"color":null,"width":0,"linetype":[]},"yref":"paper","xref":"paper","x0":0,"x1":0.463262764632628,"y0":0,"y1":1},{"type":"rect","fillcolor":"rgba(255,255,255,1)","line":{"color":"rgba(0,0,0,1)","width":1.32835201328352,"linetype":"solid"},"yref":"paper","xref":"paper","x0":0,"x1":0.463262764632628,"y0":0,"y1":23.37899543379,"yanchor":1,"ysizemode":"pixel"},{"type":"rect","fillcolor":null,"line":{"color":null,"width":0,"linetype":[]},"yref":"paper","xref":"paper","x0":0.536737235367372,"x1":1,"y0":0,"y1":1},{"type":"rect","fillcolor":"rgba(255,255,255,1)","line":{"color":"rgba(0,0,0,1)","width":1.32835201328352,"linetype":"solid"},"yref":"paper","xref":"paper","x0":0.536737235367372,"x1":1,"y0":0,"y1":23.37899543379,"yanchor":1,"ysizemode":"pixel"}],"xaxis2":{"type":"linear","autorange":false,"range":[2012.55,2022.45],"tickmode":"array","ticktext":["2013","2015","2017","2019","2021"],"tickvals":[2013,2015,2017,2019,2021],"categoryorder":"array","categoryarray":["2013","2015","2017","2019","2021"],"nticks":null,"ticks":"outside","tickcolor":"rgba(51,51,51,1)","ticklen":3.65296803652968,"tickwidth":0.66417600664176,"showticklabels":true,"tickfont":{"color":"rgba(77,77,77,1)","family":"","size":11.689497716895},"tickangle":-0,"showline":true,"linecolor":"rgba(0,0,0,1)","linewidth":0.66417600664176,"showgrid":false,"domain":[0.536737235367372,1],"gridcolor":null,"gridwidth":0,"zeroline":false,"anchor":"y2","title":"","hoverformat":".2f"},"yaxis2":{"type":"linear","autorange":false,"range":[0,5728],"tickmode":"array","ticktext":["0","1000","2000","3000","4000","5000"],"tickvals":[0,1000,2000,3000,4000,5000],"categoryorder":"array","categoryarray":["0","1000","2000","3000","4000","5000"],"nticks":null,"ticks":"outside","tickcolor":"rgba(51,51,51,1)","ticklen":3.65296803652968,"tickwidth":0.66417600664176,"showticklabels":true,"tickfont":{"color":"rgba(77,77,77,1)","family":"","size":11.689497716895},"tickangle":-0,"showline":true,"linecolor":"rgba(0,0,0,1)","linewidth":0.66417600664176,"showgrid":false,"domain":[0,1],"gridcolor":null,"gridwidth":0,"zeroline":false,"anchor":"x2","title":"","hoverformat":".2f"},"showlegend":false,"legend":{"bgcolor":"rgba(255,255,255,1)","bordercolor":"transparent","borderwidth":1.88976377952756,"font":{"color":"rgba(0,0,0,1)","family":"","size":11.689497716895}},"hovermode":"closest","barmode":"relative"},"config":{"doubleClick":"reset","modeBarButtonsToAdd":["hoverclosest","hovercompare"],"showSendToCloud":false},"source":"A","attrs":{"52d82c93478a":{"x":{},"y":{},"type":"bar"}},"cur_data":"52d82c93478a","visdat":{"52d82c93478a":["function (y) ","x"]},"highlight":{"on":"plotly_click","persistent":false,"dynamic":false,"selectize":false,"opacityDim":0.2,"selected":{"opacity":1},"debounce":0},"shinyEvents":["plotly_hover","plotly_click","plotly_selected","plotly_relayout","plotly_brushed","plotly_brushing","plotly_clickannotation","plotly_doubleclick","plotly_deselect","plotly_afterplot","plotly_sunburstclick"],"base_url":"https://plot.ly"},"evals":[],"jsHooks":[]}</script></p>
 <!-- r ggplotly(pcif) -->
 <!-- r ggplotly(pq1) -->
 <!-- <br></br> -->
@@ -2122,110 +2148,109 @@ Theory</em> (PSY3062) | Monash University
 <code>Doctoral</code>
 <ol>
 <li value="16">
-Rebecca Wallace | 2022 - current | PhD (Clinical) | primary supervisor
+R. W. | 2022 - current | PhD (Clinical) | primary supervisor
 </li>
 <li value="15">
-Elizabeth Matthews | 2022 - current | PhD (Clinical) | primary
-supervisor
+E. M. | 2022 - current | PhD (Clinical) | primary supervisor
 </li>
 <li value="14">
-Trang Do | 2022 - current | PhD (Clinical) | primary supervisor
+T. D. | 2022 - current | PhD (Clinical) | primary supervisor
 </li>
 <li value="13">
-Tingyue Sun | 2022 - current | PhD | primary supervisor
+T. S. | 2022 - current | PhD | primary supervisor
 </li>
 <li value="12">
-Rebecca Kirkham | 2022 - current | PhD | co supervisor
+R. K. | 2022 - current | PhD | co supervisor
 </li>
 <li value="11">
-Phuong (Flora) Le | 2021 - current | PhD | primary supervisor
+P. L. | 2021 - current | PhD | primary supervisor
 </li>
 <li value="10">
-Hao Jun Regine Lau | 2021 - current | PhD | co supervisor
+H. L. | 2021 - current | PhD | co supervisor
 </li>
 <li value="9">
-Caitlin Hrysanidis | 2021 - current | PhD | co supervisor
+C. H. | 2021 - current | PhD | co supervisor
 </li>
 <li value="8">
-Victoria Dax | 2020 - current | PhD (Clinical) | primary supervisor
+V. D. | 2020 - current | PhD (Clinical) | primary supervisor
 </li>
 <li value="7">
-Isabelle S. Smith | 2019 - current | PhD (Clinical) | primary supervisor
+I. S. | 2019 - current | PhD (Clinical) | primary supervisor
 </li>
 <li value="6">
-Jordan Maccora | 2019 - current | PhD (Clinical) | primary supervisor
+J. M. | 2019 - current | PhD (Clinical) | primary supervisor
 </li>
 <li value="5">
-David Tuck | 2019 - current | PhD | co supervisor
+D. T. | 2019 - current | PhD | co supervisor
 </li>
 <li value="4">
-Yan Chi Tung | 2018 - 2021 | PhD (Clinical) | primary supervisor
+Y. T. | 2018 - 2021 | PhD (Clinical) | primary supervisor
 </li>
 <li value="3">
-Yi Yang Yap | 2018 - 2022 | PhD | primary supervisor
+Y. Y. | 2018 - 2022 | PhD | primary supervisor
 </li>
 <li value="2">
-Lin Shen | 2017 - 2021 | PhD | co supervisor
+L. S. | 2017 - 2021 | PhD | co supervisor
 </li>
 <li value="1">
-Helena R. Bean | 2017 - 2020 | DPsych (Clinical) | primary supervisor
+H. B. | 2017 - 2020 | DPsych (Clinical) | primary supervisor
 </li>
 </ol>
 <code>Honours</code>
 <ol>
 <li value="18">
-Tania Wallace | 2022 - current | Honours | primary supervisor
+T. W. | 2022 - current | Honours | primary supervisor
 </li>
 <li value="17">
-Chloe Ackland | 2022 - current | Honours | primary supervisor
+C. A. | 2022 - current | Honours | primary supervisor
 </li>
 <li value="16">
-Jordan Ludbrook | 2022 - current | Honours | primary supervisor
+J. L. | 2022 - current | Honours | primary supervisor
 </li>
 <li value="15">
-Gina Mancuso | 2022 - current | Honours | primary supervisor
+G. M. | 2022 - current | Honours | primary supervisor
 </li>
 <li value="14">
-Rebecca Wallace | 2021 - 2021 | Honours | primary supervisor
+R. W. | 2021 - 2021 | Honours | primary supervisor
 </li>
 <li value="13">
-Bronte Mathews | 2021 - 2021 | Honours | primary supervisor
+B. M. | 2021 - 2021 | Honours | primary supervisor
 </li>
 <li value="12">
-Jeanette M. X. Y. Wong | 2021 - 2021 | Honours | primary supervisor
+J. W. | 2021 - 2021 | Honours | primary supervisor
 </li>
 <li value="11">
-Lauren Pearson | 2021 - 2021 | Honours | primary supervisor
+L. P. | 2021 - 2021 | Honours | primary supervisor
 </li>
 <li value="10">
-Xin Xuan Yong | 2021 - 2021 | Honours | primary supervisor
+X. Y. | 2021 - 2021 | Honours | primary supervisor
 </li>
 <li value="9">
-Phuong (Flora) Le | 2020 - 2020 | Honours | primary supervisor
+P. L. | 2020 - 2020 | Honours | primary supervisor
 </li>
 <li value="8">
-Cornelia Wellecke | 2020 - 2020 | Honours | primary supervisor
+C. W. | 2020 - 2020 | Honours | primary supervisor
 </li>
 <li value="7">
-Vanessa See | 2020 - 2020 | Honours | primary supervisor
+V. S. | 2020 - 2020 | Honours | primary supervisor
 </li>
 <li value="6">
-Lauren Ross | 2019 - 2019 | Honours | primary supervisor
+L. R. | 2019 - 2019 | Honours | primary supervisor
 </li>
 <li value="5">
-Angie Phong | 2019 - 2019 | Honours | primary supervisor
+A. P. | 2019 - 2019 | Honours | primary supervisor
 </li>
 <li value="4">
-Alice MacDonald | 2018 - 2018 | Honours | primary supervisor
+A. M. | 2018 - 2018 | Honours | primary supervisor
 </li>
 <li value="3">
-Jun Wong | 2018 - 2018 | Honours | primary supervisor
+J. W. | 2018 - 2018 | Honours | primary supervisor
 </li>
 <li value="2">
-Yi Yang Yap | 2017 - 2017 | Honours | primary supervisor
+Y. Y. | 2017 - 2017 | Honours | primary supervisor
 </li>
 <li value="1">
-Rebecca Rice-Lacy | 2017 - 2017 | Honours | primary supervisor
+R. R. | 2017 - 2017 | Honours | primary supervisor
 </li>
 </ol>
 </div>

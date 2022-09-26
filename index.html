@@ -13,7 +13,7 @@
 
 <title>Behavioural Medicine Lab</title>
 
-<script src="site_libs/header-attrs-2.14/header-attrs.js"></script>
+<script src="site_libs/header-attrs-2.16/header-attrs.js"></script>
 <script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <link href="site_libs/bootstrap-3.3.5/css/bootstrap.min.css" rel="stylesheet" />
@@ -143,11 +143,15 @@ $(document).ready(function () {
     href = "index.html";
   var menuAnchor = $('a[href="' + href + '"]');
 
-  // mark it active
-  menuAnchor.tab('show');
-
-  // if it's got a parent navbar menu mark it active as well
-  menuAnchor.closest('li.dropdown').addClass('active');
+  // mark the anchor link active (and if it's in a dropdown, also mark that active)
+  var dropdown = menuAnchor.closest('li.dropdown');
+  if (window.bootstrap) { // Bootstrap 4+
+    menuAnchor.addClass('active');
+    dropdown.find('> .dropdown-toggle').addClass('active');
+  } else { // Bootstrap 3
+    menuAnchor.parent().addClass('active');
+    dropdown.addClass('active');
+  }
 
   // Navbar adjustments
   var navHeight = $(".navbar").first().height() + 15;
@@ -340,17 +344,16 @@ $(document).ready(function () {
 </div>
 
 
-<p>Our research uses digitomics<a href="#fn1" class="footnote-ref"
-id="fnref1"><sup>1</sup></a> to understand the connections between
-sleep, psychosocial factors, and health. Reflecting our belief that both
-mental and physical health are important and interconnected, many of our
-research projects integrate mental and physical health.</p>
-<p><em>Topics</em> our team has expertise in include stress, resilience
-and emotion regulation, depression and anxiety, sleep and insomnia, and
-cancer.</p>
-<p><em>Methods</em> our team has expertise in include ecological
-momentary assessment, actigraphy, statistics and machine learning, and
-clinical trials.</p>
+<p>Through our research, we strive to understand the connections between
+sleep (behaviour), psychosocial factors, and health. Reflecting our
+belief that both mental and physical health are important and
+interconnected, many of our research projects integrate mental and
+physical health.</p>
+<p><em>Topics</em> our team has expertise in include sleep and insomnia,
+emotion regulation, depression and anxiety, and cancer.</p>
+<p><em>Methods</em> our team has expertise in include clinical trials,
+ecological momentary assessment, actigraphy, digitomics<a href="#fn1"
+class="footnote-ref" id="fnref1"><sup>1</sup></a>, and statistics.</p>
 <p>We leverage the latest science from our team and others to evaluate
 and optimise interventions to improve sleep, reduce insomnia symptoms,
 and promote mental health, particularly in people who are or have been
@@ -397,8 +400,7 @@ obtain competitive federal grant funding from the Australian National
 Health and Medical Research Council (NHMRC), Australian Research Council
 (ARC), United States National Institutes of Health (US NIH), and United
 States Department of Defense (US DoD), totaling &gt;$5 million in
-funding. He has &gt;60 peer-reviewed publications resulting in &gt;3,000
-citations (GS).</p>
+funding. He has &gt;70 publications and &gt;5,000 citations (GS).</p>
 <div id="connect" class="section level3">
 <h3><svg aria-hidden="true" role="img" viewBox="0 0 576 512" style="height:1em;width:1.12em;vertical-align:-0.125em;margin-left:auto;margin-right:auto;font-size:inherit;fill:black;overflow:visible;position:relative;"><path d="M512 32H64C28.65 32 0 60.65 0 96v320c0 35.35 28.65 64 64 64h448c35.35 0 64-28.65 64-64V96C576 60.65 547.3 32 512 32zM176 128c35.35 0 64 28.65 64 64s-28.65 64-64 64s-64-28.65-64-64S140.7 128 176 128zM272 384h-192C71.16 384 64 376.8 64 368C64 323.8 99.82 288 144 288h64c44.18 0 80 35.82 80 80C288 376.8 280.8 384 272 384zM496 320h-128C359.2 320 352 312.8 352 304S359.2 288 368 288h128C504.8 288 512 295.2 512 304S504.8 320 496 320zM496 256h-128C359.2 256 352 248.8 352 240S359.2 224 368 224h128C504.8 224 512 231.2 512 240S504.8 256 496 256zM496 192h-128C359.2 192 352 184.8 352 176S359.2 160 368 160h128C504.8 160 512 167.2 512 176S504.8 192 496 192z"/></svg>
 Connect</h3>

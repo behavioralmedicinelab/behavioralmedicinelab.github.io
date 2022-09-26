@@ -48,6 +48,7 @@ assocprofs <- list(
   `Bei Bei` = getCites("wMBLE0IAAAAJ"),
   `Sean W Cain` = getCites("fCfy7iwAAAAJ"),
   `Adrian Carter` = getCites("2XiWPd8AAAAJ"),
+  `Trevor Chong` = getCites("qLkvokIAAAAJ"),
   `Bradley A Edwards` = getCites("yypftd8AAAAJ"),
   `Sharna Jamadar` = getCites("plIkiT4AAAAJ"),
   `Laura Jobson` = getCites("dktQ3XQAAAAJ"),
@@ -62,7 +63,7 @@ assocprofs <- list(
 
 d <- as.data.table(do.call(rbind, lapply(names(assocprofs), function(v) {
   cbind(assocprofs[[v]], Name = v, Select = ifelse(v == "Joshua F Wiley",
-                                                        "Applicant", "Level D\nComparators"))
+                                                        "Joshua F Wiley", "Level D (A/Prof)\nComparators"))
 })))
 d2 <- d[Type == "Yearly" & year > 2012]
 d2[, Rank := paste0(rank(-cites, ties.method = "max"), "/", length(assocprofs)), by = year]
@@ -76,8 +77,8 @@ compareplot <- ggplot(d2, aes(year, cites, group = Name, colour = Select, size =
   ##              fun.y = median, geom = "point", shape = 18, size = 3, colour = "grey50") +
   geom_label(aes(year, cites + sqdiff(cites, 1), label = Rank),
              data = d2[Name=="Joshua F Wiley"], show.legend = FALSE) +
-  scale_colour_manual("Who", values = c("Applicant" = "black", "Level D\nComparators" = "grey60")) +
-  scale_size_manual("Who", values = c("Applicant" = 2, "Level D\nComparators" = .5)) +
+  scale_colour_manual("Who", values = c("Joshua F Wiley" = "black", "Level D (A/Prof)\nComparators" = "grey60")) +
+  scale_size_manual("Who", values = c("Joshua F Wiley" = 2, "Level D (A/Prof)\nComparators" = .5)) +
   scale_x_continuous("Year", breaks = 2013:2022,
                      labels = ifelse(
                        2013:2022 == 2015,
@@ -88,7 +89,7 @@ compareplot <- ggplot(d2, aes(year, cites, group = Name, colour = Select, size =
   theme_classic() +
   coord_cartesian(xlim = c(2013 - .2, 2022 + .2), ylim = c(10, 2300), expand = FALSE) +
   theme(legend.position = c(.8, .15)) +
-  labs(caption = "Numbers show applicant rank")
+  labs(caption = "Numbers show Joshua F Wiley's rank")
 
 fiveyear <- (year(Sys.Date()) - 5)
 
@@ -190,8 +191,8 @@ tmp <- students[Status == "Completed" & Type %in% c("Honours"),
 compNHonours <- sum(tmp)
 rm(tmp)
 
-students[, CVSummary := sprintf("%s %s | %d - %s | %s | %s supervisor",
-                                GivenName, FamilyName, Started,
+students[, CVSummary := sprintf("%s. %s. | %d - %s | %s | %s supervisor",
+                                substr(GivenName, 1, 1), substr(FamilyName, 1, 1), Started,
                                 ifelse(Status == "Current", "current", Ended),
                                 Type, ifelse(Primary == 1, "primary", "co"))]
 
@@ -312,20 +313,20 @@ dcif <- pubs[Type %in% c("Empirical", "Review"), .(CIF = sum(IF, na.rm = TRUE)),
 mdcif5 <- dcif[Year %in% (oldyear:cyear), (M = mean(CIF))]
 
 pcif <- ggplot(dcif, aes(Year, CIF)) +
-  geom_hline(yintercept = 11, colour = "grey80") + 
-  geom_hline(yintercept = 14, colour = "grey80") + 
-  geom_hline(yintercept = 22, colour = "grey80") + 
-  geom_hline(yintercept = 27.5, colour = "grey80") +
+  geom_hline(yintercept = 14.85, colour = "grey80") + 
+  geom_hline(yintercept = 18.45, colour = "grey80") + 
+  geom_hline(yintercept = 29.7, colour = "grey80") + 
+  geom_hline(yintercept = 37.125, colour = "grey80") +
   geom_line(colour = "grey60") +
   geom_point() +
   geom_text(aes(y = CIF + 1.5, label = round(CIF, 1))) +
   geom_segment(aes(x = oldyear, xend = cyear, y = mdcif5, yend = mdcif5),
                colour = "black", size = 1, linetype = 2) +
-  geom_text(aes(x = (cyear + oldyear) / 2, y = mdcif5 + 2,
+  geom_text(aes(x = (cyear + oldyear) / 2, y = mdcif5 + 4,
                 label = sprintf("5 Year Average = %0.1f", mdcif5)),
-            size = 5) + 
+            size = 5) +
   scale_x_continuous(
-    "Data from Clarivate JCR. Benchmarks are aspirational levels for Teaching & Research at Monash University.",
+    "Data from Clarivate JCR. Benchmarks are aspirational levels for Research Only at Monash University.",
     breaks = 2013:cyear,
                      labels = ifelse(
                        2013:cyear == 2015,
@@ -334,8 +335,8 @@ pcif <- ggplot(dcif, aes(Year, CIF)) +
   theme_classic() +
   theme(axis.title.y = element_blank()) +
   scale_y_continuous(
-    breaks = c(0, 11, 14, 22, 27.5),
-    labels = c("0", "Lecturer (11)", "Senior Lecturer (14)", "Assoc. Prof. (22)", "Professor (27.5)")) +
+    breaks = c(0, 14.85, 18.45, 29.7, 37.125),
+    labels = c("0", "Lecturer (~15)", "Senior Lecturer (~19)", "Assoc. Prof. (~30)", "Professor (~37)")) +
   ggtitle("Cumulative journal impact factors for all publications by year") +
   ## labs(caption = "Data from Clarivate JCR.\nBenchmarks are aspirational levels for Teaching & Research faculty at Monash University.") +
   coord_cartesian(xlim = c(2013 - .5, cyear + .5),
