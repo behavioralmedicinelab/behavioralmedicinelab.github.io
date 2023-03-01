@@ -17,14 +17,22 @@ students[, PeopleSummary := sprintf(
   GivenName, FamilyName, Started,
   Type, Bio)]
 
-
 ```
 
-![](BML_Group_2021.jpg)
+![](BML_Group_2022.jpg)
 
 <br></br>
 
 `r paste(students[, PeopleSummary], collapse = "\n\n -------------------- \n\n")`
+
+### Group Photo - 2022
+
+![](BML_Group_2022.jpg)
+
+
+### Group Photo - 2021
+
+![](BML_Group_2021.jpg)
 
 
 ### Group Photo - 2020

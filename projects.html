@@ -13,7 +13,7 @@
 
 <title>Projects</title>
 
-<script src="site_libs/header-attrs-2.16/header-attrs.js"></script>
+<script src="site_libs/header-attrs-2.20/header-attrs.js"></script>
 <script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <link href="site_libs/bootstrap-3.3.5/css/bootstrap.min.css" rel="stylesheet" />
@@ -180,8 +180,8 @@ $(document).ready(function () {
   border-radius: 4px;
 }
 
-.tabset-dropdown > .nav-tabs > li.active:before {
-  content: "";
+.tabset-dropdown > .nav-tabs > li.active:before, .tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "\e259";
   font-family: 'Glyphicons Halflings';
   display: inline-block;
   padding: 10px;
@@ -189,16 +189,9 @@ $(document).ready(function () {
 }
 
 .tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
-  content: "&#xe258;";
-  border: none;
-}
-
-.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
-  content: "";
+  content: "\e258";
   font-family: 'Glyphicons Halflings';
-  display: inline-block;
-  padding: 10px;
-  border-right: 1px solid #ddd;
+  border: none;
 }
 
 .tabset-dropdown > .nav-tabs > li.active {
@@ -265,10 +258,10 @@ $(document).ready(function () {
   <ul class="dropdown-menu" role="menu">
     <li class="dropdown-header">Clinical Trials</li>
     <li>
-      <a href="projects.html#CanCope">CanCope</a>
+      <a href="projects.html#SleepCare">SleepCare</a>
     </li>
     <li>
-      <a href="projects.html#SleepCare">SleepCare</a>
+      <a href="projects.html#CanCope">CanCope</a>
     </li>
     <li>
       <a href="projects.html#SleepWell">SleepWell</a>
@@ -347,30 +340,6 @@ $(document).ready(function () {
 <p><br></br></p>
 <div id="trials" class="section level2">
 <h2>Trials</h2>
-<h3 id="CanCope">
-CanCope | 2020 - current |
-</h3>
-<p>The <em>CanCope</em> Study is an online trial aiming to help people
-who have had cancer cope with difficult emotions they may experience and
-improve mental health outcomes. Many people affected by cancer continue
-to experience distressing emotions after treatment has finished. The
-CanCope Trial is an emotion-focused, transdiagnostic intervention which
-explores the mechanisms underlying changes in emotion regulation, and
-symptoms of anxiety and depression. The <em>CanCope</em> Study has been
-develped and each module individually piloted. We are now preparing for
-a randomised, controlled efficacy trial. <br /> <em>CanCope</em> is
-currently recruiting and taking expressions of interest.<br /> <span
-class="fa fa-globe"></span> Find out more at the <a
-href="https://cancope.weebly.com/">study website</a>. <br /> <span
-class="fa fa-paper-plane"></span> For questions or other information,
-email: <a href="mailto:psych.cancope@monash.edu"
-class="email">psych.cancope@monash.edu</a> or call/text: +61
-404353956.<br /> <span class="fa fa-book-medical"></span> This clinical
-trial is registered <a
-href="https://www.anzctr.org.au/ACTRN12620000943943p.aspx">ACTRN12620000943943p</a>
-with ethics approved by <a
-href="files/CanCopeRCT_EthicsApproval.pdf">Monash University</a>.</p>
-<hr />
 <h3 id="SleepCare">
 SleepCare | 2020 - current |
 </h3>
@@ -397,6 +366,30 @@ href="http://www.anzctr.org.au/ACTRN12620001133921.aspx">ACTRN12620001133921</a>
 with ethics approved by the <a
 href="files/SleepCareRCT_EthicsApproval.pdf">Peter MacCallum Cancer
 Centre</a>.</p>
+<hr />
+<h3 id="CanCope">
+CanCope | 2020 - NA |
+</h3>
+<p>The <em>CanCope</em> Study is an online trial aiming to help people
+who have had cancer cope with difficult emotions they may experience and
+improve mental health outcomes. Many people affected by cancer continue
+to experience distressing emotions after treatment has finished. The
+CanCope Trial is an emotion-focused, transdiagnostic intervention which
+explores the mechanisms underlying changes in emotion regulation, and
+symptoms of anxiety and depression. The <em>CanCope</em> Study has been
+develped and each module individually piloted. We are now preparing for
+a randomised, controlled efficacy trial. <br /> <em>CanCope</em> is
+currently recruiting and taking expressions of interest.<br /> <span
+class="fa fa-globe"></span> Find out more at the <a
+href="https://cancope.weebly.com/">study website</a>. <br /> <span
+class="fa fa-paper-plane"></span> For questions or other information,
+email: <a href="mailto:psych.cancope@monash.edu"
+class="email">psych.cancope@monash.edu</a> or call/text: +61
+404353956.<br /> <span class="fa fa-book-medical"></span> This clinical
+trial is registered <a
+href="https://www.anzctr.org.au/ACTRN12620000943943p.aspx">ACTRN12620000943943p</a>
+with ethics approved by <a
+href="files/CanCopeRCT_EthicsApproval.pdf">Monash University</a>.</p>
 <hr />
 <h3 id="SleepWell">
 SleepWell | 2018 - 2020 |
@@ -524,7 +517,7 @@ online web applications.</p>
 Projects We Collaborate On
 </h2>
 <h3 id="REPAT">
-REPAT | 2019 - current |
+REPAT | 2019 - NA |
 </h3>
 <p>Approximately one-third of women coping with breast cancer experience
 persistent symptoms of depression, pain and fatigue, which are not
@@ -623,7 +616,7 @@ href="https://www.thecopeinitiative.org/">study website</a>. <br /></p>
 </div>
 
 <br style = "line-height:100px;"></br>
-<p>Copyright &copy; 2019 - 2022 by Behavioural Medicine Lab based in
+<p>Copyright &copy; 2019 - 2023 by Behavioural Medicine Lab based in
   Melbourne, Australia.  All rights reserved.</p>
 
 

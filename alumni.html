@@ -13,7 +13,7 @@
 
 <title>Lab Alumni</title>
 
-<script src="site_libs/header-attrs-2.16/header-attrs.js"></script>
+<script src="site_libs/header-attrs-2.20/header-attrs.js"></script>
 <script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <link href="site_libs/bootstrap-3.3.5/css/bootstrap.min.css" rel="stylesheet" />
@@ -180,8 +180,8 @@ $(document).ready(function () {
   border-radius: 4px;
 }
 
-.tabset-dropdown > .nav-tabs > li.active:before {
-  content: "";
+.tabset-dropdown > .nav-tabs > li.active:before, .tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "\e259";
   font-family: 'Glyphicons Halflings';
   display: inline-block;
   padding: 10px;
@@ -189,16 +189,9 @@ $(document).ready(function () {
 }
 
 .tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
-  content: "&#xe258;";
-  border: none;
-}
-
-.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
-  content: "";
+  content: "\e258";
   font-family: 'Glyphicons Halflings';
-  display: inline-block;
-  padding: 10px;
-  border-right: 1px solid #ddd;
+  border: none;
 }
 
 .tabset-dropdown > .nav-tabs > li.active {
@@ -265,10 +258,10 @@ $(document).ready(function () {
   <ul class="dropdown-menu" role="menu">
     <li class="dropdown-header">Clinical Trials</li>
     <li>
-      <a href="projects.html#CanCope">CanCope</a>
+      <a href="projects.html#SleepCare">SleepCare</a>
     </li>
     <li>
-      <a href="projects.html#SleepCare">SleepCare</a>
+      <a href="projects.html#CanCope">CanCope</a>
     </li>
     <li>
       <a href="projects.html#SleepWell">SleepWell</a>
@@ -394,6 +387,25 @@ thesis uses data from three of our studies: <em>ACES</em>,
 <em>DESTRESS</em>, and <em>SHS</em>.</p>
 <hr />
 </div>
+<div id="jordan-maccora-2019---2023-phd-clinical"
+class="section level3">
+<h3>Jordan Maccora | 2019 - 2023 | PhD (Clinical)</h3>
+<p>Jordan Maccora completed his Bachelor of Psychology (with Honours) in
+2016 at Monash University. He has gained experience working within both
+community-based residential and outreach mental health programs. Jordan
+previously worked at the Monash Be Active Sleep Eat facility and was
+involved in the development, co-ordination and publication of findings
+regarding the comparative analysis of alertness detection devices within
+a sleep deprivation protocol. Jordan commenced his PhD (Clinical
+Psychology) at Monash University in 2019 and was awarded a Monash
+Graduate Excellence Scholarship for outstanding marks. Under the
+supervision of Dr Joshua Wiley, Dr. Sheila Garland (Memorial
+University), and Justine Diggens (Peter MacCallum Cancer Centre), his
+research will explore the utility of CBT-I and bright light exposure
+therapy with respect to sleep disturbance within oncology populations.
+He leads the <em>SleepCare</em> Trial.</p>
+<hr />
+</div>
 <div id="angie-phong-2019---2019-honours" class="section level3">
 <h3>Angie Phong | 2019 - 2019 | Honours</h3>
 <p>Angie Phong is a current Honours student completing her Bachelor of
@@ -434,6 +446,22 @@ internationally through a citation poster award from the American
 Psychosomatic Society and nationally through a travel award from the
 Australasian Sleep Association to present her work at Sleep Down
 Under.</p>
+<hr />
+</div>
+<div id="isabelle-s.-smith-2019---2023-phd-clinical"
+class="section level3">
+<h3>Isabelle S. Smith | 2019 - 2023 | PhD (Clinical)</h3>
+<p>Isabelle Smith completed her Bachelor of Psychology in 2018, where
+she was awarded the Australian Psychological Society Prize for academic
+excellence in her final Honours year. During her undergraduate degree,
+Isabelle worked as a research assistant in areas of mother-infant
+attachment and maternal depression, anxiety and sleep. She commenced her
+PhD in clinical psychology at Monash University in 2019 and is
+supervised by Dr Joshua Wiley and Prof Karen Weihs (University of
+Arizona). Her research now is focused on trialling a transdiagnostic
+emotion-focused intervention that targets the emotional responses
+associated with a cancer diagnosis and treatment. She leads The
+<em>CanCope</em> Study.</p>
 <hr />
 </div>
 <div id="yan-chi-tung-2018---2021-phd-clinical" class="section level3">
@@ -514,7 +542,7 @@ intensive, longitudinal designs.</p>
 </div>
 
 <br style = "line-height:100px;"></br>
-<p>Copyright &copy; 2019 - 2022 by Behavioural Medicine Lab based in
+<p>Copyright &copy; 2019 - 2023 by Behavioural Medicine Lab based in
   Melbourne, Australia.  All rights reserved.</p>
 
 

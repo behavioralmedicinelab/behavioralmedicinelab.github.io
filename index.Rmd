@@ -18,29 +18,48 @@ txttrans <- function(text){
       "california", "subscriber", "title", "los", "angeles",
       "wwwoxfordhandbookscom", "pdf", "mean", "total", "although", "across",
       "two", "less", "article", "among", "whether", "within", "included", "use",
-      "first", "doi", "one", "test", "will", "three"))
+      "first", "doi", "one", "test", "will", "three", "greater", "days", "change",
+      "day", "number", "used", "years", "months", "lower", "table", "time"))
   tm_map(text, content_transformer(stripWhitespace))
 }
 
-jw <- Corpus(DirSource(file.path(basedir, "Manuscripts/Publications/"), pattern="pdf"),
+## txttransStem <- function(text){
+##   text = tm_map(text, content_transformer(tolower))
+##   text = tm_map(text, removePunctuation)
+##   text = tm_map(text, content_transformer(removeNumbers))
+##   text = tm_map(text, removeWords,
+##     c(stopwords("english"), "may", "also", "low", "high", "using", "stanton",
+##       "seeman", "bower", "study", "model", "models", "rights", "license",
+##       "wiley", "oxford", "see", "however", "page", "can", "print", "view",
+##       "california", "subscriber", "title", "los", "angeles",
+##       "wwwoxfordhandbookscom", "pdf", "mean", "total", "although", "across",
+##       "two", "less", "article", "among", "whether", "within", "included", "use",
+##       "first", "doi", "one", "test", "will", "three", "greater", "days", "change",
+##       "day", "number", "used", "years", "months", "lower", "table", "time"))
+##   text = tm_map(text, content_transformer(stripWhitespace))
+##   tm_map(text, stemDocument)
+## }
+
+jw <- Corpus(DirSource(file.path(basedir, "Publications/Copies"), pattern="pdf"),
              readerControl = list(reader=readPDF))
 jw2 <- txttrans(jw)
+## jw3 <- txttransStem(jw)
 ## summary(jw2)
 
-png(filename = file.path(basedir, "Manuscripts/Publications/wordcloud.png"),
+png(filename = file.path(basedir, "Publications/Copies/wordcloud.png"),
     width = 10, height = 10, units = "in", res = 400)
 wordcloud(jw2, scale=c(5,0.5), max.words=100, random.order=FALSE,
           rot.per=0.35, use.r.layout=FALSE, colors=brewer.pal(8, "Dark2"))
 dev.off()
 
 
-png(filename = file.path(basedir, "Manuscripts/Publications/wordcloud_banner.png"),
+png(filename = file.path(basedir, "Publications/Copies/wordcloud_banner.png"),
     width = 12, height = 4, units = "in", res = 400)
 wordcloud(jw2, scale=c(6,0.2), max.words=150, random.order=FALSE,
           rot.per=0, use.r.layout=FALSE, fixed.asp = FALSE, colors=brewer.pal(8, "Dark2"))
 dev.off()
 
-png(filename = file.path(basedir, "Manuscripts/Publications/wordcloud_small.png"),
+png(filename = file.path(basedir, "Publications/Copies/wordcloud_small.png"),
     width = 5, height = 5, units = "in", res = 400)
 wordcloud(jw2, scale=c(5,0.1), max.words=50, random.order=FALSE,
           rot.per=0.35, use.r.layout=FALSE, colors=brewer.pal(8, "Dark2"))
@@ -130,8 +149,9 @@ obtain competitive federal grant funding from the
 Australian National Health and Medical Research Council (NHMRC),
 Australian Research Council (ARC), 
 United States National Institutes of Health (US NIH),
-and United States Department of Defense (US DoD), totaling >$5
-million in funding. He has >70 publications and >5,000 citations (GS).
+ United States Department of Defense (US DoD), and UK Wellcome Trust,
+ totaling >$10 million in funding.
+ He has >100 publications and >6,000 citations (GS).
 
 ### `r fa("address-card", fill = "black")` Connect
 

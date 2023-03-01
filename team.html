@@ -13,7 +13,7 @@
 
 <title>Team</title>
 
-<script src="site_libs/header-attrs-2.16/header-attrs.js"></script>
+<script src="site_libs/header-attrs-2.20/header-attrs.js"></script>
 <script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <link href="site_libs/bootstrap-3.3.5/css/bootstrap.min.css" rel="stylesheet" />
@@ -180,8 +180,8 @@ $(document).ready(function () {
   border-radius: 4px;
 }
 
-.tabset-dropdown > .nav-tabs > li.active:before {
-  content: "";
+.tabset-dropdown > .nav-tabs > li.active:before, .tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "\e259";
   font-family: 'Glyphicons Halflings';
   display: inline-block;
   padding: 10px;
@@ -189,16 +189,9 @@ $(document).ready(function () {
 }
 
 .tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
-  content: "&#xe258;";
-  border: none;
-}
-
-.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
-  content: "";
+  content: "\e258";
   font-family: 'Glyphicons Halflings';
-  display: inline-block;
-  padding: 10px;
-  border-right: 1px solid #ddd;
+  border: none;
 }
 
 .tabset-dropdown > .nav-tabs > li.active {
@@ -265,10 +258,10 @@ $(document).ready(function () {
   <ul class="dropdown-menu" role="menu">
     <li class="dropdown-header">Clinical Trials</li>
     <li>
-      <a href="projects.html#CanCope">CanCope</a>
+      <a href="projects.html#SleepCare">SleepCare</a>
     </li>
     <li>
-      <a href="projects.html#SleepCare">SleepCare</a>
+      <a href="projects.html#CanCope">CanCope</a>
     </li>
     <li>
       <a href="projects.html#SleepWell">SleepWell</a>
@@ -344,7 +337,7 @@ $(document).ready(function () {
 </div>
 
 
-<p><img src="BML_Group_2021.jpg" /></p>
+<p><img src="BML_Group_2022.jpg" /></p>
 <p><br></br></p>
 <div id="victoria-dax-2020---current-phd-clinical"
 class="section level3">
@@ -359,41 +352,6 @@ Psycho-oncology Conference. Tory commenced her PhD (Clinical Psychology)
 in 2020 and under supervisors Dr. Joshua Wiley and Dr. Maria Ftanou
 (Peter MacCallum Cancer Centre). Her research explores understanding the
 psychological sequelae of germ cell testicular cancer.</p>
-<hr />
-</div>
-<div id="jordan-maccora-2019---current-phd-clinical"
-class="section level3">
-<h3>Jordan Maccora | 2019 - current | PhD (Clinical)</h3>
-<p>Jordan Maccora completed his Bachelor of Psychology (with Honours) in
-2016 at Monash University. He has gained experience working within both
-community-based residential and outreach mental health programs. Jordan
-previously worked at the Monash Be Active Sleep Eat facility and was
-involved in the development, co-ordination and publication of findings
-regarding the comparative analysis of alertness detection devices within
-a sleep deprivation protocol. Jordan commenced his PhD (Clinical
-Psychology) at Monash University in 2019 and was awarded a Monash
-Graduate Excellence Scholarship for outstanding marks. Under the
-supervision of Dr Joshua Wiley, Dr. Sheila Garland (Memorial
-University), and Justine Diggens (Peter MacCallum Cancer Centre), his
-research will explore the utility of CBT-I and bright light exposure
-therapy with respect to sleep disturbance within oncology populations.
-He leads the <em>SleepCare</em> Trial.</p>
-<hr />
-</div>
-<div id="isabelle-s.-smith-2019---current-phd-clinical"
-class="section level3">
-<h3>Isabelle S. Smith | 2019 - current | PhD (Clinical)</h3>
-<p>Isabelle Smith completed her Bachelor of Psychology in 2018, where
-she was awarded the Australian Psychological Society Prize for academic
-excellence in her final Honours year. During her undergraduate degree,
-Isabelle worked as a research assistant in areas of mother-infant
-attachment and maternal depression, anxiety and sleep. She commenced her
-PhD in clinical psychology at Monash University in 2019 and is
-supervised by Dr Joshua Wiley and Prof Karen Weihs (University of
-Arizona). Her research now is focused on trialling a transdiagnostic
-emotion-focused intervention that targets the emotional responses
-associated with a cancer diagnosis and treatment. She leads The
-<em>CanCope</em> Study.</p>
 <hr />
 </div>
 <div id="david-tuck-2019---current-phd" class="section level3">
@@ -414,6 +372,14 @@ factors that promote resilience to potentially traumatic events. His
 research supervisors are Dr Emily Berger, Dr Joshua Wiley, and Dr
 Lefteris Patlmazaglou.</p>
 </div>
+<div id="group-photo---2022" class="section level3">
+<h3>Group Photo - 2022</h3>
+<p><img src="BML_Group_2022.jpg" /></p>
+</div>
+<div id="group-photo---2021" class="section level3">
+<h3>Group Photo - 2021</h3>
+<p><img src="BML_Group_2021.jpg" /></p>
+</div>
 <div id="group-photo---2020" class="section level3">
 <h3>Group Photo - 2020</h3>
 <p><img src="BML_Group_2020.jpg" /></p>
@@ -424,7 +390,7 @@ Lefteris Patlmazaglou.</p>
 </div>
 
 <br style = "line-height:100px;"></br>
-<p>Copyright &copy; 2019 - 2022 by Behavioural Medicine Lab based in
+<p>Copyright &copy; 2019 - 2023 by Behavioural Medicine Lab based in
   Melbourne, Australia.  All rights reserved.</p>
 
 

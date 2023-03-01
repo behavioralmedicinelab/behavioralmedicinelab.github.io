@@ -10,10 +10,10 @@ navbar:
       href: projects.html
       menu:
         - text: "Clinical Trials"
-        - text: "CanCope"
-          href: projects.html#CanCope
         - text: "SleepCare"
           href: projects.html#SleepCare
+        - text: "CanCope"
+          href: projects.html#CanCope
         - text: "SleepWell"
           href: projects.html#SleepWell
         - text: "---------"

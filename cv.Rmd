@@ -79,15 +79,16 @@ compareplot <- ggplot(d2, aes(year, cites, group = Name, colour = Select, size =
              data = d2[Name=="Joshua F Wiley"], show.legend = FALSE) +
   scale_colour_manual("Who", values = c("Joshua F Wiley" = "black", "Level D (A/Prof)\nComparators" = "grey60")) +
   scale_size_manual("Who", values = c("Joshua F Wiley" = 2, "Level D (A/Prof)\nComparators" = .5)) +
-  scale_x_continuous("Year", breaks = 2013:2022,
+  scale_x_continuous("Year", breaks = 2013:cyear,
                      labels = ifelse(
-                       2013:2022 == 2015,
+                       2013:cyear == 2015,
                        "2015\n(PhD Awarded)",
-                       2013:2022)) +
-  scale_y_sqrt("Yearly Citations (Google Scholar)",
-               breaks = c(10, 100, 500, 1000, 1500, 2000)) +
+                       2013:cyear)) +
+  scale_y_continuous("Yearly Citations (Google Scholar)",
+                     breaks = c(10, 100, 500, 1000, 2000, 4000),
+                     trans = "log2") +
   theme_classic() +
-  coord_cartesian(xlim = c(2013 - .2, 2022 + .2), ylim = c(10, 2300), expand = FALSE) +
+  coord_cartesian(xlim = c(2013 - .2, cyear + .2), ylim = c(10, 4300), expand = FALSE) +
   theme(legend.position = c(.8, .15)) +
   labs(caption = "Numbers show Joshua F Wiley's rank")
 
@@ -121,6 +122,7 @@ pubcounts.graph <- ggplot(pubcounts, aes(Year, value, fill = Type)) +
 
 tmp <- pubs[Type %in% c("Empirical", "Review"), FirstLast]
 NFirstLast <- sum(tmp == 1)
+N2FirstLast <- sum(pubs[Type %in% c("Empirical", "Review"), `2FirstLast`] == 1)
 NCoAuthor <- sum(tmp == 0)
 NBooks <- nrow(pubs[Type %in% c("Book")])
 NOther <- nrow(pubs[!Type %in% c("Empirical", "Review", "Book")])
@@ -256,6 +258,7 @@ affiliates <- paste(c("<ul>", sprintf("<li>%s</li>", affiliates$Info), "</ul>"),
 grants <- read_excel(file.path(basedir, "WileyDossier/CV_Full.xlsx"),
                      sheet = "Grants")
 grants <- as.data.table(grants)[, Started := as.Date(Started)]
+grants <- grants[!grepl("Associate", Role)]
 grants[, Ended := as.Date(Ended)]
 grants <- grants[order(Status, -Started)]
 
@@ -291,17 +294,20 @@ awards2 <- awards
 awards2[, CVSummary := sprintf("<li value = %d>%s</li>", Num, CVSummary)]
 awards2 <- paste(c("<ol>", awards2$CVSummary, "</ol>"), collapse = "\n")
 
+software <- read_excel(file.path(basedir, "WileyDossier/CV_Full.xlsx"),
+                     sheet = "Software")
+
 summarystatement <- sprintf(
 "Senior Lecturer at Monash University; **%0.1f** years post PhD;
->$5 million AUD in grant funding; 
+>$10 million AUD in grant funding as a chief investigator; 
 successfully graduated **%d** primary doctoral, **%d** co-supervised doctoral, and **%d** honours students;
 currently supervising **%d** primary doctoral, **%d** co-supervised doctoral, and **%d** honours students;
-**2** Associate/Statistical editorial positions at journals; NHMRC panel member;
+**1** Associate Editor position; NHMRC panel member;
 **%d** first/last & **%d** co-author peer reviewed articles; **%d** books; **%d** other pubs;
 total of **%d** publications (**%d** publications since the start of %d [last five years]);
 **%d** first/last & **%d** co-author peer reviewed abstracts; **%d** invited presentations;
-**8** software packages developed.",
-yearSincePhD,
+**%d** software packages developed.",
+  yearSincePhD,
   compNPrimary, compNSecondary, compNHonours,
   NPrimary, NSecondary, NHonours,
   NFirstLast, NCoAuthor,
@@ -309,7 +315,8 @@ yearSincePhD,
   NTotal, NTotalLast5, fiveyear,
   nrow(leadabstracts),
   nrow(coabstracts),
-  nrow(invited))
+  nrow(invited),
+  nrow(software))
 
 dcif <- pubs[Type %in% c("Empirical", "Review"), .(CIF = sum(IF, na.rm = TRUE)), by = Year]
 mdcif5 <- dcif[Year %in% (oldyear:cyear), (M = mean(CIF))]
@@ -389,7 +396,7 @@ pq1 <- ggplot(dq1, aes(Year, PQ1)) +
 ##   "JWileymisc", "extraoperators", "multilevelTools",
 ##   "pscore", "varian", "brmsmargins")
 
-## years <- (2018L):(2022L)
+## years <- (2018L):(2023L)
 
 ## pkgdownloads <- vector("list", length(years))
 ## names(pkgdownloads) <- paste0("y", years)
@@ -414,6 +421,7 @@ pq1 <- ggplot(dq1, aes(Year, PQ1)) +
 ## sum(pkgdownloads$y2020$cranlogs.data$count)
 ## sum(pkgdownloads$y2021$cranlogs.data$count)
 ## sum(pkgdownloads$y2022$cranlogs.data$count)
+## sum(pkgdownloads$y2023$cranlogs.data$count)
 
 ## pkgdownloads2022 <- cranDownloads(packages = myPackages,
 ##                    from = "2022", to = "2022")
@@ -598,8 +606,7 @@ major. GPA: 4.00/4.00
 `Honours`
 `r hstudents`
 
-## <span class="fa fa-user-circle"></span> PROFESSIONAL MEMBERSHIPS
-
-`r affiliates`
+<!-- ## <span class="fa fa-user-circle"></span> PROFESSIONAL MEMBERSHIPS -->
+<!-- `r affiliates` -->
 
 <br></br>

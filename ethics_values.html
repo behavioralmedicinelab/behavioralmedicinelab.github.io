@@ -13,7 +13,7 @@
 
 <title>Our Ethics and Values</title>
 
-<script src="site_libs/header-attrs-2.16/header-attrs.js"></script>
+<script src="site_libs/header-attrs-2.20/header-attrs.js"></script>
 <script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <link href="site_libs/bootstrap-3.3.5/css/bootstrap.min.css" rel="stylesheet" />
@@ -180,8 +180,8 @@ $(document).ready(function () {
   border-radius: 4px;
 }
 
-.tabset-dropdown > .nav-tabs > li.active:before {
-  content: "";
+.tabset-dropdown > .nav-tabs > li.active:before, .tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "\e259";
   font-family: 'Glyphicons Halflings';
   display: inline-block;
   padding: 10px;
@@ -189,16 +189,9 @@ $(document).ready(function () {
 }
 
 .tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
-  content: "&#xe258;";
-  border: none;
-}
-
-.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
-  content: "";
+  content: "\e258";
   font-family: 'Glyphicons Halflings';
-  display: inline-block;
-  padding: 10px;
-  border-right: 1px solid #ddd;
+  border: none;
 }
 
 .tabset-dropdown > .nav-tabs > li.active {
@@ -265,10 +258,10 @@ $(document).ready(function () {
   <ul class="dropdown-menu" role="menu">
     <li class="dropdown-header">Clinical Trials</li>
     <li>
-      <a href="projects.html#CanCope">CanCope</a>
+      <a href="projects.html#SleepCare">SleepCare</a>
     </li>
     <li>
-      <a href="projects.html#SleepCare">SleepCare</a>
+      <a href="projects.html#CanCope">CanCope</a>
     </li>
     <li>
       <a href="projects.html#SleepWell">SleepWell</a>
@@ -433,7 +426,7 @@ communication about staff mental and physical health.</p>
 </div>
 
 <br style = "line-height:100px;"></br>
-<p>Copyright &copy; 2019 - 2022 by Behavioural Medicine Lab based in
+<p>Copyright &copy; 2019 - 2023 by Behavioural Medicine Lab based in
   Melbourne, Australia.  All rights reserved.</p>
 
 
