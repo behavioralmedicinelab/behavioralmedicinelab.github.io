@@ -1,0 +1,33 @@
+---
+title: Lab Alumni
+toc-depth: 1
+---
+
+```{r load_packages, message=FALSE, warning=FALSE, include=FALSE} 
+
+## load packages and setup
+source("package_setup.R", echo=FALSE)
+
+students <- read_excel(file.path(basedir, "WileyDossier/CV_Full.xlsx"), sheet = "People")
+students <- as.data.table(students)[Status == "Completed" & Consent == 1][order(Started, FamilyName)]
+
+students[, PeopleSummary := sprintf(
+  "### %s %s | %d - %d | %s \n %s \n",
+  GivenName, FamilyName, Started, Ended,
+  Type, Bio)]
+
+```
+
+<br></br>
+
+# Doctoral Students
+
+`r paste(students[grepl("DPsych|PhD", Type), PeopleSummary], collapse = "\n\n -------------------- \n\n")`
+
+# Honours Students
+
+`r paste(students[Type == "Honours", PeopleSummary], collapse = "\n\n -------------------- \n\n")`
+
+# Staff
+
+`r paste(students[Type == "Staff", PeopleSummary], collapse = "\n\n -------------------- \n\n")`

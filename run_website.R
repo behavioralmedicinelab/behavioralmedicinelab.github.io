@@ -19,65 +19,64 @@ projects[, ProjectSummary := sprintf(
   Summary)]
 
 nav.trials <- paste(projects[Primary == 1 & Type == "Trial", sprintf(
-'        - text: "%s"
-          href: projects.html#%s',
+'          - text: "%s"
+            href: projects.qmd#%s',
 Name, Name)], collapse = "\n")
 nav.daily <- paste(projects[Primary == 1 & Type == "Daily", sprintf(
-'        - text: "%s"
-          href: projects.html#%s',
+'          - text: "%s"
+            href: projects.qmd#%s',
 Name, Name)], collapse = "\n")
 nav.other <- paste(projects[Primary == 1 & Type == "Other", sprintf(
-'        - text: "%s"
-          href: projects.html#%s',
+'          - text: "%s"
+            href: projects.qmd#%s',
 Name, Name)], collapse = "\n")
 
 nav <- sprintf(
-'
-name: "Behavioural Medicine Lab Website"
-exclude: ["*.*~"]
-output_dir: "."
-navbar:
-  title: <span class="fa fa-home"></span> Home
-  right:
-    - icon: fa-cogs
-      text: "Projects"
-      href: projects.html
-      menu:
-        - text: "Clinical Trials"
-%s
-        - text: "---------"
-        - text: "Daily Life Studies"
-%s
-        - text: "---------"
-        - text: "Other Studies"
-%s
-        - text: "---------"
-        - text: "Collaborations"
-          href: projects.html#collaborations
-    - icon: fa-id-badge
-      text: "Team"
-      href: team.html
-    - icon: fa-graduation-cap
-      text: "Alumni"
-      href: alumni.html
-    - icon: fa-users
-      text: "Consumers & Community"
-      href: consumer_community.html
-    - icon: fa-file-alt
-      text: "Wiley CV"
-      href: cv.html
-    - icon: fa-heart
-      text: "Ethics & Values"
-      href: ethics_values.html
-output:
-  html_document:
-    include:
-      after_body: footer.html
+'project:
+  type: website
+  output-dir: docs
 
+website:
+  title: "Behavioural Medicine Lab"
+  search: false
+  navbar:
+    background: primary
+    right:
+      - text: "{{< fa cogs >}} Projects"
+        menu:
+          - text: "Clinical Trials"
+%s
+          - text: "---------"
+          - text: "Daily Life Studies"
+%s
+          - text: "---------"
+          - text: "Other Studies"
+%s
+          - text: "---------"
+          - text: "Collaborations"
+            href: projects.html#collaborations
+      - text: "{{< fa id-badge >}} Team"
+        href: team.qmd
+      - text: "{{< fa graduation-cap >}} Alumni"
+        href: alumni.qmd
+      - text: "{{< fa users >}} Consumers & Community"
+        href: consumer_community.qmd
+      - text: "{{< fa file-alt >}} Wiley CV"
+        href: cv.qmd
+      - text: "{{< fa heart >}} Ethics & Values"
+        href: ethics_values.qmd
+  page-footer:
+    center:
+    - text: "Copyright &copy; 2019 - 2023 by Behavioural Medicine Lab based in Melbourne, Australia.  All rights reserved."
+
+format:
+  html:
+    theme: flatly
+    toc: true
 ',
 nav.trials, nav.daily, nav.other)
 
-cat(nav, file = "_site.yml")
+cat(nav, file = "_quarto.yml")
 
-rmarkdown::render_site()
+quarto::quarto_render()
 

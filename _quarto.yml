@@ -1,0 +1,52 @@
+project:
+  type: website
+  output-dir: docs
+
+website:
+  title: "Behavioural Medicine Lab"
+  search: false
+  navbar:
+    background: primary
+    right:
+      - text: "{{< fa cogs >}} Projects"
+        menu:
+          - text: "Clinical Trials"
+          - text: "SleepCare"
+            href: projects.qmd#SleepCare
+          - text: "CanCope"
+            href: projects.qmd#CanCope
+          - text: "SleepWell"
+            href: projects.qmd#SleepWell
+          - text: "---------"
+          - text: "Daily Life Studies"
+          - text: "SHS"
+            href: projects.qmd#SHS
+          - text: "DESTRESS"
+            href: projects.qmd#DESTRESS
+          - text: "ACES"
+            href: projects.qmd#ACES
+          - text: "---------"
+          - text: "Other Studies"
+          - text: "NHMRC Investigator Grant"
+            href: projects.qmd#NHMRC Investigator Grant
+          - text: "---------"
+          - text: "Collaborations"
+            href: projects.html#collaborations
+      - text: "{{< fa id-badge >}} Team"
+        href: team.qmd
+      - text: "{{< fa graduation-cap >}} Alumni"
+        href: alumni.qmd
+      - text: "{{< fa users >}} Consumers & Community"
+        href: consumer_community.qmd
+      - text: "{{< fa file-alt >}} Wiley CV"
+        href: cv.qmd
+      - text: "{{< fa heart >}} Ethics & Values"
+        href: ethics_values.qmd
+  page-footer:
+    center:
+    - text: "Copyright &copy; 2019 - 2023 by Behavioural Medicine Lab based in Melbourne, Australia.  All rights reserved."
+
+format:
+  html:
+    theme: flatly
+    toc: true

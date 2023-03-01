@@ -12,7 +12,7 @@
 #### misc
 library(fontawesome)
 library(knitr)
-library(rmarkdown)
+library(quarto)
 library(JWileymisc)
 
 #### Stuff to make word cloud summaries ####

@@ -1,0 +1,170 @@
+---
+title: Behavioural Medicine Lab
+toc: false
+---
+
+```{r}
+#| echo: false
+#| message: false
+#| include: false
+
+
+## load packages and setup
+source("package_setup.R", echo=FALSE)
+
+txttrans <- function(text){
+  text = tm_map(text, content_transformer(tolower))
+  text = tm_map(text, removePunctuation)
+  text = tm_map(text, content_transformer(removeNumbers))
+  text = tm_map(text, removeWords,
+    c(stopwords("english"), "may", "also", "low", "high", "using", "stanton",
+      "seeman", "bower", "study", "model", "models", "rights", "license",
+      "wiley", "oxford", "see", "however", "page", "can", "print", "view",
+      "california", "subscriber", "title", "los", "angeles",
+      "wwwoxfordhandbookscom", "pdf", "mean", "total", "although", "across",
+      "two", "less", "article", "among", "whether", "within", "included", "use",
+      "first", "doi", "one", "test", "will", "three", "greater", "days", "change",
+      "day", "number", "used", "years", "months", "lower", "table", "time"))
+  tm_map(text, content_transformer(stripWhitespace))
+}
+
+## txttransStem <- function(text){
+##   text = tm_map(text, content_transformer(tolower))
+##   text = tm_map(text, removePunctuation)
+##   text = tm_map(text, content_transformer(removeNumbers))
+##   text = tm_map(text, removeWords,
+##     c(stopwords("english"), "may", "also", "low", "high", "using", "stanton",
+##       "seeman", "bower", "study", "model", "models", "rights", "license",
+##       "wiley", "oxford", "see", "however", "page", "can", "print", "view",
+##       "california", "subscriber", "title", "los", "angeles",
+##       "wwwoxfordhandbookscom", "pdf", "mean", "total", "although", "across",
+##       "two", "less", "article", "among", "whether", "within", "included", "use",
+##       "first", "doi", "one", "test", "will", "three", "greater", "days", "change",
+##       "day", "number", "used", "years", "months", "lower", "table", "time"))
+##   text = tm_map(text, content_transformer(stripWhitespace))
+##   tm_map(text, stemDocument)
+## }
+
+jw <- Corpus(DirSource(file.path(basedir, "Publications/Copies"), pattern="pdf"),
+             readerControl = list(reader=readPDF))
+jw2 <- txttrans(jw)
+## jw3 <- txttransStem(jw)
+## summary(jw2)
+
+png(filename = file.path(basedir, "Publications/Copies/wordcloud.png"),
+    width = 10, height = 10, units = "in", res = 400)
+wordcloud(jw2, scale=c(5,0.5), max.words=100, random.order=FALSE,
+          rot.per=0.35, use.r.layout=FALSE, colors=brewer.pal(8, "Dark2"))
+dev.off()
+
+
+png(filename = file.path(basedir, "Publications/Copies/wordcloud_banner.png"),
+    width = 12, height = 4, units = "in", res = 400)
+wordcloud(jw2, scale=c(6,0.2), max.words=150, random.order=FALSE,
+          rot.per=0, use.r.layout=FALSE, fixed.asp = FALSE, colors=brewer.pal(8, "Dark2"))
+
+wordcloud2(jw2)
+
+dev.off()
+
+png(filename = file.path(basedir, "Publications/Copies/wordcloud_small.png"),
+    width = 5, height = 5, units = "in", res = 400)
+wordcloud(jw2, scale=c(5,0.1), max.words=50, random.order=FALSE,
+          rot.per=0.35, use.r.layout=FALSE, colors=brewer.pal(8, "Dark2"))
+dev.off()
+
+png(filename = "wordcloud_banner.png", width = 12, height = 4, units = "in", res = 400)
+wordcloud(jw2, scale=c(6,0.2), max.words=150, random.order=FALSE,
+          rot.per=0, use.r.layout=FALSE, fixed.asp = FALSE, colors=brewer.pal(8, "Dark2"))
+dev.off()
+
+
+```
+
+Through our research, we strive to understand the connections between
+sleep (behaviour), psychosocial factors, and health.
+Reflecting our belief that both mental and physical health are
+important and interconnected, many of our research projects
+integrate mental and physical health.
+
+*Topics* our team has expertise in include sleep and insomnia,
+emotion regulation, depression and anxiety, and cancer.
+
+*Methods* our team has expertise in include clinical trials, 
+ecological momentary assessment, actigraphy, 
+digitomics[^1], and statistics.
+
+We leverage the latest science from our team and others to evaluate
+and optimise interventions to improve sleep, reduce insomnia symptoms,
+and promote mental health, particularly in people who are or have been
+treated for cancer or are experiencing other sources of high stress.
+
+Our team is led by Dr. Joshua Wiley and is situated within the 
+Turner Institute for Brain and Mental Health 
+[(Turner)](https://www.monash.edu/turner-institute) 
+within the Sleep and Circadian Rhythms Program. To see an example of
+the sort of work we do and how we work to feed findings back to our
+participants and the community, take a look at our
+[projects](projects.html) and look at some of the reports we have sent 
+our participants there.
+
+<br></br>
+
+The word cloud below provides a data-driven summary of the type
+of work our lab conducts. The word cloud is based off papers published
+from our lab. Word size shows how commonly specific words appear in
+our work.
+
+![](wordcloud_banner.png){fig-alt="A word cloud where the size of words indicates how frequently they were used in our research publications"}
+
+<br></br>
+
+[^1]: Digitally collected data either actively (e.g., completing mood
+    surveys via an app; brief audio recordings of stress experienced
+    in the past few hours) or passively (e.g., using sensor data from
+    smartphones, wearables, mining social media). Often, large amounts
+    of data are generated, either due to many features, many
+    timepoints, or both.
+
+## Joshua F. Wiley
+
+Dr. Joshua Wiley is a behavioural medicine researcher currently
+appointed as a senior lecturer (Asst. Professor) at Monash University in the
+School of Psychological Sciences and Turner (2016-present). He studied
+health psychology and behavioural medicine, completing his PhD at the
+University of California at Los Angeles in 2015. Subsequently, he
+trained in pragmatic randomised controlled trials (RCTs) through post
+doctoral with a primary care and prevention group.
+
+Dr. Wiley's research includes basic science and applied intervention
+work. In basic science, his work focuses on understanding the daily
+and longitudinal dynamics of sleep, psychosocial factors and health,
+emphasising potentially malleable mechanisms driving poor sleep and
+health. His intervention work targets the basic science mechanisms
+identified to attempt to improve population health. His intervention
+research focuses on accessible and feasible sleep/behavioural and
+emotion regulation interventions with potential for broad
+dissemination. Aligned with recent calls for personalised medicine,
+his group combines digitomics and cutting edge data analytics to drive
+personalised predictions and recommendations to help optimise the
+content, targetting, and delivery of their interventions. New tools 
+and data analytic pipelines developed for his projects are routinely
+shared freely and have been picked up in many other studies and
+projects.
+
+Reflecting the global reach of his research, Dr. Wiley has helped
+obtain competitive federal grant funding from the 
+Australian National Health and Medical Research Council (NHMRC),
+Australian Research Council (ARC), 
+United States National Institutes of Health (US NIH),
+ United States Department of Defense (US DoD), and UK Wellcome Trust,
+ totaling >$10 million in funding.
+ He has >100 publications and >6,000 citations (GS).
+
+### {{< fa address-card >}} Connect
+
+  - {{< fa brands github >}}
+    [github](https://github.com/jwiley) -  {{< fa brands google >}} [Google Scholar](https://scholar.google.com/citations?user=bRG3LSQAAAAJ&hl=en)
+  - {{< fa brands linkedin >}}
+    [linkedin](https://www.linkedin.com/in/joshua-wiley-6a0b2278) - {{< fa brands twitter >}} [twitter](http://twitter.com/WileyResearch)
+  - {{< fa envelope >}} joshua.wiley _at_ monash _dot_ edu
