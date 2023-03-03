@@ -24,7 +24,7 @@ txttrans <- function(text){
       "wwwoxfordhandbookscom", "pdf", "mean", "total", "although", "across",
       "two", "less", "article", "among", "whether", "within", "included", "use",
       "first", "doi", "one", "test", "will", "three", "greater", "days", "change",
-      "day", "number", "used", "years", "months", "lower", "table", "time"))
+      "day", "number", "used", "years", "months", "lower", "table", "time", "overall"))
   tm_map(text, content_transformer(stripWhitespace))
 }
 
@@ -48,6 +48,19 @@ txttrans <- function(text){
 jw <- Corpus(DirSource(file.path(basedir, "Publications/Copies"), pattern="pdf"),
              readerControl = list(reader=readPDF))
 jw2 <- txttrans(jw)
+jw3 <- TermDocumentMatrix(jw2)
+jw4 <- as.matrix(jw3)
+jw4 <- data.table(Term = rownames(jw4), Count = rowSums(jw4))[order(-Count)]
+
+set.seed(1)
+wcplot <- ggplot(jw4[1:150], aes(label = Term, size = Count,
+                       colour = cut(Count, breaks = quantile(Count, seq(0, 1, by = .2)),
+                                    include.lowest = TRUE))) +
+  geom_text_wordcloud_area() +
+  scale_size_area(max_size = 20) +
+  scale_colour_brewer(palette = "Paired") +
+  theme_minimal()
+
 ## jw3 <- txttransStem(jw)
 ## summary(jw2)
 
@@ -58,26 +71,26 @@ wordcloud(jw2, scale=c(5,0.5), max.words=100, random.order=FALSE,
 dev.off()
 
 
+## png(filename = file.path(basedir, "Publications/Copies/wordcloud_banner.png"),
+##     width = 12, height = 4, units = "in", res = 400)
+## wordcloud(jw2, scale=c(6,0.2), max.words=150, random.order=FALSE,
+##           rot.per=0, use.r.layout=FALSE, fixed.asp = FALSE, colors=brewer.pal(8, "Dark2"))
+## dev.off()
+
 png(filename = file.path(basedir, "Publications/Copies/wordcloud_banner.png"),
-    width = 12, height = 4, units = "in", res = 400)
-wordcloud(jw2, scale=c(6,0.2), max.words=150, random.order=FALSE,
-          rot.per=0, use.r.layout=FALSE, fixed.asp = FALSE, colors=brewer.pal(8, "Dark2"))
-
-wordcloud2(jw2)
-
+    width = 6, height = 3.7, units = "in", res = 600)
+print(wcplot)
 dev.off()
+
+file.copy(
+  from = file.path(basedir, "Publications/Copies/wordcloud_banner.png"),
+  to = "wordcloud_banner.png", overwrite = TRUE)
 
 png(filename = file.path(basedir, "Publications/Copies/wordcloud_small.png"),
     width = 5, height = 5, units = "in", res = 400)
 wordcloud(jw2, scale=c(5,0.1), max.words=50, random.order=FALSE,
           rot.per=0.35, use.r.layout=FALSE, colors=brewer.pal(8, "Dark2"))
 dev.off()
-
-png(filename = "wordcloud_banner.png", width = 12, height = 4, units = "in", res = 400)
-wordcloud(jw2, scale=c(6,0.2), max.words=150, random.order=FALSE,
-          rot.per=0, use.r.layout=FALSE, fixed.asp = FALSE, colors=brewer.pal(8, "Dark2"))
-dev.off()
-
 
 ```
 
@@ -108,16 +121,12 @@ participants and the community, take a look at our
 [projects](projects.html) and look at some of the reports we have sent 
 our participants there.
 
-<br></br>
-
 The word cloud below provides a data-driven summary of the type
 of work our lab conducts. The word cloud is based off papers published
 from our lab. Word size shows how commonly specific words appear in
 our work.
 
 ![](wordcloud_banner.png){fig-alt="A word cloud where the size of words indicates how frequently they were used in our research publications"}
-
-<br></br>
 
 [^1]: Digitally collected data either actively (e.g., completing mood
     surveys via an app; brief audio recordings of stress experienced

@@ -22,6 +22,7 @@ library(wordcloud)
 library(RColorBrewer)
 library(SnowballC)
 library(pdftools)
+library(ggwordcloud)
 
 #### data
 library(readxl)

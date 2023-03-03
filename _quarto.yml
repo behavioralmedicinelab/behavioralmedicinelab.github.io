@@ -18,6 +18,12 @@ website:
           - text: "SleepWell"
             href: projects.qmd#SleepWell
           - text: "---------"
+          - text: "Observational"
+          - text: "DistressManagement"
+            href: projects.qmd#DistressManagement
+          - text: "TCSupport"
+            href: projects.qmd#TCSupport
+          - text: "---------"
           - text: "Daily Life Studies"
           - text: "SHS"
             href: projects.qmd#SHS

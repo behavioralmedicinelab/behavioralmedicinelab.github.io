@@ -10,7 +10,7 @@ source("package_setup.R", echo = FALSE)
 projects <- read_excel(file.path(basedir, "WileyDossier/CV_Full.xlsx"),
                        sheet = "Projects")
 projects <- as.data.table(projects)[nzchar(Summary) & !is.na(Summary)]
-projects[, Type := factor(Type, levels = c("Trial", "Daily", "Other"))]
+projects[, Type := factor(Type, levels = c("Trial", "Observational", "Daily", "Other"))]
 projects <- projects[order(Type, -Status, -Started)]
 
 projects[, ProjectSummary := sprintf(
@@ -19,6 +19,10 @@ projects[, ProjectSummary := sprintf(
   Summary)]
 
 nav.trials <- paste(projects[Primary == 1 & Type == "Trial", sprintf(
+'          - text: "%s"
+            href: projects.qmd#%s',
+Name, Name)], collapse = "\n")
+nav.obs <- paste(projects[Primary == 1 & Type == "Observational", sprintf(
 '          - text: "%s"
             href: projects.qmd#%s',
 Name, Name)], collapse = "\n")
@@ -45,6 +49,9 @@ website:
       - text: "{{< fa cogs >}} Projects"
         menu:
           - text: "Clinical Trials"
+%s
+          - text: "---------"
+          - text: "Observational"
 %s
           - text: "---------"
           - text: "Daily Life Studies"
@@ -74,7 +81,7 @@ format:
     theme: flatly
     toc: true
 ',
-nav.trials, nav.daily, nav.other)
+nav.trials, nav.obs, nav.daily, nav.other)
 
 cat(nav, file = "_quarto.yml")
 
