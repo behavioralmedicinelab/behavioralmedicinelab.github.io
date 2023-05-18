@@ -52,10 +52,13 @@ assocprofs <- list(
   `Sean W Cain` = getCites("fCfy7iwAAAAJ"),
   `Adrian Carter` = getCites("2XiWPd8AAAAJ"),
   `Trevor Chong` = getCites("qLkvokIAAAAJ"),
+  `James Coxon` = getCites("hnAesu8AAAAJ"),
   `Bradley A Edwards` = getCites("yypftd8AAAAJ"),
+  `Melinda Jackson` = getCites("3lg8mHgAAAAJ"),
   `Sharna Jamadar` = getCites("plIkiT4AAAAJ"),
   `Laura Jobson` = getCites("dktQ3XQAAAAJ"),
   `Yen Ying Lim` = getCites("Z13E5-MAAAAJ"),
+  `Adam McKay` = getCites("KjOgwiQAAAAJ"),
   `Matthew Pase` = getCites("vkvm6j4AAAAJ"),
   `Andrew Phillips` = getCites("w1fBCWIAAAAJ"),
   `Adeel Razi` = getCites("VG3onZwAAAAJ"),
@@ -72,7 +75,7 @@ d2 <- d[Type == "Yearly" & year > 2012]
 d2[, Rank := paste0(rank(-cites, ties.method = "max"), "/", length(assocprofs)), by = year]
 sqdiff <- function(x, j = .5) abs((x - (sqrt(x) + j)^2) )
 
-compareplot <- ggplot(d2, aes(year, cites, group = Name, colour = Select, size = Select)) +
+compareplot <- ggplot(d2, aes(year, cites, group = Name, colour = Select, linewidth = Select)) +
   ## geom_boxplot(aes(group = year, colour = NULL, size = NULL),
   ##              width = .3, colour = "grey80", show.legend = FALSE) + 
   geom_line() +
@@ -81,7 +84,7 @@ compareplot <- ggplot(d2, aes(year, cites, group = Name, colour = Select, size =
   geom_label(aes(year, cites + sqdiff(cites, 1), label = Rank),
              data = d2[Name=="Joshua F Wiley"], show.legend = FALSE) +
   scale_colour_manual("Who", values = c("Joshua F Wiley" = "black", "Level D (A/Prof)\nComparators" = "grey60")) +
-  scale_size_manual("Who", values = c("Joshua F Wiley" = 2, "Level D (A/Prof)\nComparators" = .5)) +
+  scale_linewidth_manual("Who", values = c("Joshua F Wiley" = 2, "Level D (A/Prof)\nComparators" = .5)) +
   scale_x_continuous("Year", breaks = 2013:cyear,
                      labels = ifelse(
                        2013:cyear == 2015,
