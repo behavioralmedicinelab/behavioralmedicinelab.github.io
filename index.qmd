@@ -137,20 +137,19 @@ our work.
 
 ## Joshua F. Wiley
 
-Dr. Joshua Wiley is a behavioural medicine researcher currently
-appointed as a senior lecturer (Asst. Professor) at Monash University in the
-School of Psychological Sciences and Turner (2016-present). He studied
+Dr. Joshua Wiley is a behavioural medicine researcher at Monash University in the
+School of Psychological Sciences and Turner Institute for Brain and Mental Health
+and Honorary Reserach Fellow at the Peter MacCallum Cancer Centre. He studied
 health psychology and behavioural medicine, completing his PhD at the
-University of California at Los Angeles in 2015. Subsequently, he
-trained in pragmatic randomised controlled trials (RCTs) through post
-doctoral with a primary care and prevention group.
+University of California at Los Angeles in 2015 with subsequent
+training in randomised controlled trials (RCTs) in his postdoc.
 
 Dr. Wiley's research includes basic science and applied intervention
 work. In basic science, his work focuses on understanding the daily
 and longitudinal dynamics of sleep, psychosocial factors and health,
 emphasising potentially malleable mechanisms driving poor sleep and
 health. His intervention work targets the basic science mechanisms
-identified to attempt to improve population health. His intervention
+identified to attempt to improve sleep and mental health. His intervention
 research focuses on accessible and feasible sleep/behavioural and
 emotion regulation interventions with potential for broad
 dissemination. Aligned with recent calls for personalised medicine,
@@ -168,7 +167,7 @@ Australian Research Council (ARC),
 United States National Institutes of Health (US NIH),
  United States Department of Defense (US DoD), and UK Wellcome Trust,
  totaling >$10 million in funding.
- He has >100 publications and >6,000 citations (GS).
+ He has >100 publications and >7,000 citations (GS).
 
 ### {{< fa address-card >}} Connect
 

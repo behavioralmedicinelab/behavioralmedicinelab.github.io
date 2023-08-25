@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.2.313">
+<meta name="generator" content="quarto-1.3.361">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -17,7 +17,7 @@ div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
 ul.task-list{list-style: none;}
 ul.task-list li input[type="checkbox"] {
   width: 0.8em;
-  margin: 0 0.8em 0.2em -1.6em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
 </style>
@@ -47,7 +47,8 @@ ul.task-list li input[type="checkbox"] {
     "search-more-matches-text": "more matches in this document",
     "search-clear-button-title": "Clear",
     "search-detached-cancel-button-title": "Cancel",
-    "search-submit-button-title": "Submit"
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
   }
 }</script>
 
@@ -71,81 +72,83 @@ ul.task-list li input[type="checkbox"] {
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll ms-auto">
   <li class="nav-item dropdown ">
-    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-fa-cogs--projects" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-fa-cogs--projects" role="button" data-bs-toggle="dropdown" aria-expanded="false" rel="" target="">
  <span class="menu-text"><i class="fa-solid fa-cogs" aria-label="cogs"></i> Projects</span>
     </a>
     <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-fa-cogs--projects">    
         <li class="dropdown-header">Clinical Trials</li>
         <li>
-    <a class="dropdown-item" href="./projects.html#SleepCare">
+    <a class="dropdown-item" href="./projects.html#SleepCare" rel="" target="">
  <span class="dropdown-text">SleepCare</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="./projects.html#CanCope">
+    <a class="dropdown-item" href="./projects.html#CanCope" rel="" target="">
  <span class="dropdown-text">CanCope</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="./projects.html#SleepWell">
+    <a class="dropdown-item" href="./projects.html#SleepWell" rel="" target="">
  <span class="dropdown-text">SleepWell</span></a>
   </li>  
         <li><hr class="dropdown-divider"></li>
         <li class="dropdown-header">Observational</li>
         <li>
-    <a class="dropdown-item" href="./projects.html#DistressManagement">
+    <a class="dropdown-item" href="./projects.html#DistressManagement" rel="" target="">
  <span class="dropdown-text">DistressManagement</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="./projects.html#TCSupport">
+    <a class="dropdown-item" href="./projects.html#TCSupport" rel="" target="">
  <span class="dropdown-text">TCSupport</span></a>
   </li>  
         <li><hr class="dropdown-divider"></li>
         <li class="dropdown-header">Daily Life Studies</li>
         <li>
-    <a class="dropdown-item" href="./projects.html#SHS">
+    <a class="dropdown-item" href="./projects.html#SHS" rel="" target="">
  <span class="dropdown-text">SHS</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="./projects.html#DESTRESS">
+    <a class="dropdown-item" href="./projects.html#DESTRESS" rel="" target="">
  <span class="dropdown-text">DESTRESS</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="./projects.html#ACES">
+    <a class="dropdown-item" href="./projects.html#ACES" rel="" target="">
  <span class="dropdown-text">ACES</span></a>
   </li>  
         <li><hr class="dropdown-divider"></li>
         <li class="dropdown-header">Other Studies</li>
         <li>
-    <a class="dropdown-item" href="./projects.html#NHMRC Investigator Grant">
+    <a class="dropdown-item" href="./projects.html#NHMRC Investigator Grant" rel="" target="">
  <span class="dropdown-text">NHMRC Investigator Grant</span></a>
   </li>  
         <li><hr class="dropdown-divider"></li>
         <li>
-    <a class="dropdown-item" href="./projects.html#collaborations">
+    <a class="dropdown-item" href="./projects.html#collaborations" rel="" target="">
  <span class="dropdown-text">Collaborations</span></a>
   </li>  
     </ul>
   </li>
   <li class="nav-item">
-    <a class="nav-link active" href="./team.html" aria-current="page">
+    <a class="nav-link active" href="./team.html" rel="" target="" aria-current="page">
  <span class="menu-text"><i class="fa-solid fa-id-badge" aria-label="id-badge"></i> Team</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="./alumni.html">
+    <a class="nav-link" href="./alumni.html" rel="" target="">
  <span class="menu-text"><i class="fa-solid fa-graduation-cap" aria-label="graduation-cap"></i> Alumni</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="./consumer_community.html">
+    <a class="nav-link" href="./consumer_community.html" rel="" target="">
  <span class="menu-text"><i class="fa-solid fa-users" aria-label="users"></i> Consumers &amp; Community</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="./cv.html">
+    <a class="nav-link" href="./cv.html" rel="" target="">
  <span class="menu-text"><i class="fa-solid fa-file-alt" aria-label="file-alt"></i> Wiley CV</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="./ethics_values.html">
+    <a class="nav-link" href="./ethics_values.html" rel="" target="">
  <span class="menu-text"><i class="fa-solid fa-heart" aria-label="heart"></i> Ethics &amp; Values</span></a>
   </li>  
 </ul>
+            <div class="quarto-navbar-tools">
+</div>
           </div> <!-- /navcollapse -->
       </div> <!-- /container-fluid -->
     </nav>
@@ -201,6 +204,11 @@ ul.task-list li input[type="checkbox"] {
 <section id="david-tuck-2019---current-phd" class="level3">
 <h3 class="anchored" data-anchor-id="david-tuck-2019---current-phd">David Tuck | 2019 - current | PhD</h3>
 <p>David completed his Bachelor of Behavioural Studies (clinical psychology) with a co-minor in advanced psychology at Swinburne University in 2014. Since then he has combined his personal and professional interests by volunteering as a snowboarding guide with Disabled Wintersports Australia, and an assistant music therapist at Frankston Young Veterans and Families Wellbeing Centre. David completed the Graduate Diploma of Psychology Advanced at Monash University in 2017 whilst working concurrently as a research assistant with Dr Joshua Wiley. David’s research interests lay in preventative mental health and interdisciplinary investigations. His Graduate Diploma thesis investigated the relationship between posttraumatic growth and emotional intelligence. David began his PhD at Monash in 2019, investigating the factors that promote resilience to potentially traumatic events. His research supervisors are Dr Emily Berger, Dr Joshua Wiley, and Dr Lefteris Patlmazaglou.</p>
+<hr>
+</section>
+<section id="tania-wallace-2023---current-phd-clinical" class="level3">
+<h3 class="anchored" data-anchor-id="tania-wallace-2023---current-phd-clinical">Tania Wallace | 2023 - current | PhD (Clinical)</h3>
+<p>Tania Wallace had a previous career in Human Resources in Melbourne and London, before completing the Graduate Diploma in Psychology at Monash University in 2021 and then Bachelor of Science (Honours) at Monash University in 2022. Tania commenced her PhD in clinical psychology at Monash University in 2023 and is supervised by Dr Joshua Wiley and Dr Maria Ftanou, Director of Psychosocial Oncology at the Peter MacCallum Cancer Centre. Her research is focused on psychological distress incorporating depression, anxiety and emotional well-being in haematological (blood) cancer patients.</p>
 </section>
 <section id="group-photo---2022" class="level3">
 <h3 class="anchored" data-anchor-id="group-photo---2022">Group Photo - 2022</h3>
@@ -249,9 +257,23 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     icon: icon
   };
   anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
   const clipboard = new window.ClipboardJS('.code-copy-button', {
-    target: function(trigger) {
-      return trigger.previousElementSibling;
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
     }
   });
   clipboard.on('success', function(e) {
@@ -316,6 +338,92 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       return note.innerHTML;
     });
   }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
   const findCites = (el) => {
     const parentEl = el.parentElement;
     if (parentEl) {
@@ -358,13 +466,19 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </div> <!-- /content -->
 <footer class="footer">
   <div class="nav-footer">
-      <div class="nav-footer-center">
-        <ul class="footer-items list-unstyled">
+    <div class="nav-footer-left">
+      &nbsp;
+    </div>   
+    <div class="nav-footer-center">
+      <ul class="footer-items list-unstyled">
     <li class="nav-item">
  Copyright © 2019 - 2023 by Behavioural Medicine Lab based in Melbourne, Australia.  All rights reserved.
   </li>  
 </ul>
-      </div>
+    </div>
+    <div class="nav-footer-right">
+      &nbsp;
+    </div>
   </div>
 </footer>
 
