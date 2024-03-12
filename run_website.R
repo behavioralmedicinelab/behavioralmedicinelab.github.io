@@ -74,7 +74,7 @@ website:
         href: ethics_values.qmd
   page-footer:
     center:
-    - text: "Copyright &copy; 2019 - 2023 by Behavioural Medicine Lab based in Melbourne, Australia.  All rights reserved."
+    - text: "Copyright &copy; 2019 - 2024 by Behavioural Medicine Lab based in Melbourne, Australia.  All rights reserved."
 
 format:
   html:

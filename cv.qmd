@@ -47,9 +47,9 @@ jwCites <- function() {
 citeplot <- tryCatch(jwCites(), error = function(e) ggplot() + ggtitle("Could not pull citations."))
 
 assocprofs <- list(
-  `Clare Anderson` = getCites("MHtyzVoAAAAJ"),
+  # `Clare Anderson` = getCites("MHtyzVoAAAAJ"),
   `Bei Bei` = getCites("wMBLE0IAAAAJ"),
-  `Sean W Cain` = getCites("fCfy7iwAAAAJ"),
+  # `Sean W Cain` = getCites("fCfy7iwAAAAJ"),
   `Adrian Carter` = getCites("2XiWPd8AAAAJ"),
   `Trevor Chong` = getCites("qLkvokIAAAAJ"),
   `James Coxon` = getCites("hnAesu8AAAAJ"),
@@ -60,11 +60,11 @@ assocprofs <- list(
   `Yen Ying Lim` = getCites("Z13E5-MAAAAJ"),
   `Adam McKay` = getCites("KjOgwiQAAAAJ"),
   `Matthew Pase` = getCites("vkvm6j4AAAAJ"),
-  `Andrew Phillips` = getCites("w1fBCWIAAAAJ"),
+  # `Andrew Phillips` = getCites("w1fBCWIAAAAJ"),
   `Adeel Razi` = getCites("VG3onZwAAAAJ"),
   `Renerus Stolwyk` = getCites("k6MqWxgAAAAJ"),
   `Catherine Willmott` = getCites("Rj02UH8AAAAJ"),
-  `Marie Yap` = getCites("3357uNEAAAAJ"),
+  # `Marie Yap` = getCites("3357uNEAAAAJ"),
   `Joshua F Wiley` = getCites("bRG3LSQAAAAJ"))
 
 d <- as.data.table(do.call(rbind, lapply(names(assocprofs), function(v) {
@@ -308,11 +308,10 @@ summarystatement <- sprintf(
 >$10 million AUD in grant funding as a chief investigator; 
 successfully graduated **%d** primary doctoral, **%d** co-supervised doctoral, and **%d** honours students;
 currently supervising **%d** primary doctoral, **%d** co-supervised doctoral, and **%d** honours students;
-**1** Associate Editor position; NHMRC panel member;
-**%d** first/last & **%d** co-author peer reviewed articles; **%d** books; **%d** other pubs;
+NHMRC panel member; **%d** first/last & **%d** co-author peer reviewed articles; **%d** books; **%d** other pubs;
 total of **%d** publications (**%d** publications since the start of %d [last five years]);
 **%d** first/last & **%d** co-author peer reviewed abstracts; **%d** invited presentations;
-**%d** software packages developed.",
+**%d** software packages developed; served as Associate Editor for years handling ~100 submissions.",
   yearSincePhD,
   compNPrimary, compNSecondary, compNHonours,
   NPrimary, NSecondary, NHonours,
