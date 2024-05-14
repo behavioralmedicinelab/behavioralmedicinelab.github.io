@@ -47,23 +47,21 @@ jwCites <- function() {
 citeplot <- tryCatch(jwCites(), error = function(e) ggplot() + ggtitle("Could not pull citations."))
 
 assocprofs <- list(
-  # `Clare Anderson` = getCites("MHtyzVoAAAAJ"),
   `Bei Bei` = getCites("wMBLE0IAAAAJ"),
-  # `Sean W Cain` = getCites("fCfy7iwAAAAJ"),
-  `Adrian Carter` = getCites("2XiWPd8AAAAJ"),
-  `Trevor Chong` = getCites("qLkvokIAAAAJ"),
+  `Sean Cowlishaw` = getCites("18D3_KcAAAAJ"),
   `James Coxon` = getCites("hnAesu8AAAAJ"),
-  `Bradley A Edwards` = getCites("yypftd8AAAAJ"),
   `Melinda Jackson` = getCites("3lg8mHgAAAAJ"),
   `Sharna Jamadar` = getCites("plIkiT4AAAAJ"),
   `Laura Jobson` = getCites("dktQ3XQAAAAJ"),
+  `Katherine Lawrence` = getCites("tHUmNKoAAAAJ"),
   `Yen Ying Lim` = getCites("Z13E5-MAAAAJ"),
   `Adam McKay` = getCites("KjOgwiQAAAAJ"),
   `Matthew Pase` = getCites("vkvm6j4AAAAJ"),
-  # `Andrew Phillips` = getCites("w1fBCWIAAAAJ"),
   `Adeel Razi` = getCites("VG3onZwAAAAJ"),
   `Renerus Stolwyk` = getCites("k6MqWxgAAAAJ"),
-  `Catherine Willmott` = getCites("Rj02UH8AAAAJ"),
+  `Tracey Sletten` = getCites("OjrCgUoAAAAJ"),
+  `Trevor Chong` = getCites("qLkvokIAAAAJ"),
+  #`Bradley A Edwards` = getCites("yypftd8AAAAJ"),
   # `Marie Yap` = getCites("3357uNEAAAAJ"),
   `Joshua F Wiley` = getCites("bRG3LSQAAAAJ"))
 
@@ -95,7 +93,7 @@ compareplot <- ggplot(d2, aes(year, cites, group = Name, colour = Select, linewi
                      trans = "log2") +
   theme_classic() +
   coord_cartesian(xlim = c(2013 - .2, cyear + .2), ylim = c(10, 4300), expand = FALSE) +
-  theme(legend.position = c(.8, .15)) +
+  theme(legend.position.inside = c(.8, .15)) +
   labs(caption = "Numbers show Joshua F Wiley's rank")
 
 fiveyear <- (year(Sys.Date()) - 5)
@@ -393,99 +391,122 @@ pq1 <- ggplot(dq1, aes(Year, PQ1)) +
 
 
 
+if (FALSE) {
+## Package Downloads / Ranks
 
-#### Package Downloads / Ranks
+myPackages <- c(
+  "MplusAutomation", "multilevelcoda",
+  "JWileymisc", "extraoperators", "multilevelTools",
+  "pscore", "varian", "brmsmargins")
 
-## myPackages <- c(
-##   "MplusAutomation", "multilevelcoda",
-##   "JWileymisc", "extraoperators", "multilevelTools",
-##   "pscore", "varian", "brmsmargins")
+years <- (2018L):(2024L)
 
-## years <- (2018L):(2023L)
+pkgdownloads <- vector("list", length(years))
+names(pkgdownloads) <- paste0("y", years)
 
-## pkgdownloads <- vector("list", length(years))
-## names(pkgdownloads) <- paste0("y", years)
+for (i in years) {
+  fname <- sprintf("yeardownloads_%d.RDS", i)
 
-## for (i in years) {
-##   fname <- sprintf("yeardownloads_%d.RDS", i)
+  if (isFALSE(file.exists(fname)) || identical(i, year(Sys.Date()))) {
+    pkgdownloads[[paste0("y", i)]] <- cranDownloads(
+      packages = myPackages,
+      from = i, to = i)
+    saveRDSfst(
+      object = pkgdownloads[[paste0("y", i)]],
+      filename = fname)
+  } else {
+    pkgdownloads[[paste0("y", i)]] <- readRDSfst(fname)
+  }
+}
 
-##   if (isFALSE(file.exists(fname)) || identical(i, year(Sys.Date()))) {
-##     pkgdownloads[[paste0("y", i)]] <- cranDownloads(
-##       packages = myPackages,
-##       from = i, to = i)
-##     saveRDSfst(
-##       object = pkgdownloads[[paste0("y", i)]],
-##       filename = fname)
-##   } else {
-##     pkgdownloads[[paste0("y", i)]] <- readRDSfst(fname)
-##   }
-## }
+sum(pkgdownloads$y2018$cranlogs.data$count)
+sum(pkgdownloads$y2019$cranlogs.data$count)
+sum(pkgdownloads$y2020$cranlogs.data$count)
+sum(pkgdownloads$y2021$cranlogs.data$count)
+sum(pkgdownloads$y2022$cranlogs.data$count)
+sum(pkgdownloads$y2023$cranlogs.data$count)
+sum(pkgdownloads$y2024$cranlogs.data$count)
 
-## sum(pkgdownloads$y2018$cranlogs.data$count)
-## sum(pkgdownloads$y2019$cranlogs.data$count)
-## sum(pkgdownloads$y2020$cranlogs.data$count)
-## sum(pkgdownloads$y2021$cranlogs.data$count)
-## sum(pkgdownloads$y2022$cranlogs.data$count)
-## sum(pkgdownloads$y2023$cranlogs.data$count)
+pkgdownloads2023 <- cranDownloads(packages = myPackages,
+                   from = "2023", to = "2023")
+sum(pkgdownloads2023$cranlogs.data$count)
 
-## pkgdownloads2022 <- cranDownloads(packages = myPackages,
-##                    from = "2022", to = "2022")
-## sum(pkgdownloads2022$cranlogs.data$count)
+# x2023 <- lapply(1:31, function(i) {
+#   if (i < 10) {
+#     usedate <- sprintf("2023-03-0%d", i)
+#   } else {
+#     usedate <- sprintf("2023-03-%d", i)
+#   }
+#   packageRank(package = myPackages, date = usedate)
+# })
+# saveRDSfst(x2023, file = "packageranks_2023_0301-0331.RDS")
 
-## x2022 <- lapply(1:7, function(i) {
-##   packageRank(package = myPackages, date = sprintf("2022-03-0%d", i))
-## })
-## saveRDSfst(x2022, file = "packageranks_2022_0301-0307.RDS")
+x2024 <- lapply(1:31, function(i) {
+  if (i < 10) {
+    usedate <- sprintf("2024-03-0%d", i)
+  } else {
+    usedate <- sprintf("2024-03-%d", i)
+  }
+  packageRank(package = myPackages, date = usedate)
+})
+saveRDSfst(x2024, file = "packageranks_2024_0301-0331.RDS")
 
 
-## x2022b <- as.data.table(do.call(rbind, lapply(x2022, function(x) {
-##   cbind(x$package.data, TotalPkgs = length(x$freqtab))
-## })))
 
-## x2022b[, mean(percentile), by = packages]
+x2024b <- as.data.table(do.call(rbind, lapply(x2024, function(x) {
+  cbind(x$package.data, TotalPkgs = length(x$freqtab))
+})))
 
-## x2022b[!duplicated(date), mean(TotalPkgs)]
+x2024b[, mean(percentile), by = packages][order(-V1)]
 
-## ggplot(x2022b, aes(packages, percentile)) + geom_boxplot() + geom_point()
+x2024b[!duplicated(date), mean(TotalPkgs)]
 
-## str(x2022[[1]])
+percplot <- ggplot(x2024b, aes(packages, percentile)) + 
+  geom_boxplot() +
+  geom_point() +
+  theme_classic()
+print(percplot)
 
-## plot(x1)
+percplot + coord_cartesian(ylim = c(80, 100), expand = FALSE)
 
-## plot(x, unit.observation = "month")
+str(x2024[[1]])
 
-## plot(x, multi.plot = TRUE)
+plot(x2024[[1]])
 
-## y <- as.data.table(x$cranlogs.data)
+plot(x, unit.observation = "month")
 
-## y[, Months := months(date)]
-## y[, Months := factor(Months, levels = unique(Months))]
+plot(x, multi.plot = TRUE)
 
-## ggplot(y[, sum(count), by = .(Months, package)],
-##        aes(Months, V1)) +
-##   geom_point() +
-##   facet_wrap(~package, scales = "free_y") +
-##   theme_classic()
+y <- as.data.table(x$cranlogs.data)
 
-## y[, sum(count), by = package][, sum(V1)]
+y[, Months := months(date)]
+y[, Months := factor(Months, levels = unique(Months))]
 
-## plot(x, population.plot = TRUE)
+ggplot(y[, sum(count), by = .(Months, package)],
+       aes(Months, V1)) +
+  geom_point() +
+  facet_wrap(~package, scales = "free_y") +
+  theme_classic()
 
-## plot(x1 <- packageDistribution(package = "MplusAutomation", date = "2021-03-01"))
+y[, sum(count), by = package][, sum(V1)]
 
-## plot(x1 <- packageRank(package = "MplusAutomation", date = "2021-03-01"))
+plot(x2024[[1]], population.plot = TRUE)
 
-## x2 <- filteredDownloads(package = "MplusAutomation", date = "2021-03-01")
+plot(x1 <- packageDistribution(package = "MplusAutomation", date = "2021-03-01"))
 
-## plot(cranDownloads(packages = "cranlogs", to = 2022), package.version = TRUE,
-##      smooth = TRUE, unit.observation = "month")
+plot(x1 <- packageRank(package = "MplusAutomation", date = "2021-03-01"))
 
-## plot(packageRank(packages = "cholera", date = "2020-03-04"))
+x2 <- filteredDownloads(package = "MplusAutomation", date = "2021-03-01")
 
-## filteredDownloads(package = "MplusAutomation", date = "2021-03-01", multi.core = FALSE)
+plot(cranDownloads(packages = "cranlogs", to = 2022), package.version = TRUE,
+     smooth = TRUE, unit.observation = "month")
 
-## packageRank(package = "MplusAutomation", all.filters = TRUE)
+plot(packageRank(packages = "cholera", date = "2020-03-04"))
 
+filteredDownloads(package = "MplusAutomation", date = "2021-03-01", multi.core = FALSE)
+
+packageRank(package = "MplusAutomation", all.filters = TRUE)
+}
 
 ```
 
