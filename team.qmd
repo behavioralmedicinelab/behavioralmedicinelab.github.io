@@ -23,27 +23,31 @@ students[, PeopleSummary := sprintf(
 
 ```
 
-![](BML_Group_2022.jpg){fig-alt="A group photo of members of the lab from the year 2022"}
+![](BML_Group_2024.jpg){fig-alt="A group photo of members from the year 2024"}
 
 <br></br>
 
 `r paste(students[, PeopleSummary], collapse = "\n\n -------------------- \n\n")`
 
+### Group Photo - 2024
+
+![](BML_Group_2024.jpg){fig-alt="A group photo of members from the year 2024"}
+
 ### Group Photo - 2022
 
-![](BML_Group_2022.jpg){fig-alt="A group photo of members of the lab from the year 2022"}
+![](BML_Group_2022.jpg){fig-alt="A group photo of members from the year 2022"}
 
 
 ### Group Photo - 2021
 
-![](BML_Group_2021.jpg){fig-alt="A group photo of members of the lab from the year 2021"}
+![](BML_Group_2021.jpg){fig-alt="A group photo of members from the year 2021"}
 
 
 ### Group Photo - 2020
 
-![](BML_Group_2020.jpg){fig-alt="A group photo of members of the lab from the year 2020"}
+![](BML_Group_2020.jpg){fig-alt="A group photo of members from the year 2020"}
 
 
 ### Group Photo - 2019
 
-![](BML_Group_2019.jpg){fig-alt="A group photo of members of the lab from the year 2019"}
+![](BML_Group_2019.jpg){fig-alt="A group photo of members from the year 2019"}
