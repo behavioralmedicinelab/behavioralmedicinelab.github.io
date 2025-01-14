@@ -7,6 +7,7 @@
 ## load packages and setup
 source("package_setup.R", echo = FALSE)
 
+
 projects <- read_excel(file.path(basedir, "WileyDossier/CV_Full.xlsx"),
                        sheet = "Projects")
 projects <- as.data.table(projects)[nzchar(Summary) & !is.na(Summary)]
@@ -74,7 +75,7 @@ website:
         href: ethics_values.qmd
   page-footer:
     center:
-    - text: "Copyright &copy; 2019 - 2024 by Behavioural Medicine Lab based in Melbourne, Australia.  All rights reserved."
+    - text: "Copyright &copy; 2019 - 2025 by Behavioural Medicine Lab based in Melbourne, Australia.  All rights reserved."
 
 format:
   html:

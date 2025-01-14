@@ -16,7 +16,7 @@ source("package_setup.R", echo=FALSE)
 cyear <- as.integer(format(Sys.Date(), format = "%Y"))
 oldyear <- cyear - 4
 yearSincePhD <- round(as.numeric(
-  difftime(Sys.Date(), as.Date("2015-03-24"),
+  difftime(Sys.Date(), as.Date("2015-06-12"),
            units = "days") / 365.25), 1)
 
 getCites <- function(id) {
@@ -48,19 +48,18 @@ citeplot <- tryCatch(jwCites(), error = function(e) ggplot() + ggtitle("Could no
 
 assocprofs <- list(
   `Bei Bei` = getCites("wMBLE0IAAAAJ"),
+  `Trevor Chong` = getCites("qLkvokIAAAAJ"),
   `Sean Cowlishaw` = getCites("18D3_KcAAAAJ"),
   `James Coxon` = getCites("hnAesu8AAAAJ"),
   `Melinda Jackson` = getCites("3lg8mHgAAAAJ"),
   `Sharna Jamadar` = getCites("plIkiT4AAAAJ"),
   `Laura Jobson` = getCites("dktQ3XQAAAAJ"),
-  `Katherine Lawrence` = getCites("tHUmNKoAAAAJ"),
   `Yen Ying Lim` = getCites("Z13E5-MAAAAJ"),
   `Adam McKay` = getCites("KjOgwiQAAAAJ"),
   `Matthew Pase` = getCites("vkvm6j4AAAAJ"),
   `Adeel Razi` = getCites("VG3onZwAAAAJ"),
   `Renerus Stolwyk` = getCites("k6MqWxgAAAAJ"),
   `Tracey Sletten` = getCites("OjrCgUoAAAAJ"),
-  `Trevor Chong` = getCites("qLkvokIAAAAJ"),
   #`Bradley A Edwards` = getCites("yypftd8AAAAJ"),
   # `Marie Yap` = getCites("3357uNEAAAAJ"),
   `Joshua F Wiley` = getCites("bRG3LSQAAAAJ"))
@@ -303,7 +302,7 @@ software <- read_excel(file.path(basedir, "WileyDossier/CV_Full.xlsx"),
 
 summarystatement <- sprintf(
 "Senior Lecturer at Monash University; **%0.1f** years post PhD;
->$10 million AUD in grant funding as a chief investigator; 
+>$14 million AUD in grant funding as a chief investigator; 
 successfully graduated **%d** primary doctoral, **%d** co-supervised doctoral, and **%d** honours students;
 currently supervising **%d** primary doctoral, **%d** co-supervised doctoral, and **%d** honours students;
 NHMRC panel member; **%d** first/last & **%d** co-author peer reviewed articles; **%d** books; **%d** other pubs;
@@ -514,7 +513,7 @@ packageRank(package = "MplusAutomation", all.filters = TRUE)
 
 ## <span class="fa fa-university"></span> EDUCATION
 
-`2010 - 24 March 2015`
+`2010 - 12 June 2015` (PhD pass date) 
 **Doctor of Philosophy** in Psychology (Health & Quantitative) from
 the *University of California, Los Angeles*. 
 Supervisor: Annette Stanton. Dissertation title: *Measurement of

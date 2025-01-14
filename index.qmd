@@ -113,8 +113,8 @@ and promote mental health, particularly in people who are or have been
 treated for cancer or are experiencing other sources of high stress.
 
 Our team is led by Dr. Joshua Wiley and is situated within the 
-Turner Institute for Brain and Mental Health 
-[(Turner)](https://www.monash.edu/turner-institute) 
+School of Psychological Sciences
+[(SPS)](https://www.monash.edu/medicine/psych/) 
 within the Sleep and Circadian Rhythms Program. To see an example of
 the sort of work we do and how we work to feed findings back to our
 participants and the community, take a look at our
@@ -138,7 +138,7 @@ our work.
 ## Joshua F. Wiley
 
 Dr. Joshua Wiley is a behavioural medicine researcher at Monash University in the
-School of Psychological Sciences and Turner Institute for Brain and Mental Health
+School of Psychological Sciences 
 and Honorary Reserach Fellow at the Peter MacCallum Cancer Centre. He studied
 health psychology and behavioural medicine, completing his PhD at the
 University of California at Los Angeles in 2015 with subsequent
@@ -166,8 +166,8 @@ Australian National Health and Medical Research Council (NHMRC),
 Australian Research Council (ARC), 
 United States National Institutes of Health (US NIH),
  United States Department of Defense (US DoD), and UK Wellcome Trust,
- totaling >$10 million in funding.
- He has >100 publications and >8,000 citations (GS).
+ totaling >$14 million in funding.
+ He has >120 publications and >10,000 citations (GS).
 
 ### {{< fa address-card >}} Connect
 
