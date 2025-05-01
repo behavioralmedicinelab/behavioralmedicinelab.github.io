@@ -646,7 +646,7 @@ ggplotly(citeplot)
 <!-- <br></br> -->
 <!-- ------------------------------------------- -->
 
-## {{< fa chalkboard-teacher >}} ABSTRACTS
+## {{< fa chalkboard-teacher >}} ABSTRACTS, PRESENTATIONS, & SYMPOSIA
 ### First or Last Author
 
 `r paste(unlist(lapply(unique(leadabstracts$Year), printPubs, d = leadabstracts)), collapse = "\n")`
