@@ -48,21 +48,25 @@ citeplot <- tryCatch(jwCites(), error = function(e) ggplot() + ggtitle("Could no
 
 assocprofs <- list(
   `Bei Bei` = getCites("wMBLE0IAAAAJ"),
+  ##`Sean Cain` = getCites("fCfy7iwAAAAJ"),
   `Trevor Chong` = getCites("qLkvokIAAAAJ"),
+  ## james courtney cannot find google scholar
   `Sean Cowlishaw` = getCites("18D3_KcAAAAJ"),
   `James Coxon` = getCites("hnAesu8AAAAJ"),
   `Melinda Jackson` = getCites("3lg8mHgAAAAJ"),
   `Sharna Jamadar` = getCites("plIkiT4AAAAJ"),
   `Laura Jobson` = getCites("dktQ3XQAAAAJ"),
+  `Katherine Lawrence` = getCites("tHUmNKoAAAAJ"), 
   `Yen Ying Lim` = getCites("Z13E5-MAAAAJ"),
   `Adam McKay` = getCites("KjOgwiQAAAAJ"),
+  ## david moseley cannot find google scholar
   `Matthew Pase` = getCites("vkvm6j4AAAAJ"),
   `Adeel Razi` = getCites("VG3onZwAAAAJ"),
   `Renerus Stolwyk` = getCites("k6MqWxgAAAAJ"),
   `Tracey Sletten` = getCites("OjrCgUoAAAAJ"),
   #`Bradley A Edwards` = getCites("yypftd8AAAAJ"),
-  # `Marie Yap` = getCites("3357uNEAAAAJ"),
   `Joshua F Wiley` = getCites("bRG3LSQAAAAJ"))
+
 
 d <- as.data.table(do.call(rbind, lapply(names(assocprofs), function(v) {
   cbind(assocprofs[[v]], Name = v, Select = ifelse(v == "Joshua F Wiley",
@@ -72,7 +76,7 @@ d2 <- d[Type == "Yearly" & year > 2012]
 d2[, Rank := paste0(rank(-cites, ties.method = "max"), "/", length(assocprofs)), by = year]
 sqdiff <- function(x, j = .5) abs((x - (sqrt(x) + j)^2) )
 
-compareplot <- ggplot(d2, aes(year, cites, group = Name, colour = Select, linewidth = Select)) +
+compareplot.assoc <- ggplot(d2, aes(year, cites, group = Name, colour = Select, linewidth = Select)) +
   ## geom_boxplot(aes(group = year, colour = NULL, size = NULL),
   ##              width = .3, colour = "grey80", show.legend = FALSE) + 
   geom_line() +
@@ -94,6 +98,60 @@ compareplot <- ggplot(d2, aes(year, cites, group = Name, colour = Select, linewi
   coord_cartesian(xlim = c(2013 - .2, cyear + .2), ylim = c(10, 4300), expand = FALSE) +
   theme(legend.position.inside = c(.8, .15)) +
   labs(caption = "Numbers show Joshua F Wiley's rank")
+
+
+profs <- list(
+  `Mark Bellgrove` = getCites("yb3omigAAAAJ"),
+  `Kim Cornish` = getCites("2wunT9gAAAAJ"),
+  `Sue Cotton` = getCites("VW_B2SoAAAAJ"),
+  `Sean Drummond` = getCites("ow8CMQ4AAAAJ"),
+  `Alex Fornito` = getCites("uceaXuYAAAAJ"),
+  ##`Judith Gullifer` = getCites("8MdoxdsAAAAJ"),
+  `Jennie Ponsford` = getCites("_wstNVwAAAAJ"),
+  `Nicole Rinehart` = getCites("wLwcdSMAAAAJ"), 
+  `Martin Sellbom` = getCites("t0jyZIUAAAAJ"),
+  `Julie C Stout` = getCites("CFTw2MEAAAAJ"),
+  `Shantha Rajaratnam` = getCites("Fah_71UAAAAJ"),
+  `Nao Tsuchiya` = getCites("Or751n4AAAAJ"),
+  `Antonio Verdejo-Garcia` = getCites("_Tb1r8IAAAAJ"),
+  `Marie Yap` = getCites("3357uNEAAAAJ"),
+  `Joshua F Wiley` = getCites("bRG3LSQAAAAJ"))
+
+
+d <- as.data.table(do.call(rbind, lapply(names(profs), function(v) {
+  cbind(profs[[v]], Name = v, Select = ifelse(v == "Joshua F Wiley",
+                                                        "Joshua F Wiley", "Level E (Prof)\nComparators"))
+})))
+d2 <- d[Type == "Yearly" & year > 2012]
+d2[, Rank := paste0(rank(-cites, ties.method = "max"), "/", length(profs)), by = year]
+sqdiff <- function(x, j = .5) abs((x - (sqrt(x) + j)^2) )
+
+compareplot.profs <- ggplot(d2, aes(year, cites, group = Name, colour = Select, linewidth = Select)) +
+  geom_line() +
+  geom_label(aes(year, cites + sqdiff(cites, 1), label = Rank),
+             data = d2[Name=="Joshua F Wiley"], show.legend = FALSE) +
+  scale_colour_manual("Who", values = c("Joshua F Wiley" = "black", "Level E (Prof)\nComparators" = "grey60")) +
+  scale_linewidth_manual("Who", values = c("Joshua F Wiley" = 2, "Level E (Prof)\nComparators" = .5)) +
+  scale_x_continuous("Year", breaks = 2013:cyear,
+                     labels = ifelse(
+                       2013:cyear == 2015,
+                       "2015\n(PhD Awarded)",
+                       2013:cyear)) +
+  scale_y_continuous("Yearly Citations (Google Scholar)",
+                     breaks = c(10, 100, 500, 1000, 2000, 4000),
+                     trans = "log2") +
+  theme_classic() +
+  coord_cartesian(xlim = c(2013 - .2, cyear + .2), ylim = c(10, 4300), expand = FALSE) +
+  theme(legend.position.inside = c(.8, .15)) +
+  labs(caption = "Numbers show Joshua F Wiley's rank")
+
+compareplot <- ggarrange(
+  compareplot.assoc,
+  compareplot.profs,
+  ncol = 1, nrow = 2)
+
+ggsave("compareplot.pdf", compareplot, width = 8, height = 12,
+        device = "pdf")
 
 fiveyear <- (year(Sys.Date()) - 5)
 
@@ -588,8 +646,7 @@ ggplotly(citeplot)
 <!-- <br></br> -->
 <!-- ------------------------------------------- -->
 
-## {{< fa chalkboard-teacher >}} ABSTRACTS, PRESENTATIONS, & SYMPOSIA
-
+## {{< fa chalkboard-teacher >}} ABSTRACTS
 ### First or Last Author
 
 `r paste(unlist(lapply(unique(leadabstracts$Year), printPubs, d = leadabstracts)), collapse = "\n")`

@@ -31,9 +31,14 @@ library(data.table)
 #### graphs
 library(ggplot2)
 library(plotly)
+library(ggpubr)
 
 #### benchmarking data
 library(scholar)
 library(packageRank)
 
-basedir <- Sys.getenv("OneDriveConsumer")
+if (Sys.info()[["sysname"]] == "Linux") {
+    basedir <- "/mnt/c/Users/jwile/OneDrive"
+} else {
+    basedir <- Sys.getenv("OneDriveConsumer")
+}
