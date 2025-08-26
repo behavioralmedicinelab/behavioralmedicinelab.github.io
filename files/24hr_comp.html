@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>24‑Hour Composition – Interactive Pie</title>
+  <style>
+    :root{
+      --bg:#0b0f14; --card:#121821; --muted:#9fb0c3; --text:#e9f0f7;
+      --accent:#4db6ff; --ring:#3a82c5; --grid:#1b2430;
+      --c1:#74b9ff; --c2:#ff7675; --c3:#ffeaa7; --c4:#55efc4; --c5:#a29bfe;
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{margin:0;background:linear-gradient(180deg,#0b0f14,#0f1621);
+         color:var(--text);font:16px/1.4 system-ui,Segoe UI,Roboto,Ubuntu,Arial}
+    .wrap{max-width:1100px;margin:32px auto;padding:16px}
+    .panel{background:var(--card);border:1px solid #18202c;border-radius:16px;
+           box-shadow:0 10px 30px rgba(0,0,0,.35), inset 0 1px 0 rgba(255,255,255,.02)}
+    .grid{display:grid;grid-template-columns:1.1fr .9fr;gap:22px}
+    @media (max-width:900px){.grid{grid-template-columns:1fr;}}
+
+    .canvasWrap{position:relative;padding:20px}
+    canvas{width:100%;height:auto;max-height:520px;display:block;border-radius:14px;
+           background:radial-gradient(1200px 500px at 30% -50%,rgba(77,182,255,.15),transparent),
+                      radial-gradient(900px 500px at 120% 130%,rgba(162,155,254,.12),transparent),
+                      var(--grid)}
+    .totals{position:absolute;inset:auto 20px 20px auto;background:#0e1420e6;
+            border:1px solid #1b2533;border-radius:12px;padding:10px 12px;font-size:13px;color:var(--muted)}
+    .legend{padding:18px 18px 6px 18px}
+    .row{display:grid;grid-template-columns:auto 1fr auto auto auto;gap:10px;align-items:center;margin:10px 0}
+    .swatch{width:14px;height:14px;border-radius:3px;display:inline-block;border:1px solid #0006}
+    .name{color:#dfe9f6;font-weight:600}
+    .hours{font-variant-numeric:tabular-nums;color:#c9d7e8}
+    input[type="range"]{width:100%;appearance:none;height:6px;border-radius:999px;background:#1e2a39;outline:none}
+    input[type="range"]::-webkit-slider-thumb{appearance:none;width:18px;height:18px;border-radius:50%;background:var(--accent);border:2px solid white;box-shadow:0 0 0 4px rgba(77,182,255,.25)}
+    input[type="range"]::-moz-range-thumb{width:18px;height:18px;border-radius:50%;background:var(--accent);border:2px solid white;box-shadow:0 0 0 4px rgba(77,182,255,.25)}
+
+    .btn{background:#162232;color:#cfe2f7;border:1px solid #203046;border-radius:10px;padding:4px 9px;cursor:pointer}
+    .btn:hover{background:#1a2a3e}
+    .note{color:var(--muted);font-size:13px;padding:0 18px 18px}
+    .hdr{display:flex;justify-content:space-between;align-items:end;padding:18px 18px 0 18px}
+    .hdr h1{margin:0;font-size:20px}
+    .hdr .sub{color:var(--muted);font-size:13px}
+    .controls{padding:0 18px 8px 18px}
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="grid">
+      <div class="panel canvasWrap">
+        <div class="hdr">
+          <h1>24‑Hour Composition</h1>
+          <div class="sub">Drag sliders or use ± to adjust. Total always = 24h.</div>
+        </div>
+        <canvas id="pie" width="900" height="600" aria-label="Pie chart of 24-hour composition"></canvas>
+        <div class="totals">
+          <div><strong>Total:</strong> <span id="totalH">24.00</span> h</div>
+          <div><strong>Remaining:</strong> <span id="remainH">0.00</span> h</div>
+        </div>
+      </div>
+
+      <div class="panel">
+        <div class="legend" id="legend"></div>
+        <div class="controls" style="display:flex;gap:8px;flex-wrap:wrap">
+          <button class="btn" id="equalize">Equal split</button>
+          <button class="btn" id="reset">Reset to defaults</button>
+        </div>
+        <p class="note">Defaults (reasonable estimates): TST 7.5 h, Wake 0.5 h, SB 10 h, LPA 5 h, MVPA 1 h. Use the padlock to lock a component.</p>
+      </div>
+    </div>
+  </div>
+
+  <script>
+  // Ensure DOM ready
+  window.addEventListener('DOMContentLoaded', () => {
+    // --- Model ---
+    const css = getComputedStyle(document.documentElement);
+    const DEFAULTS = [7.5, 0.5, 10, 5, 1];
+    const components = [
+      {key:'TST',  name:'TST (sleep)',         color:css.getPropertyValue('--c1').trim(), hours:DEFAULTS[0], locked:false},
+      {key:'Wake', name:'Wake (during sleep)', color:css.getPropertyValue('--c2').trim(), hours:DEFAULTS[1], locked:false},
+      {key:'SB',   name:'SB (sedentary)',      color:css.getPropertyValue('--c3').trim(), hours:DEFAULTS[2], locked:false},
+      {key:'LPA',  name:'LPA (light PA)',      color:css.getPropertyValue('--c4').trim(), hours:DEFAULTS[3], locked:false},
+      {key:'MVPA', name:'MVPA (mod‑vig PA)',   color:css.getPropertyValue('--c5').trim(), hours:DEFAULTS[4], locked:false}
+    ];
+    const TOTAL = 24;
+
+    // --- DOM helpers ---
+    const $ = sel => document.querySelector(sel);
+    const pie = $('#pie');
+    const ctx = pie.getContext('2d');
+    const totalH = $('#totalH');
+    const remainH = $('#remainH');
+    const legend = $('#legend');
+
+    function clamp(n, lo, hi){return Math.max(lo, Math.min(hi, n));}
+    function round2(n){return Math.round(n*100)/100}
+
+    // Set one component to new value; scale only UNLOCKED others so total stays 24
+    function setComponent(i, newVal){
+      if (components[i].locked) return; // cannot change locked directly
+      newVal = clamp(newVal, 0, TOTAL);
+
+      const lockedSum = components.reduce((a,c,idx)=> idx===i? a : a + (c.locked? c.hours:0), 0);
+      // Max this slice can take is TOTAL - lockedSum
+      newVal = Math.min(newVal, TOTAL - lockedSum);
+
+      const unlockedOthers = components.filter((c,idx)=> idx!==i && !c.locked);
+      const sumUnlockedOthers = unlockedOthers.reduce((a,c)=>a+c.hours,0);
+      const targetUnlockedSum = TOTAL - newVal - lockedSum;
+
+      if (sumUnlockedOthers <= 0){
+        // no pool to give/take from; just set and rely on rounding fix
+        components[i].hours = newVal;
+      } else {
+        const scale = (targetUnlockedSum < 0) ? 0 : (targetUnlockedSum / sumUnlockedOthers);
+        components.forEach((c,idx)=>{
+          if (idx===i || c.locked) return;
+          c.hours = Math.max(0, c.hours * scale);
+        });
+        components[i].hours = newVal;
+      }
+      tidyTo24(i);
+    }
+
+    // Round to 2dp but ensure exact 24 by assigning residual to the largest UNLOCKED slice (not the edited)
+    function tidyTo24(preferredIdx){
+      let rounded = components.map(c=> round2(c.hours));
+      let sum = rounded.reduce((a,b)=>a+b,0);
+      let diff = round2(TOTAL - sum);
+      if (Math.abs(diff) > 1e-9){
+        // pick largest among UNLOCKED, excluding preferredIdx; if none, allow preferredIdx
+        let idx = -1, best = -Infinity;
+        for (let k=0;k<components.length;k++){
+          if (k===preferredIdx) continue;
+          if (components[k].locked) continue;
+          if (rounded[k] > best){ best = rounded[k]; idx = k; }
+        }
+        if (idx === -1) idx = preferredIdx>=0?preferredIdx:0; // fallback
+        rounded[idx] = round2(rounded[idx] + diff);
+      }
+      components.forEach((c,i)=> c.hours = Math.max(0, rounded[i]));
+    }
+
+    // --- UI build (legend with sliders + locks) ---
+    function buildLegend(){
+      legend.innerHTML = '';
+      components.forEach((c, i)=>{
+        const row = document.createElement('div');
+        row.className = 'row';
+        row.innerHTML = `
+          <span class="swatch" style="background:${c.color}"></span>
+          <div>
+            <div class="name">${c.key}</div>
+            <input type="range" min="0" max="24" step="0.25" value="${c.hours}" aria-label="${c.name}">
+          </div>
+          <div class="hours" data-hours></div>
+          <div>
+            <button class="btn" data-dec aria-label="decrease ${c.key}">−</button>
+            <button class="btn" data-inc aria-label="increase ${c.key}">+</button>
+          </div>
+          <div>
+            <label style="display:flex;align-items:center;gap:6px;color:#cfe2f7;font-size:13px;cursor:pointer">
+              <input type="checkbox" data-lock>
+              <span data-locklabel>🔓</span>
+            </label>
+          </div>
+        `;
+        legend.appendChild(row);
+
+        const slider = row.querySelector('input[type="range"]');
+        const hoursEl = row.querySelector('[data-hours]');
+        const inc = row.querySelector('[data-inc]');
+        const dec = row.querySelector('[data-dec]');
+        const lock = row.querySelector('[data-lock]');
+        const lockLabel = row.querySelector('[data-locklabel]');
+
+        function reflect(){
+          hoursEl.textContent = components[i].hours.toFixed(2) + ' h';
+          slider.value = components[i].hours;
+          lock.checked = components[i].locked;
+          lockLabel.textContent = components[i].locked ? '🔒' : '🔓';
+          slider.disabled = components[i].locked;
+          inc.disabled = components[i].locked;
+          dec.disabled = components[i].locked;
+          row.style.opacity = components[i].locked ? 0.7 : 1;
+        }
+        reflect();
+
+        slider.addEventListener('input', e=> { setComponent(i, parseFloat(e.target.value)); render(); });
+        inc.addEventListener('click', ()=> { setComponent(i, clamp(components[i].hours + 0.25, 0, 24)); render(); });
+        dec.addEventListener('click', ()=> { setComponent(i, clamp(components[i].hours - 0.25, 0, 24)); render(); });
+        lock.addEventListener('change', ()=> { components[i].locked = lock.checked; reflect(); });
+
+        // Store reflect function for later
+        c._reflect = reflect;
+      });
+
+      $('#reset').addEventListener('click', ()=>{
+        // Reset unlocked to defaults; keep locked as-is, then rescale unlocked to fit remaining
+        const lockedSum = components.reduce((a,c)=> a + (c.locked?c.hours:0), 0);
+        const unlocked = components.map((c,i)=> ({i, c})).filter(x=> !x.c.locked);
+        // Apply defaults to unlocked
+        unlocked.forEach(({i,c})=> c.hours = DEFAULTS[i]);
+        // Scale unlocked to fill remaining space
+        const sumUnlocked = unlocked.reduce((a,{c})=> a + c.hours, 0);
+        const targetUnlocked = Math.max(0, TOTAL - lockedSum);
+        const scale = sumUnlocked>0 ? targetUnlocked/sumUnlocked : 0;
+        unlocked.forEach(({c})=> c.hours = c.hours * scale);
+        tidyTo24(-1); render();
+      });
+      $('#equalize').addEventListener('click', ()=>{
+        // Equalize only among unlocked; locked remain
+        const lockedSum = components.reduce((a,c)=> a + (c.locked?c.hours:0), 0);
+        const unlocked = components.filter(c=> !c.locked);
+        const each = (TOTAL - lockedSum) / Math.max(1, unlocked.length);
+        unlocked.forEach(c=> c.hours = Math.max(0, each));
+        tidyTo24(-1); render();
+      });
+    }
+
+    // --- Pie drawing with external labels ---
+    function renderPie(){
+      const dpr = window.devicePixelRatio || 1;
+      const cssW = pie.clientWidth, cssH = pie.clientHeight;
+      if (pie.width !== Math.floor(cssW*dpr) || pie.height !== Math.floor(cssH*dpr)){
+        pie.width = Math.floor(cssW*dpr); pie.height = Math.floor(cssH*dpr);
+      }
+      const w = pie.width, h = pie.height; ctx.clearRect(0,0,w,h);
+      const cx = w*0.5, cy = h*0.53, r = Math.min(w,h)*0.33;
+
+      // Drop shadow
+      ctx.save();
+      ctx.translate(0, 6*dpr);
+      ctx.beginPath(); ctx.arc(cx, cy, r, 0, Math.PI*2);
+      ctx.fillStyle = 'rgba(0,0,0,0.35)'; ctx.filter = 'blur('+(8*dpr)+'px)'; ctx.fill();
+      ctx.restore();
+
+      // Donut ring background
+      ctx.beginPath(); ctx.arc(cx, cy, r, 0, Math.PI*2);
+      ctx.fillStyle = '#0f1724'; ctx.fill();
+
+      // Slices
+      let start = -Math.PI/2;
+      const total = components.reduce((a,c)=>a+c.hours,0);
+      const labelLines = [];
+      components.forEach(c=>{
+        const ang = (c.hours/total)*Math.PI*2;
+        ctx.beginPath();
+        ctx.moveTo(cx,cy);
+        ctx.arc(cx,cy,r,start,start+ang);
+        ctx.closePath();
+        ctx.fillStyle = c.color; ctx.fill();
+        // separator
+        ctx.strokeStyle = '#0b0f14'; ctx.lineWidth = Math.max(2, r*0.02);
+        ctx.stroke();
+        // tiny inner value badge
+        const mid = start + ang/2;
+        const bx = cx + Math.cos(mid)*r*0.68;
+        const by = cy + Math.sin(mid)*r*0.68;
+        ctx.fillStyle = '#09111b';
+        ctx.beginPath(); ctx.arc(bx,by, 16*dpr, 0, Math.PI*2); ctx.fill();
+        ctx.fillStyle = '#cfe2f7';
+        ctx.font = (12*dpr)+'px system-ui,Segoe UI,Roboto';
+        ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+        ctx.fillText((c.hours).toFixed(1), bx, by);
+
+        // prepare external label positions
+        const outerR = r * 1.05;
+        const ox = cx + Math.cos(mid)*outerR;
+        const oy = cy + Math.sin(mid)*outerR;
+        const rightSide = Math.cos(mid) >= 0;
+        const endX = rightSide ? Math.min(w - 10*dpr, ox + r*0.45) : Math.max(10*dpr, ox - r*0.45);
+        const endY = oy;
+        labelLines.push({startX:ox, startY:oy, endX, endY, text:`${c.key}: ${c.hours.toFixed(2)} h`, right:rightSide, color:c.color});
+
+        c._slice = {start,end:start+ang, cx,cy,r};
+        start += ang;
+      });
+
+      // Center label
+      ctx.fillStyle = '#cfe2f7';
+      ctx.font = (18*dpr)+'px system-ui,Segoe UI,Roboto';
+      ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+      ctx.fillText('24 h total', cx, cy);
+
+      // Draw leader lines & external text
+      ctx.lineWidth = 1.5*dpr;
+      labelLines.forEach(L=>{
+        ctx.strokeStyle = L.color;
+        ctx.beginPath();
+        ctx.moveTo(L.startX, L.startY);
+        // small elbow
+        const midX = L.right ? L.startX + 12*dpr : L.startX - 12*dpr;
+        ctx.lineTo(midX, L.endY);
+        ctx.lineTo(L.endX, L.endY);
+        ctx.stroke();
+
+        ctx.fillStyle = '#e6f0ff';
+        ctx.font = (13*dpr)+'px system-ui,Segoe UI,Roboto';
+        ctx.textAlign = L.right ? 'left' : 'right';
+        ctx.textBaseline = 'middle';
+        ctx.fillText(L.text, L.right ? (L.endX + 6*dpr) : (L.endX - 6*dpr), L.endY);
+      });
+    }
+
+    function render(){
+      components.forEach(c=> c._reflect && c._reflect());
+      const sum = components.reduce((a,c)=>a+c.hours,0);
+      totalH.textContent = sum.toFixed(2);
+      remainH.textContent = (TOTAL - sum).toFixed(2);
+      renderPie();
+    }
+
+    // Hover tooltip (guarded)
+    const tip = document.createElement('div');
+    Object.assign(tip.style, {position:'fixed', pointerEvents:'none', background:'#0b1320', border:'1px solid #1b2533', color:'#e6f0ff', padding:'6px 8px', borderRadius:'8px', fontSize:'12px', transform:'translateY(-8px)', opacity:0, transition:'opacity .12s'});
+    document.body.appendChild(tip);
+    pie.addEventListener('mousemove', ev=>{
+      if (!components[0]._slice){ tip.style.opacity=0; return; }
+      const rect = pie.getBoundingClientRect();
+      const x = (ev.clientX - rect.left) * (pie.width/rect.width);
+      const y = (ev.clientY - rect.top) * (pie.height/rect.height);
+      const {cx,cy,r} = components[0]._slice; // all share same center/r
+      const dx = x-cx, dy = y-cy; const dist = Math.hypot(dx,dy);
+      if (dist>r || dist<0){ tip.style.opacity=0; return; }
+      let ang = Math.atan2(dy,dx);
+      if (ang < -Math.PI/2) ang += Math.PI*2; // align with start at -PI/2
+      let acc = -Math.PI/2;
+      let found = null;
+      for (const c of components){
+        const span = (c.hours/24)*Math.PI*2;
+        if (ang>=acc && ang<=acc+span){ found=c; break; }
+        acc += span;
+      }
+      if (found){
+        tip.textContent = `${found.name}: ${found.hours.toFixed(2)} h`;
+        tip.style.left = ev.clientX + 10 + 'px';
+        tip.style.top  = ev.clientY + 'px';
+        tip.style.opacity = 1;
+      } else { tip.style.opacity = 0; }
+    });
+    pie.addEventListener('mouseleave', ()=> tip.style.opacity=0);
+
+    // Kickoff
+    buildLegend();
+    tidyTo24(-1);
+    render();
+  });
+  </script>
+</body>
+</html>
