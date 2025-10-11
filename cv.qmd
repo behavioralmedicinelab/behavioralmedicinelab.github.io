@@ -55,16 +55,12 @@ assocprofs <- list(
   `James Coxon` = getCites("hnAesu8AAAAJ"),
   `Melinda Jackson` = getCites("3lg8mHgAAAAJ"),
   `Sharna Jamadar` = getCites("plIkiT4AAAAJ"),
-  `Laura Jobson` = getCites("dktQ3XQAAAAJ"),
   `Katherine Lawrence` = getCites("tHUmNKoAAAAJ"), 
-  `Yen Ying Lim` = getCites("Z13E5-MAAAAJ"),
   `Adam McKay` = getCites("KjOgwiQAAAAJ"),
   ## david moseley cannot find google scholar
-  `Matthew Pase` = getCites("vkvm6j4AAAAJ"),
-  `Adeel Razi` = getCites("VG3onZwAAAAJ"),
   `Renerus Stolwyk` = getCites("k6MqWxgAAAAJ"),
   `Tracey Sletten` = getCites("OjrCgUoAAAAJ"),
-  #`Bradley A Edwards` = getCites("yypftd8AAAAJ"),
+  `Bradley A Edwards` = getCites("yypftd8AAAAJ"),
   `Joshua F Wiley` = getCites("bRG3LSQAAAAJ"))
 
 
@@ -102,7 +98,7 @@ compareplot.assoc <- ggplot(d2, aes(year, cites, group = Name, colour = Select, 
 
 profs <- list(
   `Mark Bellgrove` = getCites("yb3omigAAAAJ"),
-  `Kim Cornish` = getCites("2wunT9gAAAAJ"),
+  `Adeel Razi` = getCites("VG3onZwAAAAJ"),
   `Sue Cotton` = getCites("VW_B2SoAAAAJ"),
   `Sean Drummond` = getCites("ow8CMQ4AAAAJ"),
   `Alex Fornito` = getCites("uceaXuYAAAAJ"),
@@ -115,6 +111,9 @@ profs <- list(
   `Nao Tsuchiya` = getCites("Or751n4AAAAJ"),
   `Antonio Verdejo-Garcia` = getCites("_Tb1r8IAAAAJ"),
   `Marie Yap` = getCites("3357uNEAAAAJ"),
+  `Matthew Pase` = getCites("vkvm6j4AAAAJ"),
+  `Yen Ying Lim` = getCites("Z13E5-MAAAAJ"),
+  `Laura Jobson` = getCites("dktQ3XQAAAAJ"),
   `Joshua F Wiley` = getCites("bRG3LSQAAAAJ"))
 
 
@@ -456,7 +455,7 @@ myPackages <- c(
   "JWileymisc", "extraoperators", "multilevelTools",
   "pscore", "varian", "brmsmargins")
 
-years <- (2018L):(2024L)
+years <- (2018L):(2025L)
 
 pkgdownloads <- vector("list", length(years))
 names(pkgdownloads) <- paste0("y", years)
@@ -483,10 +482,59 @@ sum(pkgdownloads$y2021$cranlogs.data$count)
 sum(pkgdownloads$y2022$cranlogs.data$count)
 sum(pkgdownloads$y2023$cranlogs.data$count)
 sum(pkgdownloads$y2024$cranlogs.data$count)
+sum(pkgdownloads$y2025$cranlogs.data$count)
 
-pkgdownloads2023 <- cranDownloads(packages = myPackages,
-                   from = "2023", to = "2023")
-sum(pkgdownloads2023$cranlogs.data$count)
+x2025d <- as.data.table(pkgdownloads$y2025$cranlogs.data)[,
+  .(YTD_Download = sum(count)), by = package]
+
+if (FALSE) {
+  x2025 <- lapply(1:31, function(i) {
+   if (i < 10) {
+    usedate <- sprintf("2025-03-0%d", i)
+  } else {
+    usedate <- sprintf("2025-03-%d", i)
+  }
+  packageRank(package = myPackages, date = usedate)
+})
+  saveRDSfst(x2025, file = "packageranks_2025_0301-0331.RDS")
+} else {
+  x2025 <- readRDSfst("packageranks_2025_0301-0331.RDS")
+}
+
+x2025b <- as.data.table(do.call(rbind, lapply(x2025, function(x) {
+  cbind(x$package.data, TotalPkgs = length(x$freqtab))
+})))
+
+x2025b[, M := mean(percentile), by = package]
+x2025b[!duplicated(package)][order(-M), .(package, M)]
+x2025b[, package := factor(package, levels = unique(package[order(-M)]))]
+
+x2025b[!duplicated(date), mean(TotalPkgs)]
+
+x2025d <- as.data.table(pkgdownloads$y2025$cranlogs.data)[
+  date %between% c("2025-03-01", "2025-03-31"),
+  .(March_Downloads = sum(count)), by = package]
+
+percplot <- ggplot(x2025b, aes(package, percentile / 100)) + 
+  geom_bar(data = x2025d, aes(x = package, y = March_Downloads / max(March_Downloads)),
+           stat = "identity", fill = "grey80", width = .5) +
+  geom_boxplot() +
+  geom_jitter(width = .2, height = 0, alpha = .5) +
+  scale_y_continuous("Percentile", labels = scales::percent,
+    sec.axis = sec_axis(~ . * max(x2025d$March_Downloads), name = "March Downloads")) +
+  theme_classic() +
+  geom_label(data = x2025b[!duplicated(package)],
+             aes(x = package, y = .95, label = sprintf("M=%0.1f", M)),
+             nudge_y = 0, size = 3) +
+  labs(x = "",
+       title = "R Package Ranks & Downloads (March 2025)",
+       caption = "Boxplots show distribution of daily percentiles for March 2025 (left axis).\nBars show total downloads for March 2025 (right axis).\nM = mean percentile ranking for the month.")
+print(percplot)
+
+ggsave("march2025_packagedata.pdf", percplot, width = 9, height = 7,
+        device = "pdf")
+
+percplot + coord_cartesian(ylim = c(.80, 1), expand = FALSE)
 
 # x2023 <- lapply(1:31, function(i) {
 #   if (i < 10) {
