@@ -520,8 +520,8 @@ percplot <- ggplot(x2025b, aes(package, percentile / 100)) +
            stat = "identity", fill = "grey80", width = .5) +
   geom_boxplot() +
   geom_jitter(width = .2, height = 0, alpha = .5) +
-  scale_y_continuous("Percentile", labels = scales::percent,
-    sec.axis = sec_axis(~ . * max(x2025d$March_Downloads), name = "March Downloads")) +
+  scale_y_continuous("Percentile Rank", labels = scales::percent,
+    sec.axis = sec_axis(~ . * max(x2025d$March_Downloads), name = "Downloads")) +
   theme_classic() +
   geom_label(data = x2025b[!duplicated(package)],
              aes(x = package, y = .95, label = sprintf("M=%0.1f", M)),
