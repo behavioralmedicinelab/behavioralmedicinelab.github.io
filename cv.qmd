@@ -91,8 +91,8 @@ compareplot.assoc <- ggplot(d2, aes(year, cites, group = Name, colour = Select, 
                      breaks = c(10, 100, 500, 1000, 2000, 4000),
                      trans = "log2") +
   theme_classic() +
-  coord_cartesian(xlim = c(2013 - .2, cyear + .2), ylim = c(10, 4300), expand = FALSE) +
-  theme(legend.position.inside = c(.8, .15)) +
+  coord_cartesian(xlim = c(2013 - .2, cyear + .4), ylim = c(10, 4300), expand = FALSE) +
+  theme(legend.position.inside = c(.8, .15), axis.text.x = element_text(angle = 45, hjust = 1)) +
   labs(caption = "Numbers show Joshua F Wiley's rank")
 
 
@@ -140,8 +140,8 @@ compareplot.profs <- ggplot(d2, aes(year, cites, group = Name, colour = Select, 
                      breaks = c(10, 100, 500, 1000, 2000, 4000),
                      trans = "log2") +
   theme_classic() +
-  coord_cartesian(xlim = c(2013 - .2, cyear + .2), ylim = c(10, 4300), expand = FALSE) +
-  theme(legend.position.inside = c(.8, .15)) +
+  coord_cartesian(xlim = c(2013 - .2, cyear + .4), ylim = c(10, 4300), expand = FALSE) +
+  theme(legend.position.inside = c(.8, .15), axis.text.x = element_text(angle = 45, hjust = 1)) +
   labs(caption = "Numbers show Joshua F Wiley's rank")
 
 compareplot <- ggarrange(
@@ -164,9 +164,12 @@ pubcounts <- as.data.table(xtabs(~ Year + Type, data = pubs))
 pubcounts <- pubcounts[order(Type, Year),
                        .(Year = Year, Yearly = N, Cumulative = cumsum(N)), by = Type]
 pubyears <- sort(unique(pubcounts$Year))
+# pubcounts[, Year := factor(Year,
+#                            levels = pubyears,
+#                            labels = fifelse(pubyears == "2015", "2015\n(PhD)", pubyears))]
 pubcounts[, Year := factor(Year,
                            levels = pubyears,
-                           labels = fifelse(pubyears == "2015", "2015\n(PhD)", pubyears))]
+                           labels = fifelse(pubyears == "2015", "2015\n(PhD)", fifelse(pubyears == "2020", "2020\n(Level C)", pubyears)))]
 pubcounts[, Type := factor(Type, levels = rev(c("Empirical", "Review", "Protocol",
                                                 "Book", "Book Chapter", "Editorial")))]
 pubcounts <- melt(pubcounts, id.vars = c("Type", "Year"))
@@ -178,8 +181,31 @@ pubcounts.graph <- ggplot(pubcounts, aes(Year, value, fill = Type)) +
   theme_classic() +
   theme(legend.title = element_blank(),
         legend.position = "bottom",
+        axis.text.x = element_text(angle = 45, hjust = 1),
         axis.title.x = element_blank()) +
-  coord_cartesian(expand = FALSE)
+  coord_cartesian(expand = FALSE) +
+  labs(y = "Number of Publications")
+
+tmpcitecounts <- as.data.table(profs[["Joshua F Wiley"]])
+tmpcitecounts[, Type := factor(Type, levels = c("Yearly", "Cumulative"))]
+tmpcitecounts[, year := factor(year,
+                           levels = pubyears[-1],
+                           labels = fifelse(pubyears[-1] == "2015", "2015\n(PhD)", fifelse(pubyears[-1] == "2020", "2020\n(Level C)", pubyears[-1])))]
+
+citecounts.graph <- ggplot(tmpcitecounts, aes(year, cites)) +
+  geom_bar(stat = "identity", position = "stack") +
+  facet_wrap(~ Type, scales = "free_y") +
+  theme_classic() +
+  scale_y_continuous("Citations (Google Scholar)") +
+  theme(legend.title = element_blank(),
+        legend.position = "bottom",
+        axis.text.x = element_text(angle = 45, hjust = 1),
+        axis.title.x = element_blank()) 
+
+ggarrange(
+  pubcounts.graph,
+  citecounts.graph,
+  ncol = 1, nrow = 2)
 
 tmp <- pubs[Type %in% c("Empirical", "Review"), FirstLast]
 NFirstLast <- sum(tmp == 1)
