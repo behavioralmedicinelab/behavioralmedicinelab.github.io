@@ -2,17 +2,23 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.7.31">
+<meta name="generator" content="quarto-1.10.19">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
 <title>Behavioural Medicine Lab</title>
 <style>
-code{white-space: pre-wrap;}
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
 span.smallcaps{font-variant: small-caps;}
-div.columns{display: flex; gap: min(4vw, 1.5em);}
-div.column{flex: auto; overflow-x: auto;}
+div.columns{display: flex; gap: 1.5em;}
+div.column{flex: auto;}
+@media screen {
+div.columns{gap: min(4vw, 1.5em);}
+div.column{overflow-x: auto;}
+}
 div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
 ul.task-list{list-style: none;}
 ul.task-list li input[type="checkbox"] {
@@ -25,6 +31,7 @@ ul.task-list li input[type="checkbox"] {
 
 <script src="site_libs/quarto-nav/quarto-nav.js"></script>
 <script src="site_libs/quarto-nav/headroom.min.js"></script>
+<link href="./images/bml-mark.svg" rel="icon" type="image/svg+xml">
 <script src="site_libs/clipboard/clipboard.min.js"></script>
 <script src="site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
@@ -32,10 +39,10 @@ ul.task-list li input[type="checkbox"] {
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="site_libs/quarto-html/anchor.min.js"></script>
 <link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-e1a5c8363afafaef2c763b6775fbf3ca.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-bf27225e3a48a9273f3daa8f8e829971.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-e1764dfa31facc52fc93a37390c7ebb0.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-c75da8b60e9532af37cb8e9af509bd69.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <link href="site_libs/quarto-contrib/fontawesome6-0.1.0/all.css" rel="stylesheet">
 <link href="site_libs/quarto-contrib/fontawesome6-0.1.0/latex-fontsize.css" rel="stylesheet">
 <script id="quarto-search-options" type="application/json">{
@@ -57,13 +64,17 @@ ul.task-list li input[type="checkbox"] {
 
 </head>
 
-<body class="nav-fixed fullcontent quarto-light">
+<body class="nav-fixed bml-home fullcontent quarto-light">
 
 <div id="quarto-search-results"></div>
-  <header id="quarto-header" class="headroom fixed-top">
+  <header id="quarto-header" class="headroom fixed-top quarto-banner">
     <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
       <div class="navbar-container container-fluid">
       <div class="navbar-brand-container mx-auto">
+    <a href="./index.html" class="navbar-brand navbar-brand-logo">
+    <img src="./images/bml-mark.svg" alt="Behavioural Medicine Lab home" class="navbar-logo light-content">
+    <img src="./images/bml-mark.svg" alt="Behavioural Medicine Lab home" class="navbar-logo dark-content">
+    </a>
     <a class="navbar-brand" href="./index.html">
     <span class="navbar-title">Behavioural Medicine Lab</span>
     </a>
@@ -73,11 +84,15 @@ ul.task-list li input[type="checkbox"] {
 </button>
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="./research.html"> 
+<span class="menu-text">Research</span></a>
+  </li>  
   <li class="nav-item dropdown ">
-    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-fa-cogs--projects" role="link" data-bs-toggle="dropdown" aria-expanded="false">
- <span class="menu-text"><i class="fa-solid fa-cogs" aria-label="cogs"></i> Projects</span>
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-projects" role="link" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">Projects</span>
     </a>
-    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-fa-cogs--projects">    
+    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-projects">    
         <li class="dropdown-header">Clinical Trials</li>
         <li>
     <a class="dropdown-item" href="./projects.html#SleepCare">
@@ -118,7 +133,7 @@ ul.task-list li input[type="checkbox"] {
         <li><hr class="dropdown-divider"></li>
         <li class="dropdown-header">Other Studies</li>
         <li>
-    <a class="dropdown-item" href="./projects.html#NHMRC Investigator Grant">
+    <a class="dropdown-item" href="./projects.html#NHMRC-Investigator-Grant">
  <span class="dropdown-text">NHMRC Investigator Grant</span></a>
   </li>  
         <li><hr class="dropdown-divider"></li>
@@ -130,23 +145,19 @@ ul.task-list li input[type="checkbox"] {
   </li>
   <li class="nav-item">
     <a class="nav-link" href="./team.html"> 
-<span class="menu-text"><i class="fa-solid fa-id-badge" aria-label="id-badge"></i> Team</span></a>
-  </li>  
-  <li class="nav-item">
-    <a class="nav-link" href="./alumni.html"> 
-<span class="menu-text"><i class="fa-solid fa-graduation-cap" aria-label="graduation-cap"></i> Alumni</span></a>
+<span class="menu-text">Team</span></a>
   </li>  
   <li class="nav-item">
     <a class="nav-link" href="./consumer_community.html"> 
-<span class="menu-text"><i class="fa-solid fa-users" aria-label="users"></i> Consumers &amp; Community</span></a>
-  </li>  
-  <li class="nav-item">
-    <a class="nav-link" href="./cv.html"> 
-<span class="menu-text"><i class="fa-solid fa-file-alt" aria-label="file-alt"></i> Wiley CV</span></a>
+<span class="menu-text">Community</span></a>
   </li>  
   <li class="nav-item">
     <a class="nav-link" href="./ethics_values.html"> 
-<span class="menu-text"><i class="fa-solid fa-heart" aria-label="heart"></i> Ethics &amp; Values</span></a>
+<span class="menu-text">Values</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="./consumer_community.html#take-part"> 
+<span class="menu-text"><span class="bml-nav-cta">Take part</span></span></a>
   </li>  
 </ul>
           </div> <!-- /navcollapse -->
@@ -156,63 +167,250 @@ ul.task-list li input[type="checkbox"] {
     </nav>
 </header>
 <!-- content -->
-<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<header id="title-block-header" class="quarto-title-block"></header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
 <!-- margin-sidebar -->
     
 <!-- main -->
-<main class="content" id="quarto-document-content">
+<main class="content quarto-banner-title-block page-columns page-full" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default">
-<div class="quarto-title">
-<h1 class="title">Behavioural Medicine Lab</h1>
+
+
+
+<div class="column-screen bml-band bml-straddle bml-hero bml-home-hero">
+<div class="grid bml-gap-lg align-items-end bml-hero-head">
+<div class="g-col-12 g-col-lg-8">
+<div class="bml-display" role="heading" aria-level="1">
+<p>We study sleep, stress and emotions as life happens, and build <em><span class="bml-teal">practical</span></em> ways to help.</p>
+</div>
+</div>
+<div class="g-col-12 g-col-lg-4">
+<p><span class="bml-lead bml-hero-aside">Especially for people affected by cancer. A Monash University lab in the School of Psychological Sciences, led by Dr Joshua Wiley.</span></p>
+</div>
+</div>
+<div class="bml-plate">
+<div class="bml-plate-figure">
+<p><a href="research/figures/Do2026_8-F2.png" class="bml-figlink" title="Open the full-size figure"><img src="research/figures/Do2026_8-F2.png" alt="Figure 2 from Do et al. (2026): Cognitive behavior vs bright light therapy for insomnia in women undergoing chemotherapy for breast cancer: A randomized clinical trial" width="1509" height="591"></a></p>
+<p><span class="bml-credit">Figure 2 reproduced from Do et al.&nbsp;(2026), <em>JAMA Network Open</em>.</span></p>
+</div>
+<div class="bml-plate-caption">
+<p><span class="bml-eyebrow">Insomnia &amp; fatigue</span></p>
+<p><span class="bml-finding">In women having chemotherapy for breast cancer, a brief talking-therapy program for sleep reduced insomnia, while wearing bright light glasses did not clearly help sleep or tiredness.</span></p>
+<p><span class="bml-cite">Do et al.&nbsp;(2026), <em>JAMA Network Open</em>.</span></p>
+<p><a href="https://doi.org/10.1001/jamanetworkopen.2026.30320" class="bml-btn" aria-label="Read the paper: Cognitive behavior vs bright light therapy for insomnia in women undergoing chemotherapy for breast cancer: A randomized clinical trial">Read the paper</a></p>
+</div>
+</div>
+</div>
+<section id="start" class="level2 column-screen bml-band bml-doors">
+<h2 class="anchored" data-anchor-id="start">Where would you like to start?</h2>
+<div class="grid">
+<div class="g-col-12 g-col-lg-4 bml-card bml-night bml-door">
+<p><span class="bml-eyebrow">Participants &amp; community</span></p>
+<p><span class="bml-title">I’m living with or after cancer, or caring for someone who is</span></p>
+<p><span class="bml-soft">We’d like to hear from you if you’d like a voice in our research on emotions, sleep and fatigue in cancer, as a consumer or community partner.</span></p>
+<p><a href="./consumer_community.html#take-part" class="bml-link stretched-link">Ways to take part <span aria-hidden="true">→</span></a></p>
+</div>
+<div class="g-col-12 g-col-lg-4 bml-card bml-door">
+<p><span class="bml-eyebrow">Future students</span></p>
+<p><span class="bml-title">I’m thinking about Honours, Masters or a PhD</span></p>
+<p><span class="bml-soft">15 doctoral theses and 29 Honours projects completed here since 2017. Most papers the lab leads have a student as first author.</span></p>
+<p><a href="./team.html#join" class="bml-link stretched-link">Study with us <span aria-hidden="true">→</span></a></p>
+</div>
+<div class="g-col-12 g-col-lg-4 bml-card bml-door">
+<p><span class="bml-eyebrow">Researchers &amp; clinicians</span></p>
+<p><span class="bml-title">I’m looking for papers, methods or collaborators</span></p>
+<p><span class="bml-soft">Our findings by theme, the full publication list, and free R packages for multilevel and compositional data.</span></p>
+<div class="bml-links bml-push">
+<p><a href="./research.html" class="bml-link">Research themes <span aria-hidden="true">→</span></a> <a href="./cv.html#publications" class="bml-link">Publications <span aria-hidden="true">→</span></a> <a href="./cv.html#software" class="bml-link">Software <span aria-hidden="true">→</span></a></p>
+</div>
+</div>
+</div>
+</section>
+<div class="column-screen bml-band bml-findings">
+<div class="bml-section-head">
+<section id="found" class="level2 bml-section-title">
+<h2 class="anchored" data-anchor-id="found">Our Research</h2>
+</section>
+</div>
+<div class="grid bml-theme-cards">
+<div id="insomnia" class="g-col-12 g-col-md-6 bml-card bml-card-flush bml-theme-card">
+<div class="bml-card-media bml-media-lg">
+<p><img src="research/figures/Do2026_8-F2.png" loading="lazy" alt="Figure 2 from Do et al. (2026): Cognitive behavior vs bright light therapy for insomnia in women undergoing chemotherapy for breast cancer: A randomized clinical trial" width="1509" height="591"></p>
+<p><span class="bml-credit">Figure 2 reproduced from Do et al.&nbsp;(2026), <em>JAMA Network Open</em>.</span></p>
+</div>
+<div class="bml-card-body">
+<p><span class="bml-eyebrow bml-muted">Insomnia &amp; fatigue</span></p>
+<p><span class="bml-finding">In women having chemotherapy for breast cancer, a brief talking-therapy program for sleep reduced insomnia, while wearing bright light glasses did not clearly help sleep or tiredness.</span></p>
+<div class="bml-card-foot">
+<p><span>Do et al.&nbsp;(2026)</span> <span><a href="https://doi.org/10.1001/jamanetworkopen.2026.30320" class="stretched-link" aria-label="Read more: Do et al. (2026), Cognitive behavior vs bright light therapy for insomnia in women undergoing chemotherapy for breast cancer: A randomized clinical trial">Read more <span aria-hidden="true">→</span></a></span></p>
+</div>
+</div>
+</div>
+<div id="psyonc" class="g-col-12 g-col-md-6 bml-card bml-card-flush bml-theme-card">
+<div class="bml-card-media bml-media-lg">
+<p><img src="research/figures/Smith2023_32-F2.png" loading="lazy" alt="Figure 2 from Smith et al. (2023): Targeting emotional regulation using an Internet-delivered psychological intervention for cancer survivors: A randomized controlled trial" width="1251" height="1410"></p>
+<p><span class="bml-credit">Figure 2 reproduced from Smith et al.&nbsp;(2023), <em>British Journal of Health Psychology</em>.</span></p>
+</div>
+<div class="bml-card-body">
+<p><span class="bml-eyebrow bml-muted">Psychosocial cancer care</span></p>
+<p><span class="bml-finding">An online, self-guided program teaching skills for handling emotions helped people who had finished cancer treatment become more mindful and less avoidant of difficult feelings than a healthy-lifestyle program.</span></p>
+<div class="bml-card-foot">
+<p><span>Smith et al.&nbsp;(2023)</span> <span><a href="https://doi.org/10.1111/bjhp.12679" class="stretched-link" aria-label="Read more: Smith et al. (2023), Targeting emotional regulation using an Internet-delivered psychological intervention for cancer survivors: A randomized controlled trial">Read more <span aria-hidden="true">→</span></a></span></p>
+</div>
+</div>
+</div>
+<div id="sleep" class="g-col-12 g-col-md-6 g-col-lg-4 bml-card bml-card-flush bml-theme-card">
+<div class="bml-card-media">
+<p><img src="research/figures/Yap2020_54-F3.png" loading="lazy" alt="Figure 3 from Yap et al. (2020): Bi-directional relations between stress and self-reported and actigraphy-assessed sleep: a daily intensive longitudinal study" width="1283" height="621"></p>
+<p><span class="bml-credit">Figure 3 reproduced from Yap et al.&nbsp;(2020), <em>Sleep</em>.</span></p>
+</div>
+<div class="bml-card-body">
+<p><span class="bml-eyebrow bml-muted">Everyday sleep</span></p>
+<p><span class="bml-finding-sm">Tracking young adults day by day, we found that stressful evenings led to slightly shorter sleep, and short or broken sleep led to feeling more stressed the next day.</span></p>
+<div class="bml-card-foot">
+<p><span>Yap et al.&nbsp;(2020)</span> <span><a href="https://doi.org/10.1093/sleep/zsz250" class="stretched-link" aria-label="Read more: Yap et al. (2020), Bi-directional relations between stress and self-reported and actigraphy-assessed sleep: a daily intensive longitudinal study">Read more <span aria-hidden="true">→</span></a></span></p>
+</div>
+</div>
+</div>
+<div id="stress" class="g-col-12 g-col-md-6 g-col-lg-4 bml-card bml-card-flush bml-theme-card bml-phone-extra">
+<div class="bml-card-media">
+<p><img src="research/figures/Le2026_15-F2.png" loading="lazy" alt="Figure 2 from Le et al. (2026): Temporal bidirectional dynamics of momentary stress and affect: Dynamic structural equation modelling of ecological momentary assessments" width="1604" height="1580"></p>
+<p><span class="bml-credit">Figure 2 reproduced from Le et al.&nbsp;(2026), <em>Journal of Affective Disorders</em>.</span></p>
+</div>
+<div class="bml-card-body">
+<p><span class="bml-eyebrow bml-muted">Stress &amp; emotions</span></p>
+<p><span class="bml-finding-sm">Tracking young adults’ stress and emotions several times a day showed that stress and feelings push each other up and down over hours, and that highly stressed people get less relief from positive moods.</span></p>
+<div class="bml-card-foot">
+<p><span>Le et al.&nbsp;(2026)</span> <span><a href="https://doi.org/10.1016/j.jad.2025.120810" class="stretched-link" aria-label="Read more: Le et al. (2026), Temporal bidirectional dynamics of momentary stress and affect: Dynamic structural equation modelling of ecological momentary assessments">Read more <span aria-hidden="true">→</span></a></span></p>
+</div>
+</div>
+</div>
+<div id="timeuse" class="g-col-12 g-col-md-6 g-col-lg-4 bml-card bml-card-flush bml-theme-card bml-phone-extra">
+<div class="bml-card-media">
+<p><img src="research/figures/Le2026_12-F2.png" loading="lazy" alt="Figure 2 from Le et al. (2026): Daily, prospective associations of sleep, physical activity, and sedentary behaviour with affect: A Bayesian multilevel compositional data analysis" width="1604" height="1189"></p>
+<p><span class="bml-credit">Figure 2 reproduced from Le et al.&nbsp;(2026), <em>Psychology of Sport and Exercise</em>.</span></p>
+</div>
+<div class="bml-card-body">
+<p><span class="bml-eyebrow bml-muted">24-hour time use</span></p>
+<p><span class="bml-finding-sm">Tracking young adults’ sleep and movement with wrist devices for up to two weeks showed that swapping sitting time for light or more vigorous activity on a given day predicted slightly better mood the next day.</span></p>
+<div class="bml-card-foot">
+<p><span>Le et al.&nbsp;(2026)</span> <span><a href="https://doi.org/10.1016/j.psychsport.2025.102997" class="stretched-link" aria-label="Read more: Le et al. (2026), Daily, prospective associations of sleep, physical activity, and sedentary behaviour with affect: A Bayesian multilevel compositional data analysis">Read more <span aria-hidden="true">→</span></a></span></p>
+</div>
+</div>
+</div>
+</div>
+<p><a href="./research.html" class="bml-btn-outline bml-phone-only">All five themes</a></p>
+</div>
+<div class="column-screen bml-band bml-night bml-howwork">
+<div class="grid bml-gap-lg">
+<section id="how-we-work" class="level2 g-col-12 g-col-lg-4 bml-howwork-intro">
+<h2 class="anchored" data-anchor-id="how-we-work">How we work</h2>
+<p>Intensive daily studies with phones, wearables and at-home sleep recordings, randomised trials of brief and digital treatments, and new statistical methods we share as free software.</p>
+<div class="bml-chips">
+<p><a href="https://CRAN.R-project.org/package=multilevelcoda" class="bml-chip bml-mono">multilevelcoda</a> <a href="https://CRAN.R-project.org/package=MplusAutomation" class="bml-chip bml-mono">MplusAutomation</a> <a href="https://CRAN.R-project.org/package=brmsmargins" class="bml-chip bml-mono">brmsmargins</a> <a href="https://CRAN.R-project.org/package=multilevelTools" class="bml-chip bml-mono">multilevelTools</a> <a href="https://CRAN.R-project.org/package=JWileymisc" class="bml-chip bml-mono">JWileymisc</a> <a href="https://CRAN.R-project.org/package=extraoperators" class="bml-chip bml-mono">extraoperators</a></p>
+</div>
+</section>
+<div class="g-col-12 g-col-lg-8 bml-statgrid">
+<div class="bml-stat">
+<p><span class="bml-stat-num">&gt;160</span> <span class="bml-stat-label">publications</span></p>
+</div>
+<div class="bml-stat">
+<p><span class="bml-stat-num">&gt;$26M</span> <span class="bml-stat-label">AUD in competitive funding as chief investigator</span></p>
+</div>
+<div class="bml-stat">
+<p><span class="bml-stat-num">&gt;13,000</span> <span class="bml-stat-label">citations on Google Scholar (&gt;8,000 Scopus)</span></p>
+</div>
+<div class="bml-stat">
+<p><span class="bml-stat-num">&gt;970,000</span> <span class="bml-stat-label">downloads of our 8 R packages</span></p>
+</div>
+<div class="bml-stat-note">
+<p>Track record of lab head Dr Joshua Wiley, as of October 2026, rounded down. Downloads from the Posit CRAN mirror.</p>
+</div>
+</div>
+</div>
+</div>
+<div class="column-screen bml-band bml-latest-band">
+<div class="bml-section-head align-items-baseline">
+<section id="latest" class="level2 bml-section-title">
+<h2 class="anchored" data-anchor-id="latest">Latest from the lab</h2>
+</section>
+<p><a href="./cv.html#publications" class="bml-link">All publications <span aria-hidden="true">→</span></a></p>
+</div>
+<div class="grid">
+<div class="g-col-12 g-col-md-6 g-col-lg-3 bml-card bml-latest">
+<p><span class="bml-eyebrow">New paper · 2026</span></p>
+<p><span class="bml-title-sm"><a href="https://doi.org/10.1002/pon.70573" class="stretched-link">Referral and utilization of mental health services by older adults with cancer and factors influencing referral from health professionals</a></span></p>
+<p><span class="bml-meta bml-push">Wang et al., Psycho-Oncology</span></p>
+</div>
+<div class="g-col-12 g-col-md-6 g-col-lg-3 bml-card bml-latest">
+<p><span class="bml-eyebrow">New paper · 2026</span></p>
+<p><span class="bml-title-sm"><a href="https://doi.org/10.1016/j.jad.2025.121147" class="stretched-link">The predictive role of daily emotional dynamics in depression, anxiety, and academic performance: A longitudinal study in adolescents</a></span></p>
+<p><span class="bml-meta bml-push">Sun et al., Journal of Affective Disorders</span></p>
+</div>
+<div class="g-col-12 g-col-md-6 g-col-lg-3 bml-card bml-latest">
+<p><span class="bml-eyebrow">New paper · 2026</span></p>
+<p><span class="bml-title-sm"><a href="https://doi.org/10.1002/pon.70418" class="stretched-link">A Randomized Controlled Trial: Evaluating the Sleep, Cancer and Rest (SleepCaRe) Trial to Improve Health-Related Quality of Life in Women Undergoing Chemotherapy for Breast Cancer</a></span></p>
+<p><span class="bml-meta bml-push">Wallace et al., Psycho-Oncology</span></p>
+</div>
+<div class="g-col-12 g-col-md-6 g-col-lg-3 bml-card bml-latest">
+<p><span class="bml-eyebrow">New paper · 2026</span></p>
+<p><span class="bml-title-sm"><a href="https://doi.org/10.1002/pon.70584" class="stretched-link">Identifying and Addressing Distress in Cancer Care: A Study of Screening Outcomes and Referrals in Australian Oncology Outpatients</a></span></p>
+<p><span class="bml-meta bml-push">Matthews et al., Psycho-Oncology</span></p>
+</div>
+</div>
+</div>
+<div class="column-screen bml-band bml-teaser-band">
+<div class="bml-card bml-card-flush bml-teaser">
+<div class="grid bml-gap-0">
+<div class="g-col-12 g-col-md-7 bml-cover">
+<p><img src="BML_Group_2024.jpg" class="img-fluid" alt="The Behavioural Medicine Lab team in 2024, smiling together outdoors"></p>
+</div>
+<div class="g-col-12 g-col-md-5 bml-card-body justify-content-center">
+<div class="bml-teaser-head">
+<p><span class="bml-eyebrow">The team</span></p>
+<section id="the-team" class="level2">
+<h2 class="anchored" data-anchor-id="the-team">A supportive lab that puts wellbeing first</h2>
+</section>
+</div>
+<p><span class="bml-soft">15 postdocs and students, led by Dr Joshua Wiley. We aim to be ethical, inclusive and supportive, and we share our data, code and materials where we can.</span></p>
+<div class="bml-links">
+<p><a href="./team.html" class="bml-link">Meet the team <span aria-hidden="true">→</span></a> <a href="./ethics_values.html" class="bml-link">Our values <span aria-hidden="true">→</span></a></p>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="column-screen bml-band bml-bio">
+<div class="grid bml-gap-lg">
+<div class="g-col-12 g-col-lg-4 bml-bio-side">
+<p><img src="JWiley_square.jpg" class="bml-avatar-photo img-fluid" alt="Portrait of Dr Joshua F. Wiley"></p>
+<div class="bml-bio-head">
+<p><span class="bml-eyebrow">Lab head</span></p>
+<section id="joshua-f.-wiley" class="level2">
+<h2 class="anchored" data-anchor-id="joshua-f.-wiley">Joshua F. Wiley</h2>
+</section>
+</div>
+<p><span class="bml-meta">Associate Professor, School of Psychological Sciences, Monash University</span></p>
+</div>
+<div class="g-col-12 g-col-lg-8 bml-bio-text">
+<p>Dr Joshua Wiley is an Associate Professor in the School of Psychological Sciences at Monash University and an Honorary Research Fellow at the Peter MacCallum Cancer Centre. He completed a PhD in health psychology and behavioural medicine at the University of California, Los Angeles, followed by postdoctoral training in randomised controlled trials.</p>
+<p>His research follows how sleep, stress and emotions unfold day to day, then uses what it finds to build accessible sleep and emotion-regulation treatments. His group pairs data from phones and wearables with modern statistics to tailor what each person receives and when, and shares its methods as free software. The work is funded by the NHMRC, MRFF, ARC, US National Institutes of Health, US Department of Defense and the Wellcome Trust.</p>
+<section id="connect" class="level3 bml-connect">
+<h3 class="anchored" data-anchor-id="connect"><i class="fa-solid fa-address-card" aria-label="address-card"></i> Connect</h3>
+<ul>
+<li><i class="fa-brands fa-github" aria-label="github"></i> <a href="https://github.com/jwiley">GitHub</a></li>
+<li><i class="fa-brands fa-google" aria-label="google"></i> <a href="https://scholar.google.com/citations?user=bRG3LSQAAAAJ&amp;hl=en">Google Scholar</a></li>
+<li><i class="fa-brands fa-linkedin" aria-label="linkedin"></i> <a href="https://www.linkedin.com/in/joshua-wiley-6a0b2278">LinkedIn</a></li>
+<li><i class="fa-solid fa-envelope" aria-label="envelope"></i> joshua.wiley <em>at</em> monash <em>dot</em> edu</li>
+</ul>
+</section>
+</div>
+</div>
 </div>
 
 
 
-<div class="quarto-title-meta">
-
-    
-  
-    
-  </div>
-  
-
-
-</header>
-
-
-<p>Through our research, we strive to understand the connections between sleep (behaviour), psychosocial factors, and health. Reflecting our belief that both mental and physical health are important and interconnected, many of our research projects integrate mental and physical health.</p>
-<p><em>Topics</em> our team has expertise in include sleep and insomnia, emotion regulation, depression and anxiety, and cancer.</p>
-<p><em>Methods</em> our team has expertise in include clinical trials, ecological momentary assessment, actigraphy, digitomics<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a>, and statistics.</p>
-<p>We leverage the latest science from our team and others to evaluate and optimise interventions to improve sleep, reduce insomnia symptoms, and promote mental health, particularly in people who are or have been treated for cancer or are experiencing other sources of high stress.</p>
-<p>Our team is led by Dr.&nbsp;Joshua Wiley and is situated within the School of Psychological Sciences <a href="https://www.monash.edu/medicine/psych/">(SPS)</a> within the Sleep and Circadian Rhythms Program. To see an example of the sort of work we do and how we work to feed findings back to our participants and the community, take a look at our <a href="projects.html">projects</a> and look at some of the reports we have sent our participants there.</p>
-<p>The word cloud below provides a data-driven summary of the type of work our lab conducts. The word cloud is based off papers published from our lab. Word size shows how commonly specific words appear in our work.</p>
-<p><img src="wordcloud_banner.png" class="img-fluid" alt="A word cloud where the size of words indicates how frequently they were used in our research publications"></p>
-<section id="joshua-f.-wiley" class="level2">
-<h2 class="anchored" data-anchor-id="joshua-f.-wiley">Joshua F. Wiley</h2>
-<p>Dr.&nbsp;Joshua Wiley is a behavioural medicine researcher at Monash University in the School of Psychological Sciences and Honorary Reserach Fellow at the Peter MacCallum Cancer Centre. He studied health psychology and behavioural medicine, completing his PhD at the University of California at Los Angeles in 2015 with subsequent training in randomised controlled trials (RCTs) in his postdoc.</p>
-<p>Dr.&nbsp;Wiley’s research includes basic science and applied intervention work. In basic science, his work focuses on understanding the daily and longitudinal dynamics of sleep, psychosocial factors and health, emphasising potentially malleable mechanisms driving poor sleep and health. His intervention work targets the basic science mechanisms identified to attempt to improve sleep and mental health. His intervention research focuses on accessible and feasible sleep/behavioural and emotion regulation interventions with potential for broad dissemination. Aligned with recent calls for personalised medicine, his group combines digitomics and cutting edge data analytics to drive personalised predictions and recommendations to help optimise the content, targetting, and delivery of their interventions. New tools and data analytic pipelines developed for his projects are routinely shared freely and have been picked up in many other studies and projects.</p>
-<p>Reflecting the global reach of his research, Dr.&nbsp;Wiley has helped obtain competitive federal grant funding from the Australian National Health and Medical Research Council (NHMRC), Australian Research Council (ARC), United States National Institutes of Health (US NIH), United States Department of Defense (US DoD), and UK Wellcome Trust, totaling &gt;$14 million in funding. He has &gt;120 publications and &gt;10,000 citations (GS).</p>
-<section id="connect" class="level3">
-<h3 class="anchored" data-anchor-id="connect"><i class="fa-solid fa-address-card" aria-label="address-card"></i> Connect</h3>
-<ul>
-<li><i class="fa-brands fa-github" aria-label="github"></i> <a href="https://github.com/jwiley">github</a> - <i class="fa-brands fa-google" aria-label="google"></i> <a href="https://scholar.google.com/citations?user=bRG3LSQAAAAJ&amp;hl=en">Google Scholar</a></li>
-<li><i class="fa-brands fa-linkedin" aria-label="linkedin"></i> <a href="https://www.linkedin.com/in/joshua-wiley-6a0b2278">linkedin</a> - <i class="fa-brands fa-twitter" aria-label="twitter"></i> <a href="http://twitter.com/WileyResearch">twitter</a></li>
-<li><i class="fa-solid fa-envelope" aria-label="envelope"></i> joshua.wiley <em>at</em> monash <em>dot</em> edu</li>
-</ul>
-
-
-</section>
-</section>
-
-
-<div id="quarto-appendix" class="default"><section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes"><h2 class="anchored quarto-appendix-heading">Footnotes</h2>
-
-<ol>
-<li id="fn1"><p>Digitally collected data either actively (e.g., completing mood surveys via an app; brief audio recordings of stress experienced in the past few hours) or passively (e.g., using sensor data from smartphones, wearables, mining social media). Often, large amounts of data are generated, either due to many features, many timepoints, or both.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-</ol>
-</section></div></main> <!-- /main -->
+</main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
   window.document.addEventListener("DOMContentLoaded", function (event) {
     const icon = "";
@@ -264,13 +462,14 @@ ul.task-list li input[type="checkbox"] {
       e.clearSelection();
     }
     const getTextToCopy = function(trigger) {
-        const codeEl = trigger.previousElementSibling.cloneNode(true);
-        for (const childEl of codeEl.children) {
-          if (isCodeAnnotation(childEl)) {
-            childEl.remove();
-          }
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
         }
-        return codeEl.innerText;
+      }
+      return codeEl.innerText;
     }
     const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
       text: getTextToCopy
@@ -616,18 +815,39 @@ ul.task-list li input[type="checkbox"] {
 <footer class="footer">
   <div class="nav-footer">
     <div class="nav-footer-left">
-      &nbsp;
-    </div>   
+<p><span class="bml-acknowledgement">We acknowledge and pay respects to the Elders and Traditional Owners of the land on which we work.</span></p>
+</div>   
     <div class="nav-footer-center">
-      <ul class="footer-items list-unstyled">
-    <li class="nav-item">
- Copyright © 2019 - 2025 by Behavioural Medicine Lab based in Melbourne, Australia.  All rights reserved.
-  </li>  
+<div class="bml-footer-cols">
+<div class="bml-footer-col">
+<p><span class="bml-footer-head">Explore</span></p>
+<ul>
+<li><a href="./research.html">Research</a></li>
+<li><a href="./projects.html">Projects</a></li>
+<li><a href="./team.html">Team</a></li>
+<li><a href="./cv.html">CV</a></li>
 </ul>
-    </div>
+</div>
+<div class="bml-footer-col">
+<p><span class="bml-footer-head">Get involved</span></p>
+<ul>
+<li><a href="./consumer_community.html#take-part">Take part</a></li>
+<li><a href="./consumer_community.html">Consumer partners</a></li>
+<li><a href="./team.html#join">Study with us</a></li>
+</ul>
+</div>
+<div class="bml-footer-col">
+<p><span class="bml-footer-head">Contact</span></p>
+<ul>
+<li><span class="bml-footer-email">joshua.wiley <em>at</em> monash <em>dot</em> edu</span></li>
+<li>Monash University, Clayton</li>
+</ul>
+</div>
+</div>
+</div>
     <div class="nav-footer-right">
-      &nbsp;
-    </div>
+<p><span class="bml-footer-org">Behavioural Medicine Lab · School of Psychological Sciences</span> <span class="bml-footer-copy">© 2019–2026</span></p>
+</div>
   </div>
 </footer>
 

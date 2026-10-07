@@ -1,0 +1,209 @@
+---
+title: Research
+subtitle: What we study, what we've found, and how we work.
+toc: false
+body-classes: bml-page-research
+resources:
+  - research/figures/*.png
+---
+
+```{r}
+#| include: false
+
+## Research page ("Night and Day" design): intro and theme index, five theme
+## sections (a featured study, then "More from this theme" cards), then the
+## navy "How we work" band (methods, R packages, CRAN downloads). Built from
+## Pandoc markdown that the chunks below cat(); styles are in styles/bml.scss
+## and styles/bml-research.scss.
+##
+## The themes come from a frozen snapshot made by sync_research.R (see
+## CLAUDE.md): this page reads only research/research.json and
+## research/figures/, never the wiley_cv analysis. The figures are published
+## through `resources:` above; research.json is not.
+
+## load packages and setup
+source("package_setup.R", echo = FALSE)
+
+research <- readResearch()
+
+## CRAN downloads of all the lab's packages (more than the listed ones), rounded
+## down: "Our 8 packages on CRAN have been downloaded >970,000 times (Posit
+## mirror, as of October 2026)."; left out if the workbook has none
+downloads <- getDownloads()
+
+## a text card in place of a figure, for papers with no picked figure: the
+## plain-language finding. A trial protocol has no results yet, so its card is
+## a "Study plan".
+textCardMd <- function(p, classes = "") {
+  sprintf("::: {.bml-textcard%s}\n[%s]{.bml-eyebrow}\n\n[%s]{.bml-textcard-text}\n:::\n",
+          classes, if (identical(p$design, "Trial protocol")) "Study plan" else "Key finding",
+          mdEscape(p$finding))
+}
+
+## the featured study: figure (linked to the full-size image) and credit left,
+## the finding, citation and "Read the paper" right; only the first theme's
+## figure loads straight away
+featureMd <- function(p, lazy) {
+  left <- if (!is.null(p$figure)) {
+    sprintf("::: {.bml-plate-figure}\n%s\n\n%s\n:::\n", paperFigureMd(p, lazy), paperCredit(p))
+  } else {
+    sprintf("::: {.bml-plate-figure}\n%s:::\n", textCardMd(p))
+  }
+  sprintf('
+::: {.bml-plate .bml-plate-flat .bml-feature}
+%s
+::: {.bml-plate-caption}
+[Featured study]{.bml-eyebrow}
+
+[%s]{.bml-finding}
+
+[%s (%s). %s. *%s*.]{.bml-cite}
+
+[Read the paper](%s){.bml-btn aria-label="Read the paper: %s"}
+:::
+:::
+', left, mdEscape(p$summary), mdEscape(paperAuthor(p)), p$year,
+    mdEscape(sub("\\.$", "", p$title)), mdEscape(p$journal),
+    paperDoi(p), attrEscape(p$title))
+}
+
+## a representative paper: figure thumbnail (or a text card with the
+## plain-language finding), why it's here, citation, credit and link
+paperCardMd <- function(p) {
+  top <- if (!is.null(p$figure)) {
+    sprintf("::: {.bml-card-media}\n%s\n:::\n", paperFigureMd(p))
+  } else {
+    textCardMd(p, " .bml-card-media")
+  }
+  sprintf('
+::: {.bml-card .bml-card-flush .bml-paper-card}
+%s
+::: {.bml-card-body}
+%s
+
+[%s (%s). *%s*.]{.bml-cite}
+
+%s
+
+[Read the paper [→]{aria-hidden="true"}](%s){.bml-link aria-label="Read the paper: %s"}
+:::
+:::
+', top, mdEscape(p$why), mdEscape(paperAuthor(p)), p$year, mdEscape(p$journal),
+    if (!is.null(p$figure)) paperCredit(p) else "",
+    paperDoi(p), attrEscape(p$title))
+}
+```
+
+::: {.column-screen .bml-band .bml-research-intro}
+::: {.grid .bml-gap-lg}
+::: {.g-col-12 .g-col-lg-7}
+[`r mdEscape(research$intro)`]{.bml-intro}
+
+Our team is led by Dr Joshua Wiley and is situated within the
+School of Psychological Sciences
+[(SPS)](https://www.monash.edu/medicine/psych/)
+within the Sleep and Circadian Rhythms Program.
+:::
+
+::: {.g-col-12 .g-col-lg-5 .bml-theme-index}
+[Research themes]{.bml-eyebrow .bml-muted}
+
+```{r}
+#| echo: false
+#| output: asis
+
+## the themes as a list, each linked to its section below
+cat(paste(vapply(research$themes, function(t) sprintf(
+  "- [[%s]{.bml-theme-index-name}](#%s)",
+  mdEscape(t$title), t$anchor), ""), collapse = "\n"), "\n")
+```
+:::
+:::
+:::
+
+```{r}
+#| echo: false
+#| output: asis
+
+## one section per theme: short-name eyebrow, title and blurb, the
+## featured study, then the other papers in a row (a swipe row on phones).
+## The section id is the theme's anchor (#stress, #sleep, ...), which the
+## home page's theme cards link to.
+for (i in seq_along(research$themes)) {
+  t <- research$themes[[i]]
+  cat(sprintf('
+::: {#%s .column-screen .bml-band .bml-theme-band}
+::: {.grid .bml-gap-lg .bml-theme-head}
+::: {.g-col-12 .g-col-lg-5}
+[%s]{.bml-eyebrow .bml-muted}
+
+## %s
+:::
+
+::: {.g-col-12 .g-col-lg-7}
+%s
+:::
+:::
+%s
+::: {.bml-more}
+### More from this theme {#%s-more}
+:::
+
+::: {.bml-rail role="region" tabindex="0" aria-label="More papers: %s"}
+%s
+:::
+:::
+',
+    t$anchor, mdEscape(t$short), mdEscape(t$title), mdEscape(t$blurb),
+    featureMd(t$exemplar, lazy = i > 1), t$anchor, attrEscape(t$title),
+    paste(vapply(t$representatives, paperCardMd, ""), collapse = "\n")))
+}
+```
+
+::: {#how-we-work .column-screen .bml-band .bml-night .bml-methods-band}
+::: {.bml-section-head}
+::: {.bml-section-title}
+[Methods]{.bml-eyebrow}
+
+## How we work {#how-we-work-title}
+:::
+
+Intensive daily studies, randomised trials, new statistical methods and software, and evidence synthesis.
+:::
+
+::: {.grid .bml-methods}
+```{r}
+#| echo: false
+#| output: asis
+
+## the four ways of working
+for (m in research$methods) {
+  cat(sprintf('
+::: {.g-col-12 .g-col-md-6 .g-col-lg-3 .bml-method}
+### %s
+
+%s
+:::
+', mdEscape(m$name), mdEscape(m$one_liner)))
+}
+```
+:::
+
+::: {.bml-software}
+[Free R packages from the lab]{.bml-eyebrow}
+
+```{r}
+#| echo: false
+#| output: asis
+
+cat("::: {.bml-chips}\n",
+    paste(sprintf("[%s](https://CRAN.R-project.org/package=%s){.bml-chip .bml-mono}",
+                  unlist(research$software), unlist(research$software)), collapse = " "),
+    "\n:::\n", sep = "")
+if (!is.null(downloads)) cat(sprintf(
+  "\n[Our %d packages on CRAN have been downloaded \\>%s times (Posit mirror%s).]{.bml-meta}\n",
+  downloads$packages, fmtNum(belowRound(downloads$total, 10000)),
+  if (is.na(downloads$asOf)) "" else paste(", as of", format(downloads$asOf, "%B %Y"))))
+```
+:::
+:::

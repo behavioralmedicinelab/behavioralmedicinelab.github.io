@@ -3,14 +3,14 @@ title: Consumers & Community
 toc: false
 ---
 
-We're commited to engaging and respecting the cancer community. Your
+We're committed to engaging and respecting the cancer community. Your
 advocacy provides vital guidance in this research. 
 We believe in collaboration and partnership so that in our research
 there is *nothing about the community without the community*. We
 believe this improves research and helps make sure it is work that is
 relevant and useful.
 
-#### About Involvement in Research
+#### About Involvement in Research {#take-part}
 
 Right now, we are looking for people who currently have cancer or have
 had cancer in the past or have cared for someone with cancer, such as
@@ -86,7 +86,7 @@ contact information to them.
 #### Contact
 
 If you have any questions, concerns or want to talk about any aspect
-of your role as a consumer member of our team, reach out to Josh {{< fa envelope title="An envelope" >}} joshua.wiley _at_ monash.edu.
+of your role as a consumer member of our team, reach out to Josh {{< fa envelope title="An envelope" >}} joshua.wiley _at_ monash _dot_ edu.
 
 #### Information for New Consumer and Community Members
 
@@ -106,5 +106,10 @@ in research.
 Our team is based at Monash University Clayton Campus. You can find
 directions on the map below.
 
-<iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d7400.802044166879!2d145.1337347219778!3d-37.911512923986855!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x6ad66acbf64673b9%3A0xfaf9b169a587104!2sMonash%20University!5e0!3m2!1sen!2sau!4v1573094798089!5m2!1sen!2sau" width="600" height="450" frameborder="0" style="border:0;" allowfullscreen=""></iframe>
+<!-- An embedded map needs a raw <iframe> (markdown has no syntax for one);
+     its size and border come from .bml-map in styles/bml.scss. -->
+
+::: {.ratio .ratio-4x3 .bml-map}
+<iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d7400.802044166879!2d145.1337347219778!3d-37.911512923986855!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x6ad66acbf64673b9%3A0xfaf9b169a587104!2sMonash%20University!5e0!3m2!1sen!2sau!4v1573094798089!5m2!1sen!2sau" title="Map of Monash University Clayton Campus" loading="lazy" allowfullscreen=""></iframe>
+:::
 

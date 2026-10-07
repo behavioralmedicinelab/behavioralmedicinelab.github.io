@@ -1,0 +1,357 @@
+/*-- scss:defaults --*/
+
+// Home page (index.qmd, body class .bml-home): sizes and spacing from the
+// "Night and Day" mockup for the hero, the three doors, the theme cards, the
+// "How we work" band, the latest papers, the team teaser and the bio. Colours,
+// fonts and the shared classes (.bml-band, .bml-card, .bml-plate, ...) come
+// from styles/bml.scss; this file only adds what the home page needs.
+//
+// Classes added here:
+//   .bml-links        a row of .bml-link links that wraps (spaced by gap, not
+//                     by margins, so a wrapped line starts flush left).
+//   .bml-above        a link that stays clickable above a card's
+//                     .stretched-link (e.g. "Le et al. (2026)" to the paper).
+//   .bml-media-lg     taller .bml-card-media (240px) for the two wide cards.
+//   .bml-phone-extra  hidden on phones (theme cards 4 and 5, as in the design).
+//   .bml-phone-only   shown on phones only, full width ("All five themes").
+
+/*-- scss:rules --*/
+
+// ---- shared bits ----
+.bml-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: .5rem 1.25rem;
+
+  > p { display: contents; }
+  .bml-link + .bml-link { margin-left: 0; }
+}
+
+.bml-card .bml-links { padding-top: .375rem; }
+
+.bml-above {
+  position: relative;
+  z-index: 2;
+}
+
+@include media-breakpoint-down(md) {
+  .bml-card.bml-phone-extra { display: none; }
+}
+
+.bml-phone-only {
+  display: flex;
+  width: 100%;
+  margin-top: 1rem;
+
+  @include media-breakpoint-up(md) { display: none; }
+}
+
+// the band's paragraph wrapper around a lone pill
+p:has(> .bml-phone-only:only-child) { margin: 0; }
+
+// A small-text span that is a whole paragraph (citation, meta line, credit)
+// takes its own line height: inline in a 16px paragraph it keeps the
+// paragraph's tall lines. Home and research pages only.
+:is(.bml-home, .bml-page-research) p > :is(.bml-cite, .bml-meta, .bml-credit):only-child {
+  display: block;
+}
+
+// section headings: 34px serif (design), 26px on phones
+.bml-home .bml-band h2 {
+  font-size: 2.125rem;
+  line-height: 1.2;
+  margin-bottom: 0;
+
+  @include media-breakpoint-down(md) { font-size: 1.625rem; }
+}
+
+// ---- hero: headline and aside, then the plate across the night/day line ----
+// the night/day line falls about a quarter of the way down the plate
+.bml-home-hero {
+  --bml-day-h: 24rem;
+  padding-top: 5rem;
+
+  @include media-breakpoint-down(lg) { --bml-day-h: 13rem; }
+  @include media-breakpoint-down(md) { padding-top: 1.75rem; --bml-day-h: 11rem; }
+}
+
+.bml-hero-head {
+  margin-bottom: 3.5rem;
+
+  @include media-breakpoint-down(md) { margin-bottom: 1.5rem; --bs-gap: 1.25rem; }
+}
+
+.bml-hero-aside {
+  display: block;
+  margin-bottom: .5rem;
+
+  @include media-breakpoint-down(md) { font-size: .9375rem; margin-bottom: 0; }
+}
+
+.bml-home-hero .bml-display {
+  @include media-breakpoint-down(md) { line-height: 1.18; }
+}
+
+// the plate's figure links to the full-size image
+.bml-plate-figure .bml-figlink img { max-height: 380px; }
+
+@include media-breakpoint-up(lg) {
+  .bml-home-hero .bml-plate-caption { padding-bottom: 2rem; }
+}
+
+@include media-breakpoint-down(lg) {
+  .bml-home-hero .bml-plate { box-shadow: 0 20px 50px rgba(0, 0, 0, .3); }
+  .bml-home-hero .bml-plate-figure img { max-height: 220px; }
+  .bml-home-hero .bml-plate-caption .bml-finding { font-size: 1.0625rem; }
+}
+
+// ---- where would you like to start? ----
+#quarto-document-content .bml-band.bml-doors {
+  padding-top: 5rem;
+  padding-bottom: 1.5rem;
+
+  @include media-breakpoint-down(md) { padding-top: 2.25rem; padding-bottom: .5rem; }
+
+  > section > h2,
+  > h2 { margin-bottom: 1.75rem; }
+
+  @include media-breakpoint-down(md) {
+    > section > h2,
+    > h2 { margin-bottom: 1rem; }
+  }
+}
+
+.bml-door {
+  min-height: 300px;
+
+  .bml-soft {
+    display: block;
+    font-size: 1rem;
+    line-height: 1.55;
+  }
+
+  @include media-breakpoint-down(lg) {
+    min-height: 0;
+    gap: .5rem;
+
+    .bml-title { font-size: 1.25rem; }
+    .bml-soft { font-size: .9375rem; }
+  }
+}
+
+// ---- research themes: what we've found ----
+#quarto-document-content .bml-band.bml-findings {
+  padding-top: 4.5rem;
+
+  @include media-breakpoint-down(md) { padding-top: 2.25rem; }
+}
+
+.bml-home .bml-findings .bml-section-head {
+  @include media-breakpoint-down(md) { margin-bottom: 1rem; }
+}
+
+.bml-home .bml-findings h2 {
+  font-size: 2.5rem;
+  margin-top: .625rem;
+
+  @include media-breakpoint-down(md) { font-size: 1.625rem; margin-top: .375rem; }
+}
+
+.bml-theme-cards { --bs-gap: 1.25rem; }
+
+.bml-theme-card .bml-card-media { --bml-media-h: 200px; }
+.bml-theme-card .bml-card-media.bml-media-lg { --bml-media-h: 250px; }
+
+// the media box holds the figure and its credit line: the figure fills what
+// the credit leaves
+.bml-theme-card .bml-card-media {
+  display: flex;
+  flex-direction: column;
+  gap: .5rem;
+
+  > p:first-child {
+    position: relative;
+    flex: 1 1 auto;
+    min-height: 0;
+  }
+
+  > p:first-child img {
+    position: absolute;
+    inset: 0;
+  }
+
+  > p:has(> .bml-credit) {
+    flex: none;
+    height: auto;
+    text-align: center;
+  }
+
+  .bml-credit { font-size: .75rem; line-height: 1.35; }
+
+  @include media-breakpoint-down(md) { padding: .75rem; }
+}
+
+.bml-theme-card .bml-card-body {
+  @include media-breakpoint-down(md) { padding: 1rem 1.125rem 1.125rem; gap: .5rem; }
+}
+
+.bml-theme-card .bml-eyebrow,
+.bml-theme-index .bml-num,
+.bml-theme-head .bml-eyebrow {
+  letter-spacing: .08em;
+}
+
+.bml-eyebrow .bml-num {
+  font-size: .9375rem;
+  letter-spacing: 0;
+  margin-right: .625rem;
+}
+
+.bml-theme-card .bml-finding { font-size: 1.3125rem; }
+
+@include media-breakpoint-down(md) {
+  .bml-theme-card .bml-finding,
+  .bml-theme-card .bml-finding-sm { font-size: 1.0625rem; }
+}
+
+// ---- how we work: the lab head's track record ----
+.bml-band.bml-howwork {
+  padding-top: 4rem;
+  padding-bottom: 2.75rem;
+
+  @include media-breakpoint-down(md) { padding-top: 2rem; padding-bottom: 2rem; }
+
+  h2 { margin-bottom: .875rem; }
+
+  .bml-howwork-intro > p:not(:has(.bml-chip)) {
+    font-size: 1rem;
+    line-height: 1.6;
+    color: var(--bml-soft);
+  }
+
+  .bml-chips { margin-top: 1.25rem; }
+}
+
+@include media-breakpoint-down(md) {
+  .bml-howwork .bml-statgrid {
+    row-gap: 0;
+
+    .bml-stat-num { font-size: 2rem; }
+  }
+}
+
+// phones under 400px (down to 320px, the WCAG reflow width): the numbers
+// scale with the screen so ">970,000" fits its column on one line
+@media (max-width: 399.98px) {
+  .bml-howwork .bml-statgrid {
+    > .bml-stat:nth-child(even) { padding-left: 1rem; }
+
+    .bml-stat-num { font-size: clamp(1.5rem, 8.2vw, 2rem); }
+  }
+}
+
+// ---- latest from the lab ----
+.bml-latest-band .bml-section-head { margin-bottom: 1.5rem; }
+
+.bml-latest {
+  gap: .625rem;
+  padding: 1.375rem;
+
+  .bml-eyebrow { font-size: .75rem; letter-spacing: .08em; }
+
+  // real paper titles are longer than the mockup's headlines
+  .bml-title-sm { font-size: 1.0625rem; line-height: 1.4; text-wrap: pretty; }
+
+  .bml-title-sm a {
+    color: inherit;
+    text-decoration: none;
+  }
+
+  .bml-title-sm a:hover { text-decoration: underline; text-decoration-color: $bml-teal-dark; }
+
+  > p:has(> .bml-push) { margin-top: auto; }
+}
+
+// ---- team teaser ----
+.bml-teaser {
+  .bml-card-body {
+    gap: 1rem;
+    padding: 2.75rem;
+
+    @include media-breakpoint-down(md) { padding: 1.5rem; }
+  }
+
+  .bml-teaser-head {
+    display: flex;
+    flex-direction: column;
+    gap: .75rem;
+
+    > * { margin: 0; }
+  }
+
+  .bml-soft { display: block; font-size: 1rem; line-height: 1.6; }
+}
+
+// ---- lab head bio ----
+.bml-bio {
+  .bml-bio-side {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    align-items: flex-start;
+
+    > * { margin: 0; }
+  }
+
+  .bml-bio-head {
+    display: flex;
+    flex-direction: column;
+    gap: .5rem;
+
+    > * { margin: 0; }
+  }
+
+  .bml-bio-text > p {
+    font-size: 1rem;
+    line-height: 1.7;
+    color: $bml-ink-soft;
+    max-width: 44rem;
+  }
+}
+
+// Connect: a white card of icon links
+.bml-connect {
+  margin-top: 2rem;
+  padding: 1.5rem 1.75rem;
+  background-color: $bml-paper;
+  border: 1px solid $bml-line;
+  border-radius: $bml-radius;
+  max-width: 44rem;
+
+  h3 {
+    font-family: $bml-sans;
+    font-size: .8125rem;
+    font-weight: 700;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+    color: $bml-teal-dark;
+    margin: 0 0 1rem;
+  }
+
+  ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: .625rem 1.5rem;
+
+    @include media-breakpoint-down(sm) { grid-template-columns: minmax(0, 1fr); }
+  }
+
+  li { margin: 0; }
+
+  .bi,
+  .svg-inline--fa,
+  i[class*="fa-"] { color: $bml-teal-dark; margin-right: .375rem; }
+}

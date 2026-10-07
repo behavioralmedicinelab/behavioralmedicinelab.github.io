@@ -1,0 +1,322 @@
+/*-- scss:defaults --*/
+
+// Research page (research.qmd) in the "Night and Day" language: day bands,
+// white cards with hairlines, serif headings, numbered teal eyebrows
+// ("03 INSOMNIA & FATIGUE") instead of a colour per theme. Tokens and the
+// shared classes (.bml-band, .bml-card, .bml-plate, .bml-eyebrow, ...) come
+// from styles/bml.scss; this file only adds what the research page needs.
+// The figure link and credit rules are used by the home page's plate too.
+//
+// Classes added here:
+//   .bml-intro           the page's opening statement (serif, 26px).
+//   .bml-theme-index     the list of themes beside the intro; items are links
+//                        with .bml-theme-index-name and a .bml-meta paper
+//                        count.
+//   .bml-theme-band      a theme's section (day band), hairline on top.
+//   .bml-theme-head      its heading row: eyebrow and title left, blurb right.
+//   .bml-plate-flat      a .bml-plate on the day page: hairline, no shadow.
+//   .bml-feature         the featured study (a flat plate).
+//   .bml-figlink         a figure linked to its full-size image.
+//   .bml-more            the "More from this theme" heading.
+//   .bml-rail            the other papers: one row from 992px, a swipe row
+//                        on phones (keyboard-scrollable: tabindex="0").
+//   .bml-paper-card      a paper's card in the rail (.bml-card .bml-card-flush).
+//   .bml-textcard        the finding in place of a figure ("Key finding",
+//                        "Study plan"); .bml-textcard-text is its text.
+//   .bml-methods-band    the navy "How we work" band; .bml-method is one way
+//                        of working, .bml-software the R packages.
+//
+// The page's title banner lines up with its bands' 1168px column (rule at the
+// end, on body.bml-page-research from the front matter's body-classes).
+
+
+/*-- scss:rules --*/
+
+// ---- figures (research page and the home page's plate) ----
+.bml-figlink {
+  display: block;
+  border-radius: 2px;
+
+  img {
+    display: block;
+    width: 100%;
+    height: auto;
+    margin: 0;
+    object-fit: contain;
+  }
+
+  &:hover img { opacity: .92; }
+}
+
+// ---- featured figures sit in the middle of their column ----
+.bml-plate-figure {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+// ---- intro and theme index ----
+#quarto-document-content .bml-band.bml-research-intro {
+  padding-top: 3rem;
+
+  @include media-breakpoint-down(md) { padding-top: 1.5rem; }
+}
+
+.bml-intro {
+  display: block;
+  font-family: $bml-serif;
+  font-size: 1.625rem;
+  line-height: 1.45;
+  color: $bml-ink;
+  text-wrap: pretty;
+  margin-bottom: 1.25rem;
+
+  @include media-breakpoint-down(md) { font-size: 1.25rem; }
+}
+
+.bml-research-intro p:has(> .bml-intro) { margin-bottom: 1.25rem; }
+
+.bml-theme-index {
+  > p:first-child { margin-bottom: .75rem; }
+
+  ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    background-color: $bml-paper;
+    border: 1px solid $bml-line;
+    border-radius: $bml-radius;
+  }
+
+  li {
+    margin: 0;
+    border-bottom: 1px solid $bml-line-soft;
+
+    &:last-child { border-bottom: 0; }
+  }
+
+  a {
+    display: flex;
+    align-items: baseline;
+    gap: .75rem;
+    padding: .875rem 1.125rem;
+    color: $bml-ink;
+    text-decoration: none;
+  }
+
+  a:hover .bml-theme-index-name { color: $bml-teal-dark; text-decoration: underline; }
+
+  a:focus-visible { outline-offset: -3px; }
+
+  .bml-num { flex: none; font-size: 1.0625rem; }
+  .bml-theme-index-name { flex: 1; font-family: $bml-serif; font-size: 1.0625rem; line-height: 1.35; }
+  .bml-meta { flex: none; }
+}
+
+// ---- theme sections ----
+#quarto-document-content .bml-band.bml-theme-band { padding-top: 0; }
+
+.bml-theme-head {
+  border-top: 1px solid $bml-line;
+  padding-top: 3.5rem;
+  margin-bottom: 2rem;
+
+  @include media-breakpoint-down(md) { padding-top: 2.25rem; margin-bottom: 1.25rem; --bs-gap: .75rem; }
+
+  h2 {
+    margin: .625rem 0 0;
+    font-size: 2.125rem;
+    line-height: 1.2;
+
+    @include media-breakpoint-down(md) { font-size: 1.625rem; }
+  }
+
+  p { color: $bml-ink-soft; font-size: 1.0625rem; line-height: 1.6; margin-bottom: .5rem; }
+  p:has(> .bml-meta) { margin: 0; }
+}
+
+// ---- featured study: a flat plate ----
+.bml-plate.bml-plate-flat {
+  border: 1px solid $bml-line;
+  border-radius: $bml-radius;
+  box-shadow: none;
+}
+
+.bml-feature {
+  .bml-plate-figure img { max-height: 460px; }
+  .bml-plate-figure > .bml-textcard { height: 100%; min-height: 13rem; padding: 1.75rem; }
+  .bml-plate-figure > .bml-textcard .bml-textcard-text { font-size: 1.1875rem; }
+  .bml-plate-caption .bml-finding { font-size: 1.3125rem; }
+
+  @include media-breakpoint-down(md) {
+    .bml-plate-caption .bml-finding { font-size: 1.0625rem; }
+  }
+}
+
+// ---- more from this theme ----
+.bml-more {
+  margin: 2.25rem 0 1rem;
+
+  h3 {
+    font-family: $bml-sans;
+    font-size: .8125rem;
+    font-weight: 700;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+    color: $bml-muted;
+    margin: 0;
+  }
+}
+
+// One row from 992px, a swipe row on phones. Each card spans two subgrid rows
+// (picture, text), so the text lines up across the cards.
+.bml-rail {
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: min(82%, 18rem);
+  grid-template-rows: auto auto;
+  gap: 0 1.25rem;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  overscroll-behavior-x: contain;
+  padding: 2px 2px .75rem;
+
+  @include media-breakpoint-up(lg) {
+    grid-auto-columns: minmax(0, 1fr);
+    overflow-x: visible;
+  }
+
+  &:focus-visible {
+    outline: 3px solid $bml-teal-dark;
+    outline-offset: 2px;
+    border-radius: $bml-radius;
+  }
+}
+
+.bml-rail > .bml-paper-card {
+  display: grid;
+  grid-row: span 2;
+  grid-template-rows: subgrid;
+  gap: 0;
+  scroll-snap-align: start;
+}
+
+.bml-paper-card {
+  // the figure fills its box (which grows with the row), centred
+  .bml-card-media {
+    display: flex;
+    flex-direction: column;
+    height: auto;
+    min-height: 190px;
+    padding: .875rem;
+
+    > p { display: flex; flex: 1; height: auto; }
+    .bml-figlink { position: relative; flex: 1; min-height: 160px; }
+    .bml-figlink img { position: absolute; inset: 0; height: 100%; }
+  }
+
+  .bml-card-body {
+    gap: .625rem;
+    padding: 1.125rem 1.25rem 1.25rem;
+
+    > p:first-child { font-size: .9375rem; line-height: 1.5; color: $bml-ink; }
+    .bml-cite { font-size: .8125rem; }
+    .bml-credit { font-size: .75rem; }
+    > p:has(> .bml-link) { margin-top: auto; padding-top: .25rem; }
+  }
+}
+
+// the finding in place of a figure
+.bml-textcard {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: .5rem;
+  padding: 1.125rem 1.25rem;
+  background-color: $bml-day;
+  border-radius: 4px;
+
+  > p { margin: 0; }
+  .bml-eyebrow { font-size: .75rem; }
+}
+
+.bml-textcard-text {
+  font-family: $bml-serif;
+  font-size: 1.0625rem;
+  line-height: 1.45;
+  color: $bml-ink;
+}
+
+// in a rail card the text card is the media box: inset from the card's edges
+.bml-paper-card > .bml-textcard.bml-card-media {
+  margin: .875rem .875rem 0;
+  border-bottom: 0;
+}
+
+// ---- how we work (navy band) ----
+.bml-band.bml-methods-band {
+  @include media-breakpoint-down(md) { padding-top: 2.25rem; }
+
+  h2 {
+    font-size: 2.125rem;
+    margin: .625rem 0 0;
+
+    @include media-breakpoint-down(md) { font-size: 1.625rem; }
+  }
+
+  .bml-section-head > p { color: var(--bml-soft); }
+}
+
+.bml-methods { --bs-gap: 1.25rem; margin-bottom: 2.5rem; }
+
+.bml-method {
+  display: flex;
+  flex-direction: column;
+  gap: .5rem;
+  padding: 1.5rem;
+  border: 1px solid $bml-night-border;
+  border-radius: $bml-radius;
+
+  > * { margin: 0; }
+
+  h3 {
+    font-size: 1.1875rem;
+    line-height: 1.35;
+    color: $bml-cream;
+  }
+
+  > p { font-size: .9375rem; line-height: 1.55; color: var(--bml-soft); }
+  > p:last-child { margin-top: auto; padding-top: .25rem; }
+  .bml-meta { color: $bml-teal; font-weight: 600; }
+}
+
+.bml-software {
+  display: flex;
+  flex-direction: column;
+  gap: .875rem;
+
+  > * { margin: 0; }
+  .bml-meta { color: $bml-night-faint; }
+}
+
+// The band is the last thing on the page and the footer is navy too: a
+// hairline (inside the content width, like the footer's own) separates them.
+#quarto-document-content .bml-band.bml-methods-band:last-child {
+  padding-bottom: 0;
+
+  > :last-child {
+    padding-bottom: 4rem;
+    border-bottom: 1px solid $bml-night-line;
+
+    @include media-breakpoint-down(md) { padding-bottom: 2.25rem; }
+  }
+}
+
+// ---- title banner: the research page's content is full-width bands on the
+// 1168px column, so its banner title lines up with them (and the navbar)
+// rather than with Quarto's narrower body column ----
+body.bml-page-research #title-block-header .quarto-title-banner .quarto-title {
+  grid-column: screen-start / screen-end;
+  padding-left: max(#{$bml-gutter}, calc((100% - #{$bml-max}) / 2));
+  padding-right: max(#{$bml-gutter}, calc((100% - #{$bml-max}) / 2));
+}

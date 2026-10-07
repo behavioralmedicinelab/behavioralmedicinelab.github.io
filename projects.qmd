@@ -1,5 +1,7 @@
 ---
 title: Projects
+# lights up the Projects menu as the current page (styles/bml.scss)
+body-classes: bml-page-projects
 ---
 
 ```{r}
@@ -10,19 +12,17 @@ title: Projects
 ## load packages and setup
 source("package_setup.R", echo=FALSE)
 
-projects <- read_excel(file.path(basedir, "WileyDossier/CV_Full.xlsx"), sheet = "Projects")
+projects <- read_excel(cvpath, sheet = "Projects")
 projects <- as.data.table(projects)[nzchar(Summary) & !is.na(Summary)]
 projects[, Type := factor(Type, levels = c("Trial", "Observational", "Daily", "Other"))]
 projects <- projects[order(Type, -Status, -Started)]
 
 projects[, ProjectSummary := sprintf(
-  "<h3 id=%s>%s | %d - %s |</h3> \n\n %s \n",
-  Name, Name, Started, ifelse(Status == "Completed", as.character(Ended), "current"),
+  "<h3 id=\"%s\">%s | %d - %s |</h3> \n\n %s \n",
+  projectAnchor(Name), Name, Started, ifelse(Status == "Completed", as.character(Ended), "current"),
   Summary)]
 
 ```
-
-<br></br>
 
 ## Trials
 

@@ -1,0 +1,1531 @@
+/*-- scss:defaults --*/
+
+// ===========================================================================
+// Behavioural Medicine Lab theme: "Night and Day" (Claude Design, Direction C)
+// ===========================================================================
+// Navy "night" bands (navbar, title banners, heroes, stats band, footer) and a
+// warm "day" page for the content; white cards with hairline borders; Libre
+// Caslon Text (serif) for headings and display text, Manrope for everything
+// else; teal accents. All site CSS lives in styles/*.scss (listed under
+// format.html.theme in run_website.R). Pages never carry <style> blocks or
+// style="..." attributes: they use the classes below through Pandoc markdown,
+// e.g. ::: {.bml-card} ... :::  or  [Study with us ->](team.qmd#join){.bml-link}
+//
+// CLASS VOCABULARY (all prefixed bml-). A worked example of each pattern is
+// in CLAUDE.md ("Theme and page conventions").
+//
+// Surfaces (set colours for everything inside them, so components adapt):
+//   .bml-band        full-bleed section: use with .column-screen. Vertical
+//                    padding, and side gutters that keep content within the
+//                    design's 1168px width (24px gutters on phones, as Quarto).
+//                    A day band right after another day band drops its top
+//                    padding. A page ending in a band meets the footer flush.
+//   .bml-night       navy surface: light text, cream headings, teal links and
+//                    eyebrows, teal pill buttons. On a band, card or any div.
+//   .bml-day         warm day surface (the page background).
+//   .bml-straddle    night band whose bottom strip (--bml-day-h, default 14rem;
+//                    12rem on phones) is day, so a .bml-plate inside it sits
+//                    across the night/day boundary, as in the design's hero.
+//   .bml-hero        the first band of a page that has no title block: it then
+//                    sits flush under the navbar. Such a page drops `title:`
+//                    for `pagetitle:` (Quarto would otherwise draw the title
+//                    banner, and promotes a level-1 heading into it), and marks
+//                    its headline as the page heading with
+//                    ::: {.bml-display role="heading" aria-level="1"}
+//   .bml-wrap        centred container, max 1168px (when .bml-band's own
+//                    gutters are not wanted).
+//
+// Cards:
+//   .bml-card        white card, hairline border, 6px radius, padded, children
+//                    stacked with an even gap; a final link paragraph sits at
+//                    the bottom. Add .bml-night for a navy card. Put Bootstrap's
+//                    .stretched-link on the card's main link to make the whole
+//                    card clickable (hover lifts it; focus outlines it).
+//   .bml-card-flush  card with no padding (e.g. an image across the top);
+//                    wrap the text part in .bml-card-body.
+//   .bml-card-body   padded inner part of a flush card (flex column).
+//   .bml-card-media  image box at the top of a flush card: contained image,
+//                    hairline under it (--bml-media-h sets its height, 170px).
+//   .bml-card-foot   hairline footer line of a card, two ends, small grey text
+//                    (e.g. "Le et al. (2026)" | "16 papers in theme ->").
+//   .bml-cover       box whose image fills it, cropped (team teaser photo).
+//   .bml-plate       the featured "figure plate": white, deep shadow, figure
+//                    left (8/12) and caption right (4/12) from 992px, stacked
+//                    on phones. Children: .bml-plate-figure, .bml-plate-caption.
+//   .bml-rows        white card made of rows split by hairlines (e.g. alumni by
+//                    year); each child .bml-row is "label | content" from 768px.
+//   .bml-row-label   the row's label, e.g. a year (serif, teal).
+//
+// People:
+//   .bml-avatar      initials in a navy circle: [PL]{.bml-avatar}
+//   .bml-avatar-photo round 96px photo with a teal ring, on an image:
+//                    ![](JWiley_square.jpg){.bml-avatar-photo fig-alt="..."}
+//   .bml-star        teal "*" after a name (primary supervisor).
+//
+// Text:
+//   .bml-eyebrow     small uppercase letter-spaced label (teal; add .bml-muted
+//                    for the grey version). Block-level.
+//   .bml-eyebrow-row eyebrow line with two ends, e.g. "PLATE 03 ... RANDOMISED
+//                    TRIAL": two spans in one paragraph.
+//   .bml-split       any line with two ends (two spans in one paragraph).
+//   .bml-display     hero headline (serif 64px desktop, 34px phone).
+//   .bml-title       serif card title (26px); .bml-title-sm (19px).
+//   .bml-finding     serif plain-language finding (22px); .bml-finding-sm (17px).
+//   .bml-lead        larger intro paragraph (17px).
+//   .bml-serif       serif font only.
+//   .bml-teal        accent colour (teal on night, dark teal on day), e.g. the
+//                    hero's italic *practical*: *[practical]{.bml-teal}*
+//   .bml-muted       grey text (meta, eyebrows); .bml-soft: secondary paragraph
+//                    colour.
+//   .bml-meta        small grey line (13px), e.g. "Do et al. (2026)".
+//   .bml-credit      figure credit line (13px grey).
+//   .bml-cite        citation line (14px grey).
+//   .bml-mono        monospace (R package names).
+//
+// Numbers:
+//   .bml-stat        a number over its label; children .bml-stat-num (serif,
+//                    52px desktop) and .bml-stat-label (two spans, one
+//                    paragraph).
+//   .bml-statgrid    2-column grid of .bml-stat with hairline dividers (the
+//                    "How we work" band); .bml-stat-note spans the grid.
+//   .bml-statrow     row of .bml-stat with teal 40px numbers (team banner).
+//   .bml-num         serif number inline (e.g. theme "03"), teal.
+//
+// Links and buttons:
+//   .bml-link        bold teal link, no underline until hover ("Meet the team ->");
+//                    two in a row are spaced apart.
+//   .bml-btn         round pill button: navy on day, teal (navy text) on night.
+//   .bml-btn-outline outlined pill (ink on day, teal on night).
+//   .bml-chips       wrapping row of chips; .bml-chip: small outlined pill
+//                    (a link or a span), add .bml-mono for package names.
+//   .bml-nav-cta     the navbar's "Take part" item, outlined teal pill (set in
+//                    run_website.R as text: "[Take part]{.bml-nav-cta}").
+//
+// Layout helpers:
+//   .bml-section-head heading row: title block left, a link or short
+//                    paragraph right (wraps on phones).
+//   .bml-push        margin-top: auto (push to the bottom of a card).
+//   .bml-gap-0 / .bml-gap-sm / .bml-gap-lg   no / 1rem / 3.5rem gap for a
+//                    Quarto .grid.
+//   Quarto's CSS grid (.grid with .g-col-12 .g-col-md-6 .g-col-lg-4 ...) and
+//   Bootstrap utilities (.d-flex, .flex-row, .align-items-center,
+//   .justify-content-between, .mt-auto, .mt-5, .text-center, .gap-3 ...) also
+//   work.
+//
+// Tabsets as pills:
+//   ::: {.panel-tabset .bml-tabs}  Quarto tabset drawn as round pills (active
+//   = navy). Add .bml-tabs-sm for small pills, .bml-tabs-below to put the pills
+//   under the panel (e.g. a photo switcher), .bml-tabs-end to right-align them.
+//
+// Page hooks (front matter body-classes):
+//   bml-page-projects  marks the Projects menu as the current page.
+//   bml-home, bml-page-research, bml-team  scope page rules (home, research,
+//                      team).
+//
+// Page-specific styles live in their own files, using the tokens below:
+// styles/bml-home.scss (index.qmd), styles/bml-research.scss (research.qmd)
+// and styles/bml-team.scss (team.qmd). A new page's rules go in a new
+// styles/bml-<page>.scss added to the theme list in run_website.R.
+// ===========================================================================
+
+// ---- colour tokens (exact values from the design file) ----
+$bml-night:        #121e2b;  // navbar, banners, stats band, footer
+$bml-night-raised: #1a2a3a;  // hover on navy cards
+$bml-day:          #f5f3ee;  // page background
+$bml-paper:        #ffffff;  // cards
+$bml-ink:          #16222e;  // text on day
+$bml-ink-soft:     #4a5560;  // secondary paragraphs on day
+$bml-muted:        #5a6570;  // meta text and grey eyebrows on day (5.4:1)
+$bml-line:         #e3dfd7;  // card borders
+$bml-line-soft:    #efebe4;  // dividers inside cards
+$bml-pill-line:    rgba(22, 34, 46, .25); // outlined pills on day
+$bml-teal:         #3dd6b5;  // accent on night (9:1 on navy)
+$bml-teal-dark:    #0f7a68;  // accent on day (4.7:1 on day, 5.3:1 on white)
+$bml-teal-deep:    #0b5e50;  // inline code text
+$bml-cream:        #f3efe6;  // display headings on night
+$bml-night-text:   #eef1f3;  // text on night
+$bml-night-muted:  #b7c3cd;  // paragraphs on night (9:1)
+$bml-night-faint:  #8d9ba7;  // small print on night (5.9:1)
+$bml-nav-link:     #d6dde3;  // navbar links
+$bml-night-line:   rgba(255, 255, 255, .12);
+$bml-night-border: rgba(255, 255, 255, .18);
+
+$bml-serif: "Libre Caslon Text", Georgia, "Times New Roman", serif;
+$bml-sans: Manrope, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+$bml-mono: SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+
+$bml-max: 1168px;            // content width (design: 1280px container, 56px padding)
+$bml-gutter: 1.5rem;         // minimum side gutter (Quarto's own on phones)
+$bml-radius: 6px;
+$bml-shadow-plate: 0 30px 80px rgba(0, 0, 0, .35);
+$bml-shadow-hover: 0 14px 34px rgba(18, 30, 43, .12);
+
+// ---- Bootstrap and Quarto variables ----
+$white:     #fff;
+$primary:   $bml-night;
+$secondary: $bml-muted;
+$success:   $bml-teal-dark;
+$info:      #3498db;   // info, warning and danger keep flatly's hues (no
+$warning:   #f39c12;   // page uses them for colour coding any more)
+$danger:    #e74c3c;
+$light:     $bml-day;
+$dark:      $bml-night;
+$min-contrast-ratio: 4.5;
+
+$body-bg: $bml-day;
+$body-color: $bml-ink;
+$body-secondary-color: $bml-muted;
+$headings-color: $bml-ink;
+$link-color: $bml-teal-dark;
+$link-hover-color: $bml-ink;
+$border-color: $bml-line;
+$hr-border-color: $bml-line;
+$hr-opacity: 1;
+$border-radius: $bml-radius;
+$border-radius-lg: $bml-radius;
+
+$font-family-sans-serif: $bml-sans;
+$font-family-monospace: $bml-mono;
+$headings-font-family: $bml-serif;
+$headings-font-weight: 400;
+$h1h2h3-font-weight: 400;
+$line-height-base: 1.6;
+$headings-line-height: 1.2;
+$h1-font-size: 2.75rem;
+$h2-font-size: 2.125rem;
+$h3-font-size: 1.5rem;
+$h4-font-size: 1.25rem;
+$h5-font-size: 1.125rem;
+$h6-font-size: 1rem;
+$lead-font-size: 1.0625rem;
+$lead-font-weight: 400;
+
+$navbar-bg: $bml-night;
+$navbar-fg: $bml-nav-link;
+$navbar-hl: #ffffff;
+$navbar-brand: $bml-night-text;
+$navbar-brand-hl: #ffffff;
+
+$footer-bg: $bml-night;
+$footer-fg: $bml-night-muted;
+
+$title-banner-bg: $bml-night;
+$title-banner-color: $bml-cream;
+
+$toc-color: $bml-teal-dark;
+$toc-active-border: $bml-teal-dark;
+$toc-inactive-border: $bml-line;
+
+$code-color: $bml-teal-deep;
+$code-bg: rgba($bml-teal-dark, .08);
+
+$table-border-color: $bml-line;
+$dropdown-link-active-bg: $bml-teal-dark;
+
+
+/*-- scss:rules --*/
+
+// Libre Caslon Text (headings, display) and Manrope (UI and body)
+@import url("https://fonts.googleapis.com/css2?family=Libre+Caslon+Text:ital,wght@0,400;0,700;1,400&family=Manrope:wght@400;500;600;700&display=swap");
+
+// ---------------------------------------------------------------------------
+// Surface colours as custom properties, so components adapt to night or day
+// ---------------------------------------------------------------------------
+:root,
+.bml-day,
+.bml-card,
+.bml-plate,
+.bml-rows {
+  --bml-fg: #{$bml-ink};
+  --bml-heading: #{$bml-ink};
+  --bml-soft: #{$bml-ink-soft};
+  --bml-muted: #{$bml-muted};
+  --bml-link: #{$bml-teal-dark};
+  --bml-link-hover: #{$bml-ink};
+  --bml-rule: #{$bml-line-soft};
+  --bml-border: #{$bml-line};
+  --bml-pill: #{$bml-pill-line};
+  --bml-btn-bg: #{$bml-night};
+  --bml-btn-fg: #ffffff;
+  --bml-btn-hover-bg: #{$bml-teal-dark};
+  --bml-btn-hover-fg: #ffffff;
+  --bml-focus: #{$bml-teal-dark};
+  --bs-link-color-rgb: 15, 122, 104;
+  --bs-link-hover-color-rgb: 22, 34, 46;
+}
+
+.bml-night,
+.bml-straddle,
+.quarto-title-banner {
+  --bml-fg: #{$bml-night-text};
+  --bml-heading: #{$bml-cream};
+  --bml-soft: #{$bml-night-muted};
+  --bml-muted: #{$bml-night-muted};
+  --bml-link: #{$bml-teal};
+  --bml-link-hover: #ffffff;
+  --bml-rule: #{$bml-night-line};
+  --bml-border: #{$bml-night-border};
+  --bml-pill: rgba(255, 255, 255, .3);
+  --bml-btn-bg: #{$bml-teal};
+  --bml-btn-fg: #{$bml-night};
+  --bml-btn-hover-bg: #ffffff;
+  --bml-btn-hover-fg: #{$bml-night};
+  --bml-focus: #{$bml-teal};
+  --bs-link-color-rgb: 61, 214, 181;
+  --bs-link-hover-color-rgb: 255, 255, 255;
+  color: var(--bml-fg);
+}
+
+.bml-night { background-color: $bml-night; }
+.bml-day { background-color: $bml-day; color: var(--bml-fg); }
+
+// ---------------------------------------------------------------------------
+// Base typography
+// ---------------------------------------------------------------------------
+body {
+  background-color: $bml-day;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+h1, h2, h3, h4, h5, h6,
+.h1, .h2, .h3, .h4, .h5, .h6 {
+  font-family: $bml-serif;
+  font-weight: 400;
+  color: var(--bml-heading);
+  text-wrap: balance;
+}
+
+// Quarto rules h2 off and dims h3-h6; the design does neither
+h2 {
+  border-bottom: 0;
+  padding-bottom: 0;
+}
+
+h3, h4, h5, h6 { opacity: 1; }
+
+h4, h5, h6 { line-height: 1.3; }
+
+strong, b { font-weight: 700; }
+
+// links: underlined in running text (colour alone is not enough there),
+// plain in components (cards, buttons, navigation)
+a {
+  text-underline-offset: 3px;
+  text-decoration-thickness: 1px;
+}
+
+a:focus-visible,
+button:focus-visible,
+[tabindex]:focus-visible {
+  outline: 3px solid var(--bml-focus);
+  outline-offset: 2px;
+  border-radius: 2px;
+}
+
+hr {
+  border-top-color: $bml-line;
+  opacity: 1;
+}
+
+// long bare URLs and DOIs (CV publication lists, consumer_community.qmd) break
+// instead of widening the page on phones, which would push the menu button
+// (on the right) off screen
+main.content :is(p, li, dd) { overflow-wrap: break-word; }
+
+// inline code is used for date labels in the CV (e.g. `2010 - 2015`)
+p code:not(.sourceCode),
+li code:not(.sourceCode) {
+  border-radius: 4px;
+  padding: .1em .4em;
+}
+
+.lead { color: var(--bml-soft); }
+
+blockquote {
+  border-left: 3px solid $bml-teal-dark;
+  padding-left: 1rem;
+  color: var(--bml-soft);
+}
+
+// tables (rare on this site) sit on white so they read as cards
+main .table {
+  --bs-table-bg: #{$bml-paper};
+}
+
+// callouts: white with the theme's hairline
+.callout {
+  background-color: $bml-paper;
+  border-color: $bml-line;
+}
+
+// figures and captions
+.figure-caption,
+figcaption {
+  color: $bml-muted;
+}
+
+// htmlwidgets (the CV's plotly charts) sit on white cards
+.html-widget.plotly,
+.plotly.html-widget {
+  background-color: $bml-paper;
+  border: 1px solid $bml-line;
+  border-radius: $bml-radius;
+  margin-bottom: 1.5rem;
+}
+
+// ---------------------------------------------------------------------------
+// Navbar
+// ---------------------------------------------------------------------------
+#quarto-header .navbar {
+  background-color: $bml-night;
+  padding-top: .75rem;
+  padding-bottom: .75rem;
+  font-family: $bml-sans;
+}
+
+// navbar content lines up with the bands' 1168px content column
+#quarto-header > nav.navbar {
+  padding-left: $bml-gutter;
+  padding-right: $bml-gutter;
+}
+
+#quarto-header .navbar .navbar-container {
+  max-width: $bml-max;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 0;
+  padding-right: 0;
+}
+
+.navbar-brand-container { gap: .25rem; }
+
+.navbar .navbar-brand {
+  display: inline-flex;
+  align-items: center;
+  margin-right: 0;
+  color: $bml-night-text;
+}
+
+.navbar .navbar-brand-logo { margin-right: .625rem; }
+
+.navbar .navbar-logo {
+  height: 30px;
+  width: 30px;
+  max-height: none;
+  padding-right: 0;
+}
+
+.navbar .navbar-title {
+  font-family: $bml-serif;
+  font-size: 1.3125rem;
+  font-weight: 400;
+  color: $bml-night-text;
+  letter-spacing: 0;
+}
+
+.navbar .navbar-brand:hover .navbar-title,
+.navbar .navbar-brand:focus-visible .navbar-title {
+  color: #ffffff;
+}
+
+.navbar .navbar-brand:focus-visible {
+  outline: 3px solid $bml-teal;
+  outline-offset: 3px;
+}
+
+#quarto-header .navbar-nav .nav-link {
+  font-size: .9375rem;
+  font-weight: 500;
+  color: $bml-nav-link;
+  border-radius: 999px;
+  padding: .5rem .875rem;
+  line-height: 1.4;
+  white-space: nowrap;
+  transition: background-color .15s ease, color .15s ease;
+}
+
+#quarto-header .navbar-nav .nav-link:hover,
+#quarto-header .navbar-nav .nav-link:focus-visible,
+#quarto-header .navbar-nav .show > .nav-link {
+  background-color: rgba(255, 255, 255, .08);
+  color: #ffffff;
+}
+
+#quarto-header .navbar-nav .nav-link:focus-visible {
+  outline: 3px solid $bml-teal;
+  outline-offset: 2px;
+  box-shadow: none;
+}
+
+// the current page: a light pill, as in the design. Projects is a menu, which
+// Quarto never marks as current, so projects.qmd sets
+// body-classes: bml-page-projects.
+#quarto-header .navbar-nav .nav-link.active,
+#quarto-header .navbar-nav .nav-link[aria-current="page"],
+body.bml-page-projects #quarto-header .navbar-nav .nav-item.dropdown > .nav-link {
+  background-color: $bml-night-text;
+  color: $bml-night;
+}
+
+// "Take part": outlined teal pill. The text is "[Take part]{.bml-nav-cta}" in
+// run_website.R; the span keeps the teal colour where :has() is unsupported.
+.bml-nav-cta {
+  color: $bml-teal;
+  font-weight: 700;
+}
+
+#quarto-header .navbar-nav .nav-link:has(.bml-nav-cta) {
+  border: 1.5px solid $bml-teal;
+  color: $bml-teal;
+  font-weight: 700;
+  padding: .5rem 1.125rem;
+  background-color: transparent;
+}
+
+#quarto-header .navbar-nav .nav-link:has(.bml-nav-cta):hover,
+#quarto-header .navbar-nav .nav-link:has(.bml-nav-cta):focus-visible {
+  background-color: $bml-teal;
+  color: $bml-night;
+  .bml-nav-cta { color: $bml-night; }
+}
+
+// Projects dropdown: a white card under the navbar
+#quarto-header .dropdown-menu {
+  --bs-dropdown-bg: #{$bml-paper};
+  --bs-dropdown-color: #{$bml-ink};
+  --bs-dropdown-border-color: #{$bml-line};
+  --bs-dropdown-link-color: #{$bml-ink};
+  --bs-dropdown-link-hover-color: #{$bml-ink};
+  --bs-dropdown-link-hover-bg: #{$bml-day};
+  --bs-dropdown-link-active-color: #ffffff;
+  --bs-dropdown-link-active-bg: #{$bml-teal-dark};
+  --bs-dropdown-header-color: #{$bml-teal-dark};
+  --bs-dropdown-divider-bg: #{$bml-line-soft};
+  border-radius: $bml-radius;
+  box-shadow: 0 14px 34px rgba(18, 30, 43, .18);
+  padding: .5rem;
+  font-size: .9375rem;
+}
+
+#quarto-header .dropdown-header {
+  font-size: .75rem;
+  font-weight: 700;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  padding: .625rem .75rem .25rem;
+}
+
+#quarto-header .dropdown-item {
+  border-radius: 4px;
+  padding: .375rem .75rem;
+}
+
+#quarto-header .dropdown-item:focus-visible {
+  outline: 3px solid $bml-teal-dark;
+  outline-offset: -3px;
+}
+
+// navbar toggler (phones and tablets)
+#quarto-header .navbar-toggler {
+  border: 0;
+  padding: .5rem;
+  border-radius: $bml-radius;
+}
+
+#quarto-header .navbar-toggler:focus,
+#quarto-header .navbar-toggler:focus-visible {
+  box-shadow: none;
+  outline: 3px solid $bml-teal;
+  outline-offset: 0;
+}
+
+@include media-breakpoint-up(lg) {
+  #quarto-header .navbar-nav {
+    gap: .375rem;
+    align-items: center;
+  }
+
+  #quarto-header .navbar-nav .nav-item:has(.bml-nav-cta) { margin-left: .625rem; }
+}
+
+// 992-1199px: the full navbar only just fits, so the links are tighter there
+// (otherwise the brand touches "Research" just above 992px)
+@include media-breakpoint-only(lg) {
+  #quarto-header .navbar-nav { gap: .125rem; }
+  #quarto-header .navbar-nav .nav-link { padding-left: .625rem; padding-right: .625rem; }
+  #quarto-header .navbar-nav .nav-link:has(.bml-nav-cta) { padding-left: .875rem; padding-right: .875rem; }
+  #quarto-header .navbar-nav .nav-item:has(.bml-nav-cta) { margin-left: .375rem; }
+}
+
+// collapsed menu: large serif links with hairlines, Take part as a full pill
+@include media-breakpoint-down(lg) {
+  #quarto-header .navbar { padding-top: .5rem; padding-bottom: .5rem; }
+
+  .navbar .navbar-logo { height: 24px; width: 24px; }
+
+  #quarto-header .navbar-brand-container { max-width: calc(100% - 52px); }
+
+  #quarto-header .navbar-toggler { margin-right: -.5rem; }
+
+  .navbar .navbar-title { font-size: 1.0625rem; }
+
+  #quarto-header .navbar-collapse { padding: .5rem .25rem 1.25rem; }
+
+  #quarto-header .navbar-nav .nav-item { border-top: 1px solid $bml-night-line; }
+
+  #quarto-header .navbar-nav .nav-link {
+    font-family: $bml-serif;
+    font-size: 1.375rem;
+    font-weight: 400;
+    color: $bml-night-text;
+    border-radius: 4px;
+    padding: .625rem .25rem;
+  }
+
+  #quarto-header .navbar-nav .nav-link.active,
+  #quarto-header .navbar-nav .nav-link[aria-current="page"],
+  body.bml-page-projects #quarto-header .navbar-nav .nav-item.dropdown > .nav-link {
+    background-color: transparent;
+    color: $bml-teal;
+  }
+
+  #quarto-header .navbar-nav .nav-item:has(.bml-nav-cta) {
+    border-top: 0;
+    margin-top: .75rem;
+  }
+
+  #quarto-header .navbar-nav .nav-link:has(.bml-nav-cta) {
+    font-family: $bml-sans;
+    font-size: 1rem;
+    text-align: center;
+    justify-content: center;
+    padding: .8125rem;
+    border-radius: 999px;
+  }
+
+  #quarto-header .dropdown-menu {
+    --bs-dropdown-bg: transparent;
+    --bs-dropdown-color: #{$bml-night-text};
+    --bs-dropdown-border-color: transparent;
+    --bs-dropdown-link-color: #{$bml-nav-link};
+    --bs-dropdown-link-hover-color: #ffffff;
+    --bs-dropdown-link-hover-bg: rgba(255, 255, 255, .08);
+    --bs-dropdown-header-color: #{$bml-teal};
+    --bs-dropdown-divider-bg: #{$bml-night-line};
+    box-shadow: none;
+    padding: 0 0 .5rem .5rem;
+  }
+
+  #quarto-header .dropdown-item:focus-visible { outline-color: $bml-teal; }
+}
+
+// ---------------------------------------------------------------------------
+// Title banner (every page except home): navy, big serif title
+// ---------------------------------------------------------------------------
+#title-block-header .quarto-title-banner {
+  background-color: $bml-night;
+  color: $bml-night-muted;
+  margin-bottom: 1.5rem;
+  padding-top: 4.5rem;
+  padding-bottom: 3.5rem;
+
+  @include media-breakpoint-down(lg) {
+    padding-top: 2.5rem;
+    padding-bottom: 2.25rem;
+    margin-bottom: 1rem;
+  }
+
+  .quarto-title .title {
+    font-family: $bml-serif;
+    font-weight: 400;
+    font-size: clamp(2.5rem, 1.6rem + 3.2vw, 4rem);
+    line-height: 1.1;
+    letter-spacing: -.01em;
+    color: $bml-cream;
+  }
+
+  .subtitle,
+  .description {
+    color: $bml-night-muted;
+    font-size: 1.0625rem;
+    line-height: 1.6;
+    max-width: 40rem;
+    margin-top: 1rem;
+  }
+
+  a { color: $bml-teal; }
+}
+
+// ---------------------------------------------------------------------------
+// Footer: navy, Acknowledgement of Country, three link columns, bottom line
+// ---------------------------------------------------------------------------
+footer.footer {
+  background-color: $bml-night;
+  color: $bml-night-muted;
+  border-top: 0;
+}
+
+footer.footer .nav-footer {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 2.5rem;
+  align-items: start;
+  margin: 0;
+  padding: 3rem max(#{$bml-gutter}, calc((100% - #{$bml-max}) / 2)) 2rem;
+  min-height: 0;
+  text-align: left;
+  font-size: .9375rem;
+  background-color: transparent;
+
+  @include media-breakpoint-up(lg) {
+    grid-template-columns: minmax(0, 6fr) minmax(0, 6fr);
+    gap: 2.75rem 2.5rem;
+    padding-top: 4rem;
+    padding-bottom: 2.25rem;
+  }
+}
+
+footer.footer .nav-footer-left,
+footer.footer .nav-footer-center,
+footer.footer .nav-footer-right {
+  flex: none;
+  min-height: 0;
+  margin: 0;
+  text-align: left;
+  font-size: inherit;
+  order: 0;
+}
+
+footer.footer .nav-footer-right {
+  grid-column: 1 / -1;
+  border-top: 1px solid $bml-night-line;
+  padding-top: 1.5rem;
+  font-size: .8125rem;
+  color: $bml-night-faint;
+
+  p {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: .5rem 2rem;
+  }
+}
+
+footer.footer a {
+  color: $bml-night-muted;
+  text-decoration: none;
+}
+
+footer.footer a:hover,
+footer.footer a:focus-visible {
+  color: #ffffff;
+  text-decoration: underline;
+}
+
+footer.footer a:focus-visible { outline-color: $bml-teal; }
+
+.bml-acknowledgement {
+  display: block;
+  font-family: $bml-serif;
+  font-size: 1.375rem;
+  line-height: 1.5;
+  color: $bml-night-text;
+  max-width: 35rem;
+
+  @include media-breakpoint-down(md) { font-size: 1.0625rem; }
+}
+
+.bml-footer-cols {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 2rem 2.5rem;
+
+  @include media-breakpoint-up(md) { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+
+  p { margin: 0 0 .5rem; }
+
+  ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: .5rem;
+  }
+}
+
+.bml-footer-head {
+  color: $bml-night-text;
+  font-weight: 700;
+}
+
+// the address is plain text (not a link), so it isn't teal like the links
+.bml-footer-email { color: $bml-night-text; }
+
+// ---------------------------------------------------------------------------
+// Bands and surfaces
+// ---------------------------------------------------------------------------
+.bml-band {
+  padding-top: 4.5rem;
+  padding-bottom: 4.5rem;
+  padding-left: max(#{$bml-gutter}, calc((100% - #{$bml-max}) / 2));
+  padding-right: max(#{$bml-gutter}, calc((100% - #{$bml-max}) / 2));
+
+  @include media-breakpoint-down(md) {
+    padding-top: 2.25rem;
+    padding-bottom: 2.25rem;
+  }
+
+  > :first-child { margin-top: 0; }
+  > :last-child { margin-bottom: 0; }
+}
+
+// a day band directly after another day band doesn't double the spacing
+.bml-band:not(.bml-night, .bml-straddle) + .bml-band:not(.bml-night, .bml-straddle) { padding-top: 0; }
+
+.bml-wrap {
+  max-width: $bml-max;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.bml-straddle {
+  --bml-day-h: 14rem;
+  background: linear-gradient(to top, $bml-day 0, $bml-day var(--bml-day-h), $bml-night var(--bml-day-h));
+  padding-bottom: 0;
+
+  @include media-breakpoint-down(md) { --bml-day-h: 12rem; }
+}
+
+// A page that opens with a hero band (and has no title, so no title block):
+// drop main's top margin, Quarto's content padding and the empty title
+// header, so the hero sits flush under the navbar.
+#title-block-header:not(:has(*)) { display: none; }
+#quarto-content:has(> main.content > .bml-hero:first-of-type) > * { padding-top: 0; }
+main.content:has(> .bml-hero:first-of-type) { margin-top: 0; }
+
+// A page that ends with a band (e.g. a navy "Want to join us?"): no day strip
+// between it and the footer (Quarto keeps a 60px bottom row in its grid).
+#quarto-content:has(> main.content > .bml-band:last-child) {
+  grid-template-rows: [content-top] minmax(max-content, 1fr) [content-bottom] 0 [page-bottom];
+}
+
+main.content:has(> .bml-band:last-child) { margin-bottom: 0; }
+
+// headings that open a column inside a band line up with its top
+.bml-band :is(h2, h3):first-child,
+.bml-card :is(h2, h3):first-child { margin-top: 0; }
+
+// ---------------------------------------------------------------------------
+// Text
+// ---------------------------------------------------------------------------
+.bml-eyebrow {
+  display: block;
+  font-family: $bml-sans;
+  font-size: .8125rem;
+  font-weight: 700;
+  letter-spacing: .1em;
+  line-height: 1.4;
+  text-transform: uppercase;
+  color: var(--bml-link);
+}
+
+div.bml-eyebrow > p { margin: 0; }
+
+.bml-eyebrow-row {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: .25rem 1rem;
+  font-size: .75rem;
+  font-weight: 700;
+  letter-spacing: .12em;
+  line-height: 1.4;
+  text-transform: uppercase;
+  color: var(--bml-muted);
+
+  > p {
+    display: contents;
+  }
+}
+
+.bml-display {
+  font-family: $bml-serif;
+  font-weight: 400;
+  font-size: clamp(2.125rem, 1.2rem + 3.6vw, 4rem);
+  line-height: 1.12;
+  letter-spacing: -.01em;
+  color: var(--bml-heading);
+  text-wrap: balance;
+  margin: 0;
+}
+
+.bml-title {
+  display: block;
+  font-family: $bml-serif;
+  font-size: 1.625rem;
+  line-height: 1.3;
+  color: var(--bml-heading);
+
+  @include media-breakpoint-down(md) { font-size: 1.25rem; }
+}
+
+.bml-title-sm {
+  display: block;
+  font-family: $bml-serif;
+  font-size: 1.1875rem;
+  line-height: 1.4;
+  color: var(--bml-heading);
+}
+
+.bml-finding {
+  font-family: $bml-serif;
+  font-size: 1.375rem;
+  line-height: 1.45;
+  color: var(--bml-fg);
+  text-wrap: pretty;
+
+  @include media-breakpoint-down(md) { font-size: 1.0625rem; }
+}
+
+.bml-finding-sm {
+  font-family: $bml-serif;
+  font-size: 1.0625rem;
+  line-height: 1.45;
+  color: var(--bml-fg);
+  text-wrap: pretty;
+}
+
+.bml-lead {
+  font-size: 1.0625rem;
+  line-height: 1.6;
+  color: var(--bml-soft);
+  text-wrap: pretty;
+}
+
+.bml-serif { font-family: $bml-serif; font-weight: 400; }
+.bml-teal { color: var(--bml-link); }
+.bml-muted { color: var(--bml-muted); }
+.bml-soft { color: var(--bml-soft); }
+.bml-mono { font-family: $bml-mono; }
+
+.bml-meta {
+  font-size: .8125rem;
+  line-height: 1.5;
+  color: var(--bml-muted);
+}
+
+.bml-credit {
+  font-size: .8125rem;
+  line-height: 1.45;
+  color: var(--bml-muted);
+}
+
+.bml-cite {
+  font-size: .875rem;
+  line-height: 1.5;
+  color: var(--bml-muted);
+}
+
+.bml-star {
+  color: var(--bml-link);
+  margin-left: .05em;
+}
+
+// two ends of one line, e.g. "Le et al. (2026)  ...  16 papers in theme ->"
+// (put both spans in one paragraph inside ::: {.bml-split})
+.bml-split {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: .25rem 1rem;
+
+  > p { display: contents; }
+}
+
+// ---------------------------------------------------------------------------
+// People
+// ---------------------------------------------------------------------------
+// initials avatar: [PL]{.bml-avatar}
+.bml-avatar {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex: none;
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  background-color: $bml-night;
+  color: $bml-cream;
+  font-family: $bml-serif;
+  font-size: 1.125rem;
+  line-height: 1;
+  letter-spacing: .02em;
+
+  @include media-breakpoint-down(md) { width: 44px; height: 44px; font-size: 1rem; }
+}
+
+.bml-night .bml-avatar { background-color: $bml-night-raised; }
+
+// round photo: ![](JWiley_square.jpg){.bml-avatar-photo fig-alt="..."}
+// (shown smaller by CSS only; the file itself is never resized)
+img.bml-avatar-photo {
+  width: 96px;
+  height: 96px;
+  max-width: none;
+  flex: none;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid var(--bml-link);
+}
+
+p:has(> img.bml-avatar-photo:only-child) { margin: 0; flex: none; }
+
+// ---------------------------------------------------------------------------
+// Numbers
+// ---------------------------------------------------------------------------
+.bml-num {
+  font-family: $bml-serif;
+  color: var(--bml-link);
+}
+
+.bml-stat {
+  display: flex;
+  flex-direction: column;
+  gap: .375rem;
+
+  > p { margin: 0; display: contents; }
+}
+
+.bml-stat-num {
+  display: block;
+  font-family: $bml-serif;
+  font-size: clamp(2rem, 1.3rem + 2.2vw, 3.25rem);
+  line-height: 1;
+  color: var(--bml-fg);
+}
+
+.bml-stat-label {
+  display: block;
+  font-size: .9375rem;
+  line-height: 1.45;
+  color: var(--bml-soft);
+
+  @include media-breakpoint-down(md) { font-size: .8125rem; }
+}
+
+.bml-statgrid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  column-gap: 0;
+
+  // rows after the first get a hairline above; the right column one on its left
+  > .bml-stat { padding: 0 0 1.75rem; }
+  > .bml-stat:nth-child(n + 3) { padding-top: 1.75rem; border-top: 1px solid var(--bml-rule); }
+  > .bml-stat:nth-child(even) { padding-left: 2rem; border-left: 1px solid var(--bml-rule); }
+
+  @include media-breakpoint-down(md) {
+    > .bml-stat { padding-bottom: 1.125rem; }
+    > .bml-stat:nth-child(n + 3) { padding-top: 1.125rem; }
+    > .bml-stat:nth-child(even) { padding-left: 1.25rem; }
+  }
+}
+
+.bml-stat-note {
+  grid-column: 1 / -1;
+  margin: .5rem 0 0;
+  font-size: .8125rem;
+  line-height: 1.5;
+  color: $bml-night-faint;
+
+  > p { margin: 0; }
+}
+
+.bml-day .bml-stat-note,
+.bml-card .bml-stat-note { color: var(--bml-muted); }
+
+.bml-statrow {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem 2.5rem;
+
+  .bml-stat { gap: .25rem; }
+  .bml-stat-num { color: var(--bml-link); font-size: clamp(1.75rem, 1.3rem + 1.4vw, 2.5rem); }
+  .bml-stat-label { font-size: .875rem; color: var(--bml-soft); }
+}
+
+// ---------------------------------------------------------------------------
+// Cards
+// ---------------------------------------------------------------------------
+.bml-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: .875rem;
+  padding: 2rem;
+  background-color: $bml-paper;
+  color: var(--bml-fg);
+  border: 1px solid $bml-line;
+  border-radius: $bml-radius;
+  min-width: 0;
+  transition: border-color .15s ease, box-shadow .15s ease, transform .15s ease;
+
+  @include media-breakpoint-down(md) { padding: 1.375rem; }
+
+  > * { margin-top: 0; margin-bottom: 0; }
+  > p:last-child:has(> .bml-link:only-child),
+  > p:last-child:has(> .bml-btn:only-child) { margin-top: auto; padding-top: .375rem; }
+}
+
+.bml-card.bml-night {
+  background-color: $bml-night;
+  border-color: $bml-night;
+}
+
+.bml-card-flush { padding: 0; gap: 0; overflow: hidden; }
+
+.bml-card-body {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  gap: .625rem;
+  padding: 1.375rem 1.5rem 1.5rem;
+
+  > * { margin-top: 0; margin-bottom: 0; }
+}
+
+.bml-card-media {
+  --bml-media-h: 170px;
+  height: var(--bml-media-h);
+  padding: 1.125rem;
+  border-bottom: 1px solid $bml-line-soft;
+  background-color: $bml-paper;
+
+  > p, figure, .quarto-figure { margin: 0; height: 100%; }
+
+  img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+  }
+}
+
+// card footer line: hairline above, small grey text, two ends (author/year
+// left, "N papers in theme ->" right); sits at the bottom of the card
+.bml-card-foot {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: .25rem 1rem;
+  margin-top: auto;
+  padding-top: .75rem;
+  border-top: 1px solid $bml-line-soft;
+  font-size: .8125rem;
+  line-height: 1.5;
+  color: var(--bml-muted);
+
+  > p { display: contents; }
+  a { color: inherit; text-decoration: none; }
+  a:hover { color: var(--bml-link); text-decoration: underline; }
+}
+
+// an image that fills its box (cropped, not resized), e.g. the team photo
+// beside the team teaser text: ::: {.bml-cover} ![](BML_Group_2024.jpg) :::
+.bml-cover {
+  position: relative;
+  min-height: 240px;
+  overflow: hidden;
+
+  > p, figure, .quarto-figure { margin: 0; }
+
+  // the box, not the photo, sets the height: the photo fills it
+  img {
+    position: absolute;
+    inset: 0;
+    display: block;
+    width: 100%;
+    height: 100%;
+    max-width: none;
+    object-fit: cover;
+    object-position: center 30%;
+  }
+
+  @include media-breakpoint-up(md) { min-height: 400px; }
+}
+
+// a card whose main link carries .stretched-link: the whole card is the link
+.bml-card:has(.stretched-link):hover {
+  border-color: $bml-teal-dark;
+  box-shadow: $bml-shadow-hover;
+  transform: translateY(-3px);
+}
+
+.bml-card.bml-night:has(.stretched-link):hover {
+  background-color: $bml-night-raised;
+  border-color: $bml-night-raised;
+}
+
+.bml-card:has(.stretched-link:focus-visible) {
+  outline: 3px solid var(--bml-focus);
+  outline-offset: 3px;
+}
+
+// the ring is drawn outside the card, so a navy card on the day page (home
+// door, team lab head) takes the day colour: light teal on day is 1.65:1,
+// dark teal 4.73:1. Only a navy card on navy keeps the light teal.
+.bml-card.bml-night:has(.stretched-link:focus-visible) { outline-color: $bml-teal-dark; }
+
+:is(.bml-night, .quarto-title-banner) .bml-card.bml-night:has(.stretched-link:focus-visible) {
+  outline-color: $bml-teal;
+}
+
+.bml-card .stretched-link:focus-visible { outline: none; }
+
+@media (prefers-reduced-motion: reduce) {
+  .bml-card,
+  .bml-card:has(.stretched-link):hover { transition: none; transform: none; }
+}
+
+// featured figure plate
+.bml-plate {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  background-color: $bml-paper;
+  color: var(--bml-fg);
+  border-radius: 4px;
+  box-shadow: $bml-shadow-plate;
+  position: relative;
+
+  @include media-breakpoint-up(lg) {
+    grid-template-columns: minmax(0, 8fr) minmax(0, 4fr);
+  }
+}
+
+.bml-plate-figure {
+  padding: 1rem;
+  border-bottom: 1px solid #e6e2da;
+
+  @include media-breakpoint-up(lg) {
+    padding: 2.25rem 2.5rem;
+    border-bottom: 0;
+    border-right: 1px solid #e6e2da;
+  }
+
+  > p, figure, .quarto-figure { margin: 0; }
+
+  img {
+    display: block;
+    width: 100%;
+    max-height: 380px;
+    object-fit: contain;
+  }
+
+  .bml-credit { margin-top: .75rem; }
+}
+
+.bml-plate-caption {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  padding: 1rem 1rem 1.25rem;
+
+  @include media-breakpoint-up(lg) { padding: 2.25rem; }
+
+  > * { margin-top: 0; margin-bottom: 0; }
+  > p:last-child:has(> .bml-btn:only-child) { margin-top: auto; }
+}
+
+// rows inside one white card (e.g. alumni by year)
+.bml-rows {
+  background-color: $bml-paper;
+  color: var(--bml-fg);
+  border: 1px solid $bml-line;
+  border-radius: $bml-radius;
+}
+
+.bml-row {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: .375rem 1.25rem;
+  padding: 1rem 1rem;
+  border-bottom: 1px solid $bml-line-soft;
+
+  &:last-child { border-bottom: 0; }
+
+  > * { margin: 0; }
+
+  @include media-breakpoint-up(md) {
+    grid-template-columns: 90px minmax(0, 1fr);
+    padding: 1.125rem 1.375rem;
+  }
+}
+
+.bml-row-label {
+  font-family: $bml-serif;
+  font-size: 1.375rem;
+  line-height: 1.2;
+  color: var(--bml-link);
+}
+
+// ---------------------------------------------------------------------------
+// Links, buttons and chips
+// ---------------------------------------------------------------------------
+.bml-link {
+  font-weight: 700;
+  color: var(--bml-link);
+  text-decoration: none;
+}
+
+.bml-link:hover,
+.bml-link:focus-visible {
+  color: var(--bml-link-hover);
+  text-decoration: underline;
+}
+
+// several links in one line: "Meet the team ->  Our values ->"
+.bml-link + .bml-link { margin-left: 1.25rem; }
+
+.bml-btn,
+.bml-btn-outline {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: .5rem;
+  min-height: 44px;
+  padding: .625rem 1.25rem;
+  border: 1.5px solid transparent;
+  border-radius: 999px;
+  font-family: $bml-sans;
+  font-size: .9375rem;
+  font-weight: 700;
+  line-height: 1.2;
+  text-decoration: none;
+  transition: background-color .15s ease, color .15s ease, border-color .15s ease;
+}
+
+.bml-btn {
+  background-color: var(--bml-btn-bg);
+  border-color: var(--bml-btn-bg);
+  color: var(--bml-btn-fg);
+}
+
+.bml-btn:hover,
+.bml-btn:focus-visible {
+  background-color: var(--bml-btn-hover-bg);
+  border-color: var(--bml-btn-hover-bg);
+  color: var(--bml-btn-hover-fg);
+  text-decoration: none;
+}
+
+.bml-btn-outline {
+  background-color: transparent;
+  border-color: var(--bml-fg);
+  color: var(--bml-fg);
+}
+
+.bml-night .bml-btn-outline,
+.bml-straddle .bml-btn-outline {
+  border-color: var(--bml-link);
+  color: var(--bml-link);
+}
+
+.bml-btn-outline:hover,
+.bml-btn-outline:focus-visible {
+  background-color: var(--bml-fg);
+  color: $bml-paper;
+  text-decoration: none;
+}
+
+.bml-night .bml-btn-outline:hover,
+.bml-night .bml-btn-outline:focus-visible {
+  background-color: var(--bml-link);
+  border-color: var(--bml-link);
+  color: $bml-night;
+}
+
+// the same pills inside white cards placed in night bands
+.bml-night .bml-card:not(.bml-night) .bml-btn-outline,
+.bml-night .bml-plate .bml-btn-outline {
+  border-color: var(--bml-fg);
+  color: var(--bml-fg);
+}
+
+.bml-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: .5rem;
+
+  > p { display: contents; }
+}
+
+.bml-chip {
+  display: inline-flex;
+  align-items: center;
+  padding: .3125rem .75rem;
+  border: 1px solid var(--bml-border);
+  border-radius: 999px;
+  font-size: .8125rem;
+  line-height: 1.4;
+  color: var(--bml-fg);
+  text-decoration: none;
+}
+
+.bml-night .bml-chip { color: $bml-nav-link; }
+
+a.bml-chip:hover,
+a.bml-chip:focus-visible {
+  border-color: var(--bml-link);
+  color: var(--bml-link);
+  text-decoration: none;
+}
+
+// ---------------------------------------------------------------------------
+// Layout helpers
+// ---------------------------------------------------------------------------
+.bml-section-head {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: flex-end;
+  gap: 1rem 2.5rem;
+  margin-bottom: 1.75rem;
+
+  > * { margin-top: 0; margin-bottom: 0; }
+  h2, h3 { margin: 0; }
+  > p { max-width: 29rem; color: var(--bml-muted); }
+}
+
+.bml-push { margin-top: auto; }
+
+.grid.bml-gap-0 { --bs-gap: 0; }
+.grid.bml-gap-sm { --bs-gap: 1rem; }
+.grid.bml-gap-lg { --bs-gap: 3.5rem; }
+
+@include media-breakpoint-down(md) {
+  .grid.bml-gap-lg { --bs-gap: 1.5rem; }
+}
+
+// ---------------------------------------------------------------------------
+// Tabsets as pills: ::: {.panel-tabset .bml-tabs}
+// ---------------------------------------------------------------------------
+.panel-tabset.bml-tabs {
+  > .nav-tabs {
+    display: flex;
+    flex-wrap: wrap;
+    gap: .5rem;
+    border-bottom: 0;
+    margin-bottom: 1.5rem;
+  }
+
+  > .nav-tabs .nav-item { margin: 0; }
+
+  > .nav-tabs .nav-link {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+    margin: 0;
+    padding: .5rem 1rem;
+    border: 1.5px solid var(--bml-pill);
+    border-radius: 999px;
+    background-color: transparent;
+    color: var(--bml-fg);
+    font-family: $bml-sans;
+    font-size: .875rem;
+    font-weight: 700;
+    line-height: 1.2;
+    isolation: auto;
+  }
+
+  > .nav-tabs .nav-link:hover {
+    border-color: var(--bml-fg);
+  }
+
+  > .nav-tabs .nav-link.active {
+    background-color: $bml-night;
+    border-color: $bml-night;
+    color: #ffffff;
+  }
+
+  > .nav-tabs .nav-link:focus-visible {
+    outline: 3px solid var(--bml-focus);
+    outline-offset: 2px;
+  }
+
+  > .tab-content {
+    border: 0;
+    padding: 0;
+    margin-bottom: 0;
+  }
+}
+
+.bml-night .panel-tabset.bml-tabs > .nav-tabs .nav-link.active {
+  background-color: $bml-night-text;
+  border-color: $bml-night-text;
+  color: $bml-night;
+}
+
+.panel-tabset.bml-tabs.bml-tabs-sm > .nav-tabs {
+  gap: .375rem;
+
+  .nav-link {
+    min-height: 36px;
+    padding: .375rem .75rem;
+    font-size: .8125rem;
+    border-width: 1px;
+  }
+}
+
+.panel-tabset.bml-tabs.bml-tabs-end > .nav-tabs { justify-content: flex-end; }
+
+.panel-tabset.bml-tabs.bml-tabs-below {
+  display: flex;
+  flex-direction: column;
+
+  > .nav-tabs { order: 2; margin: .875rem 0 0; }
+  > .tab-content { order: 1; }
+}
+
+// ---------------------------------------------------------------------------
+// Table of contents (CV, Projects)
+// ---------------------------------------------------------------------------
+#TOC,
+nav[role="doc-toc"] {
+  font-size: .875rem;
+
+  h2 {
+    font-family: $bml-sans;
+    font-size: .75rem;
+    font-weight: 700;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+    color: $bml-muted;
+  }
+
+  a.nav-link { color: $bml-muted; }
+  a.nav-link:hover { color: $bml-ink; }
+  a.nav-link.active { color: $bml-teal-dark; font-weight: 600; }
+}
+
+// ---------------------------------------------------------------------------
+// Page details
+// ---------------------------------------------------------------------------
+// Consumers & Community: the campus map (a raw <iframe>, which markdown
+// cannot express) inside ::: {.ratio .ratio-4x3 .bml-map}
+.bml-map {
+  max-width: 600px;
+  border: 1px solid $bml-line;
+  border-radius: $bml-radius;
+  overflow: hidden;
+
+  iframe { border: 0; }
+}
+
+// CV: the portrait at the top of the page
+.bml-portrait img,
+img.bml-portrait {
+  border-radius: $bml-radius;
+}

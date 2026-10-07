@@ -1,0 +1,403 @@
+/*-- scss:defaults --*/
+
+// Team page (team.qmd, body class .bml-team) in the "Night and Day" language:
+// sizes and spacing from the mockup's team screens. Tokens and the shared
+// classes (.bml-band, .bml-straddle, .bml-card, .bml-avatar, .bml-rows,
+// .bml-statrow, .bml-tabs ...) come from styles/bml.scss; this file only adds
+// what the team page needs.
+//
+// Classes added here:
+//   .bml-team-hero     the navy hero (a .bml-straddle): "Meet the lab", the
+//                      lab counts (.bml-statrow) and the photo plate, whose
+//                      lower part sits on the day background.
+//   .bml-photos        the group photo switcher: a tabset of years
+//                      (::: {.panel-tabset .bml-tabs .bml-tabs-sm
+//                      .bml-tabs-below .bml-photos}) drawn as a white plate;
+//                      each tab is a captioned image. The photo box crops by
+//                      CSS only (the files stay at full resolution); the year
+//                      pills share the caption's line from 768px.
+//   .bml-members       the "Current members" band: heading and filter pills
+//                      on one line from 992px (the tabset's pills scroll
+//                      sideways on phones), then the cards.
+//   .bml-members-grid  the cards of one filter (a Quarto .grid).
+//   .bml-member        a member's card (.bml-card): initials (.bml-avatar),
+//                      then .bml-member-text with .bml-member-name,
+//                      .bml-member-role and .bml-member-since. A column of
+//                      lines from 576px, a row on phones (role and year
+//                      joined then share a line).
+//   .bml-labhead       the lab head's navy card (.bml-card .bml-night): round
+//                      photo, then .bml-labhead-text (eyebrow, name, and the
+//                      .bml-labhead-line position line).
+//   .bml-members-note  the "* Joshua Wiley is primary supervisor." line.
+//   .bml-alumni        the alumni band: intro left, a .bml-rows card right.
+//   .bml-row-head      an alumni row's year (.bml-row-label) and, on phones,
+//                      its tally (.bml-row-sum: "9 people · 5 theses").
+//   .bml-alumni-names  the names in a row; each .bml-alumnus is
+//                      .bml-alumni-name, the role, and a .bml-thesis link.
+//   .bml-join          the closing navy "Want to join us?" band (#join):
+//                      .bml-join-main (heading, line, pill) and
+//                      .bml-join-aside (a serif line with a hairline on its
+//                      left). It meets the footer; a hairline separates them.
+
+/*-- scss:rules --*/
+
+// ---- hero: title and counts on navy, photo plate across the line ----
+.bml-team-hero {
+  --bml-day-h: 17rem;
+
+  @include media-breakpoint-down(lg) { --bml-day-h: 12rem; }
+  @include media-breakpoint-down(sm) { --bml-day-h: 7.5rem; }
+
+  .bml-team-head {
+    margin-bottom: 3rem;
+
+    @include media-breakpoint-down(md) { margin-bottom: 1.25rem; --bs-gap: 1rem; }
+  }
+
+  .bml-statrow {
+    padding-bottom: .625rem;
+    gap: 1rem 2.5rem;
+
+    @include media-breakpoint-down(lg) { padding-bottom: 0; }
+    // 992-1199px (lg): the column is 6 of 12 (team.qmd) and the gap tighter,
+    // so the three counts stay on one line as in the design
+    @include media-breakpoint-only(lg) {
+      flex-wrap: nowrap;
+      gap: 1rem 1.5rem;
+    }
+    // phones: the three counts stay on one line (labels may wrap)
+    @include media-breakpoint-down(sm) {
+      flex-wrap: nowrap;
+      gap: 1.25rem;
+      .bml-stat-num { font-size: 1.75rem; }
+      .bml-stat-label { font-size: .75rem; }
+    }
+  }
+}
+
+// ---- photo plate: a tabset of years ----
+.panel-tabset.bml-photos {
+  background-color: $bml-paper;
+  color: $bml-ink;
+  border-radius: 4px;
+  box-shadow: $bml-shadow-plate;
+  padding: 1rem 1rem 0;
+  --bml-fg: #{$bml-ink};
+  --bml-pill: #d8d3ca;
+  --bml-focus: #{$bml-teal-dark};
+
+  @include media-breakpoint-down(md) {
+    padding: .625rem .625rem 0;
+    box-shadow: 0 20px 50px rgba(0, 0, 0, .3);
+  }
+
+  .quarto-figure,
+  figure,
+  figure > p { margin: 0; }
+
+  // the photo box: 2:1 on desktop (as the design's 520px-tall crop), taller
+  // on smaller screens; the photo fills it, cropped by CSS only
+  img {
+    display: block;
+    width: 100%;
+    max-width: none;
+    height: auto;
+    aspect-ratio: 2 / 1;
+    object-fit: cover;
+    object-position: center 35%;
+    border-radius: 2px;
+
+    @include media-breakpoint-down(lg) { aspect-ratio: 16 / 10; }
+    @include media-breakpoint-down(sm) { aspect-ratio: 3 / 2; }
+  }
+
+  figcaption {
+    display: flex;
+    align-items: center;
+    min-height: 4rem;
+    margin: 0;
+    padding: .5rem .25rem;
+    font-family: $bml-serif;
+    font-style: italic;
+    font-size: 1rem;
+    line-height: 1.4;
+    color: $bml-ink-soft;
+    text-align: left;
+
+    @include media-breakpoint-down(md) { min-height: 0; padding: .625rem .25rem .25rem; font-size: .9375rem; }
+  }
+
+  // year pills: white, navy when active, on the caption's line (right) from
+  // 768px; under the caption on phones (.bml-tabs in the selector so these
+  // win over .bml-tabs-below)
+  &.bml-tabs > .nav-tabs {
+    margin: 0;
+    padding: 0 .25rem .875rem;
+
+    @include media-breakpoint-down(sm) {
+      gap: .3125rem;
+      .nav-link { padding: .375rem .625rem; }
+    }
+
+    @include media-breakpoint-up(md) {
+      align-self: flex-end;
+      position: relative;
+      z-index: 2; // above the positioned figure (and its caption) that follows
+      margin-top: -4rem;
+      min-height: 4rem;
+      align-items: center;
+      padding: 0 .25rem;
+    }
+  }
+
+  &.bml-tabs > .nav-tabs .nav-link {
+    background-color: $bml-paper;
+    color: $bml-ink;
+  }
+
+  &.bml-tabs > .nav-tabs .nav-link.active {
+    background-color: $bml-night;
+    border-color: $bml-night;
+    color: #ffffff;
+  }
+}
+
+// ---- current members: heading and filter pills share a line ----
+.bml-members {
+  @include media-breakpoint-up(lg) {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    align-items: center;
+    column-gap: 1.5rem;
+
+    > .tabset-margin-container { display: none; } // Quarto's empty sibling
+    > .bml-members-tabs { display: contents; }
+    > .bml-members-tabs > .nav-tabs { grid-column: 2; grid-row: 1; margin: 0; }
+    > .bml-members-tabs > .tab-content,
+    > .bml-members-note { grid-column: 1 / -1; }
+    > .bml-members-tabs > .tab-content { margin-top: 1.75rem; }
+  }
+
+  .bml-members-head {
+    h2 { margin: 0; }
+
+    @include media-breakpoint-down(lg) { margin-bottom: 1.25rem; }
+  }
+
+  // phones and tablets: one row of pills that scrolls sideways
+  @include media-breakpoint-down(lg) {
+    .bml-members-tabs > .nav-tabs {
+      flex-wrap: nowrap;
+      overflow-x: auto;
+      margin: 0 (-$bml-gutter) 1rem;
+      padding: .375rem $bml-gutter .375rem;
+      scrollbar-width: none;
+
+      .nav-item { flex: none; }
+    }
+  }
+
+  .bml-members-note {
+    display: block;
+    margin-top: 1.5rem;
+  }
+}
+
+.grid.bml-members-grid {
+  @include media-breakpoint-down(sm) { --bs-gap: .5rem; }
+}
+
+// a member's card: initials over name, role and year joined; a row on phones
+.bml-card.bml-member {
+  gap: .875rem;
+  padding: 1.25rem;
+
+  .bml-member-text > p {
+    display: flex;
+    flex-direction: column;
+    gap: .1875rem;
+    margin: 0;
+  }
+
+  .bml-member-name {
+    font-family: $bml-serif;
+    font-size: 1.125rem;
+    line-height: 1.3;
+    color: $bml-ink;
+  }
+
+  .bml-member-role { font-size: .875rem; line-height: 1.4; color: $bml-muted; }
+  .bml-member-since { font-size: .8125rem; line-height: 1.4; color: $bml-muted; }
+
+  @include media-breakpoint-down(sm) {
+    flex-direction: row;
+    align-items: center;
+    gap: .875rem;
+    padding: .75rem .875rem;
+
+    .bml-member-text > p { display: block; }
+    .bml-member-name { display: block; font-size: 1.0625rem; }
+    .bml-member-role,
+    .bml-member-since { font-size: .8125rem; }
+    .bml-member-since::before { content: "\00b7\00a0"; }
+  }
+}
+
+// the lab head's navy card: round photo beside eyebrow, name and position
+.bml-card.bml-labhead {
+  flex-direction: row;
+  align-items: center;
+  gap: 1.375rem;
+  padding: 1.375rem;
+
+  > p:has(> img) { margin: 0; flex: none; }
+
+  .bml-labhead-text {
+    display: flex;
+    flex-direction: column;
+    gap: .25rem;
+
+    > * { margin: 0; }
+  }
+
+  .bml-eyebrow { font-size: .75rem; }
+
+  .bml-title {
+    font-size: 1.5rem;
+    line-height: 1.3;
+
+    a { color: inherit; text-decoration: none; }
+    a:hover,
+    a:focus-visible { text-decoration: underline; text-decoration-color: $bml-teal; }
+  }
+
+  .bml-labhead-line {
+    display: block;
+    font-size: .875rem;
+    line-height: 1.5;
+    color: $bml-night-muted;
+  }
+
+  @include media-breakpoint-down(sm) {
+    gap: 1rem;
+    padding: 1rem;
+
+    img.bml-avatar-photo { width: 72px; height: 72px; }
+    .bml-title { font-size: 1.25rem; }
+    .bml-labhead-line { font-size: .8125rem; }
+  }
+}
+
+// ---- alumni: intro left, a card of year rows right ----
+.bml-alumni {
+  @include media-breakpoint-up(lg) { padding-bottom: 5rem; }
+
+  .bml-alumni-intro {
+    > * { margin: 0; }
+    h2 { margin-bottom: .75rem; }
+
+    p { font-size: 1rem; line-height: 1.6; color: $bml-muted; max-width: 24rem; }
+  }
+
+  .bml-row {
+    @include media-breakpoint-up(md) { grid-template-columns: 110px minmax(0, 1fr); }
+  }
+
+  .bml-row-head {
+    > p {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      gap: 1rem;
+      margin: 0;
+    }
+  }
+
+  .bml-row-sum {
+    font-size: .875rem;
+    color: $bml-ink-soft;
+
+    @include media-breakpoint-up(md) { display: none; }
+  }
+
+  .bml-alumni-names > p {
+    display: flex;
+    flex-wrap: wrap;
+    gap: .375rem 1.125rem;
+    margin: 0;
+    padding-top: .25rem;
+  }
+
+  .bml-alumnus {
+    font-size: .9375rem;
+    line-height: 1.5;
+    color: $bml-ink;
+  }
+
+  .bml-alumni-name { font-weight: 600; }
+}
+
+.bml-thesis {
+  font-size: .8125rem;
+  font-weight: 700;
+  color: $bml-teal-dark;
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.bml-thesis:hover,
+.bml-thesis:focus-visible {
+  color: $bml-ink;
+  text-decoration: underline;
+}
+
+// ---- "Want to join us?": navy band before the (navy) footer ----
+.bml-join {
+  .bml-join-main {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: .75rem;
+
+    > * { margin: 0; }
+    h2 { font-size: 2.125rem; }
+    p { font-size: 1rem; line-height: 1.6; color: $bml-night-muted; max-width: 40rem; }
+    > p:last-child { margin-top: .5rem; }
+
+    @include media-breakpoint-down(md) {
+      h2 { font-size: 1.5rem; }
+      > p:last-child { align-self: stretch; }
+      .bml-btn { display: flex; width: 100%; }
+    }
+  }
+
+  .bml-join-aside {
+    > p {
+      margin: 0;
+      font-family: $bml-serif;
+      font-size: 1.125rem;
+      line-height: 1.55;
+      color: $bml-night-text;
+    }
+
+    @include media-breakpoint-up(lg) {
+      border-left: 1px solid $bml-night-border;
+      padding-left: 2rem;
+    }
+
+    @include media-breakpoint-down(md) { > p { font-size: .9375rem; color: $bml-night-muted; } }
+  }
+}
+
+// the band ends the page and meets the navy footer: a hairline (inside the
+// content width, like the footer's own) separates them
+#quarto-document-content .bml-band.bml-join:last-child {
+  padding-bottom: 0;
+
+  > :last-child {
+    padding-bottom: 4rem;
+    border-bottom: 1px solid $bml-night-line;
+
+    @include media-breakpoint-down(md) { padding-bottom: 2.25rem; }
+  }
+}

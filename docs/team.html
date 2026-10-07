@@ -2,17 +2,23 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.7.31">
+<meta name="generator" content="quarto-1.10.19">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
 <title>Team – Behavioural Medicine Lab</title>
 <style>
-code{white-space: pre-wrap;}
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
 span.smallcaps{font-variant: small-caps;}
-div.columns{display: flex; gap: min(4vw, 1.5em);}
-div.column{flex: auto; overflow-x: auto;}
+div.columns{display: flex; gap: 1.5em;}
+div.column{flex: auto;}
+@media screen {
+div.columns{gap: min(4vw, 1.5em);}
+div.column{overflow-x: auto;}
+}
 div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
 ul.task-list{list-style: none;}
 ul.task-list li input[type="checkbox"] {
@@ -25,6 +31,7 @@ ul.task-list li input[type="checkbox"] {
 
 <script src="site_libs/quarto-nav/quarto-nav.js"></script>
 <script src="site_libs/quarto-nav/headroom.min.js"></script>
+<link href="./images/bml-mark.svg" rel="icon" type="image/svg+xml">
 <script src="site_libs/clipboard/clipboard.min.js"></script>
 <script src="site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
@@ -32,12 +39,10 @@ ul.task-list li input[type="checkbox"] {
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="site_libs/quarto-html/anchor.min.js"></script>
 <link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-e1a5c8363afafaef2c763b6775fbf3ca.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-bf27225e3a48a9273f3daa8f8e829971.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-e1764dfa31facc52fc93a37390c7ebb0.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
-<link href="site_libs/quarto-contrib/fontawesome6-0.1.0/all.css" rel="stylesheet">
-<link href="site_libs/quarto-contrib/fontawesome6-0.1.0/latex-fontsize.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap-c75da8b60e9532af37cb8e9af509bd69.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "language": {
     "search-no-results-text": "No results",
@@ -57,13 +62,17 @@ ul.task-list li input[type="checkbox"] {
 
 </head>
 
-<body class="nav-fixed fullcontent quarto-light">
+<body class="nav-fixed bml-team fullcontent quarto-light">
 
 <div id="quarto-search-results"></div>
-  <header id="quarto-header" class="headroom fixed-top">
+  <header id="quarto-header" class="headroom fixed-top quarto-banner">
     <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
       <div class="navbar-container container-fluid">
       <div class="navbar-brand-container mx-auto">
+    <a href="./index.html" class="navbar-brand navbar-brand-logo">
+    <img src="./images/bml-mark.svg" alt="Behavioural Medicine Lab home" class="navbar-logo light-content">
+    <img src="./images/bml-mark.svg" alt="Behavioural Medicine Lab home" class="navbar-logo dark-content">
+    </a>
     <a class="navbar-brand" href="./index.html">
     <span class="navbar-title">Behavioural Medicine Lab</span>
     </a>
@@ -73,11 +82,15 @@ ul.task-list li input[type="checkbox"] {
 </button>
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="./research.html"> 
+<span class="menu-text">Research</span></a>
+  </li>  
   <li class="nav-item dropdown ">
-    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-fa-cogs--projects" role="link" data-bs-toggle="dropdown" aria-expanded="false">
- <span class="menu-text"><i class="fa-solid fa-cogs" aria-label="cogs"></i> Projects</span>
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-projects" role="link" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">Projects</span>
     </a>
-    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-fa-cogs--projects">    
+    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-projects">    
         <li class="dropdown-header">Clinical Trials</li>
         <li>
     <a class="dropdown-item" href="./projects.html#SleepCare">
@@ -118,7 +131,7 @@ ul.task-list li input[type="checkbox"] {
         <li><hr class="dropdown-divider"></li>
         <li class="dropdown-header">Other Studies</li>
         <li>
-    <a class="dropdown-item" href="./projects.html#NHMRC Investigator Grant">
+    <a class="dropdown-item" href="./projects.html#NHMRC-Investigator-Grant">
  <span class="dropdown-text">NHMRC Investigator Grant</span></a>
   </li>  
         <li><hr class="dropdown-divider"></li>
@@ -130,23 +143,19 @@ ul.task-list li input[type="checkbox"] {
   </li>
   <li class="nav-item">
     <a class="nav-link active" href="./team.html" aria-current="page"> 
-<span class="menu-text"><i class="fa-solid fa-id-badge" aria-label="id-badge"></i> Team</span></a>
-  </li>  
-  <li class="nav-item">
-    <a class="nav-link" href="./alumni.html"> 
-<span class="menu-text"><i class="fa-solid fa-graduation-cap" aria-label="graduation-cap"></i> Alumni</span></a>
+<span class="menu-text">Team</span></a>
   </li>  
   <li class="nav-item">
     <a class="nav-link" href="./consumer_community.html"> 
-<span class="menu-text"><i class="fa-solid fa-users" aria-label="users"></i> Consumers &amp; Community</span></a>
-  </li>  
-  <li class="nav-item">
-    <a class="nav-link" href="./cv.html"> 
-<span class="menu-text"><i class="fa-solid fa-file-alt" aria-label="file-alt"></i> Wiley CV</span></a>
+<span class="menu-text">Community</span></a>
   </li>  
   <li class="nav-item">
     <a class="nav-link" href="./ethics_values.html"> 
-<span class="menu-text"><i class="fa-solid fa-heart" aria-label="heart"></i> Ethics &amp; Values</span></a>
+<span class="menu-text">Values</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="./consumer_community.html#take-part"> 
+<span class="menu-text"><span class="bml-nav-cta">Take part</span></span></a>
   </li>  
 </ul>
           </div> <!-- /navcollapse -->
@@ -156,70 +165,436 @@ ul.task-list li input[type="checkbox"] {
     </nav>
 </header>
 <!-- content -->
-<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<header id="title-block-header" class="quarto-title-block"></header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
 <!-- margin-sidebar -->
     
 <!-- main -->
-<main class="content" id="quarto-document-content">
+<main class="content quarto-banner-title-block page-columns page-full" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default">
-<div class="quarto-title">
-<h1 class="title">Team</h1>
+
+
+
+<div class="column-screen bml-band bml-straddle bml-hero bml-team-hero">
+<div class="grid bml-gap-lg align-items-end bml-team-head">
+<div class="g-col-12 g-col-lg-6 g-col-xl-7">
+<div class="bml-display" role="heading" aria-level="1">
+<p>Meet the lab</p>
+</div>
+</div>
+<div class="g-col-12 g-col-lg-6 g-col-xl-5 bml-statrow">
+<div class="bml-stat">
+<p><span class="bml-stat-num">15</span> <span class="bml-stat-label">current members</span></p>
+</div>
+<div class="bml-stat">
+<p><span class="bml-stat-num">15</span> <span class="bml-stat-label">doctoral theses</span></p>
+</div>
+<div class="bml-stat">
+<p><span class="bml-stat-num">29</span> <span class="bml-stat-label">Honours graduates</span></p>
+</div>
+</div>
+</div>
+<div class="tabset-margin-container"></div><div class="panel-tabset bml-tabs bml-tabs-sm bml-tabs-below bml-photos">
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-1-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-1" role="tab" aria-controls="tabset-1-1" aria-selected="true" href="">2024</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-1-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-2" role="tab" aria-controls="tabset-1-2" aria-selected="false" href="">2022</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-1-3-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-3" role="tab" aria-controls="tabset-1-3" aria-selected="false" href="">2021</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-1-4-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-4" role="tab" aria-controls="tabset-1-4" aria-selected="false" href="">2020</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-1-5-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-5" role="tab" aria-controls="tabset-1-5" aria-selected="false" href="">2019</a></li></ul>
+<div class="tab-content bml-tabs bml-tabs-sm bml-tabs-below bml-photos">
+<div id="tabset-1-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-1-1-tab">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="BML_Group_2024.jpg" class="img-fluid figure-img" alt="Group photo of the Behavioural Medicine Lab in 2024, standing outside a restaurant"></p>
+<figcaption>The Behavioural Medicine Lab, 2024</figcaption>
+</figure>
+</div>
+</div>
+<div id="tabset-1-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-1-2-tab">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="BML_Group_2022.jpg" class="img-fluid figure-img" loading="lazy" alt="Group photo of the Behavioural Medicine Lab in 2022, in a courtyard"></p>
+<figcaption>The Behavioural Medicine Lab, 2022</figcaption>
+</figure>
+</div>
+</div>
+<div id="tabset-1-3" class="tab-pane" role="tabpanel" aria-labelledby="tabset-1-3-tab">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="BML_Group_2021.jpg" class="img-fluid figure-img" loading="lazy" alt="Group photo of the Behavioural Medicine Lab in 2021, on the grass in a park"></p>
+<figcaption>The Behavioural Medicine Lab, 2021</figcaption>
+</figure>
+</div>
+</div>
+<div id="tabset-1-4" class="tab-pane" role="tabpanel" aria-labelledby="tabset-1-4-tab">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="BML_Group_2020.jpg" class="img-fluid figure-img" loading="lazy" alt="Group photo of the Behavioural Medicine Lab in 2020, in a living room"></p>
+<figcaption>The Behavioural Medicine Lab, 2020</figcaption>
+</figure>
+</div>
+</div>
+<div id="tabset-1-5" class="tab-pane" role="tabpanel" aria-labelledby="tabset-1-5-tab">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="BML_Group_2019.jpg" class="img-fluid figure-img" loading="lazy" alt="Group photo of the Behavioural Medicine Lab in 2019, in a building foyer"></p>
+<figcaption>The Behavioural Medicine Lab, 2019</figcaption>
+</figure>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="column-screen bml-band bml-members">
+<section id="current-members" class="level2 bml-members-head">
+<h2 class="anchored" data-anchor-id="current-members">Current members</h2>
+</section>
+<div class="tabset-margin-container"></div><div class="panel-tabset bml-tabs bml-members-tabs">
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-2-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-2-1" role="tab" aria-controls="tabset-2-1" aria-selected="true" href="">All</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-2-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-2-2" role="tab" aria-controls="tabset-2-2" aria-selected="false" href="">Postdocs</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-2-3-tab" data-bs-toggle="tab" data-bs-target="#tabset-2-3" role="tab" aria-controls="tabset-2-3" aria-selected="false" href="">Doctoral</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-2-4-tab" data-bs-toggle="tab" data-bs-target="#tabset-2-4" role="tab" aria-controls="tabset-2-4" aria-selected="false" href="">Masters</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-2-5-tab" data-bs-toggle="tab" data-bs-target="#tabset-2-5" role="tab" aria-controls="tabset-2-5" aria-selected="false" href="">Honours</a></li></ul>
+<div class="tab-content bml-tabs bml-members-tabs">
+<div id="tabset-2-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-2-1-tab">
+<div class="grid bml-gap-sm bml-members-grid">
+<div class="g-col-12 g-col-lg-6 bml-card bml-night bml-labhead">
+<p><img src="JWiley_square.jpg" class="bml-avatar-photo img-fluid" alt="Portrait of Dr Joshua F. Wiley"></p>
+<div class="bml-labhead-text">
+<p><span class="bml-eyebrow">Lab head</span></p>
+<p><span class="bml-title"><a href="./cv.html" class="stretched-link">Dr Joshua F. Wiley</a></span></p>
+<p><span class="bml-labhead-line">Associate Professor, Monash University · Honorary Research Fellow, Peter MacCallum Cancer Centre</span></p>
+</div>
+</div>
+<div class="g-col-12 g-col-sm-6 g-col-lg-3 bml-card bml-member">
+<p><span class="bml-avatar" aria-hidden="true">PL</span></p>
+<div class="bml-member-text">
+<p><span class="bml-member-name">Phuong (Flora) Le</span> <span class="bml-member-role">Postdoctoral Fellow</span> <span class="bml-member-since">Joined 2025</span></p>
+</div>
+</div>
+<div class="g-col-12 g-col-sm-6 g-col-lg-3 bml-card bml-member">
+<p><span class="bml-avatar" aria-hidden="true">AM</span></p>
+<div class="bml-member-text">
+<p><span class="bml-member-name">Alix Mellor<span class="bml-star" aria-hidden="true" title="Primary supervisor: Joshua Wiley">*</span><span class="visually-hidden">, primary supervisor Joshua Wiley</span></span> <span class="bml-member-role">Postdoctoral Fellow</span> <span class="bml-member-since">Joined 2026</span></p>
+</div>
+</div>
+<div class="g-col-12 g-col-sm-6 g-col-lg-3 bml-card bml-member">
+<p><span class="bml-avatar" aria-hidden="true">KB</span></p>
+<div class="bml-member-text">
+<p><span class="bml-member-name">Kristian Bressanutti<span class="bml-star" aria-hidden="true" title="Primary supervisor: Joshua Wiley">*</span><span class="visually-hidden">, primary supervisor Joshua Wiley</span></span> <span class="bml-member-role">PhD (Clinical Neuropsychology)</span> <span class="bml-member-since">Joined 2026</span></p>
+</div>
+</div>
+<div class="g-col-12 g-col-sm-6 g-col-lg-3 bml-card bml-member">
+<p><span class="bml-avatar" aria-hidden="true">WC</span></p>
+<div class="bml-member-text">
+<p><span class="bml-member-name">Weiqi Cheng</span> <span class="bml-member-role">PhD</span> <span class="bml-member-since">Joined 2023</span></p>
+</div>
+</div>
+<div class="g-col-12 g-col-sm-6 g-col-lg-3 bml-card bml-member">
+<p><span class="bml-avatar" aria-hidden="true">TD</span></p>
+<div class="bml-member-text">
+<p><span class="bml-member-name">Trang Do<span class="bml-star" aria-hidden="true" title="Primary supervisor: Joshua Wiley">*</span><span class="visually-hidden">, primary supervisor Joshua Wiley</span></span> <span class="bml-member-role">PhD (Clinical)</span> <span class="bml-member-since">Joined 2022</span></p>
+</div>
+</div>
+<div class="g-col-12 g-col-sm-6 g-col-lg-3 bml-card bml-member">
+<p><span class="bml-avatar" aria-hidden="true">MF</span></p>
+<div class="bml-member-text">
+<p><span class="bml-member-name">Madeline Forrester</span> <span class="bml-member-role">PhD (Clinical)</span> <span class="bml-member-since">Joined 2024</span></p>
+</div>
+</div>
+<div class="g-col-12 g-col-sm-6 g-col-lg-3 bml-card bml-member">
+<p><span class="bml-avatar" aria-hidden="true">LL</span></p>
+<div class="bml-member-text">
+<p><span class="bml-member-name">Lijun Li<span class="bml-star" aria-hidden="true" title="Primary supervisor: Joshua Wiley">*</span><span class="visually-hidden">, primary supervisor Joshua Wiley</span></span> <span class="bml-member-role">PhD</span> <span class="bml-member-since">Joined 2023</span></p>
+</div>
+</div>
+<div class="g-col-12 g-col-sm-6 g-col-lg-3 bml-card bml-member">
+<p><span class="bml-avatar" aria-hidden="true">QL</span></p>
+<div class="bml-member-text">
+<p><span class="bml-member-name">Qingyang Lu</span> <span class="bml-member-role">PhD</span> <span class="bml-member-since">Joined 2026</span></p>
+</div>
+</div>
+<div class="g-col-12 g-col-sm-6 g-col-lg-3 bml-card bml-member">
+<p><span class="bml-avatar" aria-hidden="true">SP</span></p>
+<div class="bml-member-text">
+<p><span class="bml-member-name">Saundarya Prakash<span class="bml-star" aria-hidden="true" title="Primary supervisor: Joshua Wiley">*</span><span class="visually-hidden">, primary supervisor Joshua Wiley</span></span> <span class="bml-member-role">PhD</span> <span class="bml-member-since">Joined 2026</span></p>
+</div>
+</div>
+<div class="g-col-12 g-col-sm-6 g-col-lg-3 bml-card bml-member">
+<p><span class="bml-avatar" aria-hidden="true">HS</span></p>
+<div class="bml-member-text">
+<p><span class="bml-member-name">Hemangi Sanjivini</span> <span class="bml-member-role">PhD (Clinical)</span> <span class="bml-member-since">Joined 2024</span></p>
+</div>
+</div>
+<div class="g-col-12 g-col-sm-6 g-col-lg-3 bml-card bml-member">
+<p><span class="bml-avatar" aria-hidden="true">TW</span></p>
+<div class="bml-member-text">
+<p><span class="bml-member-name">Tania Wallace<span class="bml-star" aria-hidden="true" title="Primary supervisor: Joshua Wiley">*</span><span class="visually-hidden">, primary supervisor Joshua Wiley</span></span> <span class="bml-member-role">PhD (Clinical)</span> <span class="bml-member-since">Joined 2023</span></p>
+</div>
+</div>
+<div class="g-col-12 g-col-sm-6 g-col-lg-3 bml-card bml-member">
+<p><span class="bml-avatar" aria-hidden="true">NL</span></p>
+<div class="bml-member-text">
+<p><span class="bml-member-name">Nicole Leong<span class="bml-star" aria-hidden="true" title="Primary supervisor: Joshua Wiley">*</span><span class="visually-hidden">, primary supervisor Joshua Wiley</span></span> <span class="bml-member-role">Masters (Clinical)</span> <span class="bml-member-since">Joined 2026</span></p>
+</div>
+</div>
+<div class="g-col-12 g-col-sm-6 g-col-lg-3 bml-card bml-member">
+<p><span class="bml-avatar" aria-hidden="true">JR</span></p>
+<div class="bml-member-text">
+<p><span class="bml-member-name">Jessie Regan<span class="bml-star" aria-hidden="true" title="Primary supervisor: Joshua Wiley">*</span><span class="visually-hidden">, primary supervisor Joshua Wiley</span></span> <span class="bml-member-role">Masters (Clinical)</span> <span class="bml-member-since">Joined 2026</span></p>
+</div>
+</div>
+<div class="g-col-12 g-col-sm-6 g-col-lg-3 bml-card bml-member">
+<p><span class="bml-avatar" aria-hidden="true">HW</span></p>
+<div class="bml-member-text">
+<p><span class="bml-member-name">Hollie Wright<span class="bml-star" aria-hidden="true" title="Primary supervisor: Joshua Wiley">*</span><span class="visually-hidden">, primary supervisor Joshua Wiley</span></span> <span class="bml-member-role">Masters (Clinical)</span> <span class="bml-member-since">Joined 2025</span></p>
+</div>
+</div>
+<div class="g-col-12 g-col-sm-6 g-col-lg-3 bml-card bml-member">
+<p><span class="bml-avatar" aria-hidden="true">VC</span></p>
+<div class="bml-member-text">
+<p><span class="bml-member-name">Veespathip Chandrakumaran<span class="bml-star" aria-hidden="true" title="Primary supervisor: Joshua Wiley">*</span><span class="visually-hidden">, primary supervisor Joshua Wiley</span></span> <span class="bml-member-role">Honours</span> <span class="bml-member-since">Joined 2026</span></p>
+</div>
+</div>
+</div>
+</div>
+<div id="tabset-2-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-2-2-tab">
+<div class="grid bml-gap-sm bml-members-grid">
+<div class="g-col-12 g-col-lg-6 bml-card bml-night bml-labhead">
+<p><img src="JWiley_square.jpg" class="bml-avatar-photo img-fluid" loading="lazy" alt="Portrait of Dr Joshua F. Wiley"></p>
+<div class="bml-labhead-text">
+<p><span class="bml-eyebrow">Lab head</span></p>
+<p><span class="bml-title"><a href="./cv.html" class="stretched-link">Dr Joshua F. Wiley</a></span></p>
+<p><span class="bml-labhead-line">Associate Professor, Monash University · Honorary Research Fellow, Peter MacCallum Cancer Centre</span></p>
+</div>
+</div>
+<div class="g-col-12 g-col-sm-6 g-col-lg-3 bml-card bml-member">
+<p><span class="bml-avatar" aria-hidden="true">PL</span></p>
+<div class="bml-member-text">
+<p><span class="bml-member-name">Phuong (Flora) Le</span> <span class="bml-member-role">Postdoctoral Fellow</span> <span class="bml-member-since">Joined 2025</span></p>
+</div>
+</div>
+<div class="g-col-12 g-col-sm-6 g-col-lg-3 bml-card bml-member">
+<p><span class="bml-avatar" aria-hidden="true">AM</span></p>
+<div class="bml-member-text">
+<p><span class="bml-member-name">Alix Mellor<span class="bml-star" aria-hidden="true" title="Primary supervisor: Joshua Wiley">*</span><span class="visually-hidden">, primary supervisor Joshua Wiley</span></span> <span class="bml-member-role">Postdoctoral Fellow</span> <span class="bml-member-since">Joined 2026</span></p>
+</div>
+</div>
+</div>
+</div>
+<div id="tabset-2-3" class="tab-pane" role="tabpanel" aria-labelledby="tabset-2-3-tab">
+<div class="grid bml-gap-sm bml-members-grid">
+<div class="g-col-12 g-col-lg-6 bml-card bml-night bml-labhead">
+<p><img src="JWiley_square.jpg" class="bml-avatar-photo img-fluid" loading="lazy" alt="Portrait of Dr Joshua F. Wiley"></p>
+<div class="bml-labhead-text">
+<p><span class="bml-eyebrow">Lab head</span></p>
+<p><span class="bml-title"><a href="./cv.html" class="stretched-link">Dr Joshua F. Wiley</a></span></p>
+<p><span class="bml-labhead-line">Associate Professor, Monash University · Honorary Research Fellow, Peter MacCallum Cancer Centre</span></p>
+</div>
+</div>
+<div class="g-col-12 g-col-sm-6 g-col-lg-3 bml-card bml-member">
+<p><span class="bml-avatar" aria-hidden="true">KB</span></p>
+<div class="bml-member-text">
+<p><span class="bml-member-name">Kristian Bressanutti<span class="bml-star" aria-hidden="true" title="Primary supervisor: Joshua Wiley">*</span><span class="visually-hidden">, primary supervisor Joshua Wiley</span></span> <span class="bml-member-role">PhD (Clinical Neuropsychology)</span> <span class="bml-member-since">Joined 2026</span></p>
+</div>
+</div>
+<div class="g-col-12 g-col-sm-6 g-col-lg-3 bml-card bml-member">
+<p><span class="bml-avatar" aria-hidden="true">WC</span></p>
+<div class="bml-member-text">
+<p><span class="bml-member-name">Weiqi Cheng</span> <span class="bml-member-role">PhD</span> <span class="bml-member-since">Joined 2023</span></p>
+</div>
+</div>
+<div class="g-col-12 g-col-sm-6 g-col-lg-3 bml-card bml-member">
+<p><span class="bml-avatar" aria-hidden="true">TD</span></p>
+<div class="bml-member-text">
+<p><span class="bml-member-name">Trang Do<span class="bml-star" aria-hidden="true" title="Primary supervisor: Joshua Wiley">*</span><span class="visually-hidden">, primary supervisor Joshua Wiley</span></span> <span class="bml-member-role">PhD (Clinical)</span> <span class="bml-member-since">Joined 2022</span></p>
+</div>
+</div>
+<div class="g-col-12 g-col-sm-6 g-col-lg-3 bml-card bml-member">
+<p><span class="bml-avatar" aria-hidden="true">MF</span></p>
+<div class="bml-member-text">
+<p><span class="bml-member-name">Madeline Forrester</span> <span class="bml-member-role">PhD (Clinical)</span> <span class="bml-member-since">Joined 2024</span></p>
+</div>
+</div>
+<div class="g-col-12 g-col-sm-6 g-col-lg-3 bml-card bml-member">
+<p><span class="bml-avatar" aria-hidden="true">LL</span></p>
+<div class="bml-member-text">
+<p><span class="bml-member-name">Lijun Li<span class="bml-star" aria-hidden="true" title="Primary supervisor: Joshua Wiley">*</span><span class="visually-hidden">, primary supervisor Joshua Wiley</span></span> <span class="bml-member-role">PhD</span> <span class="bml-member-since">Joined 2023</span></p>
+</div>
+</div>
+<div class="g-col-12 g-col-sm-6 g-col-lg-3 bml-card bml-member">
+<p><span class="bml-avatar" aria-hidden="true">QL</span></p>
+<div class="bml-member-text">
+<p><span class="bml-member-name">Qingyang Lu</span> <span class="bml-member-role">PhD</span> <span class="bml-member-since">Joined 2026</span></p>
+</div>
+</div>
+<div class="g-col-12 g-col-sm-6 g-col-lg-3 bml-card bml-member">
+<p><span class="bml-avatar" aria-hidden="true">SP</span></p>
+<div class="bml-member-text">
+<p><span class="bml-member-name">Saundarya Prakash<span class="bml-star" aria-hidden="true" title="Primary supervisor: Joshua Wiley">*</span><span class="visually-hidden">, primary supervisor Joshua Wiley</span></span> <span class="bml-member-role">PhD</span> <span class="bml-member-since">Joined 2026</span></p>
+</div>
+</div>
+<div class="g-col-12 g-col-sm-6 g-col-lg-3 bml-card bml-member">
+<p><span class="bml-avatar" aria-hidden="true">HS</span></p>
+<div class="bml-member-text">
+<p><span class="bml-member-name">Hemangi Sanjivini</span> <span class="bml-member-role">PhD (Clinical)</span> <span class="bml-member-since">Joined 2024</span></p>
+</div>
+</div>
+<div class="g-col-12 g-col-sm-6 g-col-lg-3 bml-card bml-member">
+<p><span class="bml-avatar" aria-hidden="true">TW</span></p>
+<div class="bml-member-text">
+<p><span class="bml-member-name">Tania Wallace<span class="bml-star" aria-hidden="true" title="Primary supervisor: Joshua Wiley">*</span><span class="visually-hidden">, primary supervisor Joshua Wiley</span></span> <span class="bml-member-role">PhD (Clinical)</span> <span class="bml-member-since">Joined 2023</span></p>
+</div>
+</div>
+</div>
+</div>
+<div id="tabset-2-4" class="tab-pane" role="tabpanel" aria-labelledby="tabset-2-4-tab">
+<div class="grid bml-gap-sm bml-members-grid">
+<div class="g-col-12 g-col-lg-6 bml-card bml-night bml-labhead">
+<p><img src="JWiley_square.jpg" class="bml-avatar-photo img-fluid" loading="lazy" alt="Portrait of Dr Joshua F. Wiley"></p>
+<div class="bml-labhead-text">
+<p><span class="bml-eyebrow">Lab head</span></p>
+<p><span class="bml-title"><a href="./cv.html" class="stretched-link">Dr Joshua F. Wiley</a></span></p>
+<p><span class="bml-labhead-line">Associate Professor, Monash University · Honorary Research Fellow, Peter MacCallum Cancer Centre</span></p>
+</div>
+</div>
+<div class="g-col-12 g-col-sm-6 g-col-lg-3 bml-card bml-member">
+<p><span class="bml-avatar" aria-hidden="true">NL</span></p>
+<div class="bml-member-text">
+<p><span class="bml-member-name">Nicole Leong<span class="bml-star" aria-hidden="true" title="Primary supervisor: Joshua Wiley">*</span><span class="visually-hidden">, primary supervisor Joshua Wiley</span></span> <span class="bml-member-role">Masters (Clinical)</span> <span class="bml-member-since">Joined 2026</span></p>
+</div>
+</div>
+<div class="g-col-12 g-col-sm-6 g-col-lg-3 bml-card bml-member">
+<p><span class="bml-avatar" aria-hidden="true">JR</span></p>
+<div class="bml-member-text">
+<p><span class="bml-member-name">Jessie Regan<span class="bml-star" aria-hidden="true" title="Primary supervisor: Joshua Wiley">*</span><span class="visually-hidden">, primary supervisor Joshua Wiley</span></span> <span class="bml-member-role">Masters (Clinical)</span> <span class="bml-member-since">Joined 2026</span></p>
+</div>
+</div>
+<div class="g-col-12 g-col-sm-6 g-col-lg-3 bml-card bml-member">
+<p><span class="bml-avatar" aria-hidden="true">HW</span></p>
+<div class="bml-member-text">
+<p><span class="bml-member-name">Hollie Wright<span class="bml-star" aria-hidden="true" title="Primary supervisor: Joshua Wiley">*</span><span class="visually-hidden">, primary supervisor Joshua Wiley</span></span> <span class="bml-member-role">Masters (Clinical)</span> <span class="bml-member-since">Joined 2025</span></p>
+</div>
+</div>
+</div>
+</div>
+<div id="tabset-2-5" class="tab-pane" role="tabpanel" aria-labelledby="tabset-2-5-tab">
+<div class="grid bml-gap-sm bml-members-grid">
+<div class="g-col-12 g-col-lg-6 bml-card bml-night bml-labhead">
+<p><img src="JWiley_square.jpg" class="bml-avatar-photo img-fluid" loading="lazy" alt="Portrait of Dr Joshua F. Wiley"></p>
+<div class="bml-labhead-text">
+<p><span class="bml-eyebrow">Lab head</span></p>
+<p><span class="bml-title"><a href="./cv.html" class="stretched-link">Dr Joshua F. Wiley</a></span></p>
+<p><span class="bml-labhead-line">Associate Professor, Monash University · Honorary Research Fellow, Peter MacCallum Cancer Centre</span></p>
+</div>
+</div>
+<div class="g-col-12 g-col-sm-6 g-col-lg-3 bml-card bml-member">
+<p><span class="bml-avatar" aria-hidden="true">VC</span></p>
+<div class="bml-member-text">
+<p><span class="bml-member-name">Veespathip Chandrakumaran<span class="bml-star" aria-hidden="true" title="Primary supervisor: Joshua Wiley">*</span><span class="visually-hidden">, primary supervisor Joshua Wiley</span></span> <span class="bml-member-role">Honours</span> <span class="bml-member-since">Joined 2026</span></p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<p><span class="bml-meta bml-members-note"><span class="bml-star">*</span> Joshua Wiley is primary supervisor.</span></p>
+</div>
+<div class="column-screen bml-band bml-alumni">
+<div class="grid bml-gap-lg">
+<section id="alumni" class="level2 g-col-12 g-col-lg-4 bml-alumni-intro">
+<h2 class="anchored" data-anchor-id="alumni">Alumni</h2>
+<p>Everyone who has completed a role in the lab, by year. Doctoral theses are linked. <span class="bml-star">*</span> marks Joshua Wiley as primary supervisor.</p>
+</section>
+<div class="g-col-12 g-col-lg-8 bml-rows">
+<div class="bml-row">
+<div class="bml-row-head">
+<p><span class="bml-row-label">2026</span> <span class="bml-row-sum">1 person · 1 thesis</span></p>
+</div>
+<div class="bml-alumni-names">
+<p><span class="bml-alumnus"><span class="bml-alumni-name">Caitlin Hrysanidis</span> <span class="bml-muted">PhD (Clinical)</span> <a href="https://doi.org/10.26180/32311542" class="bml-thesis" aria-label="Doctoral thesis by Caitlin Hrysanidis">thesis ↗</a></span></p>
+</div>
+</div>
+<div class="bml-row">
+<div class="bml-row-head">
+<p><span class="bml-row-label">2025</span> <span class="bml-row-sum">9 people · 5 theses</span></p>
+</div>
+<div class="bml-alumni-names">
+<p><span class="bml-alumnus"><span class="bml-alumni-name">Rebecca Kirkham<span class="bml-star" aria-hidden="true" title="Primary supervisor: Joshua Wiley">*</span><span class="visually-hidden">, primary supervisor Joshua Wiley</span></span> <span class="bml-muted">PhD (Clinical)</span> <a href="https://doi.org/10.26180/31094920" class="bml-thesis" aria-label="Doctoral thesis by Rebecca Kirkham">thesis ↗</a></span> <span class="bml-alumnus"><span class="bml-alumni-name">Phuong (Flora) Le<span class="bml-star" aria-hidden="true" title="Primary supervisor: Joshua Wiley">*</span><span class="visually-hidden">, primary supervisor Joshua Wiley</span></span> <span class="bml-muted">PhD</span> <a href="https://doi.org/10.26180/29817671" class="bml-thesis" aria-label="Doctoral thesis by Phuong (Flora) Le">thesis ↗</a></span> <span class="bml-alumnus"><span class="bml-alumni-name">Elizabeth Matthews<span class="bml-star" aria-hidden="true" title="Primary supervisor: Joshua Wiley">*</span><span class="visually-hidden">, primary supervisor Joshua Wiley</span></span> <span class="bml-muted">PhD (Clinical)</span> <a href="https://doi.org/10.26180/31321321" class="bml-thesis" aria-label="Doctoral thesis by Elizabeth Matthews">thesis ↗</a></span> <span class="bml-alumnus"><span class="bml-alumni-name">Tingyue Sun<span class="bml-star" aria-hidden="true" title="Primary supervisor: Joshua Wiley">*</span><span class="visually-hidden">, primary supervisor Joshua Wiley</span></span> <span class="bml-muted">PhD</span> <a href="https://doi.org/10.26180/32642733" class="bml-thesis" aria-label="Doctoral thesis by Tingyue Sun">thesis ↗</a></span> <span class="bml-alumnus"><span class="bml-alumni-name">Rebecca Wallace<span class="bml-star" aria-hidden="true" title="Primary supervisor: Joshua Wiley">*</span><span class="visually-hidden">, primary supervisor Joshua Wiley</span></span> <span class="bml-muted">PhD (Clinical)</span> <a href="https://doi.org/10.26180/31054753" class="bml-thesis" aria-label="Doctoral thesis by Rebecca Wallace">thesis ↗</a></span> <span class="bml-alumnus"><span class="bml-alumni-name">Lucia Pavan<span class="bml-star" aria-hidden="true" title="Primary supervisor: Joshua Wiley">*</span><span class="visually-hidden">, primary supervisor Joshua Wiley</span></span> <span class="bml-muted">Honours</span></span> <span class="bml-alumnus"><span class="bml-alumni-name">Elizabeth Sim<span class="bml-star" aria-hidden="true" title="Primary supervisor: Joshua Wiley">*</span><span class="visually-hidden">, primary supervisor Joshua Wiley</span></span> <span class="bml-muted">Honours</span></span> <span class="bml-alumnus"><span class="bml-alumni-name">Alexander Haussmann<span class="bml-star" aria-hidden="true" title="Primary supervisor: Joshua Wiley">*</span><span class="visually-hidden">, primary supervisor Joshua Wiley</span></span> <span class="bml-muted">Visiting Postdoctoral Fellow</span></span> <span class="bml-alumnus"><span class="bml-alumni-name">Shuman Wang<span class="bml-star" aria-hidden="true" title="Primary supervisor: Joshua Wiley">*</span><span class="visually-hidden">, primary supervisor Joshua Wiley</span></span> <span class="bml-muted">Visiting PhD Student</span></span></p>
+</div>
+</div>
+<div class="bml-row">
+<div class="bml-row-head">
+<p><span class="bml-row-label">2024</span> <span class="bml-row-sum">8 people · 1 thesis</span></p>
+</div>
+<div class="bml-alumni-names">
+<p><span class="bml-alumnus"><span class="bml-alumni-name">Ivy Hsieh<span class="bml-star" aria-hidden="true" title="Primary supervisor: Joshua Wiley">*</span><span class="visually-hidden">, primary supervisor Joshua Wiley</span></span> <span class="bml-muted">Staff</span></span> <span class="bml-alumnus"><span class="bml-alumni-name">Jessica Wilson<span class="bml-star" aria-hidden="true" title="Primary supervisor: Joshua Wiley">*</span><span class="visually-hidden">, primary supervisor Joshua Wiley</span></span> <span class="bml-muted">Staff</span></span> <span class="bml-alumnus"><span class="bml-alumni-name">Hao Jun Regine Lau</span> <span class="bml-muted">PhD (Clinical)</span> <a href="https://doi.org/10.26180/25395976" class="bml-thesis" aria-label="Doctoral thesis by Hao Jun Regine Lau">thesis ↗</a></span> <span class="bml-alumnus"><span class="bml-alumni-name">Olivia D’Elia<span class="bml-star" aria-hidden="true" title="Primary supervisor: Joshua Wiley">*</span><span class="visually-hidden">, primary supervisor Joshua Wiley</span></span> <span class="bml-muted">Honours</span></span> <span class="bml-alumnus"><span class="bml-alumni-name">Christina Feola<span class="bml-star" aria-hidden="true" title="Primary supervisor: Joshua Wiley">*</span><span class="visually-hidden">, primary supervisor Joshua Wiley</span></span> <span class="bml-muted">Honours</span></span> <span class="bml-alumnus"><span class="bml-alumni-name">Taniel Gencarelli<span class="bml-star" aria-hidden="true" title="Primary supervisor: Joshua Wiley">*</span><span class="visually-hidden">, primary supervisor Joshua Wiley</span></span> <span class="bml-muted">Honours</span></span> <span class="bml-alumnus"><span class="bml-alumni-name">Philip Koe-Leong<span class="bml-star" aria-hidden="true" title="Primary supervisor: Joshua Wiley">*</span><span class="visually-hidden">, primary supervisor Joshua Wiley</span></span> <span class="bml-muted">Honours</span></span> <span class="bml-alumnus"><span class="bml-alumni-name">Yun Hu<span class="bml-star" aria-hidden="true" title="Primary supervisor: Joshua Wiley">*</span><span class="visually-hidden">, primary supervisor Joshua Wiley</span></span> <span class="bml-muted">Visiting Faculty</span></span></p>
+</div>
+</div>
+<div class="bml-row">
+<div class="bml-row-head">
+<p><span class="bml-row-label">2023</span> <span class="bml-row-sum">10 people · 4 theses</span></p>
+</div>
+<div class="bml-alumni-names">
+<p><span class="bml-alumnus"><span class="bml-alumni-name">Jordan Maccora<span class="bml-star" aria-hidden="true" title="Primary supervisor: Joshua Wiley">*</span><span class="visually-hidden">, primary supervisor Joshua Wiley</span></span> <span class="bml-muted">Staff</span></span> <span class="bml-alumnus"><span class="bml-alumni-name">Victoria Dax<span class="bml-star" aria-hidden="true" title="Primary supervisor: Joshua Wiley">*</span><span class="visually-hidden">, primary supervisor Joshua Wiley</span></span> <span class="bml-muted">PhD (Clinical)</span> <a href="https://doi.org/10.26180/24822996" class="bml-thesis" aria-label="Doctoral thesis by Victoria Dax">thesis ↗</a></span> <span class="bml-alumnus"><span class="bml-alumni-name">Jordan Maccora<span class="bml-star" aria-hidden="true" title="Primary supervisor: Joshua Wiley">*</span><span class="visually-hidden">, primary supervisor Joshua Wiley</span></span> <span class="bml-muted">PhD (Clinical)</span> <a href="https://doi.org/10.26180/22140899" class="bml-thesis" aria-label="Doctoral thesis by Jordan Maccora">thesis ↗</a></span> <span class="bml-alumnus"><span class="bml-alumni-name">Isabelle S. Smith<span class="bml-star" aria-hidden="true" title="Primary supervisor: Joshua Wiley">*</span><span class="visually-hidden">, primary supervisor Joshua Wiley</span></span> <span class="bml-muted">PhD (Clinical)</span> <a href="https://doi.org/10.26180/21929013" class="bml-thesis" aria-label="Doctoral thesis by Isabelle S. Smith">thesis ↗</a></span> <span class="bml-alumnus"><span class="bml-alumni-name">David Tuck</span> <span class="bml-muted">PhD</span> <a href="https://doi.org/10.26180/24556324" class="bml-thesis" aria-label="Doctoral thesis by David Tuck">thesis ↗</a></span> <span class="bml-alumnus"><span class="bml-alumni-name">Amina Fazlic<span class="bml-star" aria-hidden="true" title="Primary supervisor: Joshua Wiley">*</span><span class="visually-hidden">, primary supervisor Joshua Wiley</span></span> <span class="bml-muted">Honours</span></span> <span class="bml-alumnus"><span class="bml-alumni-name">Ivy Hsieh<span class="bml-star" aria-hidden="true" title="Primary supervisor: Joshua Wiley">*</span><span class="visually-hidden">, primary supervisor Joshua Wiley</span></span> <span class="bml-muted">Honours</span></span> <span class="bml-alumnus"><span class="bml-alumni-name">Niva Limbu<span class="bml-star" aria-hidden="true" title="Primary supervisor: Joshua Wiley">*</span><span class="visually-hidden">, primary supervisor Joshua Wiley</span></span> <span class="bml-muted">Honours</span></span> <span class="bml-alumnus"><span class="bml-alumni-name">Hollie Wright<span class="bml-star" aria-hidden="true" title="Primary supervisor: Joshua Wiley">*</span><span class="visually-hidden">, primary supervisor Joshua Wiley</span></span> <span class="bml-muted">Honours</span></span> <span class="bml-alumnus"><span class="bml-alumni-name">Valeria Yau<span class="bml-star" aria-hidden="true" title="Primary supervisor: Joshua Wiley">*</span><span class="visually-hidden">, primary supervisor Joshua Wiley</span></span> <span class="bml-muted">Honours</span></span></p>
+</div>
+</div>
+<div class="bml-row">
+<div class="bml-row-head">
+<p><span class="bml-row-label">2022</span> <span class="bml-row-sum">7 people · 1 thesis</span></p>
+</div>
+<div class="bml-alumni-names">
+<p><span class="bml-alumnus"><span class="bml-alumni-name">Rebecca Wallace<span class="bml-star" aria-hidden="true" title="Primary supervisor: Joshua Wiley">*</span><span class="visually-hidden">, primary supervisor Joshua Wiley</span></span> <span class="bml-muted">Staff</span></span> <span class="bml-alumnus"><span class="bml-alumni-name">Yi Yang Yap<span class="bml-star" aria-hidden="true" title="Primary supervisor: Joshua Wiley">*</span><span class="visually-hidden">, primary supervisor Joshua Wiley</span></span> <span class="bml-muted">PhD</span> <a href="https://doi.org/10.26180/18583970" class="bml-thesis" aria-label="Doctoral thesis by Yi Yang Yap">thesis ↗</a></span> <span class="bml-alumnus"><span class="bml-alumni-name">Jordan Ludbrook<span class="bml-star" aria-hidden="true" title="Primary supervisor: Joshua Wiley">*</span><span class="visually-hidden">, primary supervisor Joshua Wiley</span></span> <span class="bml-muted">Honours</span></span> <span class="bml-alumnus"><span class="bml-alumni-name">Gina Mancuso<span class="bml-star" aria-hidden="true" title="Primary supervisor: Joshua Wiley">*</span><span class="visually-hidden">, primary supervisor Joshua Wiley</span></span> <span class="bml-muted">Honours</span></span> <span class="bml-alumnus"><span class="bml-alumni-name">Chloe Nicholas<span class="bml-star" aria-hidden="true" title="Primary supervisor: Joshua Wiley">*</span><span class="visually-hidden">, primary supervisor Joshua Wiley</span></span> <span class="bml-muted">Honours</span></span> <span class="bml-alumnus"><span class="bml-alumni-name">Tania Wallace<span class="bml-star" aria-hidden="true" title="Primary supervisor: Joshua Wiley">*</span><span class="visually-hidden">, primary supervisor Joshua Wiley</span></span> <span class="bml-muted">Honours</span></span> <span class="bml-alumnus"><span class="bml-alumni-name">Brett Messman<span class="bml-star" aria-hidden="true" title="Primary supervisor: Joshua Wiley">*</span><span class="visually-hidden">, primary supervisor Joshua Wiley</span></span> <span class="bml-muted">Visiting PhD Student</span> <a href="https://doi.org/10.12794/metadc2332601" class="bml-thesis" aria-label="Doctoral thesis by Brett Messman">thesis ↗</a></span></p>
+</div>
+</div>
+<div class="bml-row">
+<div class="bml-row-head">
+<p><span class="bml-row-label">2021</span> <span class="bml-row-sum">7 people · 2 theses</span></p>
+</div>
+<div class="bml-alumni-names">
+<p><span class="bml-alumnus"><span class="bml-alumni-name">Lin Shen</span> <span class="bml-muted">PhD</span> <a href="https://doi.org/10.26180/14396426" class="bml-thesis" aria-label="Doctoral thesis by Lin Shen">thesis ↗</a></span> <span class="bml-alumnus"><span class="bml-alumni-name">Yan Chi Tung<span class="bml-star" aria-hidden="true" title="Primary supervisor: Joshua Wiley">*</span><span class="visually-hidden">, primary supervisor Joshua Wiley</span></span> <span class="bml-muted">PhD (Clinical)</span> <a href="https://doi.org/10.26180/16435494" class="bml-thesis" aria-label="Doctoral thesis by Yan Chi Tung">thesis ↗</a></span> <span class="bml-alumnus"><span class="bml-alumni-name">Bronte Mathews<span class="bml-star" aria-hidden="true" title="Primary supervisor: Joshua Wiley">*</span><span class="visually-hidden">, primary supervisor Joshua Wiley</span></span> <span class="bml-muted">Honours</span></span> <span class="bml-alumnus"><span class="bml-alumni-name">Lauren Pearson<span class="bml-star" aria-hidden="true" title="Primary supervisor: Joshua Wiley">*</span><span class="visually-hidden">, primary supervisor Joshua Wiley</span></span> <span class="bml-muted">Honours</span></span> <span class="bml-alumnus"><span class="bml-alumni-name">Rebecca Wallace<span class="bml-star" aria-hidden="true" title="Primary supervisor: Joshua Wiley">*</span><span class="visually-hidden">, primary supervisor Joshua Wiley</span></span> <span class="bml-muted">Honours</span></span> <span class="bml-alumnus"><span class="bml-alumni-name">Jeanette M. X. Y. Wong<span class="bml-star" aria-hidden="true" title="Primary supervisor: Joshua Wiley">*</span><span class="visually-hidden">, primary supervisor Joshua Wiley</span></span> <span class="bml-muted">Honours</span></span> <span class="bml-alumnus"><span class="bml-alumni-name">Xin Xuan Yong<span class="bml-star" aria-hidden="true" title="Primary supervisor: Joshua Wiley">*</span><span class="visually-hidden">, primary supervisor Joshua Wiley</span></span> <span class="bml-muted">Honours</span></span></p>
+</div>
+</div>
+<div class="bml-row">
+<div class="bml-row-head">
+<p><span class="bml-row-label">2020</span> <span class="bml-row-sum">4 people · 1 thesis</span></p>
+</div>
+<div class="bml-alumni-names">
+<p><span class="bml-alumnus"><span class="bml-alumni-name">Helena R. Bean<span class="bml-star" aria-hidden="true" title="Primary supervisor: Joshua Wiley">*</span><span class="visually-hidden">, primary supervisor Joshua Wiley</span></span> <span class="bml-muted">DPsych (Clinical)</span> <a href="https://doi.org/10.26180/13256711" class="bml-thesis" aria-label="Doctoral thesis by Helena R. Bean">thesis ↗</a></span> <span class="bml-alumnus"><span class="bml-alumni-name">Phuong (Flora) Le<span class="bml-star" aria-hidden="true" title="Primary supervisor: Joshua Wiley">*</span><span class="visually-hidden">, primary supervisor Joshua Wiley</span></span> <span class="bml-muted">Honours</span></span> <span class="bml-alumnus"><span class="bml-alumni-name">Vanessa See<span class="bml-star" aria-hidden="true" title="Primary supervisor: Joshua Wiley">*</span><span class="visually-hidden">, primary supervisor Joshua Wiley</span></span> <span class="bml-muted">Honours</span></span> <span class="bml-alumnus"><span class="bml-alumni-name">Cornelia Wellecke<span class="bml-star" aria-hidden="true" title="Primary supervisor: Joshua Wiley">*</span><span class="visually-hidden">, primary supervisor Joshua Wiley</span></span> <span class="bml-muted">Honours</span></span></p>
+</div>
+</div>
+<div class="bml-row">
+<div class="bml-row-head">
+<p><span class="bml-row-label">2019</span> <span class="bml-row-sum">3 people</span></p>
+</div>
+<div class="bml-alumni-names">
+<p><span class="bml-alumnus"><span class="bml-alumni-name">James Jackson<span class="bml-star" aria-hidden="true" title="Primary supervisor: Joshua Wiley">*</span><span class="visually-hidden">, primary supervisor Joshua Wiley</span></span> <span class="bml-muted">Staff</span></span> <span class="bml-alumnus"><span class="bml-alumni-name">Angie Phong<span class="bml-star" aria-hidden="true" title="Primary supervisor: Joshua Wiley">*</span><span class="visually-hidden">, primary supervisor Joshua Wiley</span></span> <span class="bml-muted">Honours</span></span> <span class="bml-alumnus"><span class="bml-alumni-name">Lauren Ross<span class="bml-star" aria-hidden="true" title="Primary supervisor: Joshua Wiley">*</span><span class="visually-hidden">, primary supervisor Joshua Wiley</span></span> <span class="bml-muted">Honours</span></span></p>
+</div>
+</div>
+<div class="bml-row">
+<div class="bml-row-head">
+<p><span class="bml-row-label">2018</span> <span class="bml-row-sum">2 people</span></p>
+</div>
+<div class="bml-alumni-names">
+<p><span class="bml-alumnus"><span class="bml-alumni-name">Alice MacDonald<span class="bml-star" aria-hidden="true" title="Primary supervisor: Joshua Wiley">*</span><span class="visually-hidden">, primary supervisor Joshua Wiley</span></span> <span class="bml-muted">Honours</span></span> <span class="bml-alumnus"><span class="bml-alumni-name">Jun Wong<span class="bml-star" aria-hidden="true" title="Primary supervisor: Joshua Wiley">*</span><span class="visually-hidden">, primary supervisor Joshua Wiley</span></span> <span class="bml-muted">Honours</span></span></p>
+</div>
+</div>
+<div class="bml-row">
+<div class="bml-row-head">
+<p><span class="bml-row-label">2017</span> <span class="bml-row-sum">2 people</span></p>
+</div>
+<div class="bml-alumni-names">
+<p><span class="bml-alumnus"><span class="bml-alumni-name">Rebecca Rice-Lacy<span class="bml-star" aria-hidden="true" title="Primary supervisor: Joshua Wiley">*</span><span class="visually-hidden">, primary supervisor Joshua Wiley</span></span> <span class="bml-muted">Honours</span></span> <span class="bml-alumnus"><span class="bml-alumni-name">Yi Yang Yap<span class="bml-star" aria-hidden="true" title="Primary supervisor: Joshua Wiley">*</span><span class="visually-hidden">, primary supervisor Joshua Wiley</span></span> <span class="bml-muted">Honours</span></span></p>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div id="join" class="column-screen bml-band bml-night bml-join">
+<div class="grid bml-gap-lg align-items-center">
+<section id="want-to-join-us" class="level2 g-col-12 g-col-lg-7 bml-join-main">
+<h2 class="anchored" data-anchor-id="want-to-join-us">Want to join us?</h2>
+<p>We supervise Honours, Masters and PhD students. We especially welcome people from groups under-represented in health science.</p>
+<p><a href="mailto:joshua.wiley@monash.edu" class="bml-btn">Ask about opportunities</a></p>
+</section>
+<div class="g-col-12 g-col-lg-5 bml-join-aside">
+<p>Before you write, read about our <a href="./research.html">research themes</a> and the <a href="./ethics_values.html">values</a> we work by.</p>
+</div>
+</div>
 </div>
 
 
-
-<div class="quarto-title-meta">
-
-    
-  
-    
-  </div>
-  
-
-
-</header>
-
-
-<p><img src="BML_Group_2024.jpg" class="img-fluid" alt="A group photo of members from the year 2024"></p>
-<p><br><br></p>
-<section id="elizabeth-matthews-2022---current-phd-clinical" class="level3">
-<h3 class="anchored" data-anchor-id="elizabeth-matthews-2022---current-phd-clinical">Elizabeth Matthews | 2022 - current | PhD (Clinical)</h3>
-<p>Elizabeth Matthews completed her Bachelor of Biomedical Science in 2017 before completed her Bachelor of Science (Honours) in Psychology in 2020. Her honours project focused on the lived experience of returning to work post-treatment for patients with head and neck cancer. She commenced her PhD in Clinical Psychology at Monash University in 2022 and is supervised by Dr Joshua Wiley, Dr Kate Webber (Oncology, Monash Health) and Dr Catriona Parker (School of Clinical Sciences, Monash Health). Elizabeth’s research is focused on psychological distress management of patients being treated in chemotherapy day units.</p>
-<hr>
-</section>
-<section id="tingyue-sun-2022---current-phd" class="level3">
-<h3 class="anchored" data-anchor-id="tingyue-sun-2022---current-phd">Tingyue Sun | 2022 - current | PhD</h3>
-<p>Tingyue Sun completed her Bachelor of Science (with Honours) in Psychology at the Australian National University in 2021. She commenced her PhD in 2022 and is under the supervision of Dr Joshua Wiley, Dr Julia Stone and Prof Shanthakumar Wilson Rajaratnam. Her current research interests include investigating the predictive effects of daily affect on mental health and academic performance in young people. She is also one of the PhD student researchers of the Circadian, Light, Adolescence, Sleep, and School (CLASS) study.</p>
-<hr>
-</section>
-<section id="tania-wallace-2023---current-phd-clinical" class="level3">
-<h3 class="anchored" data-anchor-id="tania-wallace-2023---current-phd-clinical">Tania Wallace | 2023 - current | PhD (Clinical)</h3>
-<p>Tania Wallace had a previous career in Human Resources in Melbourne and London, before completing the Graduate Diploma in Psychology at Monash University in 2021 and then Bachelor of Science (Honours) at Monash University in 2022. Tania commenced her PhD in clinical psychology at Monash University in 2023 and is supervised by Dr Joshua Wiley and Dr Maria Ftanou, Director of Psychosocial Oncology at the Peter MacCallum Cancer Centre. Her research is focused on psychological distress incorporating depression, anxiety and emotional well-being in haematological (blood) cancer patients.</p>
-</section>
-<section id="group-photo---2024" class="level3">
-<h3 class="anchored" data-anchor-id="group-photo---2024">Group Photo - 2024</h3>
-<p><img src="BML_Group_2024.jpg" class="img-fluid" alt="A group photo of members from the year 2024"></p>
-</section>
-<section id="group-photo---2022" class="level3">
-<h3 class="anchored" data-anchor-id="group-photo---2022">Group Photo - 2022</h3>
-<p><img src="BML_Group_2022.jpg" class="img-fluid" alt="A group photo of members from the year 2022"></p>
-</section>
-<section id="group-photo---2021" class="level3">
-<h3 class="anchored" data-anchor-id="group-photo---2021">Group Photo - 2021</h3>
-<p><img src="BML_Group_2021.jpg" class="img-fluid" alt="A group photo of members from the year 2021"></p>
-</section>
-<section id="group-photo---2020" class="level3">
-<h3 class="anchored" data-anchor-id="group-photo---2020">Group Photo - 2020</h3>
-<p><img src="BML_Group_2020.jpg" class="img-fluid" alt="A group photo of members from the year 2020"></p>
-</section>
-<section id="group-photo---2019" class="level3">
-<h3 class="anchored" data-anchor-id="group-photo---2019">Group Photo - 2019</h3>
-<p><img src="BML_Group_2019.jpg" class="img-fluid" alt="A group photo of members from the year 2019"></p>
-
-
-</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
@@ -273,13 +648,14 @@ ul.task-list li input[type="checkbox"] {
       e.clearSelection();
     }
     const getTextToCopy = function(trigger) {
-        const codeEl = trigger.previousElementSibling.cloneNode(true);
-        for (const childEl of codeEl.children) {
-          if (isCodeAnnotation(childEl)) {
-            childEl.remove();
-          }
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
         }
-        return codeEl.innerText;
+      }
+      return codeEl.innerText;
     }
     const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
       text: getTextToCopy
@@ -625,18 +1001,39 @@ ul.task-list li input[type="checkbox"] {
 <footer class="footer">
   <div class="nav-footer">
     <div class="nav-footer-left">
-      &nbsp;
-    </div>   
+<p><span class="bml-acknowledgement">We acknowledge and pay respects to the Elders and Traditional Owners of the land on which we work.</span></p>
+</div>   
     <div class="nav-footer-center">
-      <ul class="footer-items list-unstyled">
-    <li class="nav-item">
- Copyright © 2019 - 2025 by Behavioural Medicine Lab based in Melbourne, Australia.  All rights reserved.
-  </li>  
+<div class="bml-footer-cols">
+<div class="bml-footer-col">
+<p><span class="bml-footer-head">Explore</span></p>
+<ul>
+<li><a href="./research.html">Research</a></li>
+<li><a href="./projects.html">Projects</a></li>
+<li><a href="./team.html">Team</a></li>
+<li><a href="./cv.html">CV</a></li>
 </ul>
-    </div>
+</div>
+<div class="bml-footer-col">
+<p><span class="bml-footer-head">Get involved</span></p>
+<ul>
+<li><a href="./consumer_community.html#take-part">Take part</a></li>
+<li><a href="./consumer_community.html">Consumer partners</a></li>
+<li><a href="./team.html#join">Study with us</a></li>
+</ul>
+</div>
+<div class="bml-footer-col">
+<p><span class="bml-footer-head">Contact</span></p>
+<ul>
+<li><span class="bml-footer-email">joshua.wiley <em>at</em> monash <em>dot</em> edu</span></li>
+<li>Monash University, Clayton</li>
+</ul>
+</div>
+</div>
+</div>
     <div class="nav-footer-right">
-      &nbsp;
-    </div>
+<p><span class="bml-footer-org">Behavioural Medicine Lab · School of Psychological Sciences</span> <span class="bml-footer-copy">© 2019–2026</span></p>
+</div>
   </div>
 </footer>
 

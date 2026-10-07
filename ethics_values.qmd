@@ -9,7 +9,7 @@ first priority.
 
 We are committed to creating an environment for work and study that is
 *ethical*, *inclusive*, and *supportive*. All of us are
-responsible for upholding these cores values, constantly mindful of
+responsible for upholding these core values, constantly mindful of
 them, being accountable for our actions and decisions, and speaking up
 about any actions or decisions contrary to these values.
 
@@ -65,10 +65,10 @@ including but not limited to socioeconomic background, race/ethnicity,
 culture, religion, language, ability status, and the intersection of
 multiple, underserved identities.
 
-We particularly encourage people who are historically underpresented
+We particularly encourage people who are historically underrepresented
 in the health sciences to apply and join our group. If you are from an
-underpresented group and would like to join our team, please reach out
-to the lab head: <span class="fa fa-envelope"></span> joshua.wiley
+underrepresented group and would like to join our team, please reach out
+to the lab head: {{< fa envelope title="An envelope" >}} joshua.wiley
 _at_ monash _dot_ edu. Dr. Wiley will be happy to discuss
 opportunities with you and to discuss any barriers or challenges you
 may be facing in getting research opportunities due to your background
@@ -84,7 +84,7 @@ Achieving milestones and accomplishing tasks on time is important,
 however, we recognise and value the mental and physical well-being of
 our team more than outcomes.
 
-**We encourage self-care** and regular,open discussions around
+**We encourage self-care** and regular, open discussions around
 self-care needs. This applies to all team members. This may
 mean getting someone to help cover a shift, adjusting deadlines or
 scaling back a project. We are committed to finding a path forward and

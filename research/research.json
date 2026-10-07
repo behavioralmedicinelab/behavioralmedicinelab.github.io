@@ -1,0 +1,410 @@
+{
+  "generated": "2026-10-07",
+  "source": "/Users/wileyj/wiley_cv/track_record/2026-10-lab-themes",
+  "source_generated": "2026-10-07",
+  "intro": "We study how sleep, stress and emotions shape health and wellbeing in everyday life, and we develop practical, scalable ways to help, especially for people affected by cancer.",
+  "themes": [
+    {
+      "id": "STRESS",
+      "anchor": "stress",
+      "title": "Stress, coping and emotions",
+      "blurb": "Everyone faces stress, but how we respond shapes our mental health. We follow people's stress, emotions and coping several times a day in their everyday lives, to understand how feelings rise and fall, which ways of coping help or backfire, and what makes some people more resilient.",
+      "papers": 16,
+      "first_year": 2016,
+      "last_year": 2026,
+      "since_2024": 7,
+      "exemplar": {
+        "paper_id": "Le2026_15",
+        "title": "Temporal bidirectional dynamics of momentary stress and affect: Dynamic structural equation modelling of ecological momentary assessments",
+        "year": 2026,
+        "journal": "Journal of Affective Disorders",
+        "doi": "10.1016/j.jad.2025.120810",
+        "first_author": "Le, F.",
+        "trainee_first_author": true,
+        "design": "Daily diary study",
+        "summary": "Tracking young adults' stress and emotions several times a day showed that stress and feelings push each other up and down over hours, and that highly stressed people get less relief from positive moods.",
+        "figure": "Le2026_15-F2",
+        "credit": "Figure 2 reproduced from Le et al. (2026)"
+      },
+      "representatives": [
+        {
+          "paper_id": "Sun2026_2",
+          "title": "The predictive role of daily emotional dynamics in depression, anxiety, and academic performance: A longitudinal study in adolescents",
+          "year": 2026,
+          "journal": "Journal of Affective Disorders",
+          "doi": "10.1016/j.jad.2025.121147",
+          "first_author": "Sun, T.",
+          "trainee_first_author": true,
+          "design": "Daily diary study",
+          "why": "Adolescents: daily emotional ups and downs predict depression, anxiety and school performance two years later (CLASS cohort).",
+          "finding": "Teenagers who felt stronger positive emotions day to day had fewer depression and anxiety symptoms two years later, but daily emotional ups and downs did not predict school test results.",
+          "figure": null,
+          "credit": null
+        },
+        {
+          "paper_id": "Tung2022_46",
+          "title": "A 14-day ecological momentary assessment study on whether resilience and early family risk moderate daily stress and affect on cortisol diurnal slope",
+          "year": 2022,
+          "journal": "Scientific Reports",
+          "doi": "10.1038/s41598-022-05277-w",
+          "first_author": "Tung, N. Y. C.",
+          "trainee_first_author": true,
+          "design": "Daily diary study",
+          "why": "Adds biology: early family adversity, resilience and the daily cortisol rhythm in students who relocated for university.",
+          "figure": "Tung2022_46-F2",
+          "credit": "Figure 2 reproduced from Tung et al. (2022)"
+        },
+        {
+          "paper_id": "Kirkham2026_13",
+          "title": "Dynamic associations between emotion regulation, mental fatigue, and stress: An ecological momentary assessment study",
+          "year": 2026,
+          "journal": "Journal of Affective Disorders",
+          "doi": "10.1016/j.jad.2026.121855",
+          "first_author": "Kirkham, R.",
+          "trainee_first_author": true,
+          "design": "Daily diary study",
+          "why": "Emotion regulation in daily life: tracked several times a day, distracting yourself from bad feelings was followed by more mental fatigue and stress a few hours later.",
+          "figure": "Kirkham2026_13-F2",
+          "credit": "Figure 2 reproduced from Kirkham et al. (2026)"
+        },
+        {
+          "paper_id": "Tuck2025_23",
+          "title": "Positive affect is indirectly related to symptoms of anxiety in tertiary education students via coping resources",
+          "year": 2025,
+          "journal": "Australian Psychologist",
+          "doi": "10.1080/00050067.2024.2379939",
+          "first_author": "Tuck, D.",
+          "trainee_first_author": true,
+          "design": "Survey study",
+          "why": "Large national survey of tertiary students: positive affect, purpose and mindfulness as routes to lower anxiety.",
+          "figure": "Tuck2025_23-F2",
+          "credit": "Figure 2 reproduced from Tuck et al. (2025)"
+        }
+      ]
+    },
+    {
+      "id": "SLEEP",
+      "anchor": "sleep",
+      "title": "Sleep in everyday life",
+      "blurb": "Sleep changes from night to night, and those changes matter. Using sleep diaries, wearables and at-home EEG, we study how sleep, stress, mood and stress hormones influence each other day to day, and why irregular sleep is linked to poorer mental health, from teenagers to adults.",
+      "papers": 13,
+      "first_year": 2017,
+      "last_year": 2026,
+      "since_2024": 5,
+      "exemplar": {
+        "paper_id": "Yap2020_54",
+        "title": "Bi-directional relations between stress and self-reported and actigraphy-assessed sleep: a daily intensive longitudinal study",
+        "year": 2020,
+        "journal": "Sleep",
+        "doi": "10.1093/sleep/zsz250",
+        "first_author": "Yap, Y. Y.",
+        "trainee_first_author": true,
+        "design": "Daily diary study",
+        "summary": "Tracking young adults day by day, we found that stressful evenings led to slightly shorter sleep, and short or broken sleep led to feeling more stressed the next day.",
+        "figure": "Yap2020_54-F3",
+        "credit": "Figure 3 reproduced from Yap et al. (2020)"
+      },
+      "representatives": [
+        {
+          "paper_id": "Shen2021_51",
+          "title": "Perceived daily sleep need and sleep debt in adolescents: associations with daily affect over school and vacation periods",
+          "year": 2021,
+          "journal": "Sleep",
+          "doi": "10.1093/sleep/zsab190",
+          "first_author": "Shen, L.",
+          "trainee_first_author": true,
+          "design": "Daily diary study",
+          "why": "Adolescents: sleep debt building up across school weeks and recovering in holidays, and its links with mood.",
+          "figure": "Shen2021_51-F1",
+          "credit": "Figure 1 reproduced from Shen et al. (2021)"
+        },
+        {
+          "paper_id": "Yap2024_28",
+          "title": "Daily associations between salivary cortisol and electroencephalographic-assessed sleep: a 15-day intensive longitudinal study",
+          "year": 2024,
+          "journal": "Sleep",
+          "doi": "10.1093/sleep/zsae087",
+          "first_author": "Yap, Y.",
+          "trainee_first_author": true,
+          "design": "Daily diary study",
+          "why": "Adds biology: two weeks of at-home EEG sleep recordings and saliva samples show that higher bedtime cortisol is followed by shorter, poorer sleep.",
+          "figure": "Yap2024_28-F2",
+          "credit": "Figure 2 reproduced from Yap et al. (2024)"
+        },
+        {
+          "paper_id": "Brown2024_27",
+          "title": "Sleep disorder symptoms and suicidal urges among US Marines seeking suicide treatment: Findings from an intensive daily assessment study",
+          "year": 2024,
+          "journal": "Journal of Psychiatric Research",
+          "doi": "10.1016/j.jpsychires.2024.08.040",
+          "first_author": "Brown, L. A.",
+          "trainee_first_author": false,
+          "design": "Daily diary study",
+          "why": "Clinical military sample (international collaboration): daily sleep problems predict next-day suicidal urges in US Marines.",
+          "figure": "Brown2024_27-F1",
+          "credit": "Figure 1 reproduced from Brown et al. (2024)"
+        },
+        {
+          "paper_id": "Leota2026_10",
+          "title": "How many nights are needed? The short-term stability of intraindividual variability in sleep parameters derived from accelerometry data in a cohort of normal sleepers",
+          "year": 2026,
+          "journal": "Sleep",
+          "doi": "10.1093/sleep/zsag040",
+          "first_author": "Leota, J.",
+          "trainee_first_author": false,
+          "design": "New method",
+          "why": "Consumer wearables: how many nights are needed to measure sleep variability reliably, using a year of WHOOP data.",
+          "figure": "Leota2026_10-F1",
+          "credit": "Figure 1 reproduced from Leota et al. (2026)"
+        }
+      ]
+    },
+    {
+      "id": "INSOMNIA",
+      "anchor": "insomnia",
+      "title": "Treating insomnia and fatigue (especially in cancer)",
+      "blurb": "Insomnia and fatigue are common and distressing during cancer treatment, yet they often go untreated. We develop and test brief treatments that can reach many people, such as cognitive behavioural therapy for insomnia and bright light therapy, in randomised trials, and study how and for whom they work.",
+      "papers": 9,
+      "first_year": 2020,
+      "last_year": 2026,
+      "since_2024": 4,
+      "exemplar": {
+        "paper_id": "Do2026_8",
+        "title": "Cognitive behavior vs bright light therapy for insomnia in women undergoing chemotherapy for breast cancer: A randomized clinical trial",
+        "year": 2026,
+        "journal": "JAMA Network Open",
+        "doi": "10.1001/jamanetworkopen.2026.30320",
+        "first_author": "Do, T. T.",
+        "trainee_first_author": true,
+        "design": "Randomised trial",
+        "summary": "In women having chemotherapy for breast cancer, a brief talking-therapy program for sleep reduced insomnia, while wearing bright light glasses did not clearly help sleep or tiredness.",
+        "figure": "Do2026_8-F2",
+        "credit": "Figure 2 reproduced from Do et al. (2026)"
+      },
+      "representatives": [
+        {
+          "paper_id": "Maccora2023_36",
+          "title": "Mechanisms of cognitive behavioral therapy and light therapy for cancer-related insomnia: A randomized clinical trial during chemotherapy for breast cancer",
+          "year": 2023,
+          "journal": "Behavioral Sleep Medicine",
+          "doi": "10.1080/15402002.2022.2075364",
+          "first_author": "Maccora, J.",
+          "trainee_first_author": true,
+          "design": "Trial analysis",
+          "why": "How the treatments work: mechanisms of CBT-I and bright light therapy during chemotherapy.",
+          "figure": "Maccora2023_36-F2",
+          "credit": "Figure 2 reproduced from Maccora et al. (2023)"
+        },
+        {
+          "paper_id": "Bean2021_52",
+          "title": "Insomnia and fatigue symptom trajectories in breast cancer: A longitudinal cohort study",
+          "year": 2021,
+          "journal": "Behavioral Sleep Medicine",
+          "doi": "10.1080/15402002.2020.1869005",
+          "first_author": "Bean, H. R.",
+          "trainee_first_author": true,
+          "design": "Cohort study",
+          "why": "Who develops persistent insomnia and fatigue after a breast cancer diagnosis (US cohort).",
+          "figure": "Bean2021_52-F2",
+          "credit": "Figure 2 reproduced from Bean et al. (2021)"
+        },
+        {
+          "paper_id": "Li2026_6",
+          "title": "Nonpharmacological interventions for sleep in people with upper gastrointestinal cancer: A systematic review and meta-analysis",
+          "year": 2026,
+          "journal": "Journal of Pain and Symptom Management",
+          "doi": "10.1016/j.jpainsymman.2025.08.037",
+          "first_author": "Li, L.",
+          "trainee_first_author": true,
+          "design": "Systematic review",
+          "why": "Beyond breast cancer: meta-analysis of non-drug sleep treatments in upper gastrointestinal cancer.",
+          "figure": "Li2026_6-F3",
+          "credit": "Figure 3 reproduced from Li et al. (2026)"
+        },
+        {
+          "paper_id": "Sanjivini2025_16",
+          "title": "MindMInC (mindfulness intervention for insomnia, mood, and cognition): a digital randomized control trial protocol for improving sleep and wellbeing in older adults",
+          "year": 2025,
+          "journal": "Sleep Advances",
+          "doi": "10.1093/sleepadvances/zpaf056",
+          "first_author": "Sanjivini, H.",
+          "trainee_first_author": true,
+          "design": "Trial protocol",
+          "why": "Beyond cancer: digital mindfulness for insomnia in older adults (trial protocol).",
+          "finding": "This study plan describes a trial testing whether an online, self-guided mindfulness program can help older adults sleep better and feel better, compared with an online sleep-habits program.",
+          "figure": null,
+          "credit": null
+        }
+      ]
+    },
+    {
+      "id": "TIMEUSE",
+      "anchor": "timeuse",
+      "title": "24-hour time use: sleep, activity and sitting",
+      "blurb": "Every day has 24 hours, so more time for one activity means less time for another. We study how the balance of sleep, physical activity and sitting across the day relates to mood and wellbeing, using compositional data analysis methods we developed and share as free software.",
+      "papers": 6,
+      "first_year": 2022,
+      "last_year": 2026,
+      "since_2024": 5,
+      "exemplar": {
+        "paper_id": "Le2026_12",
+        "title": "Daily, prospective associations of sleep, physical activity, and sedentary behaviour with affect: A Bayesian multilevel compositional data analysis",
+        "year": 2026,
+        "journal": "Psychology of Sport and Exercise",
+        "doi": "10.1016/j.psychsport.2025.102997",
+        "first_author": "Le, F.",
+        "trainee_first_author": true,
+        "design": "Daily diary study",
+        "summary": "Tracking young adults' sleep and movement with wrist devices for up to two weeks showed that swapping sitting time for light or more vigorous activity on a given day predicted slightly better mood the next day.",
+        "figure": "Le2026_12-F2",
+        "credit": "Figure 2 reproduced from Le et al. (2026)"
+      },
+      "representatives": [
+        {
+          "paper_id": "Le2026_11",
+          "title": "24-hour physical activity, sedentary behaviour and sleep profiles in individuals with cancer: a UK Biobank cohort study",
+          "year": 2026,
+          "journal": "Journal of Epidemiology and Community Health",
+          "doi": "10.1136/jech-2025-225231",
+          "first_author": "Le, F.",
+          "trainee_first_author": true,
+          "design": "Survey study",
+          "why": "People with cancer: 24-hour activity and sleep profiles in UK Biobank.",
+          "figure": "Le2026_11-F2",
+          "credit": "Figure 2 reproduced from Le et al. (2026)"
+        },
+        {
+          "paper_id": "Le2025_20",
+          "title": "Bayesian multilevel compositional data analysis: Introduction, evaluation, and application",
+          "year": 2025,
+          "journal": "Psychological Methods",
+          "doi": "10.1037/met0000750",
+          "first_author": "Le, F.",
+          "trainee_first_author": true,
+          "design": "New method",
+          "why": "The method itself: Bayesian multilevel compositional data analysis, implemented in the multilevelcoda R package.",
+          "figure": "Le2025_20-F1",
+          "credit": "Figure 1 reproduced from Le et al. (2025)"
+        },
+        {
+          "paper_id": "Le2025_22",
+          "title": "Associations between daily composition of 24 h physical behavior with affective states and working memory",
+          "year": 2025,
+          "journal": "Scientific Reports",
+          "doi": "10.1038/s41598-025-99266-4",
+          "first_author": "Le, F.",
+          "trainee_first_author": true,
+          "design": "Daily diary study",
+          "why": "International collaboration: daily movement, mood and working memory in German university employees.",
+          "figure": "Le2025_22-F2",
+          "credit": "Figure 2 reproduced from Le et al. (2025)"
+        }
+      ]
+    },
+    {
+      "id": "PSYONC",
+      "anchor": "psyonc",
+      "title": "Psychosocial care in cancer",
+      "blurb": "A cancer diagnosis can affect emotional wellbeing long after treatment ends. We build and test online programs that help people manage difficult emotions, study how distress is picked up and referred in cancer clinics, and listen to people's experiences, such as men's sense of masculinity after testicular cancer.",
+      "papers": 11,
+      "first_year": 2022,
+      "last_year": 2026,
+      "since_2024": 7,
+      "exemplar": {
+        "paper_id": "Smith2023_32",
+        "title": "Targeting emotional regulation using an Internet-delivered psychological intervention for cancer survivors: A randomized controlled trial",
+        "year": 2023,
+        "journal": "British Journal of Health Psychology",
+        "doi": "10.1111/bjhp.12679",
+        "first_author": "Smith, I. S.",
+        "trainee_first_author": true,
+        "design": "Randomised trial",
+        "summary": "An online, self-guided program teaching skills for handling emotions helped people who had finished cancer treatment become more mindful and less avoidant of difficult feelings than a healthy-lifestyle program.",
+        "figure": "Smith2023_32-F2",
+        "credit": "Figure 2 reproduced from Smith et al. (2023)"
+      },
+      "representatives": [
+        {
+          "paper_id": "Dax2024_29",
+          "title": "Self-perceptions of masculinities and testicular cancer: Qualitative explorations",
+          "year": 2024,
+          "journal": "Psycho-Oncology",
+          "doi": "10.1002/pon.6333",
+          "first_author": "Dax, V.",
+          "trainee_first_author": true,
+          "design": "Qualitative",
+          "why": "Men's experiences: masculinity after testicular cancer (qualitative interviews).",
+          "figure": "Dax2024_29-F1",
+          "credit": "Figure 1 reproduced from Dax et al. (2024)"
+        },
+        {
+          "paper_id": "Matthews2026_5",
+          "title": "Identifying and addressing distress in cancer care: A study of screening outcomes and referrals in Australian oncology outpatients",
+          "year": 2026,
+          "journal": "Psycho-Oncology",
+          "doi": "10.1002/pon.70584",
+          "first_author": "Matthews, E.",
+          "trainee_first_author": true,
+          "design": "Survey study",
+          "why": "Health services: distress screening and psychology referral in oncology outpatient clinics.",
+          "finding": "More than half of cancer outpatients screened at an Australian hospital reported high distress, but few were referred to mental health support, and most referrals went to services outside the hospital.",
+          "figure": null,
+          "credit": null
+        },
+        {
+          "paper_id": "Wang2026_1",
+          "title": "Referral and utilization of mental health services by older adults with cancer and factors influencing referral from health professionals",
+          "year": 2026,
+          "journal": "Psycho-Oncology",
+          "doi": "10.1002/pon.70573",
+          "first_author": "Wang, S.",
+          "trainee_first_author": true,
+          "design": "Survey study",
+          "why": "Older adults with cancer: who gets referred to psychology, and what helps or hinders referral.",
+          "figure": "Wang2026_1-F1",
+          "credit": "Figure 1 reproduced from Wang et al. (2026)"
+        },
+        {
+          "paper_id": "Wallace2025_25",
+          "title": "A randomized controlled trial: Evaluating whether a cognitive behavioral internet-delivered intervention targeting emotion regulation improves health-related quality of life in cancer survivors",
+          "year": 2025,
+          "journal": "Health Psychology",
+          "doi": "10.1037/hea0001497",
+          "first_author": "Wallace, R.",
+          "trainee_first_author": true,
+          "design": "Randomised trial",
+          "why": "Quality of life after cancer: an international online trial (five countries) where emotion-skills and healthy-lifestyle programs both helped, with extra gains in thinking, physical function and mood from the emotion program.",
+          "figure": "Wallace2025_25-F1",
+          "credit": "Figure 1 reproduced from Wallace et al. (2025)"
+        }
+      ]
+    }
+  ],
+  "methods": [
+    {
+      "id": "EMA",
+      "name": "Intensive longitudinal designs (EMA / daily diary)",
+      "one_liner": "Intensive daily studies: repeated surveys on phones, wearables and at-home sleep recordings capture life as it happens.",
+      "papers": 22
+    },
+    {
+      "id": "TRIALS",
+      "name": "Randomised trials of brief and digital interventions",
+      "one_liner": "Randomised trials of brief, scalable and digital treatments.",
+      "papers": 15
+    },
+    {
+      "id": "TOOLS",
+      "name": "New statistical methods, measures and software",
+      "one_liner": "New statistical methods and free, open-source R software.",
+      "papers": 6
+    },
+    {
+      "id": "SYNTH",
+      "name": "Evidence synthesis and qualitative research",
+      "one_liner": "Systematic reviews and qualitative research that bring together evidence and lived experience.",
+      "papers": 7
+    }
+  ],
+  "software": ["multilevelcoda", "MplusAutomation", "brmsmargins", "multilevelTools", "JWileymisc", "extraoperators"]
+}
