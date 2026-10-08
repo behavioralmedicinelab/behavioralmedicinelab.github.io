@@ -7,7 +7,7 @@ body-classes: bml-home
 ```{r}
 #| include: false
 
-## Home page ("Night and Day" design): hero with the featured figure plate,
+## Home page ("Night and Day" design): hero with the featured figure,
 ## three audience doors, research theme cards, the navy "How we work"
 ## track-record band, latest papers, team teaser, then Joshua's bio and
 ## Connect links. Built from Pandoc markdown (fenced divs and spans); styles
@@ -99,11 +99,11 @@ latest <- latestPublications(4)
 ::: {.grid .bml-gap-lg .align-items-end .bml-hero-head}
 ::: {.g-col-12 .g-col-lg-8}
 ::: {.bml-display role="heading" aria-level="1"}
-We study sleep, stress and emotions as life happens, and build *[practical]{.bml-teal}* ways to help.
+We study sleep, stress and emotions as life happens, and build *[interventions]{.bml-teal}* to help.
 :::
 :::
 ::: {.g-col-12 .g-col-lg-4}
-[Especially for people affected by cancer. A Monash University lab in the School of Psychological Sciences, led by Dr Joshua Wiley.]{.bml-lead .bml-hero-aside}
+[Especially for people affected by cancer. A lab in the School of Psychological Sciences at Monash University, led by Dr Joshua Wiley.]{.bml-lead .bml-hero-aside}
 :::
 :::
 
@@ -150,7 +150,7 @@ if (!is.na(hero)) {
 
 [I'm living with or after cancer, or caring for someone who is]{.bml-title}
 
-[We'd like to hear from you if you'd like a voice in our research on emotions, sleep and fatigue in cancer, as a consumer or community partner.]{.bml-soft}
+[We'd love to hear from you if you'd like a voice in shaping our research as a consumer or community partner.]{.bml-soft}
 
 [Ways to take part [→]{aria-hidden="true"}](consumer_community.qmd#take-part){.bml-link .stretched-link}
 :::
@@ -234,7 +234,7 @@ for (k in seq_along(cardOrder)) {
 ::: {.g-col-12 .g-col-lg-4 .bml-howwork-intro}
 ## How we work {#how-we-work}
 
-Intensive daily studies with phones, wearables and at-home sleep recordings, randomised trials of brief and digital treatments, and new statistical methods we share as free software.
+Randomised trials of brief and digital treatments, intensive daily studies with phones, wearables and at-home sleep recordings, and new statistical methods we share as free software.
 
 ```{r}
 #| echo: false
@@ -331,7 +331,7 @@ for (i in seq_len(nrow(latest))) {
 ::: {.column-screen .bml-band .bml-bio}
 ::: {.grid .bml-gap-lg}
 ::: {.g-col-12 .g-col-lg-4 .bml-bio-side}
-![](JWiley_square.jpg){.bml-avatar-photo fig-alt="Portrait of Dr Joshua F. Wiley"}
+![](JWiley_square.jpg){.bml-avatar-photo fig-alt="Portrait headshot of Dr Joshua F. Wiley"}
 
 ::: {.bml-bio-head}
 [Lab head]{.bml-eyebrow}
@@ -339,23 +339,22 @@ for (i in seq_len(nrow(latest))) {
 ## Joshua F. Wiley {#joshua-f.-wiley}
 :::
 
-[`r position`, School of Psychological Sciences, Monash University]{.bml-meta}
+[`r position`, School of Psychological Sciences and Turner Institute for Brain and Mental Health, Monash University]{.bml-meta}
 :::
 
 ::: {.g-col-12 .g-col-lg-8 .bml-bio-text}
-Dr Joshua Wiley is `r positionArticle` `r position` in the School of
-Psychological Sciences at Monash University and an Honorary Research Fellow at
-the Peter MacCallum Cancer Centre. He completed a PhD in health psychology and
-behavioural medicine at the University of California, Los Angeles, followed by
-postdoctoral training in randomised controlled trials.
+Dr Joshua Wiley is `r positionArticle` `r position` at Monash University 
+and an Honorary Research Fellow at the Peter MacCallum Cancer Centre.
+He completed a PhD in health psychology at the University of California,
+Los Angeles, followed by postdoctoral training in randomised controlled trials.
 
-His research follows how sleep, stress and emotions unfold day to day, then
-uses what it finds to build accessible sleep and emotion-regulation
-treatments. His group pairs data from phones and wearables with modern
-statistics to tailor what each person receives and when, and shares its
-methods as free software. The work is funded by the NHMRC, MRFF, ARC, US
-National Institutes of Health, US Department of Defense and the Wellcome
-Trust.
+His research follows how sleep, stress and emotions unfold in daily life,
+then uses those findings to build accessible sleep and emotion-regulation
+interventions. His group pairs data from phones and wearables with modern
+statistics, and sharing new methods and tools as free software.
+Our research has been funded by the NHMRC, MRFF, ARC,
+US National Institutes of Health, US Department of Defense, 
+and the Wellcome Trust.
 
 ::: {.bml-connect}
 ### {{< fa address-card >}} Connect {#connect}
