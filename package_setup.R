@@ -26,6 +26,19 @@ if (Sys.info()[["sysname"]] == "Linux") {
 
 #### helpers shared across pages ####
 
+## The lab's contact address. Every email link on the site (pages and the
+## footer in run_website.R) is built from it with mailtoUrl().
+labEmail <- "joshua.wiley@monash.edu"
+
+## A mailto: link to labEmail, with a subject line when given:
+## mailtoUrl("Honours enquiry") opens an email titled "[BML] Honours enquiry",
+## so incoming mail can be filtered by audience.
+mailtoUrl <- function(subject = NULL) {
+  if (is.null(subject) || !nzchar(subject)) return(paste0("mailto:", labEmail))
+  paste0("mailto:", labEmail, "?subject=",
+         utils::URLencode(paste("[BML]", subject), reserved = TRUE))
+}
+
 ## HTML id for a project's heading on projects.qmd. Project names can contain
 ## spaces or "/", which break an unquoted id or a URL fragment.
 projectAnchor <- function(name) gsub("[^A-Za-z0-9-]+", "-", trimws(name))
@@ -194,13 +207,13 @@ latestPublications <- function(n = 4, types = c("Empirical", "Review", "Protocol
 }
 
 ## Counts for page copy from readPeople() (Exclude rows dropped; withdrawn roles
-## are not counted): current members, completed doctoral theses (PhD and
+## are not counted): current members (people, not roles), completed doctoral theses (PhD and
 ## DPsych; Visiting PhD students are not counted), Honours graduates, and the
 ## first year anyone completed a role in the lab.
 labCounts <- function(people = readPeople()) {
   people <- people[Status != "Withdrew"]
   done <- people[Status == "Completed"]
-  list(current = people[Status == "Current", .N],
+  list(current = uniqueN(people[Status == "Current", paste(GivenName, FamilyName)]),
        theses = done[grepl("^(PhD|DPsych)", Type), .N],
        honours = done[Type == "Honours", .N],
        since = if (any(!is.na(done$Ended))) min(done$Ended, na.rm = TRUE) else NA)

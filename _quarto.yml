@@ -8,8 +8,11 @@ project:
 
 website:
   title: "Behavioural Medicine Lab"
+  site-url: https://bml.science
   favicon: images/bml-mark.svg
   search: false
+  open-graph: true
+  back-to-top-navigation: true
   navbar:
     logo: images/bml-mark.svg
     logo-alt: "Behavioural Medicine Lab home"
@@ -19,7 +22,7 @@ website:
         href: research.qmd
       - text: "Projects"
         menu:
-          - text: "Clinical Trials"
+          - text: "Trials"
           - text: "SleepCare"
             href: projects.qmd#SleepCare
           - text: "CanCope"
@@ -27,13 +30,13 @@ website:
           - text: "SleepWell"
             href: projects.qmd#SleepWell
           - text: "---------"
-          - text: "Observational"
+          - text: "Observational studies"
           - text: "DistressManagement"
             href: projects.qmd#DistressManagement
           - text: "TCSupport"
             href: projects.qmd#TCSupport
           - text: "---------"
-          - text: "Daily Life Studies"
+          - text: "Daily life studies"
           - text: "SHS"
             href: projects.qmd#SHS
           - text: "DESTRESS"
@@ -41,20 +44,18 @@ website:
           - text: "ACES"
             href: projects.qmd#ACES
           - text: "---------"
-          - text: "Other Studies"
+          - text: "Other studies"
           - text: "NHMRC Investigator Grant"
             href: projects.qmd#NHMRC-Investigator-Grant
           - text: "---------"
-          - text: "Collaborations"
+          - text: "Projects we collaborate on"
             href: projects.qmd#collaborations
       - text: "Team"
         href: team.qmd
-      - text: "Community"
-        href: consumer_community.qmd
       - text: "Values"
         href: ethics_values.qmd
-      - text: "[Take part]{.bml-nav-cta}"
-        href: consumer_community.qmd#take-part
+      - text: "[Get involved]{.bml-nav-cta}"
+        href: join.qmd
   page-footer:
     left: |
       [We acknowledge and pay respects to the Elders and Traditional Owners of the land on which we work.]{.bml-acknowledgement}
@@ -72,15 +73,17 @@ website:
       ::: {.bml-footer-col}
       [Get involved]{.bml-footer-head}
 
-      - [Take part](consumer_community.qmd#take-part)
-      - [Consumer partners](consumer_community.qmd)
-      - [Study with us](team.qmd#join)
+      - [Take part in a study](join.qmd#participate)
+      - [Lived experience](join.qmd#partner)
+      - [Study with us](join.qmd#study)
+      - [Collaborate](join.qmd#collaborate)
+      - [Work with us](join.qmd#work)
       :::
 
       ::: {.bml-footer-col}
       [Contact]{.bml-footer-head}
 
-      - [joshua.wiley _at_ monash _dot_ edu]{.bml-footer-email}
+      - [joshua.wiley@<wbr>monash.edu](mailto:joshua.wiley@monash.edu){.bml-footer-email}
       - Monash University, Clayton
       :::
       :::
@@ -94,5 +97,10 @@ format:
       - styles/bml-research.scss
       - styles/bml-home.scss
       - styles/bml-team.scss
+      - styles/bml-join.scss
+      - styles/bml-projects.scss
+      - styles/bml-values.scss
+      - styles/bml-cv.scss
+    lang: en-AU
     toc: true
     title-block-banner: true

@@ -1,0 +1,624 @@
+---
+pagetitle: Get involved
+description-meta: "Take part in a study, share your lived experience of cancer, study with us, collaborate or work with us at the Behavioural Medicine Lab, Monash University."
+open-graph:
+  title: "Get involved – Behavioural Medicine Lab"
+  description: "Take part in a study, share your lived experience of cancer, study with us, collaborate or work with us at the Behavioural Medicine Lab, Monash University."
+image: images/BML_Group_2024.jpg
+image-alt: "Group photo of the Behavioural Medicine Lab in 2024"
+toc: false
+body-classes: bml-page-join
+# the old Consumers & Community page now lives here (#partner); its address
+# redirects to this page, and its #take-part anchor is the #partner heading row
+aliases:
+  - consumer_community.html
+---
+
+```{r}
+#| include: false
+
+## Get involved page ("Night and Day" design): navy hero with five audience
+## cards (also the page's jump list) across the night/day line, then one day
+## band per audience: #participate (studies), #partner (lived experience),
+## #study (students), #collaborate and #work. Every section stays on the page
+## even when nothing is open: it then shows a fallback line. Everything that
+## goes out of date (studies, partner roles, student projects, programs and
+## their Monash links, jobs) is in data/join.yml; the prose is here.
+## Built from Pandoc markdown that the chunks below cat(); styles are in
+## styles/bml.scss and styles/bml-join.scss. The page has no title (so no
+## title banner): the hero's .bml-display is the page heading. Email buttons
+## use mailtoUrl() with a subject per audience.
+
+## load packages and setup
+source("package_setup.R", echo = FALSE)
+
+info <- yaml::read_yaml("data/join.yml")
+today <- Sys.Date()
+
+## TRUE when a field in the data file has something in it (empty, ~, [] and a
+## list of empty items are all "nothing")
+has <- function(x) {
+  if (is.null(x) || length(x) == 0) return(FALSE)
+  if (is.list(x)) return(any(vapply(x, has, TRUE)))
+  any(!is.na(x) & nzchar(trimws(as.character(x))))
+}
+
+## a list from the data file as text items, empty ones dropped. YAML reads an
+## unquoted "- Age: 18 or older" as a key and a value, so it is put back
+## together here.
+listItems <- function(x) {
+  vapply(Filter(has, x), function(v) {
+    if (is.list(v)) paste0(names(v), ": ", unlist(v), collapse = "; ") else as.character(v)
+  }, "")
+}
+
+## Stop the build with a clear message when an entry is missing a field the
+## page needs (its card would otherwise vanish without a word).
+need <- function(xs, fields, what) {
+  for (x in xs) {
+    miss <- fields[!vapply(fields, function(f) has(x[[f]]), TRUE)]
+    if (length(miss) > 0) {
+      name <- if (has(x$title)) x$title else if (has(x$name)) x$name else ""
+      stop(sprintf("data/join.yml: %s%s has no %s", what,
+                   if (nzchar(name)) sprintf(" \"%s\"", name) else "",
+                   paste(miss, collapse = ", ")), call. = FALSE)
+    }
+  }
+}
+need(info$studies, c("title", "status", "summary"), "study")
+need(info$partner_roles, c("title", "status", "summary"), "partner role")
+need(info$student_projects, c("title", "text"), "project theme")
+need(info$programs, c("id", "name", "length", "links", "subject"), "program")
+for (p in info$programs) need(p$links, c("text", "url"), sprintf("a link of %s", p$name))
+need(info$roles, c("title", "summary", "url"), "role")
+
+## "Tuesday 1 December 2026" (a role's closing date)
+longDate <- function(d) sprintf("%s %s", weekdays(d), shortDate(d))
+shortDate <- function(d) sprintf("%d %s", as.integer(format(d, "%d")), format(d, "%B %Y"))
+
+## "Opening in 2027" -> "opening in 2027", for "SleepSteps: opening in 2027";
+## a word in capitals ("HREC ...") stays as it is
+lowerFirst <- function(x) sub("^([A-Z])(?=[a-z])", "\\L\\1", x, perl = TRUE)
+
+## A study's or partner role's status: recruiting, opening-soon or closed
+## ("Opening soon" and "opening_soon" work too). Anything else is noted in the
+## render log and the entry is hidden.
+statusOf <- function(x) {
+  st <- tolower(gsub("[ _]+", "-", trimws(as.character(x$status))))
+  if (!st %in% c("recruiting", "opening-soon", "closed")) {
+    cat(sprintf("join.qmd: data/join.yml: \"%s\" has unknown status \"%s\" (use recruiting, opening-soon or closed), so it is hidden.\n",
+                x$title, x$status), file = stderr())
+  }
+  st
+}
+openOnly <- function(xs) {
+  xs <- lapply(xs, function(x) { x$status <- statusOf(x); x })
+  Filter(function(x) x$status %in% c("recruiting", "opening-soon"), xs)
+}
+
+## the status as words (never colour alone)
+statusLabel <- function(x) {
+  if (has(x$status_label)) x$status_label
+  else if (identical(x$status, "recruiting")) "Recruiting now" else "Opening soon"
+}
+statusMd <- function(x) {
+  sprintf("[%s]{.bml-status%s}", statusLabel(x),
+          if (identical(x$status, "recruiting")) " .bml-status-open" else "")
+}
+
+studies <- openOnly(info$studies)
+partnerRoles <- openOnly(info$partner_roles)
+roles <- Filter(function(r) !has(r$closes) || as.Date(r$closes) >= today, info$roles)
+
+
+## ---- the hero cards' status lines (Work with us has its line as its text) ----
+waysStatus <- list(
+  participate = if (length(studies) > 0) {
+    s <- studies[[1]]
+    if (has(s$teaser)) s$teaser else sprintf("%s: %s", s$title, lowerFirst(statusLabel(s)))
+  } else "No studies open right now",
+  partner = if (length(partnerRoles) > 0) {
+    r <- partnerRoles[[1]]
+    sprintf("%s: %s", if (has(r$short)) r$short else r$title, lowerFirst(statusLabel(r)))
+  } else "We'd love to hear from you",
+  study = "Talk to us before you apply",
+  collaborate = "Visiting researchers welcome",
+  work = if (length(roles) == 0) "Not recruiting right now." else
+    sprintf("%d %s open.", length(roles), if (length(roles) == 1) "role" else "roles"))
+
+## ---- markdown pieces (text from the data file is Markdown, used as is) ----
+
+## a study's card: title and status, what it is, the participant details the
+## HREC approved (each only once filled in), then how to sign up
+studyCard <- function(s) {
+  details <- c(
+    if (has(s$who_can_take_part)) paste0("**Who can take part**\n\n",
+      paste0("- ", listItems(s$who_can_take_part), collapse = "\n")),
+    if (has(s$what_is_involved)) paste0("**What's involved:** ", s$what_is_involved),
+    if (has(s$reimbursement)) paste0("**Thank-you payment:** ", s$reimbursement))
+  reg <- s$registration
+  meta <- c(
+    if (has(s$ethics)) sprintf("Ethics approval: %s.", s$ethics),
+    if (has(reg)) {
+      what <- paste(c(if (has(reg$registry)) reg$registry, if (has(reg$id)) reg$id), collapse = " ")
+      if (has(reg$url)) sprintf("Trial registration: [%s](%s).", what, reg$url)
+      else sprintf("Trial registration: %s.", what)
+    })
+  recruiting <- identical(s$status, "recruiting")
+  button <- if (recruiting) "Register your interest" else "Notify me when it opens"
+  ## `signup: no` or `false` reads as FALSE, which means no sign-up too
+  signup <- if (is.character(s$signup) && has(s$signup)) trimws(s$signup) else ""
+  action <- if (!nzchar(signup)) {
+    "[Check back soon.]{.bml-meta}"
+  } else if (identical(tolower(signup), "email")) {
+    sprintf("[%s](%s){.bml-btn}", button, mailtoUrl(sprintf("%s: %s", s$title,
+      if (recruiting) "register interest" else "notify me")))
+  } else {
+    sprintf("[%s](%s){.bml-btn}", button, signup)
+  }
+  more <- if (has(s$info_url)) sprintf(
+    ' [More about %s [→]{aria-hidden="true"}](%s){.bml-link}', s$title, s$info_url) else ""
+  sprintf('
+::: {.bml-card .bml-study}
+::: {.bml-card-top}
+### %s
+
+%s
+:::
+
+%s
+
+%s
+
+%s
+
+::: {.bml-actions}
+%s%s
+:::
+:::
+', s$title, statusMd(s), s$summary, paste(details, collapse = "\n\n"),
+    if (length(meta)) sprintf("[%s]{.bml-meta}", paste(meta, collapse = " ")) else "",
+    action, more)
+}
+
+## an open partner role (e.g. an advisory committee); people get in touch
+## with the section's "Email us" button, just above it
+partnerCard <- function(r) {
+  sprintf('
+::: {.g-col-12 .bml-card .bml-opening}
+::: {.bml-card-top}
+### %s
+
+%s
+:::
+
+%s
+
+If you\'re interested, use the **Email us** button above.
+:::
+', r$title, statusMd(r), r$summary)
+}
+
+## official links as Markdown, one after another: "[text](url)<sep>[text](url)"
+linksMd <- function(x, sep) {
+  paste(sprintf("[%s](%s)", vapply(x, `[[`, "", "text"), vapply(x, `[[`, "", "url")),
+        collapse = sep)
+}
+
+## a program's row in the programs table (#<id>): its name, two facts as a
+## definition list (Length, and Monash's own pages for dates, entry and how to
+## apply: the page lists no dates), and an email button
+programRow <- function(p) {
+  sprintf('
+::: {#%s .bml-row .bml-program-row}
+[%s]{.bml-row-label}
+
+::: {.bml-facts}
+Length
+: %s
+
+More information
+: %s
+:::
+
+::: {.bml-program-action}
+[Email us](%s){.bml-btn aria-label="Email us about %s"}
+:::
+:::
+', p$id, p$name, p$length, linksMd(p$links, sep = "\\\n    "),
+    mailtoUrl(p$subject), attrEscape(p$name))
+}
+
+## an open paid role
+roleCard <- function(r) {
+  sprintf('
+::: {.g-col-12 .g-col-lg-6 .bml-card .bml-role}
+::: {.bml-card-top}
+### %s
+:::
+
+%s
+
+%s
+
+[Read the ad and apply](%s){.bml-btn aria-label="Read the ad and apply: %s"}
+:::
+', r$title, r$summary,
+    if (has(r$closes)) sprintf("[Applications close %s.]{.bml-meta}", longDate(as.Date(r$closes))) else "",
+    r$url, attrEscape(r$title))
+}
+```
+
+::: {.column-screen .bml-band .bml-straddle .bml-hero .bml-ways-hero}
+::: {.bml-ways-head}
+::: {.bml-display role="heading" aria-level="1"}
+Get involved
+:::
+:::
+
+::: {.grid .bml-ways}
+::: {.g-col-12 .g-col-md-6 .bml-card .bml-way}
+[[Take part in a study\ [→]{aria-hidden="true"}](#participate){.stretched-link}]{.bml-title}
+
+[Be a participant in our research.]{.bml-soft}
+
+::: {.bml-card-foot}
+[`r waysStatus$participate`]{}
+:::
+:::
+
+::: {.g-col-12 .g-col-md-6 .bml-card .bml-way}
+[[Share your lived experience\ [→]{aria-hidden="true"}](#partner){.stretched-link}]{.bml-title}
+
+[We are looking for people with lived experience of cancer, including family members and carers, who want to help shape our research.]{.bml-soft}
+
+::: {.bml-card-foot}
+[`r waysStatus$partner`]{}
+:::
+:::
+
+::: {.g-col-12 .g-col-md-4 .bml-card .bml-way}
+[[Study with us\ [→]{aria-hidden="true"}](#study){.stretched-link}]{.bml-title-sm}
+
+[Honours, Master of Clinical Psychology and PhD projects at Monash.]{.bml-soft}
+
+::: {.bml-card-foot}
+[`r waysStatus$study`]{}
+:::
+:::
+
+::: {.g-col-12 .g-col-md-4 .bml-card .bml-way}
+[[Collaborate\ [→]{aria-hidden="true"}](#collaborate){.stretched-link}]{.bml-title-sm}
+
+[Research partnerships on sleep, cancer, emotion regulation and methods.]{.bml-soft}
+
+::: {.bml-card-foot}
+[`r waysStatus$collaborate`]{}
+:::
+:::
+
+::: {.g-col-12 .g-col-md-4 .bml-card .bml-way}
+[[Work with us\ [→]{aria-hidden="true"}](#work){.stretched-link}]{.bml-title-sm}
+
+[`r waysStatus$work`]{.bml-soft}
+:::
+:::
+:::
+
+::: {#participate .column-screen .bml-band .bml-path}
+::: {.grid .bml-gap-lg .bml-path-head}
+::: {.g-col-12 .g-col-lg-5}
+## Take part in a study
+:::
+
+::: {.g-col-12 .g-col-lg-7}
+Our studies look for better ways to help people sleep and feel well, especially during and after cancer. Taking part is always voluntary.
+:::
+:::
+
+::: {.grid .bml-path-body}
+::: {.g-col-12 .g-col-lg-7 .bml-stack}
+```{r}
+#| echo: false
+#| output: asis
+
+## the studies that are recruiting or opening soon, or the fallback line
+if (length(studies) == 0) {
+  cat("\n::: {.bml-card .bml-empty}\nWe don't have any studies open right now. Check back soon.\n:::\n")
+} else {
+  for (s in studies) cat(studyCard(s))
+}
+```
+
+[Past studies and results [→]{aria-hidden="true"}](projects.qmd){.bml-link}
+:::
+
+::: {.g-col-12 .g-col-lg-5}
+::: {.bml-support}
+### In Australia and need support now? {#need-support}
+
+If you are struggling, talk to your GP or treating team.
+
+- [Cancer Council](https://www.cancer.org.au/support-and-services/cancer-council-13-11-20): [13\ 11\ 20](tel:131120), Monday to Friday, 9am to 5pm
+- [Lifeline](https://www.lifeline.org.au/), any time: [13\ 11\ 14](tel:131114), or text [0477\ 13\ 11\ 14](sms:0477131114)
+- In an emergency, call [000](tel:000).
+:::
+:::
+:::
+
+:::
+
+::: {#partner .column-screen .bml-band .bml-path}
+::: {#take-part .grid .bml-gap-lg .bml-path-head}
+::: {.g-col-12 .g-col-lg-5}
+## Share your lived experience
+:::
+
+::: {.g-col-12 .g-col-lg-7}
+Research works better when people with lived experience help shape it: *nothing about the community without the community*. We are looking for people who have, or have had, cancer, and for family members and carers, to work with us.
+
+This is different from taking part in a study. As a partner, you help us plan and run the research.
+
+::: {.bml-actions}
+[Email us](`r mailtoUrl("Lived experience")`){.bml-btn aria-label="Email us about being a lived experience partner"}
+:::
+:::
+:::
+
+::: {.grid .bml-path-body}
+```{r}
+#| echo: false
+#| output: asis
+
+## open partner roles first, or the fallback line
+if (length(partnerRoles) == 0) {
+  cat("\n::: {.g-col-12 .bml-card .bml-empty}\nNo set roles are open right now, but we'd still love to hear from you.\n:::\n")
+} else {
+  for (r in partnerRoles) cat(partnerCard(r))
+}
+```
+
+::: {.g-col-12 .g-col-md-6 .bml-card}
+::: {.bml-card-top}
+### What you could do {#what-you-could-do}
+:::
+
+- Join an advisory committee for one of our studies.
+- Review videos, websites and information sheets before they reach participants.
+- Help design new studies and choose which questions matter most.
+- Help share what we find with the community.
+:::
+
+::: {.g-col-12 .g-col-md-6 .bml-card}
+::: {.bml-card-top}
+### What we offer {#what-we-offer}
+:::
+
+- You'll be paid for your time, and we cover reasonable expenses.
+- You don't need any research experience. Your experience is the expertise.
+- You'll have a named contact, a plain-language introduction and meetings that fit around your health and commitments.
+- You can step back at any time.
+:::
+
+::: {.g-col-12 .g-col-lg-6 .bml-card}
+::: {.bml-card-top}
+### Community and cancer support organisations {#organisations}
+:::
+
+We partner with organisations on co-design, reaching participants and sharing results. We'd love to hear from you.
+
+[Email us about a partnership [→]{aria-hidden="true"}](`r mailtoUrl("Community partnership")`){.bml-link}
+:::
+
+::: {.g-col-12 .g-col-lg-6 .bml-card}
+::: {.bml-card-top}
+### New to research partnership? {#partner-resources}
+:::
+
+- [Consumer Involvement Pack (PDF)](https://involvementtoolkit.clinicaltrialsalliance.org.au/media/z2odqoly/cip-final.pdf): what being involved in health research means and what to expect, from the Australian Clinical Trials Alliance.
+- [Consumers in Research](https://www.cancer.org.au/support-and-services/cancer-resources-and-information/elearning/consumers-in-research-training): a free online course from Cancer Council Australia, in four short modules.
+- [Research Say](https://mu-researchsay.mysocialpinpoint.com.au/): join the Monash University Clinical Trials Centre's community and have a say in health research.
+- [Statement on Consumer and Community Involvement in Health and Medical Research](https://www.nhmrc.gov.au/about-us/publications/statement-consumer-and-community-involvement-health-medical-research): NHMRC and the Consumers Health Forum of Australia, 2026.
+:::
+:::
+:::
+
+::: {#study .column-screen .bml-band .bml-path}
+::: {.grid .bml-gap-lg .bml-path-head}
+::: {.g-col-12 .g-col-lg-5}
+## Study with us
+:::
+
+::: {.g-col-12 .g-col-lg-7}
+We supervise Honours, Master of Clinical Psychology and PhD students in the School of Psychological Sciences at Monash University. Projects can be research-only or include supervised clinical training in sleep interventions.
+:::
+:::
+
+::: {.grid .bml-path-body}
+::: {.g-col-12 .g-col-lg-5 .bml-card}
+::: {.bml-card-top}
+### What supervision looks like {#supervision}
+:::
+
+- Weekly one-on-one supervision for Masters and PhD students
+- Projects designed with you to finish on time
+- Authorship agreed upfront
+- Workload negotiated with you, not demanded
+
+Your wellbeing comes before project outcomes. Read our [ethics and values](ethics_values.qmd).
+:::
+
+::: {.g-col-12 .g-col-lg-7 .bml-card}
+::: {.bml-card-top}
+### Current project themes {#projects}
+:::
+
+```{r}
+#| echo: false
+#| output: asis
+
+## project themes from the data file, each with an optional funding line
+## (a block below the theme), or a line inviting ideas when the list is empty
+if (!has(info$student_projects)) {
+  cat("Email us to talk about a project that fits your interests.\n")
+} else {
+  cat(paste(vapply(info$student_projects, function(x) sprintf(
+    "- **%s:** %s%s", x$title, x$text,
+    if (has(x$funding)) sprintf(" [%s]{.bml-meta}", x$funding) else ""), ""),
+    collapse = "\n"), "\n")
+}
+```
+:::
+:::
+
+::: {#programs .bml-path-sub}
+For some programs the School decides who supervises whom, so it isn't up to us. You can always get in touch, and name our group as your preference when you're asked.
+:::
+
+::: {.bml-rows .bml-programs}
+```{r}
+#| echo: false
+#| output: asis
+
+if (!has(info$programs)) {
+  cat("\n::: {.bml-row}\nEmail us to talk about which program fits you.\n:::\n")
+} else {
+  for (p in info$programs) cat(programRow(p))
+}
+```
+:::
+
+::: {.grid .bml-path-body}
+::: {.g-col-12 .bml-card}
+::: {.bml-card-top}
+### PhD scholarships {#phd-scholarships}
+:::
+
+::: {.bml-cols-2}
+**International applicants.** To be competitive for Monash University's international scholarships, in our experience you need excellent grades, a degree from a highly ranked university and a first-author peer-reviewed publication.
+
+**Domestic applicants.** We encourage everyone to express interest: domestic scholarships are usually less competitive.
+:::
+:::
+
+::: {.g-col-12 .g-col-lg-7 .bml-card}
+::: {.bml-card-top}
+### What to send {#what-to-send}
+:::
+
+Use the email button for your program (it fills in the subject line), and include:
+
+- which program and start year you're aiming for
+- two or three sentences on which project or topic interests you, and why
+- your CV
+- your transcript (unofficial is fine)
+
+For a PhD, please also include:
+
+- English language test results, if applicable (for example, IELTS)
+- any research experience (a writing sample is optional)
+
+Please get in touch 6 to 8 weeks before the relevant deadline.
+:::
+
+::: {.g-col-12 .g-col-lg-5 .bml-card .bml-night}
+[Everyone is welcome]{.bml-eyebrow}
+
+We especially encourage applications from people historically under-represented in the health sciences. If something is making it hard to apply, contact us to talk about it.
+
+[Email us](`r mailtoUrl("Study enquiry")`){.bml-btn aria-label="Email us about studying with us"}
+:::
+:::
+
+:::
+
+::: {#collaborate .column-screen .bml-band .bml-path}
+::: {.grid .bml-gap-lg .bml-path-head}
+::: {.g-col-12 .g-col-lg-5}
+## Collaborate with us
+:::
+
+::: {.g-col-12 .g-col-lg-7}
+We welcome collaborations on sleep, cancer, emotions and methods. Email us with a few lines about your idea, the timeline and any funding scheme you have in mind.
+
+::: {.bml-actions}
+[Email us](`r mailtoUrl("Collaboration")`){.bml-btn aria-label="Email us about a collaboration"}
+:::
+:::
+:::
+
+::: {.grid .bml-path-body}
+::: {.g-col-12 .g-col-lg-6 .bml-card}
+::: {.bml-card-top}
+### Areas we work in {#areas}
+:::
+
+- **Sleep and insomnia:** CBT-I, stepped and digital care
+- **Cancer and psycho-oncology**
+- **Emotion regulation, coping and stress**
+- **Methods:** daily diary and EMA studies, intensive longitudinal and multilevel modelling, 24-hour time use and compositional data analysis, wearables, and individual participant data and precision modelling
+
+::: {.bml-links .bml-push}
+[Research themes [→]{aria-hidden="true"}](research.qmd){.bml-link} [Publications [→]{aria-hidden="true"}](cv.qmd#publications){.bml-link} [R packages on GitHub [→]{aria-hidden="true"}](https://github.com/jwiley){.bml-link} [Google Scholar [→]{aria-hidden="true"}](https://scholar.google.com/citations?user=bRG3LSQAAAAJ&hl=en){.bml-link}
+:::
+:::
+
+::: {.g-col-12 .g-col-lg-6 .bml-stack}
+::: {.bml-card}
+::: {.bml-card-top}
+### Community of Practice: sleep after cancer {#community-of-practice}
+:::
+
+Our Community of Practice for health professionals and researchers working on sleep after cancer is launching soon.
+
+[Email us to hear when it launches [→]{aria-hidden="true"}](`r mailtoUrl("CoP launch")`){.bml-link}
+:::
+
+::: {.bml-card}
+::: {.bml-card-top}
+### Visiting PhD students and researchers {#visitors}
+:::
+
+We welcome visiting PhD students and researchers. Tell us what you'd like to work on, when and for how long.
+
+[Email us about a visit [→]{aria-hidden="true"}](`r mailtoUrl("Visit")`){.bml-link}
+:::
+:::
+:::
+:::
+
+::: {#work .column-screen .bml-band .bml-path}
+::: {.grid .bml-gap-lg .bml-path-head}
+::: {.g-col-12 .g-col-lg-5}
+## Work with us
+:::
+
+::: {.g-col-12 .g-col-lg-7}
+Research roles in the lab are advertised on [Monash Jobs](https://www.monash.edu/jobs/jobs-at-monash) and listed here when they open.
+:::
+:::
+
+::: {.grid .bml-path-body}
+```{r}
+#| echo: false
+#| output: asis
+
+## open paid roles, or the fallback card
+if (length(roles) == 0) {
+  cat("\n::: {.g-col-12 .g-col-lg-6 .bml-card .bml-empty}\nWe're not recruiting right now.\n:::\n")
+} else {
+  for (r in roles) cat(roleCard(r))
+}
+```
+
+::: {.g-col-12 .g-col-lg-6 .bml-card}
+::: {.bml-card-top}
+### Looking for a fellowship host? {#fellowships}
+:::
+
+Early-career researchers planning a fellowship application in our areas are welcome to get in touch.
+
+[Email us](`r mailtoUrl("Fellowship")`){.bml-btn aria-label="Email us about hosting a fellowship"}
+:::
+:::
+:::

@@ -1,17 +1,17 @@
 /*-- scss:defaults --*/
 
 // Research page (research.qmd) in the "Night and Day" language: day bands,
-// white cards with hairlines, serif headings, numbered teal eyebrows
-// ("03 INSOMNIA & FATIGUE") instead of a colour per theme. Tokens and the
-// shared classes (.bml-band, .bml-card, .bml-plate, .bml-eyebrow, ...) come
-// from styles/bml.scss; this file only adds what the research page needs.
+// white cards with hairlines, serif headings, the theme's short name as the
+// eyebrow ("INSOMNIA & FATIGUE"), never a number or a colour per theme.
+// Tokens and the shared classes (.bml-band, .bml-card, .bml-plate,
+// .bml-eyebrow, ...) come from styles/bml.scss; this file only adds what the
+// research page needs.
 // The figure link and credit rules are used by the home page's plate too.
 //
 // Classes added here:
 //   .bml-intro           the page's opening statement (serif, 26px).
 //   .bml-theme-index     the list of themes beside the intro; items are links
-//                        with .bml-theme-index-name and a .bml-meta paper
-//                        count.
+//                        with .bml-theme-index-name (no counts).
 //   .bml-theme-band      a theme's section (day band), hairline on top.
 //   .bml-theme-head      its heading row: eyebrow and title left, blurb right.
 //   .bml-plate-flat      a .bml-plate on the day page: hairline, no shadow.
@@ -23,8 +23,10 @@
 //   .bml-paper-card      a paper's card in the rail (.bml-card .bml-card-flush).
 //   .bml-textcard        the finding in place of a figure ("Key finding",
 //                        "Study plan"); .bml-textcard-text is its text.
-//   .bml-methods-band    the navy "How we work" band; .bml-method is one way
-//                        of working, .bml-software the R packages.
+//   .bml-methods-band    the closing "How we work" band: a day band holding a
+//                        navy card (.bml-methods-card), so a strip of day
+//                        separates it from the navy footer; .bml-method is
+//                        one way of working, .bml-software the R packages.
 //
 // The page's title banner lines up with its bands' 1168px column (rule at the
 // end, on body.bml-page-research from the front matter's body-classes).
@@ -108,20 +110,24 @@
 
   a:focus-visible { outline-offset: -3px; }
 
-  .bml-num { flex: none; font-size: 1.0625rem; }
   .bml-theme-index-name { flex: 1; font-family: $bml-serif; font-size: 1.0625rem; line-height: 1.35; }
-  .bml-meta { flex: none; }
 }
 
 // ---- theme sections ----
 #quarto-document-content .bml-band.bml-theme-band { padding-top: 0; }
 
-.bml-theme-head {
+// (.grid.bml-theme-head, so its phone gap outranks .grid.bml-gap-lg's in
+// bml.scss)
+.grid.bml-theme-head {
   border-top: 1px solid $bml-line;
   padding-top: 3.5rem;
   margin-bottom: 2rem;
 
   @include media-breakpoint-down(md) { padding-top: 2.25rem; margin-bottom: 1.25rem; --bs-gap: .75rem; }
+
+  // 768-991px: title and blurb are stacked, so the side-by-side 3.5rem gap
+  // would sit between them
+  @include media-breakpoint-only(md) { --bs-gap: 1.25rem; }
 
   h2 {
     margin: .625rem 0 0;
@@ -150,6 +156,12 @@
 
   @include media-breakpoint-down(md) {
     .bml-plate-caption .bml-finding { font-size: 1.0625rem; }
+  }
+
+  // 992-1199px: a 7/5 split rather than 8/4, so the caption isn't ten short
+  // lines beside a mostly empty figure box (as the home page's plate)
+  @media (min-width: 992px) and (max-width: 1199.98px) {
+    grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
   }
 }
 
@@ -220,8 +232,9 @@
     padding: 1.125rem 1.25rem 1.25rem;
 
     > p:first-child { font-size: .9375rem; line-height: 1.5; color: $bml-ink; }
-    .bml-cite { font-size: .8125rem; }
-    .bml-credit { font-size: .75rem; }
+    // one line names the paper: the figure's credit, or the citation on a
+    // text card; both the same size so the cards match
+    :is(.bml-cite, .bml-credit) { font-size: .8125rem; line-height: 1.45; }
     > p:has(> .bml-link) { margin-top: auto; padding-top: .25rem; }
   }
 }
@@ -253,10 +266,26 @@
   border-bottom: 0;
 }
 
-// ---- how we work (navy band) ----
-.bml-band.bml-methods-band {
-  @include media-breakpoint-down(md) { padding-top: 2.25rem; }
+// 992-1199px: four cards share the row, so a text card is only ~160px wide
+// and its finding ran to 12 lines, stretching every thumbnail box in the row
+// (they share a subgrid row) far above and below the figures
+@media (min-width: 992px) and (max-width: 1199.98px) {
+  .bml-paper-card > .bml-textcard.bml-card-media { padding: .875rem; }
+  .bml-paper-card .bml-textcard-text { font-size: .9375rem; }
+}
 
+// ---- how we work (a navy card on day) ----
+.bml-methods-card {
+  gap: 0;
+  padding: 3rem 3.5rem;
+
+  @include media-breakpoint-down(md) { padding: 1.5rem 1.375rem; }
+
+  > .bml-section-head { margin-bottom: 1.75rem; }
+  > .bml-methods { margin-bottom: 2.5rem; }
+}
+
+.bml-band.bml-methods-band {
   h2 {
     font-size: 2.125rem;
     margin: .625rem 0 0;
@@ -297,19 +326,6 @@
 
   > * { margin: 0; }
   .bml-meta { color: $bml-night-faint; }
-}
-
-// The band is the last thing on the page and the footer is navy too: a
-// hairline (inside the content width, like the footer's own) separates them.
-#quarto-document-content .bml-band.bml-methods-band:last-child {
-  padding-bottom: 0;
-
-  > :last-child {
-    padding-bottom: 4rem;
-    border-bottom: 1px solid $bml-night-line;
-
-    @include media-breakpoint-down(md) { padding-bottom: 2.25rem; }
-  }
 }
 
 // ---- title banner: the research page's content is full-width bands on the

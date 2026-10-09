@@ -1,5 +1,8 @@
 ---
 pagetitle: Behavioural Medicine Lab
+description-meta: "A Monash University lab studying sleep, stress and emotions in daily life, and building interventions to help, especially for people affected by cancer."
+open-graph:
+  description: "A Monash University lab studying sleep, stress and emotions in daily life, and building interventions to help, especially for people affected by cancer."
 toc: false
 body-classes: bml-home
 ---
@@ -8,7 +11,8 @@ body-classes: bml-home
 #| include: false
 
 ## Home page ("Night and Day" design): hero with the featured figure,
-## three audience doors, research theme cards, the navy "How we work"
+## three audience doors (linking to the sections of join.qmd, the Get
+## involved page), research theme cards, the navy "How we work"
 ## track-record band, latest papers, team teaser, then Joshua's bio and
 ## Connect links. Built from Pandoc markdown (fenced divs and spans); styles
 ## are in styles/bml.scss and styles/bml-home.scss. The page has no title
@@ -19,6 +23,8 @@ source("package_setup.R", echo = FALSE)
 
 ## ---- track record (stats band and bio), all from the CV spreadsheet and
 ## all rounded down (belowRound) so the page never overclaims ----
+## The bio is an official bio, so it opens with the official title
+## ("Associate Professor Joshua Wiley"); general mentions say "Dr Joshua Wiley".
 position <- currentPosition()
 grantMillions <- belowRound(ciGrantTotalAUD() / 1e6, 1)
 pubs <- as.data.table(read_excel(cvpath, sheet = "Publications"))
@@ -27,10 +33,7 @@ nPubs <- belowRound(nrow(pubs), 10)
 ## citations from every source in the Citations sheet (for the stats band)
 citeSources <- Filter(Negate(is.null), lapply(c("Google Scholar", "Scopus"), getCitations))
 
-## "an Associate Professor" / "a Professor", for the bio
-positionArticle <- if (grepl("^[AEIOU]", position)) "an" else "a"
-
-## CRAN downloads of all the lab's packages (Posit mirror); NULL if none
+## downloads of all the lab's R packages (Posit's CRAN mirror); NULL if none
 downloads <- getDownloads()
 
 ## the stats band: number and label for each figure we have
@@ -57,7 +60,7 @@ asOfMonths <- unique(na.omit(c(
   if (!is.null(downloads) && !is.na(downloads$asOf)) format(downloads$asOf, "%B %Y"))))
 if (length(asOfMonths) == 0) asOfMonths <- format(Sys.Date(), "%B %Y")
 statsNote <- sprintf(
-  "Track record of lab head Dr Joshua Wiley, as of %s, rounded down.%s",
+  "Track record of Dr Joshua Wiley, as of %s, rounded down.%s",
   paste(asOfMonths, collapse = " and "),
   if (!is.null(downloads)) " Downloads from the Posit CRAN mirror." else "")
 
@@ -103,7 +106,7 @@ We study sleep, stress and emotions as life happens, and build *[interventions]{
 :::
 :::
 ::: {.g-col-12 .g-col-lg-4}
-[Especially for people affected by cancer. A lab in the School of Psychological Sciences at Monash University, led by Dr Joshua Wiley.]{.bml-lead .bml-hero-aside}
+[Especially for people affected by cancer. A lab in the School of Psychological Sciences and the Turner Institute for Brain and Mental Health at Monash University, led by Dr Joshua Wiley.]{.bml-lead .bml-hero-aside}
 :::
 :::
 
@@ -142,7 +145,13 @@ if (!is.na(hero)) {
 :::
 
 ::: {.column-screen .bml-band .bml-doors}
+::: {.bml-section-head .align-items-baseline}
+::: {.bml-section-title}
 ## Where would you like to start? {#start}
+:::
+
+[All the ways to get involved\ [→]{aria-hidden="true"}](join.qmd){.bml-link}
+:::
 
 ::: {.grid}
 ::: {.g-col-12 .g-col-lg-4 .bml-card .bml-night .bml-door}
@@ -150,9 +159,11 @@ if (!is.na(hero)) {
 
 [I'm living with or after cancer, or caring for someone who is]{.bml-title}
 
-[We'd love to hear from you if you'd like a voice in shaping our research as a consumer or community partner.]{.bml-soft}
+[Take part in a study, or help shape our research as a paid lived experience partner.]{.bml-soft}
 
-[Ways to take part [→]{aria-hidden="true"}](consumer_community.qmd#take-part){.bml-link .stretched-link}
+::: {.bml-links .bml-push}
+[Take part in a study\ [→]{aria-hidden="true"}](join.qmd#participate){.bml-link} [Share your lived experience\ [→]{aria-hidden="true"}](join.qmd#partner){.bml-link}
+:::
 :::
 
 ::: {.g-col-12 .g-col-lg-4 .bml-card .bml-door}
@@ -162,7 +173,7 @@ if (!is.na(hero)) {
 
 [`r counts$theses` doctoral theses and `r counts$honours` Honours projects completed here since `r counts$since`.`r studentText`]{.bml-soft}
 
-[Study with us [→]{aria-hidden="true"}](team.qmd#join){.bml-link .stretched-link}
+[Study with us\ [→]{aria-hidden="true"}](join.qmd#study){.bml-link .stretched-link}
 :::
 
 ::: {.g-col-12 .g-col-lg-4 .bml-card .bml-door}
@@ -170,10 +181,10 @@ if (!is.na(hero)) {
 
 [I'm looking for papers, methods or collaborators]{.bml-title}
 
-[Our findings by theme, the full publication list, and free R packages for multilevel and compositional data.]{.bml-soft}
+[Our findings by theme, the full publication list and free R packages for multilevel and compositional data.]{.bml-soft}
 
 ::: {.bml-links .bml-push}
-[Research themes [→]{aria-hidden="true"}](research.qmd){.bml-link} [Publications [→]{aria-hidden="true"}](cv.qmd#publications){.bml-link} [Software [→]{aria-hidden="true"}](cv.qmd#software){.bml-link}
+[Research themes\ [→]{aria-hidden="true"}](research.qmd){.bml-link} [Publications\ [→]{aria-hidden="true"}](cv.qmd#publications){.bml-link} [Software\ [→]{aria-hidden="true"}](cv.qmd#software){.bml-link} [Collaborate\ [→]{aria-hidden="true"}](join.qmd#collaborate){.bml-link}
 :::
 :::
 :::
@@ -182,7 +193,7 @@ if (!is.na(hero)) {
 ::: {.column-screen .bml-band .bml-findings}
 ::: {.bml-section-head}
 ::: {.bml-section-title}
-## Our Research {#found}
+## Our research {#found}
 :::
 :::
 
@@ -212,7 +223,7 @@ for (k in seq_along(cardOrder)) {
 [%s]{.%s}
 
 ::: {.bml-card-foot}
-[%s (%s)]{} [[Read more [→]{aria-hidden="true"}](%s){.stretched-link aria-label="Read more: %s (%s), %s"}]{}
+[%s (%s)]{} [[Read more\\ [→]{aria-hidden="true"}](%s){.stretched-link aria-label="Read more: %s (%s), %s"}]{}
 :::
 :::
 :::
@@ -269,7 +280,7 @@ cat(sprintf("::: {.bml-stat-note}\n%s\n:::\n:::\n", statsNote))
 ## Latest from the lab {#latest}
 :::
 
-[All publications [→]{aria-hidden="true"}](cv.qmd#publications){.bml-link}
+[All publications\ [→]{aria-hidden="true"}](cv.qmd#publications){.bml-link}
 :::
 
 ::: {.grid}
@@ -308,7 +319,7 @@ for (i in seq_len(nrow(latest))) {
 ::: {.bml-card .bml-card-flush .bml-teaser}
 ::: {.grid .bml-gap-0}
 ::: {.g-col-12 .g-col-md-7 .bml-cover}
-![](BML_Group_2024.jpg){fig-alt="The Behavioural Medicine Lab team in 2024, smiling together outdoors"}
+![](images/BML_Group_2024.jpg){fig-alt="The Behavioural Medicine Lab team in 2024, smiling together outdoors" loading="lazy"}
 :::
 
 ::: {.g-col-12 .g-col-md-5 .bml-card-body .justify-content-center}
@@ -321,7 +332,7 @@ for (i in seq_len(nrow(latest))) {
 [`r membersText`, led by Dr Joshua Wiley. We aim to be ethical, inclusive and supportive, and we share our data, code and materials where we can.]{.bml-soft}
 
 ::: {.bml-links}
-[Meet the team [→]{aria-hidden="true"}](team.qmd){.bml-link} [Our values [→]{aria-hidden="true"}](ethics_values.qmd){.bml-link}
+[Meet the team\ [→]{aria-hidden="true"}](team.qmd){.bml-link} [Our values\ [→]{aria-hidden="true"}](ethics_values.qmd){.bml-link}
 :::
 :::
 :::
@@ -331,7 +342,7 @@ for (i in seq_len(nrow(latest))) {
 ::: {.column-screen .bml-band .bml-bio}
 ::: {.grid .bml-gap-lg}
 ::: {.g-col-12 .g-col-lg-4 .bml-bio-side}
-![](JWiley_square.jpg){.bml-avatar-photo fig-alt="Portrait headshot of Dr Joshua F. Wiley"}
+![](JWiley_square.jpg){.bml-avatar-photo fig-alt="Portrait of Joshua F. Wiley" loading="lazy"}
 
 ::: {.bml-bio-head}
 [Lab head]{.bml-eyebrow}
@@ -343,26 +354,26 @@ for (i in seq_len(nrow(latest))) {
 :::
 
 ::: {.g-col-12 .g-col-lg-8 .bml-bio-text}
-Dr Joshua Wiley is `r positionArticle` `r position` at Monash University 
-and an Honorary Research Fellow at the Peter MacCallum Cancer Centre.
-He completed a PhD in health psychology at the University of California,
-Los Angeles, followed by postdoctoral training in randomised controlled trials.
+`r position` Joshua Wiley leads the Behavioural Medicine Lab at Monash
+University and is an Honorary Research Fellow at the Peter MacCallum Cancer
+Centre. He completed a PhD in health psychology at the University of
+California, Los Angeles, followed by postdoctoral training in randomised
+controlled trials.
 
 His research follows how sleep, stress and emotions unfold in daily life,
 then uses those findings to build accessible sleep and emotion-regulation
 interventions. His group pairs data from phones and wearables with modern
-statistics, and sharing new methods and tools as free software.
-Our research has been funded by the NHMRC, MRFF, ARC,
-US National Institutes of Health, US Department of Defense, 
-and the Wellcome Trust.
+statistics and shares new methods and tools as free software. His work has
+been funded by the NHMRC, MRFF and ARC, the US National Institutes of
+Health and Department of Defense, and the Wellcome Trust.
 
 ::: {.bml-connect}
-### {{< fa address-card >}} Connect {#connect}
+### [{{< fa address-card >}}]{aria-hidden="true"} Connect {#connect}
 
-- {{< fa brands github >}} [GitHub](https://github.com/jwiley)
-- {{< fa brands google >}} [Google Scholar](https://scholar.google.com/citations?user=bRG3LSQAAAAJ&hl=en)
-- {{< fa brands linkedin >}} [LinkedIn](https://www.linkedin.com/in/joshua-wiley-6a0b2278)
-- {{< fa envelope >}} joshua.wiley _at_ monash _dot_ edu
+- [{{< fa brands github >}}]{aria-hidden="true"} [GitHub](https://github.com/jwiley)
+- [{{< fa brands google >}}]{aria-hidden="true"} [Google Scholar](https://scholar.google.com/citations?user=bRG3LSQAAAAJ&hl=en)
+- [{{< fa brands linkedin >}}]{aria-hidden="true"} [LinkedIn](https://www.linkedin.com/in/joshua-wiley-6a0b2278)
+- [{{< fa envelope >}}]{aria-hidden="true"} [`r labEmail`](`r mailtoUrl()`)
 :::
 :::
 :::

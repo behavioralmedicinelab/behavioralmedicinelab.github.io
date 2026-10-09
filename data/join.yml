@@ -1,0 +1,135 @@
+## Get involved page (join.qmd): everything on it that goes out of date.
+##
+## Edit this file, then rebuild the site (Rscript run_website.R). The page
+## reads it at render time; the file itself is not published (but this repo
+## is public, so keep private notes out of it).
+##
+## - Dates are YYYY-MM-DD.
+## - Text is Markdown: **bold**, *italic*, [link text](https://...).
+## - Put text that contains ": " in quotes ("Age: 18 or older"), so YAML
+##   reads it as one piece of text.
+## - An empty list ([]) is fine: that part of the page then shows a "nothing
+##   open right now" line (or an invitation to email). Every section stays.
+## - If an entry is missing a field the page needs (e.g. a role with no url),
+##   the build stops with a message naming it.
+## - Email buttons go to labEmail (package_setup.R); a `subject` here becomes
+##   the email's subject line "[BML] <subject>", so mail can be filtered.
+
+## ---- Take part in a study (#participate) ---------------------------------
+## A study is shown while its status is recruiting or opening-soon. The first
+## one's `teaser` is the line under the "Take part in a study" card at the top
+## of the page (else "<title>: <status>").
+## Until the HREC approves a study, leave its participant details empty: each
+## line appears once it is filled in, and must match the approved wording.
+studies:
+  - title: SleepSteps
+    status: opening-soon           # recruiting | opening-soon | closed
+    status_label: Opening in 2027  # optional; change or clear it when the status
+                                   # changes (else "Recruiting now" / "Opening soon")
+    teaser: >-
+      SleepSteps, an intervention for people with cancer, opens in 2027. Check
+      back soon.
+    summary: >-
+      SleepSteps will test online and telehealth support for sleep problems
+      after a cancer diagnosis.
+    who_can_take_part: []          # HREC-approved criteria, one per line
+    what_is_involved:              # e.g. "Six online sessions over eight weeks."
+    reimbursement:                 # e.g. "A $20 gift card for each survey."
+    ethics:                        # e.g. "Monash University HREC, project 12345"
+    registration:                  # trial registration, for example:
+    #   registry: ANZCTR
+    #   id: ACTRN12627000000000
+    #   url: https://www.anzctr.org.au/
+    signup:                        # how people sign up or ask to hear when it opens:
+                                   #   (empty)  "Check back soon." and no sign-up
+                                   #            (leave it blank; "no" works too)
+                                   #   email    an email button: "Notify me when it
+                                   #            opens" (or "Register your interest"
+                                   #            once recruiting)
+                                   #   a URL    the same button, to a form or website
+                                   # Only add a sign-up once the HREC allows it.
+    info_url:                      # study website or explanatory statement
+
+
+## ---- Share your lived experience (#partner) -----------------------------
+## Open partner roles, shown as cards above the general information. Each card
+## asks people to use the section's "Email us" button (subject "[BML] Lived
+## experience").
+partner_roles:
+  - title: SleepSteps Consumer Advisory Committee
+    short: SleepSteps advisory committee   # for the card at the top of the page
+    status: recruiting                     # recruiting | opening-soon | closed
+    status_label: Recruiting now
+    summary: >-
+      A group of people with lived experience of cancer, across different
+      cancer types, ages and genders, who advise us on the SleepSteps study.
+      Meetings are online.
+
+
+## ---- Study with us (#study) ---------------------------------------------
+## Project themes students can work on. `funding` (optional) is a small line
+## under the theme.
+student_projects:
+  - title: SleepSteps
+    text: >-
+      a stepped-care trial of cognitive behavioural therapy for insomnia
+      (CBT-I) after cancer. Projects can use the trial data, or focus on
+      intervention development, AI chat support, qualitative work or clinical
+      delivery.
+    funding: >-
+      SleepSteps PhD students may be eligible for a top-up scholarship of
+      $5,000 a year (years 1 to 4).
+  - title: Cognition and cancer
+    text: cognitive prehabilitation for people having cancer surgery.
+  - title: Why people sleep badly
+    text: >-
+      intensive objective and subjective measurement of night waking and
+      falling asleep.
+  - title: Precision treatment
+    text: >-
+      who benefits from CBT-I, using individual participant data from 64
+      trials (7,359 participants).
+  - title: Your own idea
+    text: our daily diary, wearable and trial data can support many questions.
+
+## The programs, in the order shown, as rows of the programs table in Study
+## with us (each row's id, e.g. #honours, is a link target). No dates: `links`
+## go to Monash's own pages for dates, entry and how to apply, and `subject`
+## is the subject line of the row's "Email us" button ("[BML] <subject>").
+programs:
+  - id: honours
+    name: Honours
+    length: 1 year full time, Clayton
+    links:
+      - text: Fourth-year programs at Monash
+        url: https://www.monash.edu/medicine/psych/education-courses-training/fourth-year-programs
+    subject: Honours EoI
+
+  - id: mcp
+    name: Master of Clinical Psychology
+    length: 2 years full time, Clayton
+    links:
+      - text: Masters programs at Monash
+        url: https://www.monash.edu/medicine/psych/education-courses-training/masters
+    subject: Clinical masters EoI
+
+  - id: phd
+    name: PhD
+    length: 3 to 4 years full time
+    links:
+      - text: Research PhD at Monash
+        url: https://www.monash.edu/graduate-research/study/apply
+      - text: Clinical PhDs at Monash
+        url: https://www.monash.edu/medicine/psych/education-courses-training/clinical-doctoral-programs
+    subject: PhD EoI
+
+
+## ---- Work with us (#work) -----------------------------------------------
+## Open paid roles. A role leaves the page after its closing date.
+roles: []
+## For example (change "roles: []" above to "roles:", then add items like
+## this, indented two spaces):
+##  - title: Research Officer, SleepSteps
+##    summary: Coordinate recruitment and data collection for the SleepSteps trial.
+##    closes: 2026-12-01
+##    url: https://careers.pageuppeople.com/513/cw/en/job/000000/

@@ -28,16 +28,18 @@
 //   .bml-labhead       the lab head's navy card (.bml-card .bml-night): round
 //                      photo, then .bml-labhead-text (eyebrow, name, and the
 //                      .bml-labhead-line position line).
-//   .bml-members-note  the "* Joshua Wiley is primary supervisor." line.
+//   .bml-members-note  the "* Dr Wiley is the primary supervisor." line.
 //   .bml-alumni        the alumni band: intro left, a .bml-rows card right.
 //   .bml-row-head      an alumni row's year (.bml-row-label) and, on phones,
 //                      its tally (.bml-row-sum: "9 people · 5 theses").
 //   .bml-alumni-names  the names in a row; each .bml-alumnus is
 //                      .bml-alumni-name, the role, and a .bml-thesis link.
-//   .bml-join          the closing navy "Want to join us?" band (#join):
+//   .bml-join          the closing "Want to join us?" band (#join): a day band
+//                      holding a navy card (.bml-join-card), so a strip of day
+//                      separates it from the navy footer. Inside,
 //                      .bml-join-main (heading, line, pill) and
 //                      .bml-join-aside (a serif line with a hairline on its
-//                      left). It meets the footer; a hairline separates them.
+//                      left).
 
 /*-- scss:rules --*/
 
@@ -351,7 +353,25 @@
   text-decoration: underline;
 }
 
-// ---- "Want to join us?": navy band before the (navy) footer ----
+// ---- "Want to join us?": a navy card on day, before the (navy) footer ----
+.bml-join-card {
+  padding: 3rem 3.5rem;
+
+  @include media-breakpoint-down(md) { padding: 1.5rem 1.375rem; }
+}
+
+// phones: a smaller gap than .grid.bml-gap-lg's (11 column gaps would make the
+// card's grid wider than the card at 320px)
+@include media-breakpoint-down(md) {
+  .bml-join-card .grid.bml-gap-lg { --bs-gap: 1rem; }
+}
+
+// 768-991px: the cells are still stacked, but eleven 3.5rem column gaps are
+// wider than the card, so the text ran into its right padding
+@include media-breakpoint-only(md) {
+  .bml-join-card .grid.bml-gap-lg { column-gap: 1rem; }
+}
+
 .bml-join {
   .bml-join-main {
     display: flex;
@@ -389,15 +409,3 @@
   }
 }
 
-// the band ends the page and meets the navy footer: a hairline (inside the
-// content width, like the footer's own) separates them
-#quarto-document-content .bml-band.bml-join:last-child {
-  padding-bottom: 0;
-
-  > :last-child {
-    padding-bottom: 4rem;
-    border-bottom: 1px solid $bml-night-line;
-
-    @include media-breakpoint-down(md) { padding-bottom: 2.25rem; }
-  }
-}

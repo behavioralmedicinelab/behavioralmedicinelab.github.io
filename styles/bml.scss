@@ -9,7 +9,7 @@
 // else; teal accents. All site CSS lives in styles/*.scss (listed under
 // format.html.theme in run_website.R). Pages never carry <style> blocks or
 // style="..." attributes: they use the classes below through Pandoc markdown,
-// e.g. ::: {.bml-card} ... :::  or  [Study with us ->](team.qmd#join){.bml-link}
+// e.g. ::: {.bml-card} ... :::  or  [Study with us ->](join.qmd#study){.bml-link}
 //
 // CLASS VOCABULARY (all prefixed bml-). A worked example of each pattern is
 // in CLAUDE.md ("Theme and page conventions").
@@ -89,7 +89,6 @@
 //   .bml-statgrid    2-column grid of .bml-stat with hairline dividers (the
 //                    "How we work" band); .bml-stat-note spans the grid.
 //   .bml-statrow     row of .bml-stat with teal 40px numbers (team banner).
-//   .bml-num         serif number inline (e.g. theme "03"), teal.
 //
 // Links and buttons:
 //   .bml-link        bold teal link, no underline until hover ("Meet the team ->");
@@ -98,8 +97,9 @@
 //   .bml-btn-outline outlined pill (ink on day, teal on night).
 //   .bml-chips       wrapping row of chips; .bml-chip: small outlined pill
 //                    (a link or a span), add .bml-mono for package names.
-//   .bml-nav-cta     the navbar's "Take part" item, outlined teal pill (set in
-//                    run_website.R as text: "[Take part]{.bml-nav-cta}").
+//   .bml-nav-cta     the navbar's "Get involved" item, outlined teal pill (set
+//                    in run_website.R as text: "[Get involved]{.bml-nav-cta}");
+//                    filled on the Get involved page itself.
 //
 // Layout helpers:
 //   .bml-section-head heading row: title block left, a link or short
@@ -118,14 +118,20 @@
 //   under the panel (e.g. a photo switcher), .bml-tabs-end to right-align them.
 //
 // Page hooks (front matter body-classes):
-//   bml-page-projects  marks the Projects menu as the current page.
-//   bml-home, bml-page-research, bml-team  scope page rules (home, research,
-//                      team).
+//   bml-page-projects  marks the Projects menu as the current page, and
+//                      scopes the projects page rules.
+//   bml-home, bml-page-research, bml-team, bml-page-join, bml-page-values,
+//   bml-page-cv        scope page rules (home, research, team, get involved,
+//                      values, CV).
+//   bml-page-404       lines the 404 page's title banner up with the 1168px
+//                      column (its content is a .bml-band).
 //
 // Page-specific styles live in their own files, using the tokens below:
-// styles/bml-home.scss (index.qmd), styles/bml-research.scss (research.qmd)
-// and styles/bml-team.scss (team.qmd). A new page's rules go in a new
-// styles/bml-<page>.scss added to the theme list in run_website.R.
+// styles/bml-home.scss (index.qmd), styles/bml-research.scss (research.qmd),
+// styles/bml-team.scss (team.qmd), styles/bml-join.scss (join.qmd),
+// styles/bml-projects.scss (projects.qmd), styles/bml-values.scss
+// (ethics_values.qmd) and styles/bml-cv.scss (cv.qmd). A new page's rules go
+// in a new styles/bml-<page>.scss added to the theme list in run_website.R.
 // ===========================================================================
 
 // ---- colour tokens (exact values from the design file) ----
@@ -328,12 +334,12 @@ hr {
   opacity: 1;
 }
 
-// long bare URLs and DOIs (CV publication lists, consumer_community.qmd) break
+// long bare URLs and DOIs (e.g. the CV's publication lists) break
 // instead of widening the page on phones, which would push the menu button
 // (on the right) off screen
 main.content :is(p, li, dd) { overflow-wrap: break-word; }
 
-// inline code is used for date labels in the CV (e.g. `2010 - 2015`)
+// inline code (e.g. a package name) as a small tinted chip
 p code:not(.sourceCode),
 li code:not(.sourceCode) {
   border-radius: 4px;
@@ -468,8 +474,8 @@ body.bml-page-projects #quarto-header .navbar-nav .nav-item.dropdown > .nav-link
   color: $bml-night;
 }
 
-// "Take part": outlined teal pill. The text is "[Take part]{.bml-nav-cta}" in
-// run_website.R; the span keeps the teal colour where :has() is unsupported.
+// "Get involved": outlined teal pill. The text is "[Get involved]{.bml-nav-cta}"
+// in run_website.R; the span keeps the teal colour where :has() is unsupported.
 .bml-nav-cta {
   color: $bml-teal;
   font-weight: 700;
@@ -484,7 +490,8 @@ body.bml-page-projects #quarto-header .navbar-nav .nav-item.dropdown > .nav-link
 }
 
 #quarto-header .navbar-nav .nav-link:has(.bml-nav-cta):hover,
-#quarto-header .navbar-nav .nav-link:has(.bml-nav-cta):focus-visible {
+#quarto-header .navbar-nav .nav-link:has(.bml-nav-cta):focus-visible,
+#quarto-header .navbar-nav .nav-link.active:has(.bml-nav-cta) {
   background-color: $bml-teal;
   color: $bml-night;
   .bml-nav-cta { color: $bml-night; }
@@ -533,9 +540,14 @@ body.bml-page-projects #quarto-header .navbar-nav .nav-item.dropdown > .nav-link
   border-radius: $bml-radius;
 }
 
-#quarto-header .navbar-toggler:focus,
-#quarto-header .navbar-toggler:focus-visible {
+// the ring is for keyboard focus only: Chrome focuses the button on a tap,
+// and a ring left around it after tapping looks like a stuck state
+#quarto-header .navbar-toggler:focus {
   box-shadow: none;
+  outline: 0;
+}
+
+#quarto-header .navbar-toggler:focus-visible {
   outline: 3px solid $bml-teal;
   outline-offset: 0;
 }
@@ -558,7 +570,7 @@ body.bml-page-projects #quarto-header .navbar-nav .nav-item.dropdown > .nav-link
   #quarto-header .navbar-nav .nav-item:has(.bml-nav-cta) { margin-left: .375rem; }
 }
 
-// collapsed menu: large serif links with hairlines, Take part as a full pill
+// collapsed menu: large serif links with hairlines, Get involved as a full pill
 @include media-breakpoint-down(lg) {
   #quarto-header .navbar { padding-top: .5rem; padding-bottom: .5rem; }
 
@@ -569,6 +581,13 @@ body.bml-page-projects #quarto-header .navbar-nav .nav-item.dropdown > .nav-link
   #quarto-header .navbar-toggler { margin-right: -.5rem; }
 
   .navbar .navbar-title { font-size: 1.0625rem; }
+
+  // small phones (most Android phones are 360px): the full lab name must fit
+  // beside the logo and the menu button rather than being clipped
+  @media (max-width: 399.98px) {
+    .navbar .navbar-title { font-size: min(1.0625rem, 4.4vw); }
+    .navbar .navbar-brand-logo { flex-shrink: 0; }
+  }
 
   #quarto-header .navbar-collapse { padding: .5rem .25rem 1.25rem; }
 
@@ -655,6 +674,21 @@ body.bml-page-projects #quarto-header .navbar-nav .nav-item.dropdown > .nav-link
   }
 
   a { color: $bml-teal; }
+}
+
+// the 404 page's content is a full-width band, so its banner title lines up
+// with the bands' 1168px column (as on the research page)
+body.bml-page-404 #title-block-header .quarto-title-banner .quarto-title {
+  grid-column: screen-start / screen-end;
+  padding-left: max(#{$bml-gutter}, calc((100% - #{$bml-max}) / 2));
+  padding-right: max(#{$bml-gutter}, calc((100% - #{$bml-max}) / 2));
+}
+
+// and its band starts closer to the banner, as the research intro does
+#quarto-document-content .bml-band.bml-404 {
+  padding-top: 2.5rem;
+
+  @include media-breakpoint-down(md) { padding-top: 1.5rem; }
 }
 
 // ---------------------------------------------------------------------------
@@ -760,8 +794,13 @@ footer.footer a:focus-visible { outline-color: $bml-teal; }
   font-weight: 700;
 }
 
-// the address is plain text (not a link), so it isn't teal like the links
-.bml-footer-email { color: $bml-night-text; }
+// the email address (a mailto link): brighter than the other links. It
+// breaks after the "@" (a <wbr> from run_website.R), and anywhere else only
+// if it must, so the footer columns never widen a phone screen.
+footer.footer a.bml-footer-email {
+  color: $bml-night-text;
+  overflow-wrap: break-word;
+}
 
 // ---------------------------------------------------------------------------
 // Bands and surfaces
@@ -986,11 +1025,6 @@ p:has(> img.bml-avatar-photo:only-child) { margin: 0; flex: none; }
 // ---------------------------------------------------------------------------
 // Numbers
 // ---------------------------------------------------------------------------
-.bml-num {
-  font-family: $bml-serif;
-  color: var(--bml-link);
-}
-
 .bml-stat {
   display: flex;
   flex-direction: column;
@@ -1134,7 +1168,7 @@ p:has(> img.bml-avatar-photo:only-child) { margin: 0; flex: none; }
 }
 
 // an image that fills its box (cropped, not resized), e.g. the team photo
-// beside the team teaser text: ::: {.bml-cover} ![](BML_Group_2024.jpg) :::
+// beside the team teaser text: ::: {.bml-cover} ![](images/BML_Group_2024.jpg) :::
 .bml-cover {
   position: relative;
   min-height: 240px;
@@ -1407,6 +1441,32 @@ a.bml-chip:focus-visible {
 
 @include media-breakpoint-down(md) {
   .grid.bml-gap-lg { --bs-gap: 1.5rem; }
+
+  // A Quarto grid has 12 columns, so 11 column gaps: at 320px eleven 1.5rem
+  // gaps are wider than the content, and the grid would run into the right
+  // margin. On phones the cells are full width anyway, so cap the column gap
+  // (no change above about 340px; row gaps are untouched).
+  .grid { column-gap: min(var(--bs-gap, 1.5rem), 8%); }
+}
+
+// Quarto's back-to-top button (website: back-to-top-navigation in
+// run_website.R): a navy pill that appears when a long page is scrolled back up
+#quarto-back-to-top {
+  background-color: $bml-night;
+  color: #ffffff;
+  border-radius: 999px;
+  box-shadow: $bml-shadow-hover;
+  font-size: .875rem;
+  font-weight: 700;
+  padding: .5rem 1rem;
+
+  &:hover,
+  &:focus-visible {
+    background-color: $bml-teal-dark;
+    color: #ffffff;
+  }
+
+  &:focus-visible { outline: 3px solid $bml-teal-dark; outline-offset: 2px; }
 }
 
 // ---------------------------------------------------------------------------
@@ -1490,7 +1550,7 @@ a.bml-chip:focus-visible {
 }
 
 // ---------------------------------------------------------------------------
-// Table of contents (CV, Projects)
+// Table of contents (CV)
 // ---------------------------------------------------------------------------
 #TOC,
 nav[role="doc-toc"] {
@@ -1513,19 +1573,3 @@ nav[role="doc-toc"] {
 // ---------------------------------------------------------------------------
 // Page details
 // ---------------------------------------------------------------------------
-// Consumers & Community: the campus map (a raw <iframe>, which markdown
-// cannot express) inside ::: {.ratio .ratio-4x3 .bml-map}
-.bml-map {
-  max-width: 600px;
-  border: 1px solid $bml-line;
-  border-radius: $bml-radius;
-  overflow: hidden;
-
-  iframe { border: 0; }
-}
-
-// CV: the portrait at the top of the page
-.bml-portrait img,
-img.bml-portrait {
-  border-radius: $bml-radius;
-}

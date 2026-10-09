@@ -1,0 +1,282 @@
+/*-- scss:defaults --*/
+
+// CV page (cv.qmd, body-classes: bml-page-cv) in the "Night and Day"
+// language, kept as a document rather than cards: one readable column on the
+// day page, serif section headings with a hairline between sections, dates in
+// a left column, teal list markers. Tokens and shared classes (.bml-chips,
+// .bml-chip, .bml-eyebrow, .bml-meta, .bml-tabs ...) come from styles/bml.scss.
+//
+// Layout: the title banner and the content line up with the site's 1168px
+// column (as on the research page). From 992px the content column is at most
+// 50rem wide, with the "On this page" list at the right end of the 1168px
+// column; below 992px that list is hidden and .bml-cv-jump takes its place.
+//
+// Classes added here:
+//   .bml-cv-jump      "On this page" chips at the top (phones and tablets only):
+//                     ::: {.bml-cv-jump role="navigation" aria-label="..."}
+//                     with an eyebrow and a ::: {.bml-chips} of section links.
+//   .bml-cv-intro     portrait (.bml-cv-portrait, cropped square by CSS only)
+//                     beside the Academic summary list (.bml-cv-summary).
+//   .bml-cv-row       an entry: a label left (.bml-cv-date or .bml-cv-year)
+//                     and the entry right (every later child sits in the right
+//                     column from 768px; stacked on phones). Hairlines between
+//                     rows.
+//   .bml-cv-date      a date range (small, bold, dark teal), as a row label or
+//                     at the start of a list item.
+//   .bml-cv-year      a year heading a group of references (serif, dark teal).
+//   .bml-cv-list      a numbered list of references or items (raw <ol> with
+//                     <li value>, as the CV counts down).
+//   .bml-cv-note      a short note under a heading (e.g. the trainee legend).
+//   .bml-cv-charts    the pill tabsets holding the publication and citation
+//                     charts.
+//   .bml-cv-numbers   the collapsed callout with the charts' numbers as tables
+//                     (::: {.callout-note .bml-cv-numbers collapse="true" ...}).
+
+
+
+/*-- scss:rules --*/
+
+// ---- layout: title banner and content on the 1168px column ----
+body.bml-page-cv #title-block-header .quarto-title-banner .quarto-title {
+  grid-column: screen-start / screen-end;
+  padding-left: max(#{$bml-gutter}, calc((100% - #{$bml-max}) / 2));
+  padding-right: max(#{$bml-gutter}, calc((100% - #{$bml-max}) / 2));
+}
+
+// from 992px: content column (max 50rem) from the column's left edge, the
+// table of contents (14rem) at its right edge
+@include media-breakpoint-up(lg) {
+  body.bml-page-cv #quarto-content.page-columns {
+    grid-template-columns:
+      [screen-start] max(#{$bml-gutter}, calc((100% - #{$bml-max}) / 2))
+      [screen-start-inset page-start page-start-inset body-start-outset body-start body-content-start] minmax(0, 50rem)
+      [body-content-end] minmax(2.5rem, 1fr)
+      [body-end body-end-outset] 14rem
+      [page-end-inset page-end] max(#{$bml-gutter}, calc((100% - #{$bml-max}) / 2))
+      [screen-end-inset screen-end];
+  }
+}
+
+// below 992px: one column (the jump chips replace the table of contents)
+@include media-breakpoint-down(lg) {
+  body.bml-page-cv #quarto-margin-sidebar { display: none; }
+
+  body.bml-page-cv #quarto-content.page-columns {
+    grid-template-columns:
+      [screen-start] $bml-gutter
+      [screen-start-inset page-start page-start-inset body-start-outset body-start body-content-start] minmax(0, 50rem)
+      [body-content-end] minmax(0, 1fr)
+      [body-end body-end-outset page-end-inset page-end] $bml-gutter
+      [screen-end-inset screen-end];
+  }
+}
+
+// ---- headings: serif, sentence case, a hairline between sections ----
+body.bml-page-cv main.content {
+  > section.level2 ~ section.level2 {
+    margin-top: 3.5rem;
+    padding-top: 2.75rem;
+    border-top: 1px solid $bml-line;
+
+    @include media-breakpoint-down(md) {
+      margin-top: 2.5rem;
+      padding-top: 2rem;
+    }
+  }
+
+  h2 {
+    margin-top: 0;
+    margin-bottom: 1.25rem;
+  }
+
+  h3 {
+    font-size: 1.375rem;
+    margin-top: 2.5rem;
+    margin-bottom: .75rem;
+  }
+
+  h4 {
+    font-size: 1.1875rem;
+    margin-top: 2rem;
+    margin-bottom: .75rem;
+  }
+
+  h2 + h3,
+  .bml-cv-note + section.level3 > h3:first-child { margin-top: 1.25rem; }
+
+  // a link in bold text stays bold (Quarto sets links to 400)
+  strong a { font-weight: inherit; }
+
+  // lists: teal markers, a little air between items
+  li::marker { color: $bml-teal-dark; }
+  ol > li::marker { font-weight: 600; font-variant-numeric: tabular-nums; }
+  li + li { margin-top: .5rem; }
+}
+
+// ---- "On this page" chips (below 992px, where the TOC is hidden) ----
+.bml-cv-jump {
+  margin-bottom: 2.5rem;
+
+  .bml-eyebrow { margin-bottom: .75rem; }
+
+  .bml-chip {
+    min-height: 2.25rem;
+    font-size: .875rem;
+    padding-left: .875rem;
+    padding-right: .875rem;
+  }
+
+  @include media-breakpoint-up(lg) { display: none; }
+}
+
+// ---- portrait and Academic summary ----
+.bml-cv-intro {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 1.25rem 2.5rem;
+  align-items: start;
+
+  > * { margin: 0; }
+
+  // the photo is cropped to a square box by CSS only (never resized)
+  img.bml-cv-portrait {
+    display: block;
+    width: 7.5rem;
+    height: 7.5rem;
+    max-width: none;
+    object-fit: cover;
+    border-radius: $bml-radius;
+  }
+
+  @include media-breakpoint-up(md) {
+    grid-template-columns: 10rem minmax(0, 1fr);
+
+    img.bml-cv-portrait { width: 10rem; height: 10rem; }
+  }
+}
+
+.bml-cv-summary ul {
+  margin: 0;
+  padding-left: 1.25rem;
+}
+
+// ---- entries: date left, entry right ----
+.bml-cv-row {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: .375rem 1.75rem;
+  padding: 1rem 0;
+
+  > * { margin: 0; }
+
+  & + & { border-top: 1px solid $bml-line-soft; }
+
+  @include media-breakpoint-up(md) {
+    grid-template-columns: 9rem minmax(0, 1fr);
+
+    > :not(:first-child) { grid-column: 2; }
+  }
+}
+
+.bml-cv-date {
+  font-size: .875rem;
+  font-weight: 600;
+  line-height: 1.5;
+  color: $bml-teal-dark;
+  font-variant-numeric: tabular-nums;
+}
+
+// as a row's label it sits level with the entry's first line
+.bml-cv-row > p:first-child .bml-cv-date {
+  display: block;
+  padding-top: .125rem;
+}
+
+// at the start of a list item
+li .bml-cv-date {
+  margin-right: .375rem;
+
+  // the same width for every date ("2018–present" is about 100px), so the
+  // entries line up; phones keep the date inline
+  @include media-breakpoint-up(md) { display: inline-block; min-width: 6.25rem; }
+}
+
+.bml-cv-year {
+  display: block;
+  font-family: $bml-serif;
+  font-size: 1.375rem;
+  line-height: 1.2;
+  color: $bml-teal-dark;
+}
+
+// the numbers sit in the list's left padding (enough for "163.")
+.bml-cv-list {
+  margin: 0;
+  padding-left: 2.75em;
+  font-size: .9375rem;
+  line-height: 1.55;
+
+  @include media-breakpoint-down(md) { padding-left: 2.25em; }
+}
+
+.bml-cv-row .bml-meta { margin-top: .25rem; }
+
+.bml-cv-note {
+  display: block;
+  font-size: .875rem;
+  line-height: 1.5;
+  color: $bml-muted;
+}
+
+p:has(> .bml-cv-note:only-child) { margin-bottom: 1.25rem; }
+
+// ---- charts ----
+.panel-tabset.bml-cv-charts {
+  > .nav-tabs { margin-bottom: .875rem; }
+
+  .html-widget.plotly { margin-bottom: .75rem; }
+
+  // the plotly output overflows by 1px, which made Quarto's overflow-x: auto
+  // box a keyboard-focusable scroller in Chrome (an extra tab stop)
+  .cell-output-display { overflow: visible; }
+}
+
+// the table of contents: the site's dark-teal focus ring, not Bootstrap's grey
+// glow (inset, because the sidebar clips overflow)
+body.bml-page-cv #TOC .nav-link:focus-visible {
+  box-shadow: none;
+  outline: 3px solid $bml-teal-dark;
+  outline-offset: -3px;
+}
+
+// the charts' numbers: a collapsed callout holding two compact tables
+body.bml-page-cv div.callout.bml-cv-numbers {
+  border-left-color: $bml-teal-dark;
+  margin-top: 1.5rem;
+
+  .callout-title-container { font-weight: 600; color: $bml-ink; }
+
+  table {
+    font-size: .875rem;
+    font-variant-numeric: tabular-nums;
+  }
+
+  // narrow cells, so a table fits a phone without scrolling
+  .table > :not(caption) > * > * { padding: .375rem .5rem; }
+
+  @include media-breakpoint-down(sm) {
+    table { font-size: .8125rem; }
+    .table > :not(caption) > * > * { padding: .375rem .25rem; }
+    .callout-body-container { padding-left: .25rem; padding-right: .25rem; }
+  }
+
+  caption {
+    caption-side: top;
+    color: $bml-muted;
+    font-size: .8125rem;
+  }
+
+  .callout-body-container { overflow-x: auto; }
+}
+
+// (Quarto's back-to-top button is styled site-wide in styles/bml.scss.)

@@ -1,0 +1,235 @@
+/*-- scss:defaults --*/
+
+// Projects page (projects.qmd, body class .bml-page-projects) in the "Night
+// and Day" language: day bands, white cards with hairlines, serif headings.
+// Tokens and the shared classes (.bml-band, .bml-card, .bml-chips, .bml-link
+// ...) come from styles/bml.scss; this file only adds what the page needs.
+//
+// Classes added here:
+//   .bml-projects-intro  the opening band: the lead line
+//                        (.bml-projects-lead), a "Take part in a study" link
+//                        and the jump list of groups (.bml-projects-jump, a
+//                        row of .bml-chip links).
+//   .bml-projects-band   a group's section (a day band): .bml-projects-head is
+//                        its heading row (h2 left, a line about the group
+//                        right, hairline on top); .bml-projects-list holds the
+//                        group's cards, one under another.
+//   .bml-project         a project's card (a .bml-card): .bml-project-head
+//                        (the h3, which carries the project's anchor id, then
+//                        .bml-project-meta: status pill and years) and
+//                        .bml-project-body (the workbook's Summary). From
+//                        992px the head sits left and the body right, lined up
+//                        with the heading row's two columns; stacked below.
+//   .bml-project-status  the status pill, always words: "Completed" (grey
+//                        ring before it); .bml-project-current is the filled
+//                        one ("Current", teal, a dot before it). The same look
+//                        as .bml-status on the Get involved page.
+//   .bml-project-years   the years beside it ("2020–2022", "2020–present").
+//
+// The page's title banner lines up with its bands' 1168px column (rule at the
+// end, on body.bml-page-projects from the front matter's body-classes).
+
+// the heading row's grid gap (Quarto grid with .bml-gap-lg) and the cards'
+// padding from 768px; together they line the cards' two columns up with the
+// heading row's
+$bml-projects-gap: 3.5rem;
+$bml-projects-pad: 2rem;
+
+
+/*-- scss:rules --*/
+
+// ---- intro ----
+#quarto-document-content .bml-band.bml-projects-intro {
+  padding-top: 3rem;
+
+  @include media-breakpoint-down(md) { padding-top: 1.5rem; }
+
+  > p { margin-bottom: 0; }
+  > p:has(> .bml-projects-lead) { margin-bottom: 1.25rem; }
+}
+
+.bml-projects-lead {
+  display: block;
+  max-width: 46rem;
+  font-family: $bml-serif;
+  font-size: 1.625rem;
+  line-height: 1.45;
+  color: $bml-ink;
+  text-wrap: pretty;
+
+  @include media-breakpoint-down(md) { font-size: 1.25rem; }
+}
+
+.bml-chips.bml-projects-jump {
+  margin-top: 1.75rem;
+
+  @include media-breakpoint-down(md) { margin-top: 1.25rem; }
+
+  .bml-chip {
+    min-height: 2rem;
+    font-weight: 600;
+  }
+}
+
+// ---- a group: heading row, then its cards ----
+#quarto-document-content .bml-band.bml-projects-band { padding-top: 0; }
+
+.bml-projects-head {
+  border-top: 1px solid $bml-line;
+  padding-top: 3.5rem;
+  margin-bottom: 2rem;
+
+  @include media-breakpoint-up(lg) { align-items: baseline; }
+
+  @include media-breakpoint-down(md) { padding-top: 2.25rem; margin-bottom: 1.25rem; }
+
+  h2 {
+    margin: 0;
+    font-size: 2.125rem;
+    line-height: 1.2;
+
+    @include media-breakpoint-down(md) { font-size: 1.625rem; }
+  }
+
+  p {
+    margin: 0;
+    color: $bml-ink-soft;
+    font-size: 1.0625rem;
+    line-height: 1.6;
+  }
+}
+
+// below 992px the title and its line stack: a small gap between them, not
+// the desktop column gap
+@include media-breakpoint-down(lg) {
+  .grid.bml-gap-lg.bml-projects-head { --bs-gap: .625rem; }
+}
+
+.bml-projects-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+
+  @include media-breakpoint-down(md) { gap: .875rem; }
+}
+
+// ---- a project's card ----
+.bml-card.bml-project {
+  gap: 1.125rem;
+
+  @include media-breakpoint-up(md) { padding: $bml-projects-pad; }
+
+  // from 992px: head left, Summary right. The left column ends where the
+  // heading row's left column (5 of 12, gap 3.5rem) ends, so the Summary
+  // starts in line with the group's line above it:
+  // 5/12 of the card's content box, less (2 x padding + 7 x gap + 2px border) / 12
+  @include media-breakpoint-up(lg) {
+    display: grid;
+    grid-template-columns:
+      calc(100% * 5 / 12 - (2 * #{$bml-projects-pad} + 7 * #{$bml-projects-gap} + 2px) / 12)
+      minmax(0, 1fr);
+    column-gap: $bml-projects-gap;
+    align-items: start;
+  }
+}
+
+.bml-project-head {
+  h3 {
+    margin: 0;
+    font-size: 1.625rem;
+    line-height: 1.25;
+    overflow-wrap: break-word;
+
+    @include media-breakpoint-down(md) { font-size: 1.3125rem; }
+  }
+}
+
+// a jump from the Projects menu (or the jump list) shows the card's top edge,
+// or the group's hairline, rather than putting the heading at the very top.
+// (Pandoc merges a div holding only a heading into the heading's section, so
+// the id is on .bml-project-head itself, and on the heading row's column.)
+.bml-page-projects .bml-project section[id] { scroll-margin-top: 3rem; }
+.bml-page-projects .bml-projects-head section[id] { scroll-margin-top: 4.5rem; }
+
+@include media-breakpoint-down(md) {
+  .bml-page-projects .bml-project section[id] { scroll-margin-top: 2.25rem; }
+  .bml-page-projects .bml-projects-head section[id] { scroll-margin-top: 3rem; }
+}
+
+.bml-project-meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: .5rem .75rem;
+  margin-top: .875rem;
+
+  > p { display: contents; }
+}
+
+.bml-project-years {
+  font-size: .9375rem;
+  font-weight: 600;
+  line-height: 1.3;
+  color: $bml-muted;
+  font-variant-numeric: tabular-nums;
+}
+
+// ---- status pill: always words; the ring or dot is decoration ----
+.bml-project-status {
+  display: inline-flex;
+  align-items: center;
+  gap: .4375rem;
+  padding: .25rem .6875rem;
+  border: 1px solid $bml-muted;
+  border-radius: 999px;
+  font-size: .75rem;
+  font-weight: 700;
+  letter-spacing: .06em;
+  line-height: 1.3;
+  text-transform: uppercase;
+  color: $bml-muted;
+
+  &::before {
+    content: "";
+    flex: none;
+    width: .5rem;
+    height: .5rem;
+    border: 1.5px solid currentColor;
+    border-radius: 50%;
+  }
+}
+
+.bml-project-status.bml-project-current {
+  background-color: $bml-teal-dark;
+  border-color: $bml-teal-dark;
+  color: #ffffff;
+
+  &::before { background-color: currentColor; }
+}
+
+// ---- the Summary (workbook text: paragraphs, line breaks, links, icons) ----
+.bml-project-body {
+  min-width: 0;
+  font-size: 1rem;
+  line-height: 1.7;
+  color: $bml-ink;
+
+  > p { margin: 0 0 .875rem; }
+  > :last-child { margin-bottom: 0; }
+
+  // the icons before "For more info", "This clinical trial is registered" ...
+  :is(i, span)[class*="fa-"] {
+    width: 1.25em;
+    text-align: center;
+    color: $bml-teal-dark;
+  }
+}
+
+// ---- title banner: the page's content is full-width bands on the 1168px
+// column, so its banner title lines up with them (and the navbar) rather
+// than with Quarto's narrower body column ----
+body.bml-page-projects #title-block-header .quarto-title-banner .quarto-title {
+  grid-column: screen-start / screen-end;
+  padding-left: max(#{$bml-gutter}, calc((100% - #{$bml-max}) / 2));
+  padding-right: max(#{$bml-gutter}, calc((100% - #{$bml-max}) / 2));
+}

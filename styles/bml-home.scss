@@ -56,6 +56,15 @@ p:has(> .bml-phone-only:only-child) { margin: 0; }
   display: block;
 }
 
+// Quarto's grid has 12 columns and 11 column gaps: at 320px eleven 1.5rem
+// gaps (280px) are wider than the content (269px), so every grid ran 11px
+// into the right gutter. Below 768px every column on these two pages is
+// .g-col-12 (full width), so only the row gap is needed. Home and research
+// pages only.
+@include media-breakpoint-down(md) {
+  :is(.bml-home, .bml-page-research) .grid { column-gap: 0; }
+}
+
 // section headings: 34px serif (design), 26px on phones
 .bml-home .bml-band h2 {
   font-size: 2.125rem;
@@ -75,7 +84,8 @@ p:has(> .bml-phone-only:only-child) { margin: 0; }
   @include media-breakpoint-down(md) { padding-top: 1.75rem; --bml-day-h: 11rem; }
 }
 
-.bml-hero-head {
+// (.grid.bml-hero-head, to outrank .grid.bml-gap-lg's phone gap in bml.scss)
+.grid.bml-hero-head {
   margin-bottom: 3.5rem;
 
   @include media-breakpoint-down(md) { margin-bottom: 1.5rem; --bs-gap: 1.25rem; }
@@ -90,13 +100,29 @@ p:has(> .bml-phone-only:only-child) { margin: 0; }
 
 .bml-home-hero .bml-display {
   @include media-breakpoint-down(md) { line-height: 1.18; }
+
+  // Below 390px the 36px headline needs 6 or 7 lines: Chrome only balances up
+  // to 6, leaving "build" and "help." alone on lines, and at 375-389px the 6
+  // lines are ragged ("stress and", "interventions" alone). At this size it
+  // is 4 or 5 balanced lines, in Chrome and WebKit (1.75rem was a pixel away
+  // from 7 lines at 320px). A rem size, not vw, so it still grows with the
+  // reader's zoom.
+  @media (max-width: 389.98px) { font-size: 1.6875rem; }
 }
 
-// the plate's figure links to the full-size image
-.bml-plate-figure .bml-figlink img { max-height: 380px; }
+// the plate's figure links to the full-size image (scoped to the hero: the
+// research page's featured figures may be taller)
+.bml-home-hero .bml-plate-figure .bml-figlink img { max-height: 380px; }
 
 @include media-breakpoint-up(lg) {
   .bml-home-hero .bml-plate-caption { padding-bottom: 2rem; }
+}
+
+// 992-1199px: an 8/4 split leaves the caption about 250px wide, so the
+// finding runs to ten short lines and the figure floats in a tall, mostly
+// empty box; 7/5 gives the caption room (the research page's plates too)
+@media (min-width: 992px) and (max-width: 1199.98px) {
+  .bml-home-hero .bml-plate { grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); }
 }
 
 @include media-breakpoint-down(lg) {
@@ -112,12 +138,9 @@ p:has(> .bml-phone-only:only-child) { margin: 0; }
 
   @include media-breakpoint-down(md) { padding-top: 2.25rem; padding-bottom: .5rem; }
 
-  > section > h2,
-  > h2 { margin-bottom: 1.75rem; }
-
-  @include media-breakpoint-down(md) {
-    > section > h2,
-    > h2 { margin-bottom: 1rem; }
+  // heading left, "All the ways to get involved ->" right
+  .bml-section-head {
+    @include media-breakpoint-down(md) { margin-bottom: 1rem; gap: .5rem; }
   }
 }
 
@@ -196,15 +219,8 @@ p:has(> .bml-phone-only:only-child) { margin: 0; }
 }
 
 .bml-theme-card .bml-eyebrow,
-.bml-theme-index .bml-num,
 .bml-theme-head .bml-eyebrow {
   letter-spacing: .08em;
-}
-
-.bml-eyebrow .bml-num {
-  font-size: .9375rem;
-  letter-spacing: 0;
-  margin-right: .625rem;
 }
 
 .bml-theme-card .bml-finding { font-size: 1.3125rem; }
@@ -354,4 +370,11 @@ p:has(> .bml-phone-only:only-child) { margin: 0; }
   .bi,
   .svg-inline--fa,
   i[class*="fa-"] { color: $bml-teal-dark; margin-right: .375rem; }
+}
+
+// below 360px the card's padding leaves the email address too little room
+// (it broke mid-word and left the envelope icon alone on a line)
+@media (max-width: 359.98px) {
+  .bml-connect { padding: 1.25rem 1rem; }
+  .bml-connect li { font-size: .9375rem; }
 }

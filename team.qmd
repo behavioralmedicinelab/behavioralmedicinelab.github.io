@@ -1,5 +1,11 @@
 ---
 pagetitle: Team
+description-meta: "Meet the Behavioural Medicine Lab at Monash University, led by Dr Joshua Wiley: our current students, postdocs and staff, and our alumni."
+open-graph:
+  title: "Team – Behavioural Medicine Lab"
+  description: "Meet the Behavioural Medicine Lab at Monash University, led by Dr Joshua Wiley: our current students, postdocs and staff, and our alumni."
+image: images/BML_Group_2024.jpg
+image-alt: "Group photo of the Behavioural Medicine Lab in 2024"
 toc: false
 body-classes: bml-team
 aliases:
@@ -12,11 +18,12 @@ aliases:
 ## Team page ("Night and Day" design): navy hero with the computed lab counts
 ## and the group photos (a tabset of years) across the night/day line; current
 ## members (a tabset of roles drawn as pills; the lab head card first); alumni
-## by year; and the navy "Want to join us?" band (#join, which the footer's
-## "Study with us" links to). Built from Pandoc markdown (fenced divs and
-## spans) that the chunks below cat(); styles are in styles/bml.scss and
-## styles/bml-team.scss. The page has no title (so no title banner): the
-## hero's .bml-display is the page heading.
+## by year; and the "Want to join us?" navy card (#join, kept for old links)
+## on the day background before the footer, which points to the Get involved
+## page (join.qmd). Built from Pandoc
+## markdown (fenced divs and spans) that the chunks below cat(); styles are in
+## styles/bml.scss and styles/bml-team.scss. The page has no title (so no
+## title banner): the hero's .bml-display is the page heading.
 
 ## load packages and setup
 source("package_setup.R", echo = FALSE)
@@ -35,9 +42,12 @@ people[, Role := fcase(
 people[, Doctoral := grepl("^(PhD|DPsych)", Type)]
 
 ## DOI link to a completed thesis, shown when present; the column may be
-## missing (older workbook) or blank, so anything that isn't a URL is dropped
+## missing (older workbook) or blank, so anything that isn't a URL is dropped.
+## Only doctoral roles in the lab (the rows the thesis counts use) get a link:
+## a visiting student's thesis from another university is not linked, so the
+## links in an alumni row match its "N theses" tally.
 if (!"ThesisLink" %in% names(people)) people[, ThesisLink := NA_character_]
-people[, ThesisLink := fifelse(grepl("^https?://\\S+$", trimws(ThesisLink)),
+people[, ThesisLink := fifelse(Doctoral & grepl("^https?://\\S+$", trimws(ThesisLink)),
                                trimws(ThesisLink), NA_character_)]
 
 ## role groups in display order, with the label of their filter pill
@@ -83,7 +93,7 @@ headLine <- paste(c(paste0(currentPosition(), ", Monash University"), honorary),
 ## readers hear the words instead of the symbol
 star <- function(primary) {
   ifelse(!is.na(primary) & primary == 1,
-         "[\\*]{.bml-star aria-hidden=\"true\" title=\"Primary supervisor: Joshua Wiley\"}[, primary supervisor Joshua Wiley]{.visually-hidden}",
+         "[\\*]{.bml-star aria-hidden=\"true\" title=\"Primary supervisor: Dr Wiley\"}[, primary supervisor Dr Wiley]{.visually-hidden}",
          "")
 }
 
@@ -104,15 +114,18 @@ memberCard <- function(x) {
 ## the lab head's navy card (first in every filter, as in the design); the
 ## whole card links to the CV page. The photo is shown small by CSS
 ## only (never resized).
+## The line under the name states his position, so the name carries no "Dr"
+## (the site's rule: "Dr Wiley" in general mentions, the official title
+## wherever his role is stated).
 labHeadCard <- function(lazy) {
   sprintf('
 ::: {.g-col-12 .g-col-lg-6 .bml-card .bml-night .bml-labhead}
-![](JWiley_square.jpg){.bml-avatar-photo fig-alt="Portrait of Dr Joshua F. Wiley"%s}
+![](JWiley_square.jpg){.bml-avatar-photo fig-alt="Portrait of Joshua F. Wiley"%s}
 
 ::: {.bml-labhead-text}
 [Lab head]{.bml-eyebrow}
 
-[[Dr Joshua F. Wiley](cv.qmd){.stretched-link}]{.bml-title}
+[[Joshua F. Wiley](cv.qmd){.stretched-link}]{.bml-title}
 
 [%s]{.bml-labhead-line}
 :::
@@ -131,18 +144,19 @@ memberTab <- function(label, x, first) {
 ## a thesis link; its accessible name says whose thesis it is
 thesisLink <- function(url, name) {
   ifelse(is.na(url), "", sprintf(
-    ' [thesis \u2197](%s){.bml-thesis aria-label="Doctoral thesis by %s"}',
+    ' [thesis \u2197](%s){.bml-thesis aria-label="Thesis by %s"}',
     gsub(")", "%29", gsub("(", "%28", url, fixed = TRUE), fixed = TRUE),
     attrEscape(name)))
 }
 
 ## one alumni row: the year (with "9 people · 5 theses" on phones), then
 ## everyone who completed a role that year: name (with the primary-supervisor
-## star), role, thesis link
+## star), role, thesis link. Someone who finished two roles in one year (e.g.
+## a staff role and a PhD) is listed twice but counted once.
 plural <- function(n, one, many) sprintf("%d %s", n, ifelse(n == 1, one, many))
 alumniRow <- function(label, x, meta) {
   nTheses <- x[Doctoral == TRUE, .N]
-  tally <- paste(c(plural(nrow(x), "person", "people"),
+  tally <- paste(c(plural(uniqueN(x$Name), "person", "people"),
                  if (nTheses > 0) plural(nTheses, "thesis", "theses")),
                collapse = " \u00b7 ")
   cat(sprintf('
@@ -184,23 +198,23 @@ Meet the lab
 ::: {.panel-tabset .bml-tabs .bml-tabs-sm .bml-tabs-below .bml-photos}
 ### 2024
 
-![The Behavioural Medicine Lab, 2024](BML_Group_2024.jpg){fig-alt="Group photo of the Behavioural Medicine Lab in 2024, standing outside a restaurant"}
+![The Behavioural Medicine Lab, 2024](images/BML_Group_2024.jpg){fig-alt="Group photo of the Behavioural Medicine Lab in 2024, standing outside a restaurant"}
 
 ### 2022
 
-![The Behavioural Medicine Lab, 2022](BML_Group_2022.jpg){fig-alt="Group photo of the Behavioural Medicine Lab in 2022, in a courtyard" loading="lazy"}
+![The Behavioural Medicine Lab, 2022](images/BML_Group_2022.jpg){fig-alt="Group photo of the Behavioural Medicine Lab in 2022, in a courtyard" loading="lazy"}
 
 ### 2021
 
-![The Behavioural Medicine Lab, 2021](BML_Group_2021.jpg){fig-alt="Group photo of the Behavioural Medicine Lab in 2021, on the grass in a park" loading="lazy"}
+![The Behavioural Medicine Lab, 2021](images/BML_Group_2021.jpg){fig-alt="Group photo of the Behavioural Medicine Lab in 2021, on the grass in a park" loading="lazy"}
 
 ### 2020
 
-![The Behavioural Medicine Lab, 2020](BML_Group_2020.jpg){fig-alt="Group photo of the Behavioural Medicine Lab in 2020, in a living room" loading="lazy"}
+![The Behavioural Medicine Lab, 2020](images/BML_Group_2020.jpg){fig-alt="Group photo of the Behavioural Medicine Lab in 2020, in a living room" loading="lazy"}
 
 ### 2019
 
-![The Behavioural Medicine Lab, 2019](BML_Group_2019.jpg){fig-alt="Group photo of the Behavioural Medicine Lab in 2019, in a building foyer" loading="lazy"}
+![The Behavioural Medicine Lab, 2019](images/BML_Group_2019.jpg){fig-alt="Group photo of the Behavioural Medicine Lab in 2019, in a building foyer" loading="lazy"}
 :::
 :::
 
@@ -222,7 +236,7 @@ for (g in intersect(groups$Group, current$Group)) {
 cat("\n:::\n")
 ```
 
-[[\*]{.bml-star} Joshua Wiley is primary supervisor.]{.bml-meta .bml-members-note}
+[[\*]{.bml-star} Dr Wiley is the primary supervisor.]{.bml-meta .bml-members-note}
 :::
 
 ::: {.column-screen .bml-band .bml-alumni}
@@ -230,7 +244,7 @@ cat("\n:::\n")
 ::: {.g-col-12 .g-col-lg-4 .bml-alumni-intro}
 ## Alumni {#alumni}
 
-Everyone who has completed a role in the lab, by year. Doctoral theses are linked. [\*]{.bml-star} marks Joshua Wiley as primary supervisor.
+Everyone who has completed a role in the lab, by year. Doctoral theses are linked. [\*]{.bml-star} marks Dr Wiley as the primary supervisor.
 :::
 ::: {.g-col-12 .g-col-lg-8 .bml-rows}
 ```{r}
@@ -254,17 +268,19 @@ if (past[is.na(Ended), .N] > 0) {
 :::
 :::
 
-::: {#join .column-screen .bml-band .bml-night .bml-join}
+::: {#join .column-screen .bml-band .bml-join}
+::: {.bml-card .bml-night .bml-join-card}
 ::: {.grid .bml-gap-lg .align-items-center}
 ::: {.g-col-12 .g-col-lg-7 .bml-join-main}
 ## Want to join us? {#want-to-join-us}
 
-We supervise Honours, Masters and PhD students. We especially welcome people from groups under-represented in health science.
+We supervise Honours, Masters and PhD students, and host visiting students and researchers. We especially welcome people from groups under-represented in the health sciences.
 
-[Ask about opportunities](mailto:joshua.wiley@monash.edu){.bml-btn}
+[Study with us](join.qmd#study){.bml-btn}
 :::
 ::: {.g-col-12 .g-col-lg-5 .bml-join-aside}
-Before you write, read about our [research themes](research.qmd) and the [values](ethics_values.qmd) we work by.
+Before you get in touch, read about our [research themes](research.qmd) and the [values](ethics_values.qmd) we work by. Studies, lived experience roles and jobs are listed on our [Get involved](join.qmd) page.
+:::
 :::
 :::
 :::

@@ -1,0 +1,222 @@
+/*-- scss:defaults --*/
+
+// Values page (ethics_values.qmd, body class .bml-page-values) in the "Night
+// and Day" language: day bands, white cards with hairlines, serif headings,
+// teal list markers. Tokens and the shared classes (.bml-band, .bml-card,
+// .bml-night, .bml-eyebrow, ...) come from styles/bml.scss; this file only
+// adds what the page needs.
+//
+// Classes added here:
+//   .bml-values-intro      the opening band: statement and paragraphs left,
+//                          the "On this page" index right.
+//   .bml-values-statement  the opening statement (serif, 26px; a span that is
+//                          its paragraph's only child).
+//   .bml-values-index      the "On this page" list (in place of a TOC): a
+//                          white card of serif links split by hairlines.
+//   .bml-values-band       a value's section (a day band, id = its anchor:
+//                          #ethics, #diversity-and-inclusion, #support).
+//   .bml-values-head       its heading row (a Quarto .grid): eyebrow and h2
+//                          left, opening paragraphs right, hairline on top.
+//   .bml-values-ideals     the research ideals card: .bml-values-ideals-intro
+//                          (h3 and lead-in) left, the list right from 992px;
+//                          list items split by hairlines, teal markers.
+//   .bml-values-invite     the navy invitation card (Diversity and inclusion):
+//                          .bml-values-invite-lead (serif line) left, the text
+//                          right from 992px.
+//   .bml-values-cards      the Support cards (a Quarto .grid of .bml-card);
+//                          .bml-values-health is the card in serif text.
+//
+// The page's title banner lines up with its bands' 1168px column (rule at the
+// end, as on the research page).
+
+
+/*-- scss:rules --*/
+
+// ---- intro: statement, paragraphs and the "On this page" index ----
+#quarto-document-content .bml-band.bml-values-intro {
+  padding-top: 3rem;
+
+  @include media-breakpoint-down(md) { padding-top: 1.5rem; }
+}
+
+// stacked below 992px: a smaller gap between the text and the index. On
+// phones the column gap is small too, as .grid.bml-gap-lg's (times 11 column
+// gaps) would make the grid wider than the screen at 320px.
+.bml-values-intro > .grid {
+  @include media-breakpoint-down(lg) { row-gap: 2rem; }
+  @include media-breakpoint-down(md) { --bs-gap: .75rem; row-gap: 1.75rem; }
+}
+
+.bml-values-statement {
+  display: block;
+  font-family: $bml-serif;
+  font-size: 1.625rem;
+  line-height: 1.45;
+  color: $bml-ink;
+  text-wrap: pretty;
+
+  @include media-breakpoint-down(md) { font-size: 1.25rem; }
+}
+
+.bml-values-intro p:has(> .bml-values-statement) { margin-bottom: 1.5rem; }
+
+.bml-values-intro .g-col-12 > p:last-child { margin-bottom: 0; }
+
+.bml-values-index {
+  > p:first-child { margin-bottom: .75rem; }
+
+  ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    background-color: $bml-paper;
+    border: 1px solid $bml-line;
+    border-radius: $bml-radius;
+  }
+
+  li {
+    margin: 0;
+    border-bottom: 1px solid $bml-line-soft;
+
+    &:last-child { border-bottom: 0; }
+  }
+
+  a {
+    display: block;
+    padding: .875rem 1.125rem;
+    font-family: $bml-serif;
+    font-size: 1.0625rem;
+    line-height: 1.35;
+    color: $bml-ink;
+    text-decoration: none;
+  }
+
+  a:hover { color: $bml-teal-dark; text-decoration: underline; }
+
+  a:focus-visible { outline-offset: -3px; }
+}
+
+// ---- a value's section ----
+#quarto-document-content .bml-band.bml-values-band { padding-top: 0; }
+
+// a jump to a section (from the index or another page) keeps its hairline
+// and eyebrow clear of the navbar
+.bml-page-values .bml-values-band { scroll-margin-top: 1.5rem; }
+
+.grid.bml-values-head {
+  border-top: 1px solid $bml-line;
+  padding-top: 3.5rem;
+  margin-bottom: 2rem;
+
+  @include media-breakpoint-down(lg) { row-gap: 1rem; }
+  @include media-breakpoint-down(md) { padding-top: 2.25rem; margin-bottom: 1.25rem; --bs-gap: .75rem; row-gap: .75rem; }
+
+  h2 {
+    margin: .625rem 0 0;
+    font-size: 2.125rem;
+    line-height: 1.2;
+
+    @include media-breakpoint-down(md) { font-size: 1.625rem; }
+  }
+
+  p {
+    color: $bml-ink-soft;
+    font-size: 1.0625rem;
+    line-height: 1.6;
+  }
+
+  .g-col-12 > :last-child,
+  .g-col-12 > section > :last-child { margin-bottom: 0; }
+}
+
+// ---- research ideals: lead-in left, the list right ----
+.bml-card.bml-values-ideals {
+  @include media-breakpoint-up(lg) {
+    display: grid;
+    grid-template-columns: minmax(0, 4fr) minmax(0, 8fr);
+    gap: 3rem;
+    padding: 2.5rem;
+  }
+
+  ul {
+    margin: 0;
+    padding-left: 1.25rem;
+  }
+
+  li {
+    padding: .875rem 0 .875rem .25rem;
+    border-top: 1px solid $bml-line-soft;
+    line-height: 1.6;
+
+    &:first-child { padding-top: 0; border-top: 0; }
+    &:last-child { padding-bottom: 0; }
+  }
+
+  li::marker { color: $bml-teal-dark; }
+}
+
+// the h3 and its lead-in (Pandoc makes this div the h3's <section>)
+.bml-values-ideals-intro {
+  display: flex;
+  flex-direction: column;
+  gap: .625rem;
+
+  > * { margin: 0; }
+
+  h3 {
+    font-size: 1.5rem;
+    line-height: 1.3;
+
+    @include media-breakpoint-down(md) { font-size: 1.3125rem; }
+  }
+
+  p { color: $bml-ink-soft; }
+}
+
+// ---- the invitation (a navy card on day) ----
+.bml-card.bml-values-invite {
+  @include media-breakpoint-up(lg) {
+    display: grid;
+    grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+    gap: 3rem;
+    padding: 2.5rem;
+  }
+
+  > p { color: var(--bml-soft); }
+}
+
+.bml-values-invite-lead {
+  display: block;
+  font-family: $bml-serif;
+  font-size: 1.375rem;
+  line-height: 1.45;
+  color: $bml-cream;
+  text-wrap: pretty;
+
+  @include media-breakpoint-down(md) { font-size: 1.125rem; }
+}
+
+// ---- support cards ----
+.grid.bml-values-cards {
+  --bs-gap: 1.25rem;
+
+  @include media-breakpoint-down(md) { --bs-gap: .875rem; }
+}
+
+.bml-values-health {
+  justify-content: center;
+  font-family: $bml-serif;
+  font-size: 1.1875rem;
+  line-height: 1.5;
+
+  @include media-breakpoint-down(md) { font-size: 1.0625rem; }
+}
+
+// ---- title banner: the page's content is full-width bands on the 1168px
+// column, so its banner title lines up with them (and the navbar) rather than
+// with Quarto's narrower body column ----
+body.bml-page-values #title-block-header .quarto-title-banner .quarto-title {
+  grid-column: screen-start / screen-end;
+  padding-left: max(#{$bml-gutter}, calc((100% - #{$bml-max}) / 2));
+  padding-right: max(#{$bml-gutter}, calc((100% - #{$bml-max}) / 2));
+}

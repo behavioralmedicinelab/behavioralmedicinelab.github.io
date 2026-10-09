@@ -1,0 +1,379 @@
+/*-- scss:defaults --*/
+
+// Get involved page (join.qmd, body class .bml-page-join) in the "Night and
+// Day" language. Tokens and the shared classes (.bml-band, .bml-straddle,
+// .bml-card, .bml-card-foot, .bml-rows, .bml-row, .bml-btn, .bml-link ...)
+// come from styles/bml.scss, and .bml-links from styles/bml-home.scss; this
+// file only adds what the page needs.
+//
+// Classes added here:
+//   .bml-ways-hero    the navy hero (a .bml-straddle): the headline
+//                     (.bml-ways-head), then the audience cards, whose second
+//                     row sits across the night/day line.
+//   .bml-ways         the five audience cards (a Quarto .grid), which are also
+//                     the page's jump list; .bml-way is one card: title (the
+//                     card's stretched link), a line of text and, except Work
+//                     with us, a .bml-card-foot status line. From 768px the
+//                     cards in a row share their row lines (subgrid), so titles
+//                     and status lines line up. Their focus ring is two-tone
+//                     (light teal outside, dark teal inside), as they sit on
+//                     navy and across the line.
+//   .bml-path         an audience's section (a day .bml-band). .bml-path-head
+//                     is its heading row: title left, intro right, hairline on
+//                     top. .bml-path-body is a grid of cards under it;
+//                     .bml-path-sub an intro line inside the section (above
+//                     the programs table).
+//   .bml-stack        a column of cards or blocks inside one grid cell.
+//   .bml-cols-2       two paragraphs side by side from 768px (PhD scholarships).
+//   .bml-card-top     a card's heading block (eyebrow, h3, status) in its own
+//                     div, so Pandoc's <section> ends there.
+//   .bml-status       a status pill that is always words ("Opening in 2027",
+//                     a ring before it); .bml-status-open is the filled one
+//                     ("Recruiting now", a dot before it).
+//   .bml-study        a study's card; .bml-opening a partner role's card;
+//                     .bml-role a paid role's card.
+//                     These three are hooks (no rules of their own yet).
+//                     .bml-empty is the dashed "nothing open right now" card.
+//   .bml-actions      a row of buttons and links that wraps.
+//   .bml-support      the "In Australia and need support now?" box (teal rule
+//                     on its left).
+//   .bml-programs     the programs table (a .bml-rows card); each
+//                     .bml-program-row is the program's name, .bml-facts (a
+//                     definition list of two facts: Length, and More
+//                     information, i.e. links to Monash's pages) and
+//                     .bml-program-action (its email button). From 768px a
+//                     row is name | facts side by side | button; stacked on
+//                     phones.
+
+
+/*-- scss:rules --*/
+
+// a small-text span that is a whole paragraph takes its own line height
+.bml-page-join p > .bml-meta:only-child { display: block; }
+
+// ---- hero: headline, then the five audience cards ----
+// the night/day line runs through the second row of cards (padding below
+// them plus about half a card)
+.bml-ways-hero {
+  --bml-day-h: 10rem;
+  padding-top: 4.5rem;
+  padding-bottom: 3.5rem;
+
+  @include media-breakpoint-down(md) {
+    --bml-day-h: 6rem;
+    padding-top: 1.75rem;
+    padding-bottom: 2.25rem;
+  }
+}
+
+.bml-ways-head {
+  margin-bottom: 3rem;
+
+  @include media-breakpoint-down(md) { margin-bottom: 1.25rem; }
+}
+
+// phones: a smaller gap than .grid.bml-gap-lg's, which (times 11 column gaps)
+// would make the section heading rows wider than the cards at 320px
+@include media-breakpoint-down(md) {
+  .grid.bml-gap-lg.bml-path-head { --bs-gap: .75rem; }
+}
+
+.grid.bml-ways {
+  --bs-gap: 1.25rem;
+
+  @include media-breakpoint-down(md) { --bs-gap: .75rem; }
+}
+
+.bml-way {
+  gap: .625rem;
+  padding: 1.75rem;
+  box-shadow: 0 18px 44px rgba(0, 0, 0, .22);
+
+  .bml-title a,
+  .bml-title-sm a {
+    color: inherit;
+    text-decoration: none;
+  }
+
+  .bml-soft {
+    display: block;
+    font-size: .9375rem;
+    line-height: 1.55;
+  }
+
+  // status line: no single word left alone on its last line
+  .bml-card-foot { font-weight: 600; text-wrap: pretty; }
+
+  @include media-breakpoint-down(md) {
+    gap: .375rem;
+    padding: 1.125rem 1.25rem;
+
+    .bml-title { font-size: 1.1875rem; }
+    .bml-card-foot { padding-top: .5rem; }
+  }
+}
+
+.bml-way:has(.stretched-link):hover :is(.bml-title, .bml-title-sm) a {
+  color: $bml-teal-dark;
+}
+
+// from 768px the cards in a row share three row lines (title, text, status),
+// so their titles and status hairlines line up
+@include media-breakpoint-up(md) {
+  .grid.bml-ways > .bml-way {
+    display: grid;
+    grid-row: span 3;
+    grid-template-rows: subgrid;
+    row-gap: .625rem;
+    align-content: start;
+
+    // the status line starts on its row line (not pushed to the card's foot
+    // by .bml-card-foot's margin-top: auto), so the hairlines line up
+    > .bml-card-foot { margin-top: 0; }
+  }
+}
+
+// the focus ring is drawn on navy (and, for the second row, across the
+// night/day line): light teal outside (9.2:1 on navy) around a dark teal band
+// (4.7:1 on day)
+.bml-way:has(.stretched-link:focus-visible) {
+  outline-color: $bml-teal;
+  box-shadow: 0 0 0 6px $bml-teal-dark, 0 18px 44px rgba(0, 0, 0, .22);
+}
+
+// ---- an audience's section ----
+#quarto-document-content .bml-band.bml-path:not(.bml-night) { padding-top: 0; }
+
+.bml-path-head {
+  border-top: 1px solid $bml-line;
+  padding-top: 3.5rem;
+  margin-bottom: 2rem;
+
+  @include media-breakpoint-down(md) { padding-top: 2.25rem; margin-bottom: 1.25rem; }
+
+  h2 {
+    margin: 0;
+    font-size: 2.125rem;
+    line-height: 1.2;
+
+    @include media-breakpoint-down(md) { font-size: 1.625rem; }
+  }
+
+  p {
+    color: var(--bml-soft);
+    font-size: 1.0625rem;
+    line-height: 1.6;
+  }
+
+  .g-col-12 > :last-child,
+  .g-col-12 > section > :last-child { margin-bottom: 0; }
+}
+
+.grid.bml-path-body {
+  --bs-gap: 1.25rem;
+
+  @include media-breakpoint-down(md) { --bs-gap: .875rem; }
+}
+
+.bml-path-body + .bml-path-body,
+.bml-rows + .bml-path-body { margin-top: 1.25rem; }
+
+// a jump to a section (or to the old #take-part) clears the navbar
+.bml-page-join :is(.bml-path, #take-part) { scroll-margin-top: 2.5rem; }
+
+.bml-path-sub {
+  margin: 2.75rem 0 1rem;
+
+  h3 {
+    font-size: 1.5rem;
+    margin: 0;
+  }
+
+  p {
+    margin: .5rem 0 0;
+    max-width: 46rem;
+    color: var(--bml-soft);
+  }
+
+  @include media-breakpoint-down(md) { margin-top: 2rem; h3 { font-size: 1.3125rem; } }
+}
+
+.bml-cols-2 {
+  display: grid;
+  gap: .875rem 2.5rem;
+
+  > * { margin: 0; }
+
+  @include media-breakpoint-up(md) { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+
+.bml-stack {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+
+  > * { margin-top: 0; margin-bottom: 0; }
+
+  @include media-breakpoint-down(md) { gap: .875rem; }
+}
+
+// lists and text inside the section's cards
+.bml-path .bml-card {
+  ul,
+  ol {
+    margin: 0;
+    padding-left: 1.25rem;
+  }
+
+  li + li { margin-top: .375rem; }
+  li::marker { color: var(--bml-link); }
+
+  // a small line under an item (e.g. a theme's funding)
+  li > .bml-meta {
+    display: block;
+    margin-top: .25rem;
+  }
+}
+
+// a card's heading block: Pandoc wraps the heading (and what follows it in
+// the div) in a <section>, which is unwrapped here so the parts stack evenly
+.bml-card-top {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: .5rem;
+
+  > section { display: contents; }
+  > *,
+  > section > * { margin: 0; }
+
+  h3 {
+    font-size: 1.375rem;
+    line-height: 1.3;
+
+    @include media-breakpoint-down(md) { font-size: 1.1875rem; }
+  }
+}
+
+// ---- status pills: always words; the ring or dot is decoration ----
+.bml-status {
+  display: inline-flex;
+  align-items: center;
+  gap: .4375rem;
+  padding: .25rem .6875rem;
+  border: 1px solid var(--bml-link);
+  border-radius: 999px;
+  font-size: .75rem;
+  font-weight: 700;
+  letter-spacing: .06em;
+  line-height: 1.3;
+  text-transform: uppercase;
+  color: var(--bml-link);
+
+  &::before {
+    content: "";
+    flex: none;
+    width: .5rem;
+    height: .5rem;
+    border: 1.5px solid currentColor;
+    border-radius: 50%;
+  }
+}
+
+.bml-status.bml-status-open {
+  background-color: $bml-teal-dark;
+  border-color: $bml-teal-dark;
+  color: #ffffff;
+
+  &::before { background-color: currentColor; }
+}
+
+.bml-card.bml-empty {
+  border-style: dashed;
+  color: var(--bml-soft);
+}
+
+.bml-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: .75rem 1.25rem;
+
+  > p { display: contents; }
+  .bml-link + .bml-link { margin-left: 0; }
+}
+
+.bml-card > .bml-actions:last-child { margin-top: auto; padding-top: .375rem; }
+
+// ---- "In Australia and need support now?" ----
+.bml-support {
+  background-color: $bml-paper;
+  border: 1px solid $bml-line;
+  border-left: 4px solid $bml-teal-dark;
+  border-radius: $bml-radius;
+  padding: 1.5rem 1.75rem;
+
+  @include media-breakpoint-down(md) { padding: 1.125rem 1.25rem; }
+
+  h3 {
+    font-size: 1.25rem;
+    margin: 0 0 .5rem;
+  }
+
+  p { margin: 0 0 .625rem; }
+
+  ul {
+    margin: 0;
+    padding-left: 1.25rem;
+  }
+
+  li + li { margin-top: .375rem; }
+  li::marker { color: $bml-teal-dark; }
+}
+
+// ---- the programs table ----
+.bml-programs .bml-row {
+  @include media-breakpoint-up(md) { grid-template-columns: 11rem minmax(0, 1fr) auto; }
+}
+
+.bml-programs .bml-row-label {
+  font-size: 1.25rem;
+  line-height: 1.3;
+}
+
+.bml-program-row { scroll-margin-top: 2.5rem; }
+
+.bml-facts dl {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  column-gap: 1.5rem;
+  margin: 0;
+
+  dt {
+    margin: .625rem 0 .125rem;
+    font-size: .75rem;
+    font-weight: 700;
+    letter-spacing: .08em;
+    line-height: 1.4;
+    text-transform: uppercase;
+    color: var(--bml-muted);
+  }
+
+  dt:first-child { margin-top: 0; }
+
+  dd {
+    margin: 0;
+    font-size: .9375rem;
+    line-height: 1.5;
+  }
+
+  // each fact is a dt over its dd; from 576px the two pairs sit side by side
+  // (after the dt rule above, so this margin wins)
+  @include media-breakpoint-up(sm) {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1.4fr);
+    grid-template-rows: repeat(2, auto);
+    grid-auto-flow: column;
+
+    dt { margin-top: 0; }
+  }
+}

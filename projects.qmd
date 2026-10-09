@@ -1,56 +1,236 @@
 ---
 title: Projects
-# lights up the Projects menu as the current page (styles/bml.scss)
+description-meta: "Trials, observational and daily life studies on sleep, stress, emotions and cancer care from the Behavioural Medicine Lab, and projects we collaborate on."
+open-graph:
+  description: "Trials, observational and daily life studies on sleep, stress, emotions and cancer care from the Behavioural Medicine Lab, and projects we collaborate on."
+toc: false
+# lights up the Projects menu as the current page (styles/bml.scss) and
+# scopes this page's rules (styles/bml-projects.scss)
 body-classes: bml-page-projects
 ---
 
 ```{r}
 #| include: false
-#| warning: false
-#| message: false
+
+## Projects page ("Night and Day" design): an intro band with a jump list,
+## then one day band per group (Trials, Observational studies, Daily life
+## studies, Other studies, then "Projects we collaborate on"), each a white
+## card per project: name, status and years, then the project's Summary.
+## Built from Pandoc markdown that the chunks below cat(); styles are in
+## styles/bml.scss and styles/bml-projects.scss.
+##
+## Everything comes from the workbook's Projects sheet. The Summary text is
+## shown as written there (fix wording in the workbook, not here), apart from
+## links to retired websites, which are taken out below. The navbar's Projects
+## menu (run_website.R) links to each project's heading id, projectAnchor(Name),
+## and to the group headings (#collaborations): keep those ids.
 
 ## load packages and setup
-source("package_setup.R", echo=FALSE)
+source("package_setup.R", echo = FALSE)
 
 projects <- read_excel(cvpath, sheet = "Projects")
 projects <- as.data.table(projects)[nzchar(Summary) & !is.na(Summary)]
-projects[, Type := factor(Type, levels = c("Trial", "Observational", "Daily", "Other"))]
-projects <- projects[order(Type, -Status, -Started)]
 
-projects[, ProjectSummary := sprintf(
-  "<h3 id=\"%s\">%s | %d - %s |</h3> \n\n %s \n",
-  projectAnchor(Name), Name, Started, ifelse(Status == "Completed", as.character(Ended), "current"),
-  Summary)]
+## Websites that no longer work. Studies' own websites close once a study
+## ends, so their links are taken out of the Summary text at render time:
+## a line that only points to one ("Find out more at the study website.",
+## with its icon and line break) is dropped, and any other link to one is
+## shown as plain text. Add an address here when a website goes down.
+retiredUrls <- c(
+  "https://cancope.weebly.com/",        # CanCope: study finished (2022), website closed
+  "https://sleepcarestudy.weebly.com/", # SleepCare: study finished, website closing
+  "http://repat.haifa.ac.il/en/"        # REPAT (University of Haifa): page not found
+)
 
+## the groups, in page order: the workbook's Type, the heading (the same
+## words as the navbar menu), the heading id (kept from the old page) and a
+## line about the group. Projects we collaborate on (Primary == 0) are one
+## group whatever their Type.
+groups <- list(
+  list(type = "Trial", title = "Trials", id = "trials",
+       about = "Studies that test whether a treatment or program helps people."),
+  list(type = "Observational", title = "Observational studies", id = "observational-studies",
+       about = "Studies that learn from people's experiences, without testing a treatment."),
+  list(type = "Daily", title = "Daily life studies", id = "daily-life-studies",
+       about = "Studies that follow sleep, stress, mood and activity day by day, as people go about their lives."),
+  list(type = "Other", title = "Other studies", id = "other-studies",
+       about = "Other research our lab leads, including programs of work that span several studies."),
+  list(type = NA_character_, title = "Projects we collaborate on", id = "collaborations",
+       about = "Studies led by other research teams, in which our lab is a partner.")
+)
+
+## a project of ours with a Type not listed above would not appear in any
+## group, so it goes under Other studies (and the render log says so)
+ourTypes <- na.omit(vapply(groups, `[[`, "", "type"))
+odd <- projects[Primary == 1 & !Type %in% ourTypes, Name]
+if (length(odd) > 0) {
+  cat("projects.qmd: shown under Other studies (Type not ",
+      paste(ourTypes, collapse = ", "), "): ", paste(odd, collapse = ", "), "\n",
+      sep = "", file = stderr())
+  projects[Primary == 1 & !Type %in% ourTypes, Type := "Other"]
+}
+
+## current projects first, then the most recently started (as in the menu)
+projects <- projects[order(-Status, -Started)]
+
+## ---- retired links ----
+## an address as a regular expression that also matches it with http or
+## https, with or without "www." and with or without a final "/"
+urlPattern <- function(u) {
+  core <- sub("/+$", "", sub("^https?://(www\\.)?", "", u))
+  paste0("https?://(?:www\\.)?", gsub("([.?*+^$()\\[\\]{}|\\\\])", "\\\\\\1", core, perl = TRUE), "/?")
+}
+
+## the Summary without links to retired websites
+dropRetired <- function(s) {
+  icon <- '(?:\\{\\{<\\s*fa\\s[^>]*>\\}\\}|<span class="fa[^"]*"></span>|<i class="fa[^"]*"></i>)'
+  for (u in vapply(retiredUrls, urlPattern, "")) {
+    ## a line (after a line break, or at the start) holding only an icon, a
+    ## few words, the link and a full stop: dropped, with its line break
+    s <- gsub(sprintf('(^|\\n|<br\\s*/?>)[ \\t]*(?:%s)?[ \\t]*[^.\\n<\\[]{0,60}\\[[^]\\n]*\\]\\(%s\\)\\.?[ \\t]*(?:<br\\s*/?>[ \\t]*\\n?|\\n|$)',
+                      icon, u), "\\1", s, perl = TRUE)
+    ## any other link to it: its text only
+    s <- gsub(sprintf("\\[([^]\\n]*)\\]\\(%s\\)", u), "\\1", s, perl = TRUE)
+    s <- gsub(sprintf('<a\\s[^>]*href="%s"[^>]*>(.*?)</a>', u), "\\1", s, perl = TRUE)
+  }
+  ## no line break left dangling at the end
+  sub("(?:\\s*<br\\s*/?>)+\\s*$", "", trimws(s), perl = TRUE)
+}
+
+## ---- a project's card ----
+## years: "2020–2022", "2018" (started and ended the same year),
+## "2020–present" (current); a completed project without an Ended year shows
+## its start year only (and the render log says so)
+yearsLabel <- function(start, end, current) {
+  start <- if (is.na(start)) NA else as.integer(start)
+  end <- if (is.na(end)) NA else as.integer(end)
+  if (is.na(start)) return(if (current) "" else if (is.na(end)) "" else as.character(end))
+  if (current) return(sprintf("%d\u2013present", start))
+  if (is.na(end) || end == start) return(as.character(start))
+  sprintf("%d\u2013%d", start, end)
+}
+
+missingEnd <- projects[Status == "Completed" & is.na(Ended), Name]
+if (length(missingEnd) > 0) {
+  cat("projects.qmd: completed without an Ended year (start year shown): ",
+      paste(missingEnd, collapse = ", "), "\n", sep = "", file = stderr())
+}
+
+## status in words, as a pill: "Current" (filled) or "Completed"
+statusPill <- function(status) {
+  if (is.na(status) || !nzchar(status)) return("")
+  sprintf("[%s]{.bml-project-status%s}", mdEscape(status),
+          if (identical(status, "Current")) " .bml-project-current" else "")
+}
+
+projectMd <- function(r) {
+  years <- yearsLabel(r$Started, r$Ended, identical(r$Status, "Current"))
+  meta <- trimws(paste(statusPill(r$Status),
+                       if (nzchar(years)) sprintf("[%s]{.bml-project-years}", years) else ""))
+  sprintf('
+::: {.bml-card .bml-project}
+::: {.bml-project-head}
+### %s {#%s}
+%s
+:::
+
+::: {.bml-project-body}
+%s
+:::
+:::
+', mdEscape(r$Name), projectAnchor(r$Name),
+    if (nzchar(meta)) sprintf("\n::: {.bml-project-meta}\n%s\n:::\n", meta) else "",
+    dropRetired(r$Summary))
+}
+
+## the projects in each group
+groupRows <- function(g) {
+  if (is.na(g$type)) projects[Primary == 0] else projects[Primary == 1 & Type == g$type]
+}
+shown <- Filter(function(g) is.na(g$type) || nrow(groupRows(g)) > 0, groups)
 ```
 
-## Trials
+```{=html}
+<!-- Raw HTML: markdown can't add behaviour. On phones and tablets the navbar's
+     Projects menu stays open after a project on this page is picked, so the
+     jump lands behind the open menu, and closing it then moves the page up
+     past the project. So: close the menu first, then jump. (Desktop, where the
+     menu isn't collapsed, and links to other pages are left alone.) It sits
+     here, not at the end, so the page still ends with a band (styles/bml.scss
+     then joins the last band to the footer). -->
+<script>
+document.addEventListener('click', function (e) {
+  var a = e.target.closest('#navbarCollapse a[href*="#"]:not([data-bs-toggle])');
+  var menu = document.getElementById('navbarCollapse');
+  var page = function (p) { return p.replace(/\.html$/, ''); };
+  var button = document.querySelector('.navbar-toggler[data-bs-target="#navbarCollapse"]');
+  if (!a || !a.hash || page(a.pathname) !== page(location.pathname) ||
+      !menu || !menu.classList.contains('show') || !button) return;
+  var target = document.getElementById(decodeURIComponent(a.hash.slice(1)));
+  if (!target) return;
+  e.preventDefault();
+  menu.addEventListener('hidden.bs.collapse', function () {
+    // wait for Quarto to shrink the page's top padding to the closed navbar
+    setTimeout(function () {
+      if (location.hash === a.hash) target.scrollIntoView();
+      else location.hash = a.hash;
+    }, 50);
+  }, { once: true });
+  // close it with the menu button, as a reader would: the button's onclick
+  // (Quarto's) also lets the navbar hide on scroll again
+  button.click();
+});
+</script>
+```
 
-`r paste(projects[Primary == 1 & Type == "Trial", ProjectSummary], collapse = "\n\n -------------------- \n\n")`
+::: {.column-screen .bml-band .bml-projects-intro}
+[From clinical trials to studies of daily life, these are the studies our lab runs and the projects we work on with other research teams.]{.bml-projects-lead}
 
-----------------------
+[Take part in a study [→]{aria-hidden="true"}](join.qmd#participate){.bml-link}
 
-## Observational Studies
+```{r}
+#| echo: false
+#| output: asis
 
-`r paste(projects[Primary == 1 & Type == "Observational", ProjectSummary], collapse = "\n\n -------------------- \n\n")`
+## jump list: one chip per group on the page
+cat("::: {.bml-chips .bml-projects-jump}\n",
+    paste(vapply(shown, function(g) sprintf("[%s](#%s){.bml-chip}", g$title, g$id), ""),
+          collapse = "\n"),
+    "\n:::\n", sep = "")
+```
+:::
 
-----------------------
+```{r}
+#| echo: false
+#| output: asis
 
-## Daily Life Studies
+## one day band per group: heading row (title left, a line about the group
+## right, hairline above), then a card per project. Groups of our own with no
+## projects are left out; "Projects we collaborate on" always shows, as the
+## navbar links to it.
+for (g in shown) {
+  rows <- groupRows(g)
+  cards <- if (nrow(rows) > 0) {
+    paste(vapply(seq_len(nrow(rows)), function(i) projectMd(rows[i]), ""), collapse = "\n")
+  } else {
+    "::: {.bml-card .bml-project}\nNone listed at the moment.\n:::\n"
+  }
+  cat(sprintf('
+::: {.column-screen .bml-band .bml-projects-band}
+::: {.grid .bml-gap-lg .bml-projects-head}
+::: {.g-col-12 .g-col-lg-5}
+## %s {#%s}
+:::
 
-`r paste(projects[Primary == 1 & Type == "Daily", ProjectSummary], collapse = "\n\n -------------------- \n\n")`
+::: {.g-col-12 .g-col-lg-7}
+%s
+:::
+:::
 
-----------------------
-
-## Other Studies
-
-`r paste(projects[Primary == 1 & Type == "Other", ProjectSummary], collapse = "\n\n -------------------- \n\n")`
-
-----------------------
-
-
-<h2 id="collaborations">Projects We Collaborate On</h2>
-
-`r paste(projects[Primary == 0, ProjectSummary], collapse = "\n\n -------------------- \n\n")`
-
-----------------------
+::: {.bml-projects-list}
+%s
+:::
+:::
+', g$title, g$id, g$about, cards))
+}
+```

@@ -1,0 +1,71 @@
+---
+title: Page not found
+description-meta: "Sorry, we can't find that page on the Behavioural Medicine Lab website; try our home, research, team or Get involved pages instead."
+open-graph:
+  description: "Sorry, we can't find that page on the Behavioural Medicine Lab website; try our home, research, team or Get involved pages instead."
+toc: false
+# lines the banner up with the 1168px column (styles/bml.scss)
+body-classes: bml-page-404
+---
+
+```{r}
+#| include: false
+
+## 404 page. GitHub Pages serves docs/404.html for any address it can't find,
+## including nested ones (/a/b/c.html), so its styles, scripts, images and
+## links must not be relative to the page: for a 404.qmd Quarto writes them
+## from the site root (it knows the root from site-url), and leaves the page
+## out of the sitemap. No aliases point here.
+## The title banner, then a day band (on the site's 1168px column) with a
+## line of text, four cards in the home page's door pattern (title, a line,
+## and a link that makes the whole card clickable) and the contact email.
+## Uses only classes from styles/bml.scss (body class bml-page-404 lines the
+## banner up with the column).
+
+## load packages and setup (labEmail and mailtoUrl() for the email link)
+source("package_setup.R", echo = FALSE)
+```
+
+::: {.column-screen .bml-band .bml-404}
+::: {.bml-lead}
+Sorry, we can't find that page. It may have moved when we updated the site.
+:::
+
+::: {.grid .bml-gap-sm}
+::: {.g-col-12 .g-col-sm-6 .bml-card}
+[Home]{.bml-title-sm}
+
+[The lab at a glance: our research, latest papers and team.]{.bml-soft}
+
+[Go to the home page\ [→]{aria-hidden="true"}](index.qmd){.bml-link .stretched-link}
+:::
+
+::: {.g-col-12 .g-col-sm-6 .bml-card}
+[Research]{.bml-title-sm}
+
+[Our research themes and featured studies.]{.bml-soft}
+
+[Explore our research\ [→]{aria-hidden="true"}](research.qmd){.bml-link .stretched-link}
+:::
+
+::: {.g-col-12 .g-col-sm-6 .bml-card}
+[Team]{.bml-title-sm}
+
+[Current members and alumni of the lab.]{.bml-soft}
+
+[Meet the team\ [→]{aria-hidden="true"}](team.qmd){.bml-link .stretched-link}
+:::
+
+::: {.g-col-12 .g-col-sm-6 .bml-card}
+[Get involved]{.bml-title-sm}
+
+[Take part in a study, share your lived experience or study with us.]{.bml-soft}
+
+[Find ways to get involved\ [→]{aria-hidden="true"}](join.qmd){.bml-link .stretched-link}
+:::
+:::
+
+::: {.mt-4}
+Still can't find what you're looking for? Email us at [`r labEmail`](`r mailtoUrl("Page not found")`).
+:::
+:::

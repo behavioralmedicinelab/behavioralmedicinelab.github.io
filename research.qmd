@@ -1,6 +1,9 @@
 ---
 title: Research
-subtitle: What we study, what we've found, and how we work.
+subtitle: What we study, what we've found and how we work.
+description-meta: "The Behavioural Medicine Lab's research on insomnia and fatigue, cancer care, everyday sleep, stress and emotions, and 24-hour time use, with key findings."
+open-graph:
+  description: "The Behavioural Medicine Lab's research on insomnia and fatigue, cancer care, everyday sleep, stress and emotions, and 24-hour time use, with key findings."
 toc: false
 body-classes: bml-page-research
 resources:
@@ -12,7 +15,7 @@ resources:
 
 ## Research page ("Night and Day" design): intro and theme index, five theme
 ## sections (a featured study, then "More from this theme" cards), then the
-## navy "How we work" band (methods, R packages, CRAN downloads). Built from
+## navy "How we work" card (methods, R packages, package downloads). Built from
 ## Pandoc markdown that the chunks below cat(); styles are in styles/bml.scss
 ## and styles/bml-research.scss.
 ##
@@ -26,9 +29,11 @@ source("package_setup.R", echo = FALSE)
 
 research <- readResearch()
 
-## CRAN downloads of all the lab's packages (more than the listed ones), rounded
-## down: "Our 8 packages on CRAN have been downloaded >970,000 times (Posit
-## mirror, as of October 2026)."; left out if the workbook has none
+## downloads of all the lab's R packages (more than the listed ones), rounded
+## down: "Our 8 R packages have been downloaded >970,000 times (Posit CRAN
+## mirror, as of October 2026)."; left out if the workbook has none. It names
+## the mirror as the source but doesn't claim the packages are on CRAN
+## (Joshua, 2026-10-09).
 downloads <- getDownloads()
 
 ## a text card in place of a figure, for papers with no picked figure: the
@@ -68,29 +73,30 @@ featureMd <- function(p, lazy) {
 }
 
 ## a representative paper: figure thumbnail (or a text card with the
-## plain-language finding), why it's here, citation, credit and link
+## plain-language finding), why it's here, one line naming the paper, and the
+## link. With a figure that line is its credit ("Figure 2 reproduced from Tung
+## et al. (2022), *Scientific Reports*."), which already gives the citation;
+## a text card gets the citation ("Sanjivini et al. (2025). *Sleep Advances*.").
 paperCardMd <- function(p) {
   top <- if (!is.null(p$figure)) {
     sprintf("::: {.bml-card-media}\n%s\n:::\n", paperFigureMd(p))
   } else {
     textCardMd(p, " .bml-card-media")
   }
+  source <- if (!is.null(p$figure)) paperCredit(p) else sprintf(
+    "[%s (%s). *%s*.]{.bml-cite}", mdEscape(paperAuthor(p)), p$year, mdEscape(p$journal))
   sprintf('
 ::: {.bml-card .bml-card-flush .bml-paper-card}
 %s
 ::: {.bml-card-body}
 %s
 
-[%s (%s). *%s*.]{.bml-cite}
-
 %s
 
-[Read the paper [→]{aria-hidden="true"}](%s){.bml-link aria-label="Read the paper: %s"}
+[Read the paper\\ [→]{aria-hidden="true"}](%s){.bml-link aria-label="Read the paper: %s"}
 :::
 :::
-', top, mdEscape(p$why), mdEscape(paperAuthor(p)), p$year, mdEscape(p$journal),
-    if (!is.null(p$figure)) paperCredit(p) else "",
-    paperDoi(p), attrEscape(p$title))
+', top, mdEscape(p$why), source, paperDoi(p), attrEscape(p$title))
 }
 ```
 
@@ -99,10 +105,10 @@ paperCardMd <- function(p) {
 ::: {.g-col-12 .g-col-lg-7}
 [`r mdEscape(research$intro)`]{.bml-intro}
 
-Our team is led by Dr Joshua Wiley and is situated within the
-School of Psychological Sciences
-[(SPS)](https://www.monash.edu/medicine/psych/)
-within the Sleep and Circadian Rhythms Program.
+Our team is led by Dr Joshua Wiley and sits within the
+[School of Psychological Sciences](https://www.monash.edu/medicine/psych/)
+and the [Turner Institute for Brain and Mental Health](https://www.monash.edu/turner-institute)
+at Monash University, in the Sleep and Circadian Rhythms Program.
 :::
 
 ::: {.g-col-12 .g-col-lg-5 .bml-theme-index}
@@ -160,7 +166,8 @@ for (i in seq_along(research$themes)) {
 }
 ```
 
-::: {#how-we-work .column-screen .bml-band .bml-night .bml-methods-band}
+::: {#how-we-work .column-screen .bml-band .bml-methods-band}
+::: {.bml-card .bml-night .bml-methods-card}
 ::: {.bml-section-head}
 ::: {.bml-section-title}
 [Methods]{.bml-eyebrow}
@@ -201,9 +208,10 @@ cat("::: {.bml-chips}\n",
                   unlist(research$software), unlist(research$software)), collapse = " "),
     "\n:::\n", sep = "")
 if (!is.null(downloads)) cat(sprintf(
-  "\n[Our %d packages on CRAN have been downloaded \\>%s times (Posit mirror%s).]{.bml-meta}\n",
+  "\n[Our %d R packages have been downloaded \\>%s times (Posit CRAN mirror%s).]{.bml-meta}\n",
   downloads$packages, fmtNum(belowRound(downloads$total, 10000)),
   if (is.na(downloads$asOf)) "" else paste(", as of", format(downloads$asOf, "%B %Y"))))
 ```
+:::
 :::
 :::
