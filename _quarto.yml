@@ -23,22 +23,24 @@ website:
       - text: "Projects"
         menu:
           - text: "Trials"
-          - text: "SleepCare"
-            href: projects.qmd#SleepCare
+          - text: "SleepSteps"
+            href: projects.qmd#SleepSteps
           - text: "CanCope"
             href: projects.qmd#CanCope
+          - text: "SleepCare"
+            href: projects.qmd#SleepCare
           - text: "SleepWell"
             href: projects.qmd#SleepWell
           - text: "---------"
           - text: "Observational studies"
-          - text: "DistressManagement"
-            href: projects.qmd#DistressManagement
-          - text: "TCSupport"
-            href: projects.qmd#TCSupport
+          - text: "Distress Management in Oncology"
+            href: projects.qmd#Distress-Management-in-Oncology
+          - text: "Testicular Cancer and Masculinities"
+            href: projects.qmd#Testicular-Cancer-and-Masculinities
           - text: "---------"
           - text: "Daily life studies"
-          - text: "SHS"
-            href: projects.qmd#SHS
+          - text: "Stress and Health Study"
+            href: projects.qmd#Stress-and-Health-Study
           - text: "DESTRESS"
             href: projects.qmd#DESTRESS
           - text: "ACES"
@@ -104,3 +106,4 @@ format:
     lang: en-AU
     toc: true
     title-block-banner: true
+    canonical-url: true

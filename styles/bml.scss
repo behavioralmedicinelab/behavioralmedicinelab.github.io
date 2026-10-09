@@ -559,6 +559,14 @@ body.bml-page-projects #quarto-header .navbar-nav .nav-item.dropdown > .nav-link
   }
 
   #quarto-header .navbar-nav .nav-item:has(.bml-nav-cta) { margin-left: .625rem; }
+
+  // the Projects menu sits in the fixed header, so the page can't scroll it
+  // into view: on short screens it scrolls inside its card instead
+  #quarto-header .dropdown-menu {
+    max-height: calc(100vh - 5rem);
+    overflow-y: auto;
+    overscroll-behavior: contain;
+  }
 }
 
 // 992-1199px: the full navbar only just fits, so the links are tighter there
@@ -637,6 +645,10 @@ body.bml-page-projects #quarto-header .navbar-nav .nav-item.dropdown > .nav-link
   }
 
   #quarto-header .dropdown-item:focus-visible { outline-color: $bml-teal; }
+
+  // long project names wrap (Bootstrap's items don't), so they can't push the
+  // menu past a 320px screen
+  #quarto-header .dropdown-item { white-space: normal; }
 }
 
 // ---------------------------------------------------------------------------

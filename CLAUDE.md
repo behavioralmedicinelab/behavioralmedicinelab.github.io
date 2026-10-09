@@ -31,6 +31,21 @@ Quarto website for the lab (https://bml.science). This repo is **public** on Git
   file are never published.
 - Commit `docs/` with `git add -A docs`: Quarto renames files in `docs/site_libs/` between
   versions, and a partial commit leaves the live site pointing at missing CSS/JS.
+- **joshuawiley.com mirrors this site.** It is GitHub Pages from `docs/` on `master` of
+  `JWiley/jwiley.github.io` (cloned at `../jwiley.github.io`), which holds no source of its
+  own. After pushing a build here, `Rscript sync_personal.R` copies what bml.science serves
+  (`docs/` on `origin/main`, not the local build) into that repo's `docs/`, sets
+  `docs/CNAME` there to joshuawiley.com (the `CNAME` at that repo's root is unused), adds the
+  two standalone pages from `files/` (`personalExtras`), then commits and pushes there
+  (`--dry-run` lists the changes and changes nothing; `--no-push` commits only; a later run
+  pushes commits left unpushed). Files there that are not on bml.science are deleted, so
+  never edit that repo by hand; change this one. `canonical-url: true` (template) gives every
+  page a canonical link to its bml.science address, so search engines treat the mirror as a
+  copy (pages get it when next rendered; the script notes when the live pages lack it). That
+  repo also lends its domain to Joshua's other GitHub Pages sites (R packages such as
+  joshuawiley.com/brmsmargins/, which the CV links to, and teaching sites), so keep it, with
+  Pages on and `docs/CNAME` set, even if the mirror is retired, and never give this site a
+  top-level folder named like one of his repos. Push or commit there only when Joshua asks.
 
 ## Conventions
 
@@ -70,7 +85,8 @@ Quarto website for the lab (https://bml.science). This repo is **public** on Git
   fold get `loading="lazy"`.
 - `files/24hr_comp.html` and `files/emotion_dynamics.html` are standalone pages Joshua links to
   directly. They are deliberately not linked from the site (so not copied into `docs/`); leave
-  them alone.
+  them alone. They are live only at joshuawiley.com/files/..., where `sync_personal.R` copies
+  them (they are not on bml.science).
 
 ## Theme and page conventions ("Night and Day")
 
@@ -144,7 +160,9 @@ else (both from Google Fonts), teal accents (#3dd6b5 on navy, #0f7a68 on light).
   outlined teal pill, filled on its own page) linking to `join.qmd`. The CV is linked from the
   footer, not the navbar. Quarto marks the current page; the Projects menu needs
   `body-classes: bml-page-projects` in `projects.qmd`. The hamburger sits on the right
-  (`toggle-position: right`).
+  (`toggle-position: right`). Project names are long, so the phone menu wraps them (they
+  would otherwise push it past a 320px screen) and the desktop dropdown scrolls inside its
+  card on short screens (it sits in the fixed header).
 - **Footer** (template `page-footer`, laid out by the footer rules in `bml.scss`):
   Acknowledgement of Country ("We acknowledge and pay respects to the Elders and Traditional
   Owners of the land on which we work."; Monash University's footer wording, adapted by Joshua
@@ -183,10 +201,18 @@ else (both from Google Fonts), teal accents (#3dd6b5 on navy, #0f7a68 on light).
   Quarto's redirects can't add an anchor), and its old `#take-part` anchor is the id of the
   `#partner` heading row; `team.qmd#join` is still the Team
   page's closing band. Keep the CV section ids (e.g. `#publications`, `#software`, `#grants`),
-  the project anchors (`projectAnchor(Name)`) and the Projects group ids (`#trials`,
+  the project anchors (`projectAnchor(Name)`, which follow the workbook's Name) and the
+  Projects group ids (`#trials`,
   `#observational-studies`, `#daily-life-studies`, `#other-studies`, `#collaborations`), the
   Values ids (`#ethics`, `#diversity-and-inclusion`, `#support`), `#connect` and the research
   theme ids.
+- **Only the current site's anchors need to work** (Joshua, 2026-10-09): the ids that the
+  site's own pages, navbar and footer link to, and those listed above. Don't add ids,
+  aliases or redirects to keep former names or old addresses working. When a project is
+  renamed in the workbook, its anchor changes with it (e.g. `#SHS` became
+  `#Stress-and-Health-Study`), and a link to the old one opens the page at the top. The
+  old-address items above (`#take-part`, the `consumer_community.html` and `alumni.html`
+  aliases, `#joshua-f.-wiley`) predate this rule; leave them unless Joshua asks.
 - **Accessibility**: text contrast at least 4.5:1 (the tokens are chosen for this; muted
   grey `#5a6570` is the lightest text on day, `#8d9ba7` on night), visible focus outlines
   (teal on navy, dark teal on light), alt text on every image (`fig-alt`), and the phone menu

@@ -1,5 +1,5 @@
 {
-  "generated": "2026-10-07",
+  "generated": "2026-10-09",
   "source": "/Users/wileyj/wiley_cv/track_record/2026-10-lab-themes",
   "source_generated": "2026-10-07",
   "intro": "We study how sleep, stress and emotions shape health and wellbeing in everyday life, and we develop practical, scalable ways to help, especially for people affected by cancer.",
@@ -36,8 +36,8 @@
           "first_author": "Sun, T.",
           "trainee_first_author": true,
           "design": "Daily diary study",
-          "why": "Adolescents: daily emotional ups and downs predict depression, anxiety and school performance two years later (CLASS cohort).",
-          "finding": "Teenagers who felt stronger positive emotions day to day had fewer depression and anxiety symptoms two years later, but daily emotional ups and downs did not predict school test results.",
+          "why": "A two-year study of teenagers: Melbourne students rated their emotions daily for two weeks every six months from Year 7, to see whether everyday emotions forecast later mental health and school results.",
+          "finding": "Teenagers who felt stronger positive emotions day to day had fewer depression and anxiety symptoms two years later, and those with stronger negative emotions had more anxiety, but none of the daily emotion measures predicted school test results.",
           "figure": null,
           "credit": null
         },
@@ -50,7 +50,7 @@
           "first_author": "Tung, N. Y. C.",
           "trainee_first_author": true,
           "design": "Daily diary study",
-          "why": "Adds biology: early family adversity, resilience and the daily cortisol rhythm in students who relocated for university.",
+          "why": "Stress hormones: early family adversity, resilience and the daily rhythm of cortisol in students who moved interstate or overseas for university.",
           "figure": "Tung2022_46-F2",
           "credit": "Figure 2 reproduced from Tung et al. (2022)"
         },
@@ -63,7 +63,7 @@
           "first_author": "Kirkham, R.",
           "trainee_first_author": true,
           "design": "Daily diary study",
-          "why": "Emotion regulation in daily life: tracked several times a day, distracting yourself from bad feelings was followed by more mental fatigue and stress a few hours later.",
+          "why": "Emotion regulation in daily life: in adults aged 18–35 surveyed four times a day for four weeks, distracting themselves from bad feelings was followed by more mental fatigue and stress a few hours later.",
           "figure": "Kirkham2026_13-F2",
           "credit": "Figure 2 reproduced from Kirkham et al. (2026)"
         },
@@ -97,7 +97,7 @@
         "year": 2020,
         "journal": "Sleep",
         "doi": "10.1093/sleep/zsz250",
-        "first_author": "Yap, Y. Y.",
+        "first_author": "Yap, Y.",
         "trainee_first_author": true,
         "design": "Daily diary study",
         "summary": "Tracking young adults day by day, we found that stressful evenings led to slightly shorter sleep, and short or broken sleep led to feeling more stressed the next day.",
@@ -127,7 +127,7 @@
           "first_author": "Yap, Y.",
           "trainee_first_author": true,
           "design": "Daily diary study",
-          "why": "Adds biology: two weeks of at-home EEG sleep recordings and saliva samples show that higher bedtime cortisol is followed by shorter, poorer sleep.",
+          "why": "Measured, not just reported: two weeks of at-home EEG sleep recordings and saliva samples show that when bedtime cortisol, a stress hormone, is higher than usual, sleep is shorter and poorer.",
           "figure": "Yap2024_28-F2",
           "credit": "Figure 2 reproduced from Yap et al. (2024)"
         },
@@ -140,7 +140,7 @@
           "first_author": "Brown, L. A.",
           "trainee_first_author": false,
           "design": "Daily diary study",
-          "why": "Clinical military sample (international collaboration): daily sleep problems predict next-day suicidal urges in US Marines.",
+          "why": "Military personnel at high suicide risk (international collaboration): daily sleep problems predict next-day suicidal urges in US Marines.",
           "figure": "Brown2024_27-F1",
           "credit": "Figure 1 reproduced from Brown et al. (2024)"
         },
@@ -191,7 +191,7 @@
           "first_author": "Maccora, J.",
           "trainee_first_author": true,
           "design": "Trial analysis",
-          "why": "How the treatments work: mechanisms of CBT-I and bright light therapy during chemotherapy.",
+          "why": "How the treatments work: during chemotherapy, changes in sleep habits, such as less time awake in bed, may matter for how cognitive behavioural therapy for insomnia plus bright light therapy works.",
           "figure": "Maccora2023_36-F2",
           "credit": "Figure 2 reproduced from Maccora et al. (2023)"
         },
@@ -217,7 +217,7 @@
           "first_author": "Li, L.",
           "trainee_first_author": true,
           "design": "Systematic review",
-          "why": "Beyond breast cancer: meta-analysis of non-drug sleep treatments in upper gastrointestinal cancer.",
+          "why": "Beyond breast cancer: pooling the evidence on non-drug sleep treatments for people with stomach or oesophageal cancer.",
           "figure": "Li2026_6-F3",
           "credit": "Figure 3 reproduced from Li et al. (2026)"
         },
@@ -373,7 +373,7 @@
           "first_author": "Wallace, R.",
           "trainee_first_author": true,
           "design": "Randomised trial",
-          "why": "Quality of life after cancer: an international online trial (five countries) where emotion-skills and healthy-lifestyle programs both helped, with extra gains in thinking, physical function and mood from the emotion program.",
+          "why": "Quality of life after cancer: an international online trial (five countries) in which people's quality of life improved with both the emotion-skills and healthy-lifestyle programs, with extra gains in thinking, physical function and mood from the emotion program.",
           "figure": "Wallace2025_25-F1",
           "credit": "Figure 1 reproduced from Wallace et al. (2025)"
         }
@@ -383,26 +383,26 @@
   "methods": [
     {
       "id": "EMA",
-      "name": "Intensive longitudinal designs (EMA / daily diary)",
-      "one_liner": "Intensive daily studies: repeated surveys on phones, wearables and at-home sleep recordings capture life as it happens.",
+      "name": "Intensive daily studies",
+      "one_liner": "Short phone surveys, daily diaries, wearables and at-home sleep recordings capture life as it happens.",
       "papers": 22
     },
     {
       "id": "TRIALS",
       "name": "Randomised trials of brief and digital interventions",
-      "one_liner": "Randomised trials of brief, scalable and digital treatments.",
+      "one_liner": "Testing treatments that can reach many people, from sleep therapy and bright light to online programs.",
       "papers": 15
     },
     {
       "id": "TOOLS",
       "name": "New statistical methods, measures and software",
-      "one_liner": "New statistical methods and free, open-source R software.",
+      "one_liner": "Our R packages are free and open source, so any researcher can use them.",
       "papers": 6
     },
     {
       "id": "SYNTH",
       "name": "Evidence synthesis and qualitative research",
-      "one_liner": "Systematic reviews and qualitative research that bring together evidence and lived experience.",
+      "one_liner": "Systematic reviews pool the published evidence; interviews and focus groups capture the experiences of patients and health professionals.",
       "papers": 7
     }
   ],
