@@ -11,8 +11,8 @@
 // style="..." attributes: they use the classes below through Pandoc markdown,
 // e.g. ::: {.bml-card} ... :::  or  [Study with us ->](join.qmd#study){.bml-link}
 //
-// CLASS VOCABULARY (all prefixed bml-). A worked example of each pattern is
-// in CLAUDE.md ("Theme and page conventions").
+// CLASS VOCABULARY (all prefixed bml-). How pages use these from markdown
+// is in CLAUDE.md ("Theme and page conventions").
 //
 // Surfaces (set colours for everything inside them, so components adapt):
 //   .bml-band        full-bleed section: use with .column-screen. Vertical
@@ -22,7 +22,6 @@
 //                    padding. A page ending in a band meets the footer flush.
 //   .bml-night       navy surface: light text, cream headings, teal links and
 //                    eyebrows, teal pill buttons. On a band, card or any div.
-//   .bml-day         warm day surface (the page background).
 //   .bml-straddle    night band whose bottom strip (--bml-day-h, default 14rem;
 //                    12rem on phones) is day, so a .bml-plate inside it sits
 //                    across the night/day boundary, as in the design's hero.
@@ -32,8 +31,6 @@
 //                    banner, and promotes a level-1 heading into it), and marks
 //                    its headline as the page heading with
 //                    ::: {.bml-display role="heading" aria-level="1"}
-//   .bml-wrap        centred container, max 1168px (when .bml-band's own
-//                    gutters are not wanted).
 //
 // Cards:
 //   .bml-card        white card, hairline border, 6px radius, padded, children
@@ -47,7 +44,7 @@
 //   .bml-card-media  image box at the top of a flush card: contained image,
 //                    hairline under it (--bml-media-h sets its height, 170px).
 //   .bml-card-foot   hairline footer line of a card, two ends, small grey text
-//                    (e.g. "Le et al. (2026)" | "16 papers in theme ->").
+//                    (e.g. "Le et al. (2026)" | "Read more ->").
 //   .bml-cover       box whose image fills it, cropped (team teaser photo).
 //   .bml-plate       the featured "figure plate": white, deep shadow, figure
 //                    left (8/12) and caption right (4/12) from 992px, stacked
@@ -65,16 +62,12 @@
 // Text:
 //   .bml-eyebrow     small uppercase letter-spaced label (teal; add .bml-muted
 //                    for the grey version). Block-level.
-//   .bml-eyebrow-row eyebrow line with two ends, e.g. "PLATE 03 ... RANDOMISED
-//                    TRIAL": two spans in one paragraph.
-//   .bml-split       any line with two ends (two spans in one paragraph).
 //   .bml-display     hero headline (serif 64px desktop, 34px phone).
 //   .bml-title       serif card title (26px); .bml-title-sm (19px).
 //   .bml-finding     serif plain-language finding (22px); .bml-finding-sm (17px).
 //   .bml-lead        larger intro paragraph (17px).
-//   .bml-serif       serif font only.
 //   .bml-teal        accent colour (teal on night, dark teal on day), e.g. the
-//                    hero's italic *practical*: *[practical]{.bml-teal}*
+//                    hero's italic word: *[interventions]{.bml-teal}*
 //   .bml-muted       grey text (meta, eyebrows); .bml-soft: secondary paragraph
 //                    colour.
 //   .bml-meta        small grey line (13px), e.g. "Do et al. (2026)".
@@ -115,7 +108,7 @@
 // Tabsets as pills:
 //   ::: {.panel-tabset .bml-tabs}  Quarto tabset drawn as round pills (active
 //   = navy). Add .bml-tabs-sm for small pills, .bml-tabs-below to put the pills
-//   under the panel (e.g. a photo switcher), .bml-tabs-end to right-align them.
+//   under the panel (e.g. a photo switcher).
 //
 // Page hooks (front matter body-classes):
 //   bml-page-projects  marks the Projects menu as the current page, and
@@ -238,7 +231,6 @@ $dropdown-link-active-bg: $bml-teal-dark;
 // Surface colours as custom properties, so components adapt to night or day
 // ---------------------------------------------------------------------------
 :root,
-.bml-day,
 .bml-card,
 .bml-plate,
 .bml-rows {
@@ -283,7 +275,6 @@ $dropdown-link-active-bg: $bml-teal-dark;
 }
 
 .bml-night { background-color: $bml-night; }
-.bml-day { background-color: $bml-day; color: var(--bml-fg); }
 
 // ---------------------------------------------------------------------------
 // Base typography
@@ -835,12 +826,6 @@ footer.footer a.bml-footer-email {
 // a day band directly after another day band doesn't double the spacing
 .bml-band:not(.bml-night, .bml-straddle) + .bml-band:not(.bml-night, .bml-straddle) { padding-top: 0; }
 
-.bml-wrap {
-  max-width: $bml-max;
-  margin-left: auto;
-  margin-right: auto;
-}
-
 .bml-straddle {
   --bml-day-h: 14rem;
   background: linear-gradient(to top, $bml-day 0, $bml-day var(--bml-day-h), $bml-night var(--bml-day-h));
@@ -883,23 +868,6 @@ main.content:has(> .bml-band:last-child) { margin-bottom: 0; }
 }
 
 div.bml-eyebrow > p { margin: 0; }
-
-.bml-eyebrow-row {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
-  gap: .25rem 1rem;
-  font-size: .75rem;
-  font-weight: 700;
-  letter-spacing: .12em;
-  line-height: 1.4;
-  text-transform: uppercase;
-  color: var(--bml-muted);
-
-  > p {
-    display: contents;
-  }
-}
 
 .bml-display {
   font-family: $bml-serif;
@@ -955,7 +923,6 @@ div.bml-eyebrow > p { margin: 0; }
   text-wrap: pretty;
 }
 
-.bml-serif { font-family: $bml-serif; font-weight: 400; }
 .bml-teal { color: var(--bml-link); }
 .bml-muted { color: var(--bml-muted); }
 .bml-soft { color: var(--bml-soft); }
@@ -982,18 +949,6 @@ div.bml-eyebrow > p { margin: 0; }
 .bml-star {
   color: var(--bml-link);
   margin-left: .05em;
-}
-
-// two ends of one line, e.g. "Le et al. (2026)  ...  16 papers in theme ->"
-// (put both spans in one paragraph inside ::: {.bml-split})
-.bml-split {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
-  align-items: baseline;
-  gap: .25rem 1rem;
-
-  > p { display: contents; }
 }
 
 // ---------------------------------------------------------------------------
@@ -1089,7 +1044,6 @@ p:has(> img.bml-avatar-photo:only-child) { margin: 0; flex: none; }
   > p { margin: 0; }
 }
 
-.bml-day .bml-stat-note,
 .bml-card .bml-stat-note { color: var(--bml-muted); }
 
 .bml-statrow {
@@ -1160,7 +1114,7 @@ p:has(> img.bml-avatar-photo:only-child) { margin: 0; flex: none; }
 }
 
 // card footer line: hairline above, small grey text, two ends (author/year
-// left, "N papers in theme ->" right); sits at the bottom of the card
+// left, "Read more ->" right); sits at the bottom of the card
 .bml-card-foot {
   display: flex;
   flex-wrap: wrap;
@@ -1550,8 +1504,6 @@ a.bml-chip:focus-visible {
     border-width: 1px;
   }
 }
-
-.panel-tabset.bml-tabs.bml-tabs-end > .nav-tabs { justify-content: flex-end; }
 
 .panel-tabset.bml-tabs.bml-tabs-below {
   display: flex;

@@ -31,6 +31,9 @@ Quarto website for the lab (https://bml.science). This repo is **public** on Git
   file are never published.
 - Commit `docs/` with `git add -A docs`: Quarto renames files in `docs/site_libs/` between
   versions, and a partial commit leaves the live site pointing at missing CSS/JS.
+- `run_website.R` writes an empty `docs/.nojekyll` after each build, so GitHub Pages serves
+  `docs/` as it is (Jekyll would leave out any file or folder whose name starts with `_`).
+  Keep it committed.
 - **joshuawiley.com mirrors this site.** It is GitHub Pages from `docs/` on `master` of
   `JWiley/jwiley.github.io` (cloned at `../jwiley.github.io`), which holds no source of its
   own. After pushing a build here, `Rscript sync_personal.R` copies what bml.science serves
@@ -49,13 +52,20 @@ Quarto website for the lab (https://bml.science). This repo is **public** on Git
 
 ## Conventions
 
+- `package_setup.R` loads only `readxl` and `data.table`, which every page needs. A package
+  only one page uses is loaded in that page (`library(plotly)` in `cv.qmd`), and the scripts
+  call `quarto::` and `jsonlite` themselves.
 - Shared helpers live in `package_setup.R`: `projectAnchor()` (heading ids for projects),
-  `readPeople()` (the People sheet without `Exclude` rows), `getCitations(source)` (Citations
-  sheet, with as-of date), `getDownloads()` (SoftwareStats sheet), `currentPosition()`,
+  `readProjects()` and `projectTypes` (the Projects rows the site shows and their groups, for
+  the Projects page and the navbar menu), `readPeople()` (the People sheet without `Exclude`
+  rows), `getCitations(source)` (Citations sheet, with as-of date), `getDownloads()`
+  (SoftwareStats sheet), `softwareLinks()` and `packageChipsMd()` (where each R package links
+  to; see "R packages" below), `currentPosition()`,
   `ciGrantTotalAUD()`, `belowRound()` for ">N" figures and `fmtNum()` for thousands separators.
   For pages whose R chunks write markdown: `mdEscape()` (plain text made safe for markdown),
   `attrEscape()` (a value for a `{key="..."}` attribute), `pngSize()`, `parseReference()`
-  (author, year, title, journal and DOI from a Publications `Reference`), `latestPublications(n)`
+  (author, year, title, journal and DOI from a Publications `Reference`; its author comes
+  from `shortAuthors()`: "Wiley", "Smith & Jones", or "Do et al." for three or more), `latestPublications(n)`
   (the newest Empirical/Review/Protocol rows, parsed, with a label such as "New paper"),
   `labCounts()` (current members (people, not roles), completed doctoral theses, Honours
   graduates and the first completion year, from `readPeople()`), and the research-snapshot helpers `readResearch()`,
@@ -73,6 +83,12 @@ Quarto website for the lab (https://bml.science). This repo is **public** on Git
   position line under it). Never "Dr" next to a stated position, and never "Dr." with a full
   stop.
 - Wherever citations appear (home page, CV chart), show both Google Scholar and Scopus.
+- R packages: a package name links to CRAN only while the Software sheet's `CRAN` column is 1
+  (`softwareLinks()`; `~/wiley_cv` keeps the column current, and the site never checks CRAN
+  itself). Otherwise it links to the first GitHub address in its `Info`, or is shown without
+  a link. The CV's Software list and the home and research chips all use it. Download counts
+  cover only the packages in SoftwareStats, fewer than the CV lists, so say "8 of our R
+  packages", never "our 8 R packages".
 - Funding (totals and the CV grants list) counts only grants where Joshua is a chief
   investigator (`ciRoles`: CIA, CI, CIC, CID), never AI, Supervisor or Trainee.
 - Figures for funding, students and publications must never overclaim: always round down
@@ -109,8 +125,8 @@ else (both from Google Fonts), teal accents (#3dd6b5 on navy, #0f7a68 on light).
     up with its bands' 1168px column (`body-classes: bml-page-research`).
   - `styles/bml-home.scss`: the home page (`index.qmd`, `body-classes: bml-home`): hero and
     plate sizes, doors, theme cards, the track-record band, latest papers, team teaser, bio and
-    Connect card, plus a few small helpers (`.bml-links`, `.bml-above`, `.bml-phone-extra`,
-    `.bml-phone-only`) listed at its top.
+    Connect card, plus a few small helpers (`.bml-links`, `.bml-phone-extra`, `.bml-phone-only`) listed at
+    its top.
   - `styles/bml-team.scss`: the team page (`team.qmd`, `body-classes: bml-team`): hero and
     photo plate, the members band (heading and filter pills on one line), member and lab head
     cards, alumni rows, the closing "Want to join us?" band. Class list at its top.
@@ -129,6 +145,7 @@ else (both from Google Fonts), teal accents (#3dd6b5 on navy, #0f7a68 on light).
     shows from 992px). Class list at its top.
   - Projects, Research, Values and CV keep a title banner, lined up with the bands' 1168px
     column by a `body.bml-page-<page>` rule in their stylesheet.
+  - Don't keep classes no page uses: a rule goes when its last use does.
   - A redesigned page's own rules go in its file (or a new `styles/bml-<page>.scss` added to
     the theme list), using the tokens from `bml.scss`. Each file needs both
     `/*-- scss:defaults --*/` and `/*-- scss:rules --*/` markers.
@@ -144,7 +161,7 @@ else (both from Google Fonts), teal accents (#3dd6b5 on navy, #0f7a68 on light).
   something (e.g. the `<wbr>` in the footer's email link, from `run_website.R`; the small
   script in `projects.qmd` that closes the phone menu before jumping to a project on the same
   page; the CV's count-down `<ol>` lists), kept tiny, with a comment saying why. Bootstrap's `.stretched-link` on a card's main link makes the whole card
-  clickable (a second link stays clickable with `.bml-above`). Pandoc wraps a heading and
+  clickable. Pandoc wraps a heading and
   everything after it, up to the end of the enclosing div, in a `<section>`; so in a flex or
   grid layout put a heading (with its eyebrow) in its own small div, e.g.
   `::: {.bml-section-title}`. When an eyebrow sits above a heading, put the anchor id on the
@@ -156,7 +173,8 @@ else (both from Google Fonts), teal accents (#3dd6b5 on navy, #0f7a68 on light).
 - **Navbar** (template): logo `images/bml-mark.svg` (teal ring and dot; also the favicon) +
   "Behavioural Medicine Lab"; Research, Projects (menu generated from the Projects sheet, its
   group labels "Trials", "Observational studies", "Daily life studies", "Other studies",
-  "Projects we collaborate on" matching the Projects page headings), Team, Values, and "Get involved" (text `[Get involved]{.bml-nav-cta}`, drawn as an
+  "Projects we collaborate on" matching the Projects page headings: both come from
+  `readProjects()` and `projectTypes`, and a group with no projects is left out of both), Team, Values, and "Get involved" (text `[Get involved]{.bml-nav-cta}`, drawn as an
   outlined teal pill, filled on its own page) linking to `join.qmd`. The CV is linked from the
   footer, not the navbar. Quarto marks the current page; the Projects menu needs
   `body-classes: bml-page-projects` in `projects.qmd`. The hamburger sits on the right
@@ -179,7 +197,9 @@ else (both from Google Fonts), teal accents (#3dd6b5 on navy, #0f7a68 on light).
   `<meta name="description">`) and `open-graph:` / `description: "..."` (link previews).
   Don't use `description:`: on a title-banner page Quarto prints it under the title, and
   `hide-description` doesn't stop it. `image:` and `image-alt:` set the preview image (Team
-  and Get involved use the 2024 group photo).
+  and Get involved use the 2024 group photo). The home page sets none on purpose: Quarto then
+  uses the first image on the page, the hero's featured figure, which Joshua likes as the
+  preview (2026-11-19).
 - **Back to top** (template `back-to-top-navigation: true`): Quarto's "Back to top" link,
   styled as a navy pill in `bml.scss`, appears when a long page is scrolled back up.
 - **404 page** (`404.qmd`): GitHub Pages serves `docs/404.html` for any unknown address,
@@ -237,7 +257,8 @@ else (both from Google Fonts), teal accents (#3dd6b5 on navy, #0f7a68 on light).
 - **Home (`index.qmd`)**, top to bottom: navy hero (`.bml-straddle .bml-hero`) with the serif
   headline and the featured "plate" (one theme exemplar: figure and credit, the theme's short name as
   the eyebrow, plain-language finding, citation, "Read the paper"; `heroId` picks the
-  theme, else the first with a figure) across the night/day line; "Where would you like to
+  theme, else the first with a figure) across the night/day line (the same study is also the
+  first "Our research" card: that repeat is fine with Joshua, 2026-11-19); "Where would you like to
   start?" (heading row with "All the ways to get involved" to `join.qmd`, then three door
   cards: people affected by cancer (Take part in a study `join.qmd#participate`, Share your
   experience `#partner`), Study with us (`#study`), Research/Publications/Software/Collaborate
@@ -289,8 +310,9 @@ else (both from Google Fonts), teal accents (#3dd6b5 on navy, #0f7a68 on light).
   (no intro line) and five audience cards, which are also the jump list, with no eyebrows:
   Take part in a study ("Be a participant in our research."), Share your lived experience,
   Study with us, Collaborate, Work with us ("Not recruiting right now." as its text, no line
-  under it); each a stretched link to its section, the others with a status line from the
-  data (a study's `teaser`, e.g. "SleepSteps, an intervention for people with cancer, opens in
+  under it); each a stretched link to its section. Take part and lived experience have a
+  status line from the data; Study with us ("Talk to us before you apply") and Collaborate
+  ("Visiting researchers welcome") have fixed lines in `join.qmd` (a study's `teaser`, e.g. "SleepSteps, an intervention for people with cancer, opens in
   2027. Check back soon."). The lived-experience card reads "We are looking for people with
   lived experience of cancer, including family members and carers, who want to help shape our
   research." Then one day band per audience (`.bml-path`), each with title and
@@ -327,7 +349,7 @@ else (both from Google Fonts), teal accents (#3dd6b5 on navy, #0f7a68 on light).
   project without `Ended` shows its start year, with a render-log note), then the workbook
   Summary as written. Current projects first, then the most recently started. **Retired
   links**: `retiredUrls` in `projects.qmd` lists study websites that are down (CanCope,
-  SleepCare, the REPAT page); their "Find out more at the study website" lines are dropped
+  SleepCaRe, the REPAT page); their "Find out more at the study website" lines are dropped
   and other links to them shown as plain text at render time. Add an address there when a
   study site goes down, and tell Joshua so the workbook Summary can be cleaned up too.
 - **Values (`ethics_values.qmd`)**: title banner ("Our ethics and values"); an intro band (opening statement and an
@@ -337,12 +359,20 @@ else (both from Google Fonts), teal accents (#3dd6b5 on navy, #0f7a68 on light).
 - **CV (`cv.qmd`)**: title banner; portrait beside the Academic summary; sections with
   serif sentence-case headings (ids unchanged); entries with dates in a left column. Every
   DOI is a link (`linkDois()`), and a legend explains the trainee asterisk wherever stars
-  appear. Grants never show "NA"/"N/A" numbers, show one year when start equals end, and
-  grants that haven't started go in an "Awarded, starting <year>" group. `cranArchived`
-  lists packages no longer on CRAN (currently varian), which aren't linked to CRAN. The
-  charts are plotly charts in pill tabsets, with a collapsed table of their numbers. The
-  orphan chart outputs and the two links to missing project anchors are left as they are
-  until Joshua decides.
+  appear. The presentations section is headed "Selected abstracts, presentations and
+  symposia" (id `#abstracts-presentations-symposia`): the Presentations sheet is a selection,
+  not a full record (Joshua, 2026-11-20). Grants never show "NA"/"N/A" numbers, show one year when start equals end, and
+  grants that haven't started go in an "Awarded, starting <year>" group. Package names link
+  as `softwareLinks()` says (varian, archived from CRAN, links to GitHub). The
+  charts are plotly charts in pill tabsets, with a collapsed table of their numbers; "the
+  year to date" in their note is the calendar year at render time. A date range never mixes
+  styles: when the workbook gives a month at one end and only a year at the other, both are
+  shown as years ("2019–2022"). A completed student with no `Ended` year shows the start year
+  alone, never "present" (with a render-log note), and "currently supervising" counts only
+  `Status == "Current"`. The page shows only what it builds: the impact-factor, Q1 and
+  publications-by-type charts that were built but never shown were removed on 2026-11-19
+  (their code is in git history at `d367c85`, handed to `~/wiley_cv/metrics/`). The CV links
+  to `projects.html#POSSUM` and `#HCHS-SOL`, which don't exist; Joshua chose to leave them.
 - **404 (`404.qmd`, `body-classes: bml-page-404`)**: "Page not found" banner lined up with
   the 1168px column, then a day band with a line of text, four door-style cards (Home,
   Research, Team, Get involved) and the contact email (subject "[BML] Page not found").
@@ -359,12 +389,17 @@ else (both from Google Fonts), teal accents (#3dd6b5 on navy, #0f7a68 on light).
   reach the site only when the snapshot is refreshed.
 - `Rscript sync_research.R` (from the repo root) refreshes it. **Run it only when Joshua asks.**
   `run_website.R` and the pages never call it. It reads `themes.json`, `site_copy.json`,
-  `hero_picks.json`, `profiles/` and `figures/candidates/` there (read-only) and writes:
-  - `research/research.json`: only what the pages show (intro; theme titles, blurbs and counts;
-    exemplar and representative papers with title, year, journal, DOI, first author, trainee
-    flag, design label, card text, figure ID and credit; methods; software; generated date and
-    source path). Internal fields (theme descriptions, member lists, `not_featured`, other
-    profile fields) stay out, because this repo is public. Journal subtitles are trimmed
+  `hero_picks.json`, `profiles/` and `figures/candidates/` there, and the workbook's
+  Publications sheet (all read-only), and writes:
+  - `research/research.json`: only what the pages show (intro; theme titles and blurbs;
+    exemplar and representative papers with title, year, journal, DOI, short citation
+    (`author`: "Le et al.", or "Smith & Jones" for two authors, counted from the paper's
+    Publications reference, matched by DOI), design label (used only to call a trial
+    protocol's text card "Study plan"), card text, figure ID and credit; methods; software;
+    generated dates). Everything else stays out, because this repo is public: paper counts
+    per theme or method, years active and "since <year>" counts (Joshua keeps those
+    private), trainee flags, the analysis's paper IDs and local path, theme descriptions,
+    member lists, `not_featured` and other profile fields. Journal subtitles are trimmed
     ("Health Psychology: Official Journal of ..." becomes "Health Psychology").
   - `research/figures/<figure ID>.png`: the picked figures, copied byte for byte (never resize
     or recompress them). Figures no longer picked are deleted.
@@ -376,6 +411,8 @@ else (both from Google Fonts), teal accents (#3dd6b5 on navy, #0f7a68 on light).
   is not published.
 - Styles are in `styles/bml-research.scss` (research page) and `styles/bml-home.scss` (home).
   Themes are told apart by their short name ("INSOMNIA & FATIGUE"), never by number or colour.
+- Reuse permission for the reproduced figures is in place (Joshua, 2026-11-19); don't raise
+  it again for the figures already picked.
 - Every reproduced figure has a credit line: "Figure N reproduced from Surname et al. (Year),
   *Journal*." Papers whose pick is `null` get a text card instead: a representative's shows
   its profile `summary` (plain-language finding), and an exemplar's shows its profile
@@ -401,4 +438,5 @@ else (both from Google Fonts), teal accents (#3dd6b5 on navy, #0f7a68 on light).
 - Theme display order and title overrides live in `themeOrder` / `themeTitle` in
   `package_setup.R` (Insomnia, Psychosocial cancer care, Sleep, Stress, 24-hour time use).
   Never show per-theme or per-method paper counts, years active or "since <year>" counts:
-  Joshua keeps those private because they go stale.
+  Joshua keeps those private because they go stale. They are not in `research/research.json`
+  either (`sync_research.R` leaves them out).

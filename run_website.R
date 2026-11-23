@@ -15,17 +15,29 @@
 source("package_setup.R", echo = FALSE)
 
 
-projects <- read_excel(cvpath,
-                       sheet = "Projects")
-projects <- as.data.table(projects)[nzchar(Summary) & !is.na(Summary)]
-projects <- projects[order(-Status, -Started)]
+## The Projects menu: one group per type that has projects of ours (label,
+## then its projects), with a rule between groups, then "Projects we
+## collaborate on". It lists the same projects in the same groups and order as
+## the Projects page, because both use readProjects() and projectTypes
+## (package_setup.R). A group with no projects is left out, as on the page.
+projects <- readProjects()
 
-navItems <- function(type) {
-  paste(projects[Primary == 1 & Type == type, sprintf(
-'          - text: "%s"
-            href: projects.qmd#%s',
-Name, projectAnchor(Name))], collapse = "\n")
+## Menu text is Markdown inside a double-quoted YAML string, so a project name
+## is escaped for both (a name with a quote would otherwise break _quarto.yml).
+menuText <- function(x) gsub('(["\\\\])', "\\\\\\1", mdEscape(x))
+
+menuGroup <- function(type) {
+  rows <- projects[Primary == 1 & Type == type]
+  if (nrow(rows) == 0) return(NULL)
+  paste(c(sprintf('          - text: "%s"', projectTypes[[type]]),
+          sprintf('          - text: "%s"\n            href: projects.qmd#%s',
+                  menuText(rows$Name), projectAnchor(rows$Name))),
+        collapse = "\n")
 }
+projectsMenu <- paste(
+  c(unlist(lapply(names(projectTypes), menuGroup)),
+    '          - text: "Projects we collaborate on"\n            href: projects.qmd#collaborations'),
+  collapse = '\n          - text: "---------"\n')
 
 ## Navbar: logo mark + lab name, then Research, Projects (menu from the
 ## Projects sheet), Team, Values and a "Get involved" pill (.bml-nav-cta) to
@@ -69,20 +81,7 @@ website:
         href: research.qmd
       - text: "Projects"
         menu:
-          - text: "Trials"
 %s
-          - text: "---------"
-          - text: "Observational studies"
-%s
-          - text: "---------"
-          - text: "Daily life studies"
-%s
-          - text: "---------"
-          - text: "Other studies"
-%s
-          - text: "---------"
-          - text: "Projects we collaborate on"
-            href: projects.qmd#collaborations
       - text: "Team"
         href: team.qmd
       - text: "Values"
@@ -139,9 +138,15 @@ format:
     title-block-banner: true
     canonical-url: true
 ',
-navItems("Trial"), navItems("Observational"), navItems("Daily"), navItems("Other"),
+projectsMenu,
 sub("@", "@<wbr>", labEmail, fixed = TRUE), mailtoUrl(), format(Sys.Date(), "%Y"))
 
 cat(nav, file = "_quarto.yml")
 
 quarto::quarto_render()
+
+## GitHub Pages serves docs/ through Jekyll unless this empty file is there,
+## and Jekyll leaves out any file or folder whose name starts with "_". The
+## site has none today, so this only makes sure a future one is still served.
+## Written after each build, in case the render clears docs/.
+invisible(file.create(file.path("docs", ".nojekyll")))

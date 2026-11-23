@@ -29,11 +29,11 @@ source("package_setup.R", echo = FALSE)
 
 research <- readResearch()
 
-## downloads of all the lab's R packages (more than the listed ones), rounded
-## down: "Our 8 R packages have been downloaded >970,000 times (Posit CRAN
-## mirror, as of October 2026)."; left out if the workbook has none. It names
-## the mirror as the source but doesn't claim the packages are on CRAN
-## (Joshua, 2026-10-09).
+## downloads of the lab's R packages that have download counts (more than the
+## chips shown, fewer than the CV lists), rounded down: "Together, 8 of our R
+## packages have been downloaded >970,000 times (Posit CRAN mirror, as of
+## October 2026)."; left out if the workbook has none. It names the mirror as
+## the source but doesn't claim the packages are on CRAN (Joshua, 2026-10-09).
 downloads <- getDownloads()
 
 ## a text card in place of a figure, for papers with no picked figure: the
@@ -203,12 +203,11 @@ for (m in research$methods) {
 #| echo: false
 #| output: asis
 
-cat("::: {.bml-chips}\n",
-    paste(sprintf("[%s](https://CRAN.R-project.org/package=%s){.bml-chip .bml-mono}",
-                  unlist(research$software), unlist(research$software)), collapse = " "),
-    "\n:::\n", sep = "")
+## each chip links to CRAN while the package is there (the Software sheet's
+## CRAN column decides; see packageChipsMd() in package_setup.R)
+cat(packageChipsMd(unlist(research$software)))
 if (!is.null(downloads)) cat(sprintf(
-  "\n[Our %d R packages have been downloaded \\>%s times (Posit CRAN mirror%s).]{.bml-meta}\n",
+  "\n[Together, %d of our R packages have been downloaded \\>%s times (Posit CRAN mirror%s).]{.bml-meta}\n",
   downloads$packages, fmtNum(belowRound(downloads$total, 10000)),
   if (is.na(downloads$asOf)) "" else paste(", as of", format(downloads$asOf, "%B %Y"))))
 ```

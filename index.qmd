@@ -50,7 +50,9 @@ stats <- list(
   else if (!is.null(cites[["Scopus"]])) stat(sprintf("\\>%s", cites[["Scopus"]]), "citations on Scopus"),
   if (!is.null(downloads)) stat(
     sprintf("\\>%s", fmtNum(belowRound(downloads$total, 10000))),
-    sprintf("downloads of our %d R packages", downloads$packages)))
+    ## the packages with download counts, not every package the lab has
+    ## written (the CV lists more)
+    sprintf("downloads of %d of our R packages", downloads$packages)))
 stats <- Filter(Negate(is.null), stats)
 
 ## "as of October 2026": the month of the citation and download counts (the
@@ -66,6 +68,11 @@ statsNote <- sprintf(
 
 ## ---- people (doors and team teaser), from readPeople() ----
 counts <- labCounts()
+## the Future students door: "15 doctoral theses and 29 Honours projects
+## completed here since 2017." ("since" is left out if no row has an end year)
+completedText <- sprintf("%d doctoral theses and %d Honours projects completed here%s.",
+                         counts$theses, counts$honours,
+                         if (is.na(counts$since)) "" else sprintf(" since %d", as.integer(counts$since)))
 currentTypes <- readPeople()[Status == "Current", Type]
 membersText <- sprintf(
   if (all(grepl("^(Postdoctoral|PhD|DPsych|Masters|Honours)", currentTypes)))
@@ -89,8 +96,9 @@ hasFigure <- vapply(themes, function(t) !is.null(t$exemplar$figure), TRUE)
 ids <- vapply(themes, `[[`, "", "id")
 hero <- if (heroId %in% ids[hasFigure]) which(ids == heroId) else which(hasFigure)[1]
 
-## theme cards: the plate's theme first, then the rest in order
-cardOrder <- c(hero, setdiff(seq_along(themes), hero))
+## theme cards: the plate's theme first, then the rest in order (all in order
+## when no exemplar has a figure, so there is no plate)
+cardOrder <- if (is.na(hero)) seq_along(themes) else c(hero, setdiff(seq_along(themes), hero))
 numWords <- c("one", "two", "three", "four", "five", "six", "seven", "eight", "nine", "ten")
 allThemes <- if (length(themes) <= 10) numWords[length(themes)] else length(themes)
 
@@ -171,7 +179,7 @@ if (!is.na(hero)) {
 
 [I'm thinking about Honours, Masters or a PhD]{.bml-title}
 
-[`r counts$theses` doctoral theses and `r counts$honours` Honours projects completed here since `r counts$since`.`r studentText`]{.bml-soft}
+[`r paste0(completedText, studentText)`]{.bml-soft}
 
 [Study with us\ [→]{aria-hidden="true"}](join.qmd#study){.bml-link .stretched-link}
 :::
@@ -251,11 +259,9 @@ Randomised trials of brief and digital treatments, intensive daily studies with 
 #| echo: false
 #| output: asis
 
-## the lab's R packages, each linked to its CRAN page
-cat("::: {.bml-chips}\n",
-    paste(sprintf("[%s](https://CRAN.R-project.org/package=%s){.bml-chip .bml-mono}",
-                  unlist(research$software), unlist(research$software)), collapse = " "),
-    "\n:::\n", sep = "")
+## the lab's R packages, each linked to CRAN while it is there (the Software
+## sheet's CRAN column decides; see packageChipsMd() in package_setup.R)
+cat(packageChipsMd(unlist(research$software)))
 ```
 :::
 

@@ -11,13 +11,14 @@ body-classes: bml-page-cv
 #| warning: false
 #| message: false
 
-## load packages and setup
+## load packages and setup; plotly draws the charts (only this page has any)
 source("package_setup.R", echo=FALSE)
+library(plotly)
 ## no R warnings or messages in the page itself
 knitr::opts_chunk$set(warning = FALSE, message = FALSE)
 
-cyear <- as.integer(format(Sys.Date(), format = "%Y"))
-oldyear <- cyear - 4
+## this year, for "the year to date" under the charts
+thisYear <- as.integer(format(Sys.Date(), "%Y"))
 ## rounded down, like every figure on the site
 yearSincePhD <- floor(10 * as.numeric(
   difftime(Sys.Date(), as.Date("2015-06-12"),
@@ -26,80 +27,14 @@ yearSincePhD <- floor(10 * as.numeric(
 ## Citations by year from the workbook's Citations sheet, one entry per
 ## source that has data
 citeSources <- Filter(Negate(is.null), lapply(c("Google Scholar", "Scopus"), getCitations))
-## Google Scholar only, for citecounts.graph below
-cites <- getCitations("Google Scholar")$byYear
-
-citeHistory <- function(ct) {
-  ct <- ct[order(ct$year), c("year", "cites")]
-  ct2 <- ct
-  ct2$cites <- cumsum(ct2$cites)
-  ct$Type <- "Yearly"
-  ct2$Type <- "Cumulative"
-  ct <- rbind(ct, ct2)
-  ct$Type <- factor(ct$Type, levels = c("Yearly", "Cumulative"))
-  ct
-}
 
 fiveyear <- (year(Sys.Date()) - 5)
 
 pubs <- read_excel(cvpath, sheet = "Publications")
 pubs <- as.data.table(pubs)
 
-## pubs[MonashCountsIF == 1, sum(IF, na.rm = TRUE), by = Year]
-## pubs[MonashCountsIF == 1, sum(IF, na.rm = TRUE), by = Year][Year >= 2020, mean(V1)]
-
-pubcounts <- as.data.table(xtabs(~ Year + Type, data = pubs))
-pubcounts <- pubcounts[order(Type, Year),
-                       .(Year = Year, Yearly = N, Cumulative = cumsum(N)), by = Type]
-pubyears <- sort(unique(pubcounts$Year))
-# pubcounts[, Year := factor(Year,
-#                            levels = pubyears,
-#                            labels = fifelse(pubyears == "2015", "2015\n(PhD)", pubyears))]
-pubcounts[, Year := factor(Year,
-                           levels = pubyears,
-                           labels = fifelse(pubyears == "2015", "2015\n(PhD)", fifelse(pubyears == "2020", "2020\n(Level C)", pubyears)))]
-pubcounts[, Type := factor(Type, levels = rev(c("Empirical", "Review", "Protocol",
-                                                "Book", "Book Chapter", "Editorial")))]
-pubcounts <- melt(pubcounts, id.vars = c("Type", "Year"))
-
-pubcounts.graph <- ggplot(pubcounts, aes(Year, value, fill = Type)) +
-  geom_bar(stat = "identity", position = "stack") +
-  scale_fill_viridis_d(begin = 1, end = 0) +
-  facet_wrap(~ variable, scales = "free_y") +
-  theme_classic() +
-  theme(legend.title = element_blank(),
-        legend.position = "bottom",
-        axis.text.x = element_text(angle = 45, hjust = 1),
-        axis.title.x = element_blank()) +
-  coord_cartesian(expand = FALSE) +
-  labs(y = "Number of Publications")
-
-citecounts.graph <- NULL
-if (!is.null(cites)) {
-tmpcitecounts <- as.data.table(citeHistory(cites))
-tmpcitecounts[, year := factor(year,
-                           levels = pubyears[-1],
-                           labels = fifelse(pubyears[-1] == "2015", "2015\n(PhD)", fifelse(pubyears[-1] == "2020", "2020\n(Level C)", pubyears[-1])))]
-
-citecounts.graph <- ggplot(tmpcitecounts, aes(year, cites)) +
-  geom_bar(stat = "identity", position = "stack") +
-  facet_wrap(~ Type, scales = "free_y") +
-  theme_classic() +
-  scale_y_continuous("Citations (Google Scholar)") +
-  theme(legend.title = element_blank(),
-        legend.position = "bottom",
-        axis.text.x = element_text(angle = 45, hjust = 1),
-        axis.title.x = element_blank())
-}
-
-ggarrange(
-  pubcounts.graph,
-  citecounts.graph,
-  ncol = 1, nrow = 2)
-
 tmp <- pubs[Type %in% c("Empirical", "Review"), FirstLast]
 NFirstLast <- sum(tmp == 1)
-N2FirstLast <- sum(pubs[Type %in% c("Empirical", "Review"), `2FirstLast`] == 1)
 NCoAuthor <- sum(tmp == 0)
 NBooks <- nrow(pubs[Type %in% c("Book")])
 NOther <- nrow(pubs[!Type %in% c("Empirical", "Review", "Book")])
@@ -141,11 +76,18 @@ yearOf <- function(x) {
 ## A date range for the CV: "2019–2024", "July 2026 – present" (the en dash
 ## is spaced when either end has a space), a single date when both ends are
 ## the same ("2018", not "2018 - 2018"), and "present" for an open end
-## ("Current" or blank).
+## ("Current" or blank). A range never mixes styles: when one end names a
+## month and the other is only a year ("February 2019" to "2022" in the
+## workbook), both are shown as years ("2019–2022").
 dateRange <- function(start, end) {
   start <- trimws(as.character(start))
   end <- trimws(as.character(end))
   end[is.na(end) | !nzchar(end) | tolower(end) %in% c("current", "present")] <- "present"
+  bareYear <- function(x) !is.na(x) & grepl("^[0-9]{4}$", x)
+  withMonth <- function(x) !is.na(x) & grepl("[A-Za-z].*[0-9]{4}", x)
+  toYear <- function(x) sub("^.*?([0-9]{4}).*$", "\\1", x)
+  start <- ifelse(withMonth(start) & bareYear(end), toYear(start), start)
+  end <- ifelse(withMonth(end) & bareYear(start), toYear(end), end)
   sep <- ifelse(grepl(" ", start) | grepl(" ", end), " \u2013 ", "\u2013")
   ## no line break inside a date ("July 2020"), only after the dash
   nb <- function(x) gsub(" ", "\u00a0", x)
@@ -191,7 +133,7 @@ numberedList <- function(num, items) {
 }
 
 ## Link Project names to projects.html, matching the Projects sheet
-## case-insensitively (e.g. "SleepCaRe" -> "SleepCare"). Names with no row
+## case-insensitively (e.g. "sleepcare" -> "SleepCaRe"). Names with no row
 ## there (HCHS/SOL, POSSUM) still get a link; Joshua chose to leave those as is.
 projectNames <- read_excel(cvpath, sheet = "Projects")$Name
 projectLinks <- function(x) {
@@ -218,7 +160,7 @@ printAllPubs <- function(d) cat(vapply(unique(d$Year), printPubs, "", d = d), se
 
 students <- readPeople()[Status != "Withdrew"]
 
-tmp <- students[Status != "Completed" & grepl("^(PhD|DPsych)", Type),
+tmp <- students[Status == "Current" & grepl("^(PhD|DPsych)", Type),
                 Primary]
 NPrimary <- sum(tmp == 1)
 NSecondary <- sum(tmp == 0)
@@ -260,8 +202,18 @@ studentCounts <- function(n) {
 
 ## STUDENTS: initials only (see CLAUDE.md), e.g.
 ## "[2018–2022]{.bml-cv-date} Y. Y., PhD, primary supervisor"
+## Only a current student's range ends in "present". A completed row with no
+## Ended year in the workbook shows its start year alone (never "present"),
+## and the render log says so.
+noEnd <- students[Status != "Current" & is.na(Ended), .N]
+if (noEnd > 0) {
+  cat("cv.qmd: ", noEnd, " completed People rows have no Ended year; ",
+      "their start year is shown alone.\n", sep = "", file = stderr())
+}
 students[, CVSummary := sprintf("%s %s. %s., %s, %s",
-                                dateSpan(dateRange(Started, ifelse(Status == "Current", NA, Ended))),
+                                dateSpan(dateRange(Started, fifelse(
+                                  Status == "Current", NA_real_,
+                                  fifelse(is.na(Ended), as.numeric(Started), as.numeric(Ended))))),
                                 substr(GivenName, 1, 1), substr(FamilyName, 1, 1),
                                 Type, ifelse(Primary == 1, "primary supervisor", "co-supervisor"))]
 
@@ -389,24 +341,19 @@ packageStats <- function(name) {
     sprintf('\n\n[%s.]{.bml-meta}', paste(parts, collapse = "; "))
 }
 
-## Package names link to CRAN only while the package is on CRAN; otherwise to
-## the first GitHub address in its Info text. The site never checks CRAN
-## itself, so archived packages are listed here: varian was archived from
-## CRAN on 2026-05-15 (remove it from this list if it returns).
-cranArchived <- c("varian")
-onCRAN <- setdiff(if (is.null(softwareStats)) character(0) else unique(softwareStats$Package),
-                  cranArchived)
-packageLink <- function(name, info) {
-  gh <- regmatches(info, regexpr("https?://github\\.com/[^[:space:]]+[^[:space:].,;]", info))
-  if (name %in% onCRAN) sprintf("[%s](https://CRAN.R-project.org/package=%s)", name, name)
-  else if (length(gh) == 1) sprintf("[%s](%s)", name, gh)
-  else name
+## Package names link to CRAN while the Software sheet's CRAN column says the
+## package is there, otherwise to the first GitHub address in its Info text
+## (softwareLinks() in package_setup.R), or not at all.
+packageUrls <- softwareLinks()
+packageLink <- function(name) {
+  url <- packageUrls[[name]]
+  if (is.na(url)) name else sprintf("[%s](%s)", name, url)
 }
 softwareList <- as.data.table(software)[order(Ended != "present", -Started)]
 softwareSection <- paste(cvRow(
   dateRange(softwareList$Started, softwareList$Ended),
   sprintf("**%s**. %s%s",
-          mapply(packageLink, softwareList$Name, softwareList$Info),
+          vapply(softwareList$Name, packageLink, ""),
           linkDois(softwareList$Info),
           vapply(softwareList$Name, packageStats, ""))),
   collapse = "\n")
@@ -451,74 +398,6 @@ summaryItems <- c(
   sprintf("**%d** software packages developed%s", nrow(software), downloadsText),
   aeText)
 summarystatement <- paste0("- ", summaryItems, collapse = "\n")
-
-dcif <- pubs[Type %in% c("Empirical", "Review"), .(CIF = sum(IF, na.rm = TRUE)), by = Year]
-mdcif5 <- dcif[Year %in% (oldyear:cyear), (M = mean(CIF))]
-
-pcif <- ggplot(dcif, aes(Year, CIF)) +
-  geom_hline(yintercept = 14.85, colour = "grey80") +
-  geom_hline(yintercept = 18.45, colour = "grey80") +
-  geom_hline(yintercept = 29.7, colour = "grey80") +
-  geom_hline(yintercept = 37.125, colour = "grey80") +
-  geom_line(colour = "grey60") +
-  geom_point() +
-  geom_text(aes(y = CIF + 1.5, label = round(CIF, 1))) +
-  geom_segment(aes(x = oldyear, xend = cyear, y = mdcif5, yend = mdcif5),
-               colour = "black", linewidth = 1, linetype = 2) +
-  geom_text(aes(x = (cyear + oldyear) / 2, y = mdcif5 + 4,
-                label = sprintf("5 Year Average = %0.1f", mdcif5)),
-            size = 5) +
-  scale_x_continuous(
-    "Data from Clarivate JCR. Benchmarks are aspirational levels for Research Only at Monash University.",
-    breaks = 2013:cyear,
-                     labels = ifelse(
-                       2013:cyear == 2015,
-                       "2015\n(PhD Awarded)",
-                       2013:cyear)) +
-  theme_classic() +
-  theme(axis.title.y = element_blank()) +
-  scale_y_continuous(
-    breaks = c(0, 14.85, 18.45, 29.7, 37.125),
-    labels = c("0", "Lecturer (~15)", "Senior Lecturer (~19)", "Assoc. Prof. (~30)", "Professor (~37)")) +
-  ggtitle("Cumulative journal impact factors for all publications by year") +
-  ## labs(caption = "Data from Clarivate JCR.\nBenchmarks are aspirational levels for Teaching & Research faculty at Monash University.") +
-  coord_cartesian(xlim = c(2013 - .5, cyear + .5),
-                  ylim = c(0, max(dcif$CIF) + 5),
-                  expand = FALSE)
-
-dq1 <- pubs[, .(PQ1 = mean(Q1 == 1, na.rm=TRUE)), by = Year]
-mdq15 <- dq1[Year %in% (oldyear:cyear), (M = mean(PQ1*100))]
-
-pq1 <- ggplot(dq1, aes(Year, PQ1)) +
-  geom_hline(yintercept = .60, colour = "grey80") +
-  geom_hline(yintercept = .70, colour = "grey80") +
-  geom_hline(yintercept = .75, colour = "grey80") +
-  geom_line(colour = "grey60") +
-  geom_point() +
-  geom_text(aes(y = PQ1 + .03, label = sprintf("%0.0f%%", round(PQ1 * 100)))) +
-  geom_segment(aes(x = oldyear, xend = cyear, y = mdq15/100, yend = mdq15/100),
-               colour = "black", linewidth = 1, linetype = 2) +
-  geom_text(aes(x = (cyear + oldyear) / 2, y = mdq15 / 100 + .03,
-                label = sprintf("5 Year Average = %0.1f%%", mdq15)),
-            size = 5) +
-  scale_x_continuous(
-    "Data from Clarivate JCR. Benchmarks are aspirational levels for Teaching & Research at Monash University.",
-    breaks = 2013:cyear,
-                     labels = ifelse(
-                       2013:cyear == 2015,
-                       "2015\n(PhD Awarded)",
-                       2013:cyear)) +
-  theme_classic() +
-  theme(axis.title.y = element_blank()) +
-  scale_y_continuous(
-    breaks = c(.5, .6, .7, .75, 1),
-    labels = c("50%",
-               "Lecturer (60%)", "Senior Lecturer (70%)", "Assoc. Prof. & Prof. (75%)", "100%")) +
-  ggtitle("Percent publications in top quartile (Q1) journals by year") +
-  ## labs(caption = "Data from Clarivate JCR.\nBenchmarks are aspirational levels for Teaching & Research faculty at Monash University.") +
-  coord_cartesian(xlim = c(2013 - .5, cyear + .5),
-                  ylim = c(pmin(.5, min(dq1$PQ1)), 1.07),
-                  expand = FALSE)
 
 #### charts shown on the page ####
 ## Built with plot_ly rather than ggplotly so they suit phones: titles sit in
@@ -642,7 +521,13 @@ chartTableMd <- paste0(
     "\n",
     mdTable(citeByYear[order(-year), c("year", srcs), with = FALSE], c("Year", srcs)),
     "\n\n: Citations by year.\n"))
-chartYearNow <- max(chartYears)
+## the note under the publication charts: this year's bar is the year to
+## date; papers already dated ahead (in press) get a mention rather than being
+## taken for the current year
+chartYearNote <- paste0(
+  if (thisYear %in% chartYears) sprintf(" (%d is the year to date%s)", thisYear,
+    if (max(chartYears) > thisYear) "; later years are papers in press" else "") else "",
+  ".")
 
 ```
 
@@ -758,7 +643,7 @@ pubTotalChart
 ```
 :::
 
-[Counted from the lists above (`r chartYearNow` is the year to date). Other publications are protocols, commentaries, letters and book chapters.]{.bml-cv-note}
+[Counted from the lists above`r chartYearNote` Other publications are protocols, commentaries, letters and book chapters.]{.bml-cv-note}
 
 #### Citations {#chart-citations}
 
@@ -803,9 +688,6 @@ cat(chartTableMd)
 ```
 :::
 
-<!-- r ggplotly(pcif) -->
-<!-- r ggplotly(pq1) -->
-
 ## Software {#software}
 
 [Download counts come from Posit's CRAN mirror (cranlogs), so they understate total downloads.]{.bml-cv-note}
@@ -816,7 +698,7 @@ cat(chartTableMd)
 cat(softwareSection)
 ```
 
-## Abstracts, presentations and symposia {#abstracts-presentations-symposia}
+## Selected abstracts, presentations and symposia {#abstracts-presentations-symposia}
 
 [\* before a name marks an author who was Dr Wiley's trainee when the work was done.]{.bml-cv-note}
 

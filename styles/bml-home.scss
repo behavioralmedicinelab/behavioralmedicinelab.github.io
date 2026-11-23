@@ -9,8 +9,6 @@
 // Classes added here:
 //   .bml-links        a row of .bml-link links that wraps (spaced by gap, not
 //                     by margins, so a wrapped line starts flush left).
-//   .bml-above        a link that stays clickable above a card's
-//                     .stretched-link (e.g. "Le et al. (2026)" to the paper).
 //   .bml-media-lg     taller .bml-card-media (240px) for the two wide cards.
 //   .bml-phone-extra  hidden on phones (theme cards 4 and 5, as in the design).
 //   .bml-phone-only   shown on phones only, full width ("All five themes").
@@ -28,11 +26,6 @@
 }
 
 .bml-card .bml-links { padding-top: .375rem; }
-
-.bml-above {
-  position: relative;
-  z-index: 2;
-}
 
 @include media-breakpoint-down(md) {
   .bml-card.bml-phone-extra { display: none; }

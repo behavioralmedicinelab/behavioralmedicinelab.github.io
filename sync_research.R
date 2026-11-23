@@ -1,25 +1,32 @@
-#### Research themes snapshot for the home page ####
+#### Research themes snapshot (home and research pages) ####
 
 ## Copies a frozen, public-safe snapshot of the lab's research themes from the
 ## wiley_cv analysis into this repo:
-##   research/research.json        everything index.qmd shows (and nothing else)
+##   research/research.json        what index.qmd and research.qmd show, and
+##                                 nothing else (this repo is public)
 ##   research/figures/<ID>.png     the picked figures, copied byte for byte
 ##
 ## Run by hand from the repo root, only when Joshua asks for a refresh:
 ##   Rscript sync_research.R
-## It is NOT called by run_website.R or index.qmd, so the home page only
-## changes when this is re-run. The source folder is read-only: this script
-## never writes there.
-
-library(jsonlite)
-
-src <- "/Users/wileyj/wiley_cv/track_record/2026-10-lab-themes"
-outDir <- "research"
-figDir <- file.path(outDir, "figures")
+## It is NOT called by run_website.R or the pages, so the themes only change
+## when this is re-run. The source folder and the workbook are read-only: this
+## script never writes there.
+##
+## Left out on purpose: per-theme and per-method paper counts, the years a
+## theme has been active and "since <year>" counts (Joshua keeps those
+## private), trainee flags, the analysis's paper IDs and its local path.
 
 if (!file.exists("index.qmd") || !file.exists("run_website.R")) {
   stop("Run sync_research.R from the website repo root.")
 }
+
+library(jsonlite)
+## cvpath and parseReference(), for the papers' short citations
+source("package_setup.R", echo = FALSE)
+
+src <- "/Users/wileyj/wiley_cv/track_record/2026-10-lab-themes"
+outDir <- "research"
+figDir <- file.path(outDir, "figures")
 
 readSrc <- function(...) fromJSON(file.path(src, ...), simplifyVector = FALSE)
 themes <- readSrc("themes.json")
@@ -46,8 +53,21 @@ designLabel <- function(paperId) {
   if (is.null(design) || is.na(designLabels[design])) "Study" else unname(designLabels[design])
 }
 
-## "Le, F." -> "Le et al."
-shortAuthor <- function(p) paste(sub(",.*$", "", p$first_author), "et al.")
+## A paper's short citation: "Le et al.", or "Smith & Jones" for two authors.
+## The analysis only records the first author, so the authors are counted in
+## the paper's reference in the Publications sheet (matched by DOI). A paper
+## not found there gets "<first author> et al." and a warning.
+pubRefs <- as.character(read_excel(cvpath, sheet = "Publications")$Reference)
+shortAuthor <- function(p) {
+  ref <- pubRefs[grepl(tolower(p$doi), tolower(pubRefs), fixed = TRUE)]
+  author <- if (length(ref) == 1) parseReference(ref)$author else NA_character_
+  if (is.na(author)) {
+    warning("No single Publications row for ", p$doi, "; using \"",
+            sub(",.*$", "", p$first_author), " et al.\".", call. = FALSE)
+    author <- paste(sub(",.*$", "", p$first_author), "et al.")
+  }
+  author
+}
 
 ## Journal as shown on the site: drop a subtitle, e.g. "Health Psychology:
 ## Official Journal of the Division ..." -> "Health Psychology"
@@ -92,10 +112,11 @@ paperRecord <- function(p, extra, findingField = "summary") {
     if (is.null(extra$finding)) extra$finding <- profile$summary
     if (is.null(extra$finding)) stop("Profile for ", p$paper_id, " has no text for its text card.")
   }
-  c(list(paper_id = p$paper_id, title = p$title, year = p$year,
+  ## `design` is not shown as a tag; research.qmd only uses it to label a
+  ## trial protocol's text card "Study plan"
+  c(list(title = p$title, year = p$year,
          journal = shortJournal(p$journal), doi = p$doi,
-         first_author = p$first_author,
-         trainee_first_author = isTRUE(p$trainee_first_author),
+         author = shortAuthor(p),
          design = designLabel(p$paper_id)),
     extra,
     list(figure = fig, credit = if (is.null(fig)) NULL else creditFor(fig, p)))
@@ -106,8 +127,6 @@ themeOut <- lapply(themes$topic_themes, function(t) {
   if (is.null(tc)) stop("site_copy.json has no copy for theme ", t$id)
   list(
     id = t$id, anchor = tolower(t$id), title = tc$title, blurb = tc$blurb,
-    papers = t$papers, first_year = t$first_year, last_year = t$last_year,
-    since_2024 = t$since_2024,
     exemplar = paperRecord(t$exemplar, list(summary = t$exemplar$summary),
                            findingField = "key_finding"),
     representatives = lapply(t$representatives, function(r) {
@@ -118,12 +137,11 @@ themeOut <- lapply(themes$topic_themes, function(t) {
 methodsOut <- lapply(themes$methods_strand, function(m) {
   oneLiner <- copy$methods[[m$id]]
   if (is.null(oneLiner)) stop("site_copy.json has no methods line for ", m$id)
-  list(id = m$id, name = m$name, one_liner = oneLiner, papers = m$papers)
+  list(id = m$id, name = m$name, one_liner = oneLiner)
 })
 
 snapshot <- list(
   generated = format(Sys.Date()),
-  source = src,
   source_generated = themes$generated,
   intro = copy$intro,
   themes = themeOut,

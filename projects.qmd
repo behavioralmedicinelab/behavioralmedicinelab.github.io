@@ -28,8 +28,10 @@ body-classes: bml-page-projects
 ## load packages and setup
 source("package_setup.R", echo = FALSE)
 
-projects <- read_excel(cvpath, sheet = "Projects")
-projects <- as.data.table(projects)[nzchar(Summary) & !is.na(Summary)]
+## the projects with a Summary, current ones first, then the most recently
+## started (as in the menu). A project of ours with a Type that is not one of
+## the groups below is put under Other studies there (the render log says so).
+projects <- readProjects()
 
 ## Websites that no longer work. Studies' own websites close once a study
 ## ends, so their links are taken out of the Summary text at render time:
@@ -38,40 +40,33 @@ projects <- as.data.table(projects)[nzchar(Summary) & !is.na(Summary)]
 ## shown as plain text. Add an address here when a website goes down.
 retiredUrls <- c(
   "https://cancope.weebly.com/",        # CanCope: study finished (2022), website closed
-  "https://sleepcarestudy.weebly.com/", # SleepCare: study finished, website closing
+  "https://sleepcarestudy.weebly.com/", # SleepCaRe: study finished, website closing
   "http://repat.haifa.ac.il/en/"        # REPAT (University of Haifa): page not found
 )
 
-## the groups, in page order: the workbook's Type, the heading (the same
-## words as the navbar menu), the heading id (kept from the old page) and a
-## line about the group. Projects we collaborate on (Primary == 0) are one
-## group whatever their Type.
+## the groups, in page order: the workbook's Type, the heading (from
+## projectTypes in package_setup.R, which the navbar menu uses too), the
+## heading id (the navbar and other pages link to it) and a line about the
+## group. Projects we collaborate on (Primary == 0) are one group whatever
+## their Type.
 groups <- list(
-  list(type = "Trial", title = "Trials", id = "trials",
+  list(type = "Trial", id = "trials",
        about = "Studies that test whether a treatment or program helps people."),
-  list(type = "Observational", title = "Observational studies", id = "observational-studies",
+  list(type = "Observational", id = "observational-studies",
        about = "Studies that learn from people's experiences, without testing a treatment."),
-  list(type = "Daily", title = "Daily life studies", id = "daily-life-studies",
+  list(type = "Daily", id = "daily-life-studies",
        about = "Studies that follow sleep, stress, mood and activity day by day, as people go about their lives."),
-  list(type = "Other", title = "Other studies", id = "other-studies",
+  list(type = "Other", id = "other-studies",
        about = "Other research our lab leads, including programs of work that span several studies."),
   list(type = NA_character_, title = "Projects we collaborate on", id = "collaborations",
        about = "Studies led by other research teams, in which our lab is a partner.")
 )
-
-## a project of ours with a Type not listed above would not appear in any
-## group, so it goes under Other studies (and the render log says so)
-ourTypes <- na.omit(vapply(groups, `[[`, "", "type"))
-odd <- projects[Primary == 1 & !Type %in% ourTypes, Name]
-if (length(odd) > 0) {
-  cat("projects.qmd: shown under Other studies (Type not ",
-      paste(ourTypes, collapse = ", "), "): ", paste(odd, collapse = ", "), "\n",
-      sep = "", file = stderr())
-  projects[Primary == 1 & !Type %in% ourTypes, Type := "Other"]
-}
-
-## current projects first, then the most recently started (as in the menu)
-projects <- projects[order(-Status, -Started)]
+groups <- lapply(groups, function(g) {
+  if (!is.na(g$type)) g$title <- projectTypes[[g$type]]
+  g
+})
+## every type the menu has is a group here
+stopifnot(setequal(names(projectTypes), na.omit(vapply(groups, `[[`, "", "type"))))
 
 ## ---- retired links ----
 ## an address as a regular expression that also matches it with http or
@@ -186,7 +181,7 @@ document.addEventListener('click', function (e) {
 ::: {.column-screen .bml-band .bml-projects-intro}
 [From clinical trials to studies of daily life, these are the studies our lab runs and the projects we work on with other research teams.]{.bml-projects-lead}
 
-[Take part in a study [→]{aria-hidden="true"}](join.qmd#participate){.bml-link}
+[Take part in a study\ [→]{aria-hidden="true"}](join.qmd#participate){.bml-link}
 
 ```{r}
 #| echo: false

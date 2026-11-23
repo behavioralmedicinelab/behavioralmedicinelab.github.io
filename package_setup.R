@@ -1,17 +1,9 @@
-#### misc
-library(fontawesome)
-library(knitr)
-library(quarto)
-library(JWileymisc)
-
 #### data
+## Every page needs only these two. cv.qmd loads plotly itself for its charts;
+## run_website.R calls quarto::quarto_render() and sync_research.R uses
+## jsonlite, so those two packages must be installed as well.
 library(readxl)
 library(data.table)
-
-#### graphs
-library(ggplot2)
-library(plotly)
-library(ggpubr)
 
 if (Sys.info()[["sysname"]] == "Linux") {
     basedir <- "/mnt/c/Users/jwile/OneDrive"
@@ -114,6 +106,54 @@ getDownloads <- function() {
        asOf = if (all(is.na(to))) as.Date(NA) else max(to, na.rm = TRUE))
 }
 
+## Where each R package's name links to, from the workbook's Software sheet: a
+## named vector, package -> address. A package is linked to CRAN only while the
+## sheet's CRAN column is 1 (~/wiley_cv keeps it current; the site never checks
+## CRAN itself, and varian was archived there in 2026). Otherwise it gets the
+## first GitHub address in its Info text, or NA (shown without a link).
+softwareLinks <- function() {
+  sw <- as.data.table(read_excel(cvpath, sheet = "Software"))
+  if (!"CRAN" %in% names(sw)) {
+    stop("The Software sheet has no CRAN column (1 = on CRAN now); see ~/wiley_cv/CLAUDE.md.",
+         call. = FALSE)
+  }
+  gh <- regmatches(sw$Info, regexec("https?://github\\.com/[^[:space:]]+[^[:space:].,;]", sw$Info))
+  gh <- vapply(gh, function(x) if (length(x)) x[1] else NA_character_, "")
+  setNames(ifelse(sw$CRAN %in% 1, paste0("https://CRAN.R-project.org/package=", sw$Name), gh),
+           sw$Name)
+}
+
+## The lab's R packages as a row of chips (home and research pages), each
+## linked as softwareLinks() says; a package with no address, or one missing
+## from the Software sheet, is a plain chip.
+packageChipsMd <- function(pkgs) {
+  url <- unname(softwareLinks()[pkgs])
+  chips <- ifelse(is.na(url), sprintf("[%s]{.bml-chip .bml-mono}", pkgs),
+                  sprintf("[%s](%s){.bml-chip .bml-mono}", pkgs, url))
+  paste0("::: {.bml-chips}\n", paste(chips, collapse = " "), "\n:::\n")
+}
+
+## The Projects sheet rows the site shows (those with a Summary), current
+## projects first, then the most recently started. Used by the Projects page
+## and by the navbar's Projects menu (run_website.R), so the two always list
+## the same projects under the same group. projectTypes maps the sheet's Type
+## to the group's heading; a project of ours (Primary == 1) with any other
+## Type goes under "Other studies", and the render log says so.
+projectTypes <- c(Trial = "Trials", Observational = "Observational studies",
+                  Daily = "Daily life studies", Other = "Other studies")
+readProjects <- function() {
+  projects <- as.data.table(read_excel(cvpath, sheet = "Projects"))
+  projects <- projects[!is.na(Summary) & nzchar(Summary)]
+  odd <- projects[Primary == 1 & !Type %in% names(projectTypes), Name]
+  if (length(odd) > 0) {
+    cat("Projects: shown under Other studies (Type not ",
+        paste(names(projectTypes), collapse = ", "), "): ", paste(odd, collapse = ", "),
+        "\n", sep = "", file = stderr())
+    projects[Primary == 1 & !Type %in% names(projectTypes), Type := "Other"]
+  }
+  projects[order(-Status, -Started)]
+}
+
 #### helpers for pages that write markdown from R chunks ####
 
 ## Plain text made safe for the Pandoc markdown an `output: asis` chunk cat()s
@@ -128,12 +168,30 @@ pngSize <- function(path) {
   c(width = sum(b[17:20] * 256^(3:0)), height = sum(b[21:24] * 256^(3:0)))
 }
 
+## An APA author list (the part of a reference before the year) as a short
+## citation: "Wiley" for one author, "Smith & Jones" for two, "Do et al." for
+## three or more (or a list shortened with "..."). Trainee "\*" marks and bold
+## are dropped. NA if there is no author.
+shortAuthors <- function(authors) {
+  authors <- trimws(gsub("\\\\\\*|\\*\\*", "", authors))
+  if (is.na(authors) || !nzchar(authors)) return(NA_character_)
+  ## authors are "Surname, I. I."; they are separated by the comma after an
+  ## initial's full stop and by "&"
+  parts <- trimws(unlist(strsplit(authors, "(?<=\\.),\\s*(?:&\\s*)?|\\s*&\\s+", perl = TRUE)))
+  surnames <- trimws(sub(",.*$", "", parts[nzchar(parts) & !grepl("^(\\.\\.\\.|…)", parts)]))
+  if (length(surnames) == 0) return(NA_character_)
+  if (length(surnames) > 2 || grepl("\\.\\.\\.|…", authors)) {
+    paste(surnames[1], "et al.")
+  } else paste(surnames, collapse = " & ")
+}
+
 ## Parts of an APA 7 reference as written in the Publications sheet's
 ## Reference column (markdown; see ~/wiley_cv/CLAUDE.md), e.g.
 ##   \*Do, T. T., ... **Wiley, J. F.** (2026). Title. *JAMA Network Open, 9*(8),
 ##   e2630320. https://doi.org/10.1001/...
-## Returns list(author = "Do et al.", year, title (markdown, final full stop
-## dropped), journal, doi (a URL)); any part it can't find is NA.
+## Returns list(author = "Do et al." (see shortAuthors()), year, title
+## (markdown, final full stop dropped), journal, doi (a URL)); any part it
+## can't find is NA.
 parseReference <- function(ref) {
   out <- list(author = NA_character_, year = NA_integer_, title = NA_character_,
               journal = NA_character_, doi = NA_character_)
@@ -141,9 +199,7 @@ parseReference <- function(ref) {
   if (is.na(ref) || !nzchar(ref)) return(out)
   m <- regmatches(ref, regexec("^(.*?)\\s*\\((\\d{4})[a-z]?\\)\\.\\s+(.*)$", ref))[[1]]
   if (length(m) == 4) {
-    authors <- gsub("\\\\\\*|\\*\\*", "", m[2])          # trainee "\*" and bold
-    first <- trimws(sub(",.*$", "", authors))
-    if (nzchar(first)) out$author <- paste0(first, if (grepl("&|\\.\\.\\.", authors)) " et al.")
+    out$author <- shortAuthors(m[2])
     out$year <- as.integer(m[3])
     ## title: up to the sentence end before the italic journal
     t <- regmatches(m[4], regexec("^(.+?[.?!])\\s+\\*([^*]+)\\*", m[4]))[[1]]
@@ -248,8 +304,10 @@ readResearch <- function(path = "research/research.json") {
   research
 }
 
-## a snapshot paper's "Le et al.", DOI link and figure file (NULL if none)
-paperAuthor <- function(p) paste(sub(",.*$", "", p$first_author), "et al.")
+## a snapshot paper's short citation ("Le et al."; sync_research.R writes it
+## from the paper's reference in the Publications sheet, so a two-author paper
+## is "Smith & Jones"), DOI link and figure file (NULL if none)
+paperAuthor <- function(p) p$author
 paperDoi <- function(p) paste0("https://doi.org/", p$doi)
 paperFigure <- function(p) if (!is.null(p$figure)) sprintf("research/figures/%s.png", p$figure)
 

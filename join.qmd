@@ -157,7 +157,7 @@ studyCard <- function(s) {
     sprintf("[%s](%s){.bml-btn}", button, signup)
   }
   more <- if (has(s$info_url)) sprintf(
-    ' [More about %s [→]{aria-hidden="true"}](%s){.bml-link}', s$title, s$info_url) else ""
+    ' [More about %s\\ [→]{aria-hidden="true"}](%s){.bml-link}', s$title, s$info_url) else ""
   sprintf('
 ::: {.bml-card .bml-study}
 ::: {.bml-card-top}
@@ -330,7 +330,7 @@ if (length(studies) == 0) {
 }
 ```
 
-[Past studies and results [→]{aria-hidden="true"}](projects.qmd){.bml-link}
+[Past studies and results\ [→]{aria-hidden="true"}](projects.qmd){.bml-link}
 :::
 
 ::: {.g-col-12 .g-col-lg-5}
@@ -407,7 +407,7 @@ if (length(partnerRoles) == 0) {
 
 We partner with organisations on co-design, reaching participants and sharing results. We'd love to hear from you.
 
-[Email us about a partnership [→]{aria-hidden="true"}](`r mailtoUrl("Community partnership")`){.bml-link}
+[Email us about a partnership\ [→]{aria-hidden="true"}](`r mailtoUrl("Community partnership")`){.bml-link}
 :::
 
 ::: {.g-col-12 .g-col-lg-6 .bml-card}
@@ -559,7 +559,7 @@ We welcome collaborations on sleep, cancer, emotions and methods. Email us with 
 - **Methods:** daily diary and EMA studies, intensive longitudinal and multilevel modelling, 24-hour time use and compositional data analysis, wearables, and individual participant data and precision modelling
 
 ::: {.bml-links .bml-push}
-[Research themes [→]{aria-hidden="true"}](research.qmd){.bml-link} [Publications [→]{aria-hidden="true"}](cv.qmd#publications){.bml-link} [R packages on GitHub [→]{aria-hidden="true"}](https://github.com/jwiley){.bml-link} [Google Scholar [→]{aria-hidden="true"}](https://scholar.google.com/citations?user=bRG3LSQAAAAJ&hl=en){.bml-link}
+[Research themes\ [→]{aria-hidden="true"}](research.qmd){.bml-link} [Publications\ [→]{aria-hidden="true"}](cv.qmd#publications){.bml-link} [R packages on GitHub\ [→]{aria-hidden="true"}](https://github.com/jwiley){.bml-link} [Google Scholar\ [→]{aria-hidden="true"}](https://scholar.google.com/citations?user=bRG3LSQAAAAJ&hl=en){.bml-link}
 :::
 :::
 
@@ -571,7 +571,7 @@ We welcome collaborations on sleep, cancer, emotions and methods. Email us with 
 
 Our Community of Practice for health professionals and researchers working on sleep after cancer is launching soon.
 
-[Email us to hear when it launches [→]{aria-hidden="true"}](`r mailtoUrl("CoP launch")`){.bml-link}
+[Email us to hear when it launches\ [→]{aria-hidden="true"}](`r mailtoUrl("CoP launch")`){.bml-link}
 :::
 
 ::: {.bml-card}
@@ -581,7 +581,7 @@ Our Community of Practice for health professionals and researchers working on sl
 
 We welcome visiting PhD students and researchers. Tell us what you'd like to work on, when and for how long.
 
-[Email us about a visit [→]{aria-hidden="true"}](`r mailtoUrl("Visit")`){.bml-link}
+[Email us about a visit\ [→]{aria-hidden="true"}](`r mailtoUrl("Visit")`){.bml-link}
 :::
 :::
 :::
